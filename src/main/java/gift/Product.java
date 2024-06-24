@@ -3,14 +3,10 @@ package gift;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Product {
-    @JsonProperty
-    Long id;
-    @JsonProperty
-    String name;
-    @JsonProperty
-    int price;
-    @JsonProperty
-    String imageUrl;
+    private Long id;
+    private String name;
+    private int price;
+    private String imageUrl;
 
     public Product(Long id, String name, int price, String imageUrl) {
         this.id = id;
@@ -19,4 +15,19 @@ public class Product {
         this.imageUrl = imageUrl;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
 }
