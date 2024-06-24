@@ -1,9 +1,7 @@
 package gift;
 
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -21,6 +19,17 @@ public class GiftController {
     public Collection<Gift> getAllgifts(){
         return gifts.values();
     }
+
+    @PostMapping
+    public Gift addGift(@RequestBody Gift gift){
+        long id = idGenerator.incrementAndGet();
+        gift.setId(id);
+        gifts.put(id,gift);
+        return gift;
+    }
+
+
+
 
 
 }
