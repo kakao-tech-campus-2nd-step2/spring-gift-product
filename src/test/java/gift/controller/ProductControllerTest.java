@@ -1,10 +1,16 @@
 package gift.controller;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import gift.controller.request.ProductCreateRequest;
+import gift.domain.Product;
 import gift.service.ProductService;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -19,6 +25,9 @@ import org.springframework.test.web.servlet.ResultActions;
 @WebMvcTest(controllers = ProductController.class)
 class ProductControllerTest {
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
     @MockBean
     private ProductService productService;
 
@@ -32,14 +41,33 @@ class ProductControllerTest {
         given(productService.getProducts()).willReturn(List.of());
 
         //when
-        ResultActions result = mvc.perform(get("/api/products")
-            .contentType(MediaType.APPLICATION_JSON));
+        ResultActions result = mvc.perform(get("/api/products"));
 
         //then
         result
             .andExpect(status().isOk());
 
         then(productService).should().getProducts();
+    }
+
+    @DisplayName("[POST] 상품 하나를 추가한다.")
+    @Test
+    void productAdd() throws Exception {
+        //given
+        ProductCreateRequest request = new ProductCreateRequest();
+        given(productService.addProduct(request)).willReturn(new Product());
+
+        //when
+        ResultActions result = mvc.perform(post("/api/products")
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .content(objectMapper.writeValueAsString(request)));
+
+        //then
+        result
+            .andExpect(status().isCreated())
+            .andDo(print());
+
+        then(productService).should().addProduct(request);
     }
 
 }

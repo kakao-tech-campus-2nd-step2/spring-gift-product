@@ -3,6 +3,8 @@ package gift.service;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 
+import gift.controller.request.ProductCreateRequest;
+import gift.domain.Product;
 import gift.domain.ProductRepository;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -32,6 +34,21 @@ class ProductServiceTest {
 
         //then
         then(productRepository).should().findAll();
+    }
+
+    @DisplayName("상품 하나를 추가한다.")
+    @Test
+    void addProduct() throws Exception {
+        //given
+        ProductCreateRequest request = new ProductCreateRequest();
+        Product product = new Product();
+        given(productRepository.save(product)).willReturn(product);
+
+        //when
+        productService.addProduct(request);
+
+        //then
+        then(productRepository).should().save(product);
     }
 
 }

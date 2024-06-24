@@ -23,4 +23,9 @@ public class ProductRepository {
         return product;
     }
 
+    public void clear() {
+        products.clear();
+        currentId = 0L;
+    }
+
 }
