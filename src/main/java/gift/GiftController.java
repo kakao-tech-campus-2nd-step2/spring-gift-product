@@ -38,6 +38,11 @@ public class GiftController {
         return gift;
     }
 
+    @DeleteMapping("/{id}")
+    public void deleteGift(@PathVariable Long id){
+        gifts.remove(id);
+    }
+
 
 
 
