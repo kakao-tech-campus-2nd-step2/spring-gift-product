@@ -1,5 +1,6 @@
 package gift.service;
 
+import gift.controller.request.ProductCreateRequest;
 import gift.domain.Product;
 import gift.domain.ProductRepository;
 import java.util.List;
@@ -16,6 +17,10 @@ public class ProductService {
 
     public List<Product> getProducts() {
         return productRepository.findAll();
+    }
+
+    public Product addProduct(ProductCreateRequest request) {
+        return productRepository.save(request.toEntity());
     }
 
 }
