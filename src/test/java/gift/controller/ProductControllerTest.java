@@ -1,11 +1,10 @@
 package gift.controller;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -55,7 +54,9 @@ class ProductControllerTest {
     void productAdd() throws Exception {
         //given
         ProductRequest request = new ProductRequest();
-        given(productService.addProduct(request)).willReturn(new Product());
+        Product product = new Product();
+
+        given(productService.addProduct(request)).willReturn(product);
 
         //when
         ResultActions result = mvc.perform(post("/api/products")
@@ -64,10 +65,31 @@ class ProductControllerTest {
 
         //then
         result
-            .andExpect(status().isCreated())
-            .andDo(print());
+            .andExpect(status().isCreated());
 
         then(productService).should().addProduct(request);
+    }
+
+    @DisplayName("[PUT] 상품 정보를 수정한다.")
+    @Test
+    void productEdit() throws Exception {
+        //given
+        Long productId = 1L;
+        ProductRequest request = new ProductRequest();
+        Product product = new Product();
+
+        given(productService.editProduct(productId, request)).willReturn(product);
+
+        //when
+        ResultActions result = mvc.perform(put("/api/products/{productId}", productId)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(request)));
+
+        //then
+        result
+            .andExpect(status().isOk());
+
+        then(productService).should().editProduct(productId, request);
     }
 
 }

@@ -42,6 +42,7 @@ class ProductServiceTest {
         //given
         ProductRequest request = new ProductRequest();
         Product product = new Product();
+
         given(productRepository.save(product)).willReturn(product);
 
         //when
@@ -49,6 +50,23 @@ class ProductServiceTest {
 
         //then
         then(productRepository).should().save(product);
+    }
+
+    @DisplayName("상품 정보를 수정한다.")
+    @Test
+    void editProduct() throws Exception {
+        //given
+        Long productId = 1L;
+        ProductRequest request = new ProductRequest();
+        Product product = new Product();
+
+        given(productRepository.edit(productId, product)).willReturn(product);
+
+        //when
+        productService.editProduct(productId, request);
+
+        //then
+        then(productRepository).should().edit(productId, product);
     }
 
 }

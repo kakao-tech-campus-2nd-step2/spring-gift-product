@@ -24,6 +24,15 @@ public class ProductRequest {
         return new Product(this.name, this.price, this.imageUrl);
     }
 
+    public ProductRequest() {
+    }
+
+    public ProductRequest(String name, int price, String imageUrl) {
+        this.name = name;
+        this.price = price;
+        this.imageUrl = imageUrl;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

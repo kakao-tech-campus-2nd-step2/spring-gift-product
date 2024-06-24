@@ -2,6 +2,7 @@ package gift.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import gift.controller.request.ProductRequest;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -41,6 +42,25 @@ class ProductRepositoryTest {
 
         //then
         assertThat(savedProduct).isNotNull();
+    }
+
+    @DisplayName("상품 정보를 수정한다.")
+    @Test
+    void edit() throws Exception {
+        //given
+        Product product = new Product("아이스 아메리카노", 3500, "https://examle.com");
+        Product savedProduct = productRepository.save(product);
+
+        Long productId = savedProduct.getId();
+        ProductRequest request = new ProductRequest("망고 스무디", 5000, "https://test.com");
+
+        //when
+        productRepository.edit(productId, request.toEntity());
+
+        //then
+        assertThat(savedProduct.getName()).isEqualTo(request.getName());
+        assertThat(savedProduct.getPrice()).isEqualTo(request.getPrice());
+        assertThat(savedProduct.getImageUrl()).isEqualTo(request.getImageUrl());
     }
 
 }
