@@ -2,7 +2,7 @@ package gift.controller.request;
 
 import gift.domain.Product;
 
-public class ProductCreateRequest {
+public class ProductRequest {
 
     private String name;
     private int price;
@@ -29,11 +29,11 @@ public class ProductCreateRequest {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof ProductCreateRequest)) {
+        if (!(o instanceof ProductRequest)) {
             return false;
         }
 
-        ProductCreateRequest that = (ProductCreateRequest) o;
+        ProductRequest that = (ProductRequest) o;
 
         if (price != that.price) {
             return false;

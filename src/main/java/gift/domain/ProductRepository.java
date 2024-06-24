@@ -11,6 +11,11 @@ public class ProductRepository {
     private final Map<Long, Product> products = new HashMap<>();
     private Long currentId = 1L;
 
+    public void clear() {
+        products.clear();
+        currentId = 0L;
+    }
+
     public List<Product> findAll() {
         return products.values().stream().toList();
     }
@@ -23,9 +28,16 @@ public class ProductRepository {
         return product;
     }
 
-    public void clear() {
-        products.clear();
-        currentId = 0L;
+    public Product edit(Long productId, Product request) {
+        Product product = products.get(productId);
+
+        product.changeName(request.getName());
+        product.changePrice(request.getPrice());
+        product.changeImageUrl(request.getImageUrl());
+
+        products.put(productId, product);
+
+        return product;
     }
 
 }

@@ -9,7 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import gift.controller.request.ProductCreateRequest;
+import gift.controller.request.ProductRequest;
 import gift.domain.Product;
 import gift.service.ProductService;
 import java.util.List;
@@ -54,7 +54,7 @@ class ProductControllerTest {
     @Test
     void productAdd() throws Exception {
         //given
-        ProductCreateRequest request = new ProductCreateRequest();
+        ProductRequest request = new ProductRequest();
         given(productService.addProduct(request)).willReturn(new Product());
 
         //when

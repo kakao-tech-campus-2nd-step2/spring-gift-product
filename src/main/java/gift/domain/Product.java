@@ -22,6 +22,22 @@ public class Product {
         return price;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void changeName(String name) {
+        this.name = name;
+    }
+
+    public void changePrice(int price) {
+        this.price = price;
+    }
+
+    public void changeImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
     public String getImageUrl() {
         return imageUrl;
     }
@@ -30,10 +46,6 @@ public class Product {
         this.name = name;
         this.price = price;
         this.imageUrl = imageUrl;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     @Override

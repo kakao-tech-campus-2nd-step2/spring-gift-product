@@ -3,7 +3,7 @@ package gift.service;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 
-import gift.controller.request.ProductCreateRequest;
+import gift.controller.request.ProductRequest;
 import gift.domain.Product;
 import gift.domain.ProductRepository;
 import java.util.List;
@@ -40,7 +40,7 @@ class ProductServiceTest {
     @Test
     void addProduct() throws Exception {
         //given
-        ProductCreateRequest request = new ProductCreateRequest();
+        ProductRequest request = new ProductRequest();
         Product product = new Product();
         given(productRepository.save(product)).willReturn(product);
 
