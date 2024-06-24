@@ -21,30 +21,31 @@ public class GiftController {
     }
 
     @PostMapping
-    public Gift addGift(@RequestBody Gift gift){
+    public Gift addGift(@RequestBody Gift giftreq){
         long id = idGenerator.incrementAndGet();
-        gift.setId(id);
+        Gift gift = new Gift(id,giftreq.name(),giftreq.price(),giftreq.imageUrl());
         gifts.put(id,gift);
         return gift;
     }
 
     @PutMapping("/{id}")
-    public Gift updateGift(@PathVariable Long id,@RequestBody Gift gift){
+    public Gift updateGift(@PathVariable Long id,@RequestBody Gift giftreq){
         if(!gifts.containsKey(id)){
             throw new IllegalArgumentException("찾는 상품이 없습니다!");
         }
-        gift.setId(id);
+        Gift gift = new Gift(id,giftreq.name(),giftreq.price(),giftreq.imageUrl());
         gifts.put(id,gift);
         return gift;
     }
-
     @DeleteMapping("/{id}")
     public void deleteGift(@PathVariable Long id){
         gifts.remove(id);
     }
-
-
-
-
+    @PostMapping("/receive")
+    public String age(@RequestParam String name) {
+        System.out.println("결과 " + name);
+        return "result";
+    }
 
 }
+
