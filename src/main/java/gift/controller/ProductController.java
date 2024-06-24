@@ -3,6 +3,7 @@ package gift.controller;
 import gift.domain.Product;
 import gift.service.ProductService;
 import java.util.List;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,8 +19,9 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<Product> productList() {
-        return productService.getProducts();
+    public ResponseEntity<List<Product>> productList() {
+        return ResponseEntity.ok()
+            .body(productService.getProducts());
     }
 
 }
