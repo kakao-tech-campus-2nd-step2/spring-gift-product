@@ -1,12 +1,14 @@
 package gift.dto;
 
-public class ProductRequestDto {
+import gift.domain.Product;
+
+public class ProductDto {
 
     private String name;
     private int price;
     private String imageUrl;
 
-    public ProductRequestDto(String name, int price, String imageUrl) {
+    public ProductDto(String name, int price, String imageUrl) {
         this.name = name;
         this.price = price;
         this.imageUrl = imageUrl;
@@ -35,4 +37,5 @@ public class ProductRequestDto {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
+
 }
