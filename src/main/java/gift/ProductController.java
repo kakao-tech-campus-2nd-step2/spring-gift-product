@@ -13,6 +13,17 @@ public class ProductController {
     public void addProduct(@RequestBody Product product) {
         products.put(product.id, product);
     }
+    //Read
+    @GetMapping("api/products")
+    public List<Product> getProducts() {
+        List<Product> productList = new ArrayList<>();
+
+        for (Map.Entry<Long, Product> entry : products.entrySet()) {
+            productList.add(entry.getValue());
+        }
+
+        return productList;
+    }
 
 
 
