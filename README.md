@@ -1,5 +1,7 @@
 # spring-gift-product
 
+> 간략하게 요약
+
 ## Step1 - ToDo List
 - Domain
   - Product 생성
@@ -8,13 +10,5 @@
 - Repository
   - Products Repository Interface 생성
   - ProductMemoryRepository 생성
-- Controller
-  - 조회 HTTP API 구현
-  - 추가 HTTP API 구현
-  - 수정 HTTP API 구현
-  - 삭제 HTTP API 구현
-- Service
-  - 조회 로직 구현
-  - 추가 로직 구현
-  - 수정 로직 구현
-  - 삭제 로직 구현
+- Product Service
+- Product Controller
