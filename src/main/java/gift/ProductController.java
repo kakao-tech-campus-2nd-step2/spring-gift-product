@@ -11,7 +11,7 @@ public class ProductController {
     //Create
     @PostMapping("api/products")
     public void addProduct(@RequestBody Product product) {
-        products.put(product.id, product);
+        products.put(product.getId(), product);
     }
     //Read
     @GetMapping("api/products")
@@ -34,7 +34,5 @@ public class ProductController {
     public void deleteProduct(@PathVariable("id") Long id) {
         products.remove(id);
     }
-
-
 
 }
