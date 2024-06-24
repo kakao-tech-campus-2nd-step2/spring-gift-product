@@ -37,6 +37,9 @@ public class GiftController {
     }
     @DeleteMapping("/{id}")
     public void deleteGift(@PathVariable Long id){
+        if(!gifts.containsKey(id)){
+            throw new IllegalArgumentException("삭제할 상품이 없습니다!");
+        }
         gifts.remove(id);
     }
     @PostMapping("/receive")
