@@ -38,4 +38,7 @@ public class ProductDto {
         this.imageUrl = imageUrl;
     }
 
+    public static ProductDto toDto(Product product){
+        return new ProductDto(product.getName(), product.getPrice(), product.getImageUrl());
+    }
 }
