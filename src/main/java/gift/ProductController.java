@@ -29,6 +29,11 @@ public class ProductController {
     public void updateProduct(@PathVariable("id") Long id, @RequestBody Product product) {
         products.put(id, product);
     }
+    //Delete
+    @DeleteMapping("api/products/{id}")
+    public void deleteProduct(@PathVariable("id") Long id) {
+        products.remove(id);
+    }
 
 
 
