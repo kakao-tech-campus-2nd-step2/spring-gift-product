@@ -40,6 +40,15 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
+    public ProductDto updateProduct(Long id, int price){
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("해당 상품은 존재하지 않습니다."));
+
+        product.setPrice(price);
+
+        return ProductDto.toDto(product);
+    }
+
     public Long deleteProduct(Long id){
         Product findProduct = productRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("해당 상품은 존재하지 않습니다."));
