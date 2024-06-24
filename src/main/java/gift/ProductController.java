@@ -11,8 +11,9 @@ public class ProductController {
     //Create
     //상품 추가
     @PostMapping("api/products")
-    public void addProduct(@RequestBody Product product) {
+    public String addProduct(@RequestBody Product product) {
         products.put(product.getId(), product);
+        return "상품 추가 성공!";
     }
     //Read
     //등록된 상품들의 리스트 반환
@@ -29,14 +30,22 @@ public class ProductController {
     //Update
     //해당 id를 가진 상품 정보를 수정
     @PutMapping("api/products/{id}")
-    public void updateProduct(@PathVariable("id") Long id, @RequestBody Product product) {
-        products.put(id, product);
+    public String updateProduct(@PathVariable("id") Long id, @RequestBody Product product) {
+        if (products.containsKey(id)) {
+            products.put(id, product);
+            return "상품 수정 성공!";
+        }
+        return "수정 실패, 해당 id를 가진 상품이 존재하지 않습니다";
     }
     //Delete
     //해당 id를 가진 상품을 삭제
     @DeleteMapping("api/products/{id}")
-    public void deleteProduct(@PathVariable("id") Long id) {
-        products.remove(id);
+    public String deleteProduct(@PathVariable("id") Long id) {
+        if (products.containsKey(id)) {
+            products.remove(id);
+            return "상품 삭제 성공!";
+        }
+        return "삭제 실패, 해당 id를 가진 상품이 존재하지 않습니다";
     }
 
 }
