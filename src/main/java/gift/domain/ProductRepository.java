@@ -40,4 +40,8 @@ public class ProductRepository {
         return product;
     }
 
+    public Long deleteById(Long productId) {
+        return products.remove(productId).getId();
+    }
+
 }

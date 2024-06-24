@@ -27,4 +27,8 @@ public class ProductService {
         return productRepository.edit(productId, request.toEntity());
     }
 
+    public Long removeProduct(Long productId) {
+        return productRepository.deleteById(productId);
+    }
+
 }
