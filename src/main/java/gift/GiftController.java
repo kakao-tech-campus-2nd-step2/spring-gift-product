@@ -28,6 +28,16 @@ public class GiftController {
         return gift;
     }
 
+    @PutMapping("/{id}")
+    public Gift updateGift(@PathVariable Long id,@RequestBody Gift gift){
+        if(!gifts.containsKey(id)){
+            throw new IllegalArgumentException("찾는 상품이 없습니다!");
+        }
+        gift.setId(id);
+        gifts.put(id,gift);
+        return gift;
+    }
+
 
 
 
