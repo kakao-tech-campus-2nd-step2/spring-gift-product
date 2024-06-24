@@ -12,6 +12,9 @@ public class ProductController {
     //상품 추가
     @PostMapping("api/products")
     public String addProduct(@RequestBody Product product) {
+가        if (products.containsKey(product.getId())) {
+            return "추가 실패, 해당 id를 가진 상품이 이미 존재합니다.";
+        }
         products.put(product.getId(), product);
         return "상품 추가 성공!";
     }
