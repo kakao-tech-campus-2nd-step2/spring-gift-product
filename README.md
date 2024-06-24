@@ -43,6 +43,14 @@
 
   ```http
   POST /api/products HTTP/1.1
+  Content-Type: application/json
+  
+  {
+    "name": "아이스 카페 아메리카노 T",
+    "price": 4500,
+    "imageUrl": "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg"
+  }
+
   ```
 
 * response
@@ -65,6 +73,13 @@
 
   ```http
   PUT /api/products/{productId} HTTP/1.1
+  Content-Type: application/json
+
+  {
+    "name": "복숭아 아이스티",
+    "price": 3500,
+    "imageUrl": "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg"
+  }
   ```
 
 * response
