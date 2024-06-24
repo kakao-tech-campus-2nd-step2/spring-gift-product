@@ -6,7 +6,8 @@
 - Dto
   - ProductResponseDto 생성
 - Repository
-  - Products Repository 생성
+  - Products Repository Interface 생성
+  - ProductMemoryRepository 생성
 - Controller
   - 조회 HTTP API 구현
   - 추가 HTTP API 구현
