@@ -1,0 +1,25 @@
+package gift.controller;
+
+import gift.domain.Product;
+import gift.service.ProductService;
+import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RequestMapping("/api/products")
+@RestController
+public class ProductController {
+
+    private final ProductService productService;
+
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
+
+    @GetMapping
+    public List<Product> productList() {
+        return productService.getProducts();
+    }
+
+}
