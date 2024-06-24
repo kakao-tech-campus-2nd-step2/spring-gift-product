@@ -24,7 +24,11 @@ public class ProductController {
 
         return productList;
     }
-
+    //Update
+    @PutMapping("api/products/{id}")
+    public void updateProduct(@PathVariable("id") Long id, @RequestBody Product product) {
+        products.put(id, product);
+    }
 
 
 
