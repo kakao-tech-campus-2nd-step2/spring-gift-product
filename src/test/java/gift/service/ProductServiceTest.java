@@ -69,4 +69,19 @@ class ProductServiceTest {
         then(productRepository).should().edit(productId, product);
     }
 
+    @DisplayName("상품 하나를 삭제한다.")
+    @Test
+    void removeProduct() throws Exception {
+        //given
+        Long productId = 1L;
+
+        given(productRepository.deleteById(productId)).willReturn(productId);
+
+        //when
+        productService.removeProduct(productId);
+
+        //then
+        then(productRepository).should().deleteById(productId);
+    }
+
 }

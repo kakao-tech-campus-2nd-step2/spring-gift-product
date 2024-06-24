@@ -2,6 +2,7 @@ package gift.controller;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -90,6 +91,24 @@ class ProductControllerTest {
             .andExpect(status().isOk());
 
         then(productService).should().editProduct(productId, request);
+    }
+
+    @DisplayName("[DELETE] 상품 하나를 삭제한다.")
+    @Test
+    void productRemove() throws Exception {
+        //given
+        Long productId = 1L;
+
+        given(productService.removeProduct(productId)).willReturn(productId);
+
+        //when
+        ResultActions result = mvc.perform(delete("/api/products/{productId}", productId));
+
+        //then
+        result
+            .andExpect(status().isOk());
+
+        then(productService).should().removeProduct(productId);
     }
 
 }

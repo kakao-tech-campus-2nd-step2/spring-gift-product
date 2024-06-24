@@ -63,4 +63,23 @@ class ProductRepositoryTest {
         assertThat(savedProduct.getImageUrl()).isEqualTo(request.getImageUrl());
     }
 
+    @DisplayName("상품 아이디를 받아, 해당하는 상품을 삭제한다.")
+    @Test
+    void deleteById() throws Exception {
+        //given
+        Product product = new Product("아이스 아메리카노", 3500, "https://examle.com");
+        Product savedProduct = productRepository.save(product);
+
+        Long productId = savedProduct.getId();
+        int prevSize = productRepository.findAll().size();
+
+        //when
+        productRepository.deleteById(productId);
+
+        //then
+        int currSize = productRepository.findAll().size();
+
+        assertThat(currSize).isEqualTo(prevSize - 1);
+    }
+
 }
