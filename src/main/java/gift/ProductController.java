@@ -1,10 +1,29 @@
 package gift;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.websocket.server.PathParam;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
-public class ProductsController {
+public class ProductController {
+    private final Map<Long, Product> products = new HashMap<>();
+
     @GetMapping("/api/products")
-    public
+    public Product getProducts() {
+    }
+
+    @PostMapping("/api/product")
+    public void addProduct() {
+    }
+
+    @DeleteMapping("api/product/{id}")
+    public void deleteProduct(@PathVariable int id) {
+    }
+
+    @PutMapping("api/product/{id}")
+    public void editProduct(@PathVariable int id){
+
+    }
 }

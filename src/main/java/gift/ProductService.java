@@ -1,2 +1,4 @@
-package gift;public class ProductService {
+package gift;
+
+public class ProductService {
 }
