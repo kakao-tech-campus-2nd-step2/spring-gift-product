@@ -1,9 +1,11 @@
 package gift.repository;
 
 import gift.domain.Product;
+import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
+@Repository
 public class ProductMemoryRepository implements ProductRepository{
 
     private static Map<Long, Product> products = new HashMap<>();
@@ -28,7 +30,6 @@ public class ProductMemoryRepository implements ProductRepository{
 
     @Override
     public Long delete(Long id) {
-        findById(id).orElseThrow(IllegalAccessError::new);
         products.remove(id);
         return id;
     }
