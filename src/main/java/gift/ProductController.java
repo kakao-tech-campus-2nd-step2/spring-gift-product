@@ -13,23 +13,51 @@ public class ProductController {
     private static Long count = 1L;
 
     @GetMapping("/api/products")
-    public String getProducts(){
-        String allProducts="";
+    public String getProducts() {
+        String allProducts = "";
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             allProducts = objectMapper.writeValueAsString(products.values());
-        }catch(JsonProcessingException e){
+        } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
         return allProducts;
     }
+
     @PostMapping("/api/products")
-    public void addProduct(@RequestParam("id")int id,@RequestParam("name")String name,@RequestParam("price")int price, @RequestParam("imageUrl") String imageUrl){
-        Product product = new Product(id,name,price,imageUrl);
-        products.put(count,product);
+    public void addProduct(@RequestParam("id") int id, @RequestParam("name") String name, @RequestParam("price") int price, @RequestParam("imageUrl") String imageUrl) {
+        Product product = new Product(id, name, price, imageUrl);
+        products.put(count, product);
         count++;
     }
+
+    @DeleteMapping("/api/products")
+    public void deleteProduct(@RequestParam("id") int id) {
+        Iterator<Map.Entry<Long, Product>> iterator = products.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<Long, Product> entry = iterator.next();
+            if (entry.getValue().id == id) {
+                iterator.remove();
+            }
+        }
+    }
+
+    @PutMapping("/api/products")
+    public void modifyProduct(@RequestParam("id") int id, @RequestParam("name") String name, @RequestParam("price") int price, @RequestParam("imageUrl") String imageUrl) {
+        Iterator<Map.Entry<Long, Product>> iterator = products.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<Long, Product> entry = iterator.next();
+            if (entry.getValue().id == id) {
+                entry.getValue().name = name;
+                entry.getValue().price = price;
+                entry.getValue().imageUrl = imageUrl;
+            }
+        }
+    }
+
     public void setProducts(Map<Long, Product> products) {
         this.products = products;
     }
+
 }
+
