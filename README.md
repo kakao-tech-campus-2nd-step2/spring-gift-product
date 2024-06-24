@@ -4,8 +4,6 @@
 
 * 상품 전체 조회 API
 
-* 상품 단건 조회 API
-
 * 상품 추가 API
 
 * 상품 수정 API
@@ -37,28 +35,6 @@
       "imageUrl": "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg"
     }
   ]
-  ```
-
-### 상품 단건 조회 API
-
-* request
-
-  ```http
-  GET /api/products/{productId} HTTP/1.1
-  ```
-
-* response
-
-  ```http
-  HTTP/1.1 200 
-  Content-Type: application/json
-
-  {
-    "id": 8146027,
-    "name": "아이스 카페 아메리카노 T",
-    "price": 4500,
-    "imageUrl": "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg"
-  }
   ```
 
 ### 상품 추가 API
