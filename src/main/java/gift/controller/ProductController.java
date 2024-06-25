@@ -49,7 +49,7 @@ public class ProductController {
         Long deletedId = productService.deleteProduct(id);
         Map<String, Long> response = new HashMap<>();
         response.put("id", deletedId);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
 }
