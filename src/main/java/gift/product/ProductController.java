@@ -10,4 +10,8 @@ public class ProductController {
     public void addProduct(ProductVo product) {
         products.put((long) (products.size()+1), product);
     }
+
+    public void modifyProduct(Long id, ProductVo product) {
+        products.put(id, product);
+    }
 }
