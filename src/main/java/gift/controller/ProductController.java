@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -31,7 +32,7 @@ public class ProductController {
     public ProductResponseDto getProduct(@PathVariable Long id){
         try{
             return productService.findById(id);
-        } catch (IllegalArgumentException e){
+        } catch (RuntimeException e){
              throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
@@ -42,15 +43,27 @@ public class ProductController {
         return productService.findAll();
     }
 
-    /*
-    @DeleteMapping("api/product/{id}")
-    public void deleteProduct(@PathVariable int id) {
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<HashMap<String,Long>> deleteProduct(@PathVariable Long id) {
+        try{
+            productService.deleteById(id);
+            HashMap<String, Long> response = new HashMap<>();
+            response.put("id", id);
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        } catch (RuntimeException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
     }
 
-    @PutMapping("api/product/{id}")
-    public void editProduct(@PathVariable int id){
 
+    @PutMapping("/{id}")
+    public ResponseEntity<ProductResponseDto> updateProduct(@PathVariable Long id, @RequestBody ProductRequestDto request){
+        try{
+            ProductResponseDto updatedProduct = productService.updateById(id,request);
+            return ResponseEntity.status(HttpStatus.OK).body(updatedProduct);
+        } catch (RuntimeException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
     }
-     */
 }
