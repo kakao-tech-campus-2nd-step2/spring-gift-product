@@ -102,6 +102,23 @@ public class ProductControllerTest {
         assertEquals(1L, selecteLong);
         assertThrows(IllegalArgumentException.class,
             () -> productController.deleteProduct(2L));
-        assertEquals(0,productController.selectAllProduct().size());
+        assertEquals(0, productController.selectAllProduct().size());
+    }
+
+    @Test
+    @DisplayName("상품 수정 기능 확인")
+    void checkUpdateProduct() {
+        //given
+        Product tempProduct1 = new Product("콜라", 1500L, "image1.jpg");
+        Product tempProduct2 = new Product("아이스크림", 1000L, "image1.jpg");
+        //when
+        productController.addProduct(tempProduct1);
+        Product updatedProduct1 = productController.updateProduct(1L, tempProduct2);
+        //then
+        assertEquals("아이스크림", updatedProduct1.getName());
+        assertEquals(1000L, updatedProduct1.getPrice());
+        assertThrows(IllegalArgumentException.class,
+            () -> productController.updateProduct(2L, tempProduct2));
+        assertEquals(1,productController.selectAllProduct().size());
     }
 }
