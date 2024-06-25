@@ -83,5 +83,33 @@ class ProductControllerTest {
             .andExpect(content().string("올바르지 않은 요청"));
     }
 
+    @Test
+    @DisplayName("Delete Product - Success")
+    void deleteProduct_Success() throws Exception {
+        when(products.add(any(Product.class))).thenReturn(true); // 필요한 경우 설정을 추가해야 할 수 있습니다.
 
+        mvc.perform(post("/product")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(product)))
+            .andExpect(status().isCreated());
+
+        mvc.perform(delete("/product/delete/1"))
+            .andExpect(status().isNoContent())
+            .andExpect(content().string("product delete success"));
+    }
+
+    @Test
+    @DisplayName("Delete Product - Bad Request")
+    void deleteProduct_BadRequest() throws Exception {
+        when(products.add(any(Product.class))).thenReturn(true);
+
+        mvc.perform(post("/product")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(product)))
+            .andExpect(status().isCreated());
+
+        mvc.perform(delete("/product/delete/2"))
+            .andExpect(status().isBadRequest())
+            .andExpect(content().string("올바르지 않은 요청"));
+    }
 }
