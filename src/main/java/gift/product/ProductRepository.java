@@ -21,4 +21,14 @@ public class ProductRepository {
         products.put(productId, product);
         return products.get(productId);
     }
+
+    public Product updateProduct(Long id, Product product) {
+        product.setId(id);
+        products.put(id, product);
+        return products.get(id);
+    }
+
+    public boolean isExist(Long id) {
+        return products.containsKey(id);
+    }
 }
