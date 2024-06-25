@@ -19,9 +19,19 @@ public class ProductService {
         return productRepository.findAll();
     }
 
+    public Product getProductById(Long id) {
+        return Optional.ofNullable(productRepository.findById(id))
+                .orElseThrow(() -> new IllegalArgumentException("Product not found"));
+    }
+
     public void addProduct(Product product) {
         validateProduct(product);
         productRepository.save(product);
+    }
+
+    public void updateProduct(Product product) {
+        validateProduct(product);
+        productRepository.update(product);
     }
 
     private void validateProduct(Product product) {

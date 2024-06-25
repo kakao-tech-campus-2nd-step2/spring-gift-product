@@ -35,20 +35,47 @@ public class ProductController {
                                               @RequestParam Long price,
                                               @RequestParam String description) {
         try {
-            // Save the image and get the file path
             String imagePath = ImageStorageUtil.saveImage(imageFile, id);
 
-            // Encode the file path to Base64
             String base64EncodedImagePath = ImageStorageUtil.encodeImagePathToBase64(imagePath);
 
-            // Create a new Product instance with encoded image URL
             String imageUrl = base64EncodedImagePath;
             Product product = new Product(id, name, price, description, imageUrl);
 
-            // Add product to the service
             productService.addProduct(product);
 
             return new ResponseEntity<>(product, HttpStatus.CREATED);
+        } catch (IOException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Product> updateProduct(@PathVariable Long id,
+                                                 @RequestPart MultipartFile imageFile,
+                                                 @RequestParam String name,
+                                                 @RequestParam Long price,
+                                                 @RequestParam String description) {
+        try {
+            Product product = productService.getProductById(id);
+
+            if (product.getImageUrl() != null && !product.getImageUrl().isEmpty()) {
+                ImageStorageUtil.deleteImage(product.getImageUrl());
+            }
+
+            String imagePath = ImageStorageUtil.saveImage(imageFile, id);
+
+            String base64EncodedImagePath = ImageStorageUtil.encodeImagePathToBase64(imagePath);
+
+            String imageUrl = base64EncodedImagePath;
+            product.setName(name);
+            product.setPrice(price);
+            product.setDescription(description);
+            product.setImageUrl(imageUrl);
+
+            productService.updateProduct(product);
+
+            return new ResponseEntity<>(product, HttpStatus.OK);
         } catch (IOException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
