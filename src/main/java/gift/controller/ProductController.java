@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -23,6 +24,15 @@ public class ProductController {
         Collection<Product> val = products.values();
         return val;
     }
+
+    // 상품 조회 기능(id에 따른 조회)
+    @GetMapping("/get/{id}")
+    public Product getProductbyId(@RequestParam(value = "id") Long id) {
+        return products.get(id);
+    }
+
+    
+
 
 
 
