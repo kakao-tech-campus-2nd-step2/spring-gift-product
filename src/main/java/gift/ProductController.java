@@ -25,4 +25,10 @@ public class ProductController {
         products.put(product1.getId(), product1);
 
     }
+
+    @GetMapping
+    public List<Product> getProducts() {
+        return new ArrayList<>(products.values());
+    }
+
 }
