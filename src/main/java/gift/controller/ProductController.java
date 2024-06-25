@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,6 +48,21 @@ public class ProductController {
         if (existingProduct != null) {
             products.remove(id);
             return id;
+        } else {
+            throw new IllegalArgumentException("No Exists Product By Id");
+        }
+    }
+
+    //상품 수정 기능
+    @PutMapping("/{id}")
+    public Product updateProduct(@PathVariable Long id, @RequestBody Product product) {
+        Product existingProduct = products.get(id);
+        if (existingProduct != null) {
+            product.setName(product.getName());
+            product.setPrice(product.getPrice());
+            product.setImageUrl(product.getImageUrl());
+            products.put(id, product);
+            return product;
         } else {
             throw new IllegalArgumentException("No Exists Product By Id");
         }
