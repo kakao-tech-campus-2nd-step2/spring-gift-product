@@ -16,6 +16,13 @@ public class ProductService {
         return new ArrayList<>(products.values());
     }
 
+    public Product getProductById(long id) {
+        if(products.containsKey(id)) {
+            return products.get(id);
+        }
+        throw new IllegalArgumentException("[ERROR] ID가 " + id + "인 상품을 찾을 수 없습니다.");
+    }
+
     public void addProduct(Product product) {
         products.put(product.getId(), product);
     }

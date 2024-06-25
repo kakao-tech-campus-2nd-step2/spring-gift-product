@@ -42,4 +42,35 @@ class ProductServiceTest {
         assertThat(products.size()).isEqualTo(2);
         assertThat(products).containsAll(expected);
     }
+
+    @Test
+    @DisplayName("getProductById exception test")
+    void getProductByIdExceptionTest() throws Exception {
+        //given
+        ProductService productService = new ProductService();
+        Product product1 = new Product(1L, "product1", 10000, null);
+        Product product2 = new Product(2L, "product2", 20000, null);
+        productService.addProduct(product1);
+        productService.addProduct(product2);
+
+        //when & then
+        assertThrows(IllegalArgumentException.class, () -> productService.getProductById(3L));
+    }
+
+    @Test
+    @DisplayName("getProductById test")
+    void getProductByIdTest() throws Exception {
+        //given
+        ProductService productService = new ProductService();
+        Product product1 = new Product(1L, "product1", 10000, null);
+        Product product2 = new Product(2L, "product2", 20000, null);
+        productService.addProduct(product1);
+        productService.addProduct(product2);
+
+        //when
+        Product product = productService.getProductById(2L);
+
+        //then
+        assertThat(product).isEqualTo(product2);
+    }
 }
