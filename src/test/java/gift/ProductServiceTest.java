@@ -88,7 +88,7 @@ class ProductServiceTest {
 
 
         //when
-        productService.updateProduct(newProduct);
+        productService.updateProduct(1L, newProduct);
         Product updatedProduct = productService.getProductById(1L);
 
         //then
