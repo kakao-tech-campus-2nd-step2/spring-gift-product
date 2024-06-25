@@ -3,6 +3,7 @@ package gift.service;
 import gift.domain.Product;
 import gift.dto.ProductRequestDto;
 import gift.dto.ProductResponseDto;
+import gift.exception.ProductNotFoundException;
 import gift.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,7 +28,7 @@ public class ProductService {
 
     public ProductResponseDto findById(Long id){
         return productRepository.findById(id)
-                .orElseThrow(()-> new IllegalArgumentException("해당 상품이 존재하지 않습니다."))
+                .orElseThrow(()-> new ProductNotFoundException("ID" + id + " 상품이 존재하지 않습니다."))
                 .toDto();
     }
 
@@ -40,13 +41,13 @@ public class ProductService {
 
     public Long deleteById(Long id){
         productRepository.findById(id)
-                .orElseThrow(()-> new IllegalArgumentException("해당 상품이 존재하지 않습니다."));
+                .orElseThrow(()-> new ProductNotFoundException("ID" + id + " 상품이 존재하지 않습니다."));
         return productRepository.delete(id);
     }
 
     public ProductResponseDto updateById(Long id, ProductRequestDto request){
         Product product = productRepository.findById(id)
-                .orElseThrow(()-> new IllegalArgumentException("해당 상품이 존재하지 않습니다."));
+                .orElseThrow(()-> new ProductNotFoundException("ID" + id + " 상품이 존재하지 않습니다."));
 
         if(request.getName()!= null){
             product.setName(request.getName());
