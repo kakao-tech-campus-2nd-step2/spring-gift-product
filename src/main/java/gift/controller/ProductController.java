@@ -24,8 +24,8 @@ public class ProductController {
         return ResponseEntity.ok().body(productsRes);
     }
 
-    @GetMapping("/product")
-    public ResponseEntity<Product> getProduct(@RequestParam("id") long id) {
+    @GetMapping("/product/{id}")
+    public ResponseEntity<Product> getProduct(@PathVariable("id") long id) {
         Product product = products.get(id);
         return ResponseEntity.ok().body(product);
     }
@@ -37,4 +37,13 @@ public class ProductController {
         products.put(id, product);
         return ResponseEntity.status(HttpStatus.CREATED).body(id);
     }
+
+    @PutMapping("/product/{id}")
+    public ResponseEntity<Product> updateProduct(@PathVariable("id") long id,
+                                              @RequestBody ProductRequest request) {
+        Product newProduct = new Product(id, request.name(), request.price(), request.imageUrl());
+        products.replace(id, newProduct);
+        return ResponseEntity.ok().body(newProduct);
+    }
+
 }
