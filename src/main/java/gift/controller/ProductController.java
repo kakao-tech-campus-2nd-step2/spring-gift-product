@@ -1,6 +1,6 @@
-package gift;
+package gift.controller;
 
-import jakarta.websocket.server.PathParam;
+import gift.entity.Product;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
