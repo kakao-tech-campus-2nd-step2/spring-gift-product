@@ -28,4 +28,18 @@ public class ProductController {
     public List<Product> getAllProducts() {
         return new ArrayList<>(products.values());
     }
+
+    @PutMapping("/{id}")
+    public Product updateProduct(@PathVariable Long id, @RequestBody Map<String, Object> productData) {
+        Product product = products.get(id);
+        if (product != null) {
+            String name = (String) productData.get("name");
+            int price = (Integer) productData.get("price");
+            String imageUrl = (String) productData.get("imageUrl");
+            product = new Product(id, name, price, imageUrl);
+            products.put(id, product);
+            return product;
+        }
+        return null;
+    }
 }
