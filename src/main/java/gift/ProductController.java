@@ -18,4 +18,9 @@ public class ProductController {
                 .map(ProductResponse::from)
                 .toList();
     }
+
+    @GetMapping("/products/{id}")
+    public ProductResponse getProduct(@PathVariable Long id) {
+        return ProductResponse.from(products.get(id));
+    }
 }
