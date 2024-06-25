@@ -8,11 +8,11 @@ public class ProductController {
     private final Map<Long, ProductVo> products = new HashMap<>();
 
     public void addProduct(ProductVo product) {
-        products.put((long) (products.size()+1), product);
+        products.put(product.getId(), product);
     }
 
-    public void modifyProduct(Long id, ProductVo product) {
-        products.put(id, product);
+    public void modifyProduct(ProductVo product) {
+        products.put(product.getId(), product);
     }
 
     public ProductVo selectProduct(Long id) {

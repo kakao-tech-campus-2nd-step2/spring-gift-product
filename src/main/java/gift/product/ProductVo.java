@@ -2,12 +2,12 @@ package gift.product;
 
 public class ProductVo {
 
-    private int id;
+    private long id;
     private String name;
     private int price;
     private String imageUrl;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
     public void setId(int id) {
