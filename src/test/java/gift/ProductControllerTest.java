@@ -11,9 +11,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(ProductController.class)
+@WebMvcTest
 class ProductControllerTest {
-    private final ProductController productController = new ProductController();
 
     @Autowired
     private MockMvc mockMvc;
