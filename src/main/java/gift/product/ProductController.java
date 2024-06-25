@@ -18,4 +18,8 @@ public class ProductController {
     public ProductVo selectProduct(Long id) {
         return products.get(id);
     }
+
+    public void deleteProduct(Long id) {
+        products.remove(id);
+    }
 }
