@@ -2,7 +2,9 @@ package gift.product;
 
 import java.util.HashMap;
 import java.util.Map;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
 public class ProductController {
 
     private final Map<Long, ProductVo> products = new HashMap<>();
