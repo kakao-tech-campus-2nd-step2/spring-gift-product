@@ -1,6 +1,7 @@
-package gift;
+package gift.controller;
 
 
+import gift.entity.Gift;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -11,7 +12,7 @@ import java.util.concurrent.atomic.AtomicLong;
 @RestController
 @RequestMapping("/api/products")
 public class GiftController {
-    private final Map<Long,Gift> gifts = new HashMap<>();
+    private final Map<Long, Gift> gifts = new HashMap<>();
     private final AtomicLong idGenerator = new AtomicLong();
 
     @GetMapping
