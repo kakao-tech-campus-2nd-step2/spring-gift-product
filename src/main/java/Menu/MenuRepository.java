@@ -1,8 +1,11 @@
 package Menu;
 
+import org.springframework.stereotype.Repository;
+
 import java.util.HashMap;
 import java.util.Map;
 
+@Repository
 public class MenuRepository {
     private final Map<Long,Menu> menus = new HashMap<>();
     private Long id = 1L;
