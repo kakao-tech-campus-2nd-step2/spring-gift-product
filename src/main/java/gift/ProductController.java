@@ -23,4 +23,21 @@ public class ProductController {
     public ProductResponse getProduct(@PathVariable Long id) {
         return ProductResponse.from(products.get(id));
     }
+
+    @PostMapping("/products")
+    public void addProduct(
+            @RequestBody ProductCreateRequest productCreateRequest
+    ) {
+        Product product = productOf(productCreateRequest);
+        products.put(product.id(), product);
+    }
+
+    private Product productOf(ProductCreateRequest productCreateRequest) {
+        return new Product(
+                products.size() + 1L,
+                productCreateRequest.name(),
+                productCreateRequest.price(),
+                productCreateRequest.imageUrl()
+        );
+    }
 }
