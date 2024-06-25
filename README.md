@@ -3,9 +3,9 @@
 ---
 ## Resource Representation Class
 ### Product
-- int id
+- long id
 - String name
-- int price
+- long price
 - String imageUrl
 
 ## Resource Controller
@@ -16,6 +16,6 @@
 - public 수정
 - public 삭제
 
-## SpringBootApplication
-### PdApplication
+## SpringApplication
+### Application
 - run();
