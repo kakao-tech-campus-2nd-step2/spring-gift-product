@@ -2,15 +2,17 @@ package gift.product;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ProductController {
 
     private final Map<Long, ProductVo> products = new HashMap<>();
+    private final AtomicLong idCounter = new AtomicLong();
 
     public void addProduct(ProductVo product) {
-        products.put(product.getId(), product);
+        products.put(idCounter.incrementAndGet(), product);
     }
 
     public void modifyProduct(ProductVo product) {
