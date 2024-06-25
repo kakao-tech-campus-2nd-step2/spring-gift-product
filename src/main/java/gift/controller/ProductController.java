@@ -1,7 +1,6 @@
 package gift.controller;
 
 import gift.model.Product;
-import gift.model.ProductRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
