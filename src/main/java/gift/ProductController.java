@@ -31,4 +31,11 @@ public class ProductController {
         return new ArrayList<>(products.values());
     }
 
+    @PostMapping
+    public Product addProduct(@RequestBody Product product) {
+        product.setId(nextId++);
+        products.put(product.getId(), product);
+        return product;
+    }
+
 }
