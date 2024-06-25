@@ -31,24 +31,24 @@ public class ProductController {
         return ResponseEntity.ok(products.findAll());
     }
     @PostMapping
-    public ResponseEntity<Product> addProducts(@RequestBody Product product){
+    public ResponseEntity<String> addProducts(@RequestBody Product product){
         if(products.addProduct(product)){
-            return new ResponseEntity<>(product,HttpStatus.CREATED);
+            return new ResponseEntity<>("상품 추가 완료",HttpStatus.CREATED);
         }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("이미존재하는 상품 id",HttpStatus.BAD_REQUEST);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<Product> modifyProducts(@PathVariable("id") long id,@RequestBody Product product){
+    public ResponseEntity<String> modifyProducts(@PathVariable("id") long id,@RequestBody Product product){
         if(products.updateProduct(product)){
-            return new ResponseEntity<>(product,HttpStatus.OK);
+            return new ResponseEntity<>("상품 수정 완료",HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("존재하지 않는 상품 id",HttpStatus.BAD_REQUEST);
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<Product> deleteProducts(@PathVariable("id") long id){
+    public ResponseEntity<String> deleteProducts(@PathVariable("id") long id){
         if(products.deleteProduct(id)){
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>("상품삭제 완료",HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>("없는 상품",HttpStatus.BAD_REQUEST);
     }
 }
