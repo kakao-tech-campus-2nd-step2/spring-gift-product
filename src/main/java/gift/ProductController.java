@@ -24,7 +24,7 @@ public class ProductController {
         return products;
     }
     @GetMapping("/{id}")
-    public Product getProduct(@PathVariable("id") Long id) throws Exception {
+    public Product getProduct(@PathVariable("id") Long id){
         if(!products.containsKey(id)){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Product Not Found");
         }
