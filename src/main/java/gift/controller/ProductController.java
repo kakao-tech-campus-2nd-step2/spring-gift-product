@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
@@ -34,11 +36,13 @@ public class ProductController {
         }
     }
 
-    /*
+
     @GetMapping
-    public Product getProducts() {
+    public List<ProductResponseDto> getProducts() {
+        return productService.findAll();
     }
 
+    /*
     @DeleteMapping("api/product/{id}")
     public void deleteProduct(@PathVariable int id) {
 
