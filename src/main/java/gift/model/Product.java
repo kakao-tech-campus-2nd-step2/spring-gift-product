@@ -1,6 +1,6 @@
-package gift.domain;
+package gift.model;
 
-public class ProductDTO {
+public class Product {
 
     private Long id;
     private String name;
