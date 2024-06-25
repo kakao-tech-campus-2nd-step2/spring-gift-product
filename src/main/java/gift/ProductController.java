@@ -8,8 +8,13 @@ import java.util.Map;
 @RestController
 public class ProductController {
     private final Map<Long, Product> products = new HashMap<>();
+    @PostMapping
+    public Product setProduct(@RequestBody Product product) {
+        products.put(product.id(), product);
+        return  product;
+    }
     @PutMapping("/{id}")
-    public Product setProduct(@PathVariable Long id, @RequestBody Product product) {
+    public Product updateProduct(@PathVariable Long id, @RequestBody Product product) {
         products.put(id, product);
         return  product;
     }
