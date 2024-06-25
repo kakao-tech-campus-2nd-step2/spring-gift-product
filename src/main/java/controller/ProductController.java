@@ -1,13 +1,14 @@
-package gift;
+package controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import gift.Product;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.atomic.AtomicLong;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -45,11 +46,20 @@ public class ProductController {
             return;
         }
         var sampleProduct = products.get(productList.getFirst());
-        for (Long l : productList) {
+        productList.stream().forEach(l -> {
             products.remove(l);
-            products.put(l, new Product(sampleProduct.id(), name,
-                sampleProduct.price(), sampleProduct.imageUrl()));
-        }
+            products.put(l, new Product(sampleProduct.id(), name, sampleProduct.price(),
+                sampleProduct.imageUrl()));
+        });
     }
 
+    @DeleteMapping("/api/products")
+    public void DeletePRoduct(@RequestParam(name = "id") Long productId) {
+        var keyList = products.entrySet().stream().filter(x -> x.getValue().id().equals(productId))
+            .map(Entry::getKey).toList();
+        if (keyList.isEmpty()) {
+            return;
+        }
+        keyList.forEach(products::remove); // 왜 stream이 필요가 없어지는지? forEach가 stream을 포함하고 있는 관계?
+    }
 }
