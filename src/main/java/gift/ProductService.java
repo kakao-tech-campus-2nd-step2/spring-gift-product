@@ -28,6 +28,18 @@ public class ProductService {
     }
 
     public void updateProduct(Product product) {
+        if(!products.containsKey(product.id())) {
+            throw new IllegalArgumentException(
+                "[ERROR] ID가 " + product.id() + "인 상품을 찾을 수 없어 수정할 수 없습니다."
+            );
+        }
+
+        if(product.id() == null) {
+            throw new IllegalArgumentException("[ERROR] ID는 비워둘 수 없습니다.");
+        }
+
         products.put(product.id(), product);
     }
+
+
 }
