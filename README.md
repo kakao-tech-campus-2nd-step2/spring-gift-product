@@ -22,7 +22,7 @@
   * 상품 전체 삭제: **/products/delete** 
   * id가 i인 상품 삭제: **/products/i/delete**
  
-### Product model 구조
+### Json Request 구조
 * id: int
 * name: String
 * price: int
