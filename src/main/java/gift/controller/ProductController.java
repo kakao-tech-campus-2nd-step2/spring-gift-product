@@ -1,13 +1,14 @@
 package gift.controller;
 
+import gift.dto.ErrorResponse;
 import gift.dto.ProductRequestDto;
 import gift.dto.ProductResponseDto;
+import gift.exception.ProductNotFoundException;
 import gift.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -29,41 +30,42 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ProductResponseDto getProduct(@PathVariable Long id){
+    public ResponseEntity<?> getProduct(@PathVariable Long id){
         try{
-            return productService.findById(id);
-        } catch (RuntimeException e){
-             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+            ProductResponseDto product = productService.findById(id);
+            return ResponseEntity.status(HttpStatus.OK).body(product);
+        } catch (ProductNotFoundException e){
+            ErrorResponse errorResponse = new ErrorResponse(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
         }
     }
 
-
     @GetMapping
-    public List<ProductResponseDto> getProducts() {
-        return productService.findAll();
+    public ResponseEntity<List<ProductResponseDto>> getProducts() {
+        return ResponseEntity.status(HttpStatus.OK).body(productService.findAll());
     }
 
-
     @DeleteMapping("/{id}")
-    public ResponseEntity<HashMap<String,Long>> deleteProduct(@PathVariable Long id) {
+    public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
         try{
             productService.deleteById(id);
             HashMap<String, Long> response = new HashMap<>();
             response.put("id", id);
             return ResponseEntity.status(HttpStatus.OK).body(response);
-        } catch (RuntimeException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (ProductNotFoundException e){
+            ErrorResponse errorResponse = new ErrorResponse(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
         }
     }
 
-
     @PutMapping("/{id}")
-    public ResponseEntity<ProductResponseDto> updateProduct(@PathVariable Long id, @RequestBody ProductRequestDto request){
+    public ResponseEntity<?> updateProduct(@PathVariable Long id, @RequestBody ProductRequestDto request){
         try{
             ProductResponseDto updatedProduct = productService.updateById(id,request);
             return ResponseEntity.status(HttpStatus.OK).body(updatedProduct);
-        } catch (RuntimeException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (ProductNotFoundException e){
+            ErrorResponse errorResponse = new ErrorResponse(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
         }
     }
 }
