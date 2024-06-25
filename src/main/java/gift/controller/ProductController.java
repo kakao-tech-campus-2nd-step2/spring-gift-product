@@ -49,9 +49,10 @@ public class ProductController {
         return ResponseEntity.ok().body(productList.getFirst().getValue());
     }
 
-    @PutMapping("/api/products")
-    public ResponseEntity<Product> UpdateProductsName(@RequestParam(name = "id") Long id,
+    @PutMapping("/api/products/{id}")
+    public ResponseEntity<Product> UpdateProductsName(@PathVariable Long id,
         @RequestParam(name = "name") String name) {
+
         var productList = products.entrySet().stream().filter(x -> x.getValue().id().equals(id))
             .map(Entry::getKey).toList();
         if (productList.isEmpty()) {
@@ -68,15 +69,17 @@ public class ProductController {
             sampleProduct.imageUrl()));
     }
 
-    @DeleteMapping("/api/products")
-    public ResponseEntity<Product> DeleteProduct(@RequestParam(name = "id") Long productId) {
+    @DeleteMapping("/api/products/{id}")
+    public ResponseEntity<Product> DeleteProduct(@PathVariable Long productId) {
         var keyList = products.entrySet().stream().filter(x -> x.getValue().id().equals(productId))
             .map(Entry::getKey).toList();
         if (keyList.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
         keyList.forEach(products::remove);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.noContent().
+
+            build();
     }
 }
 
