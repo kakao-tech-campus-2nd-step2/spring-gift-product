@@ -14,4 +14,8 @@ public class ProductController {
     public void modifyProduct(Long id, ProductVo product) {
         products.put(id, product);
     }
+
+    public ProductVo selectProduct(Long id) {
+        return products.get(id);
+    }
 }
