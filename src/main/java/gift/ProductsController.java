@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,6 +39,16 @@ public class ProductsController {
         if (product == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
+        return product;
+    }
+
+    @PutMapping("/{id}")
+    public Product updateProduct(@PathVariable Long id, @RequestBody Product product) {
+        if (!products.containsKey(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        product.setId(id);
+        products.put(id, product);
         return product;
     }
 }
