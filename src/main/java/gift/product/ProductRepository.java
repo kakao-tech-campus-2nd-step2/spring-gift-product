@@ -28,6 +28,11 @@ public class ProductRepository {
         return products.get(id);
     }
 
+    public Long deleteProduct(Long id) {
+        products.remove(id);
+        return id;
+    }
+
     public boolean isExist(Long id) {
         return products.containsKey(id);
     }

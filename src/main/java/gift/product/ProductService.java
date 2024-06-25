@@ -28,6 +28,14 @@ public class ProductService {
         return productRepository.updateProduct(id, product);
     }
 
+    public Long deleteProduct(Long id) {
+        if(!isExist(id)) {
+            // 예외처리 학습후 반환값 수정 예정
+            return -1L;
+        }
+        return productRepository.deleteProduct(id);
+    }
+
     private boolean isExist(Long id) {
         return productRepository.isExist(id);
     }
