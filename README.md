@@ -76,13 +76,13 @@ Content-Type: application/json
 ```
 존재하지 않는 id
 ```
-HTTP/1.1 400
+HTTP/1.1 404
 ```
 
 ### 상품 정보 수정
 #### Request
 ```
-PATCH /api/products/{id}
+PUT /api/products/{id}
 
 {
     "price": 5000
@@ -103,7 +103,7 @@ Content-Type: application/json
 ```
 존재하지 않는 id
 ```
-HTTP/1.1 400
+HTTP/1.1 404
 ```
 
 ### 상품 정보 삭제
@@ -118,5 +118,5 @@ HTTP/1.1 200
 ```
 존재하지 않는 id
 ```
-HTTP/1.1 400
+HTTP/1.1 404
 ```
