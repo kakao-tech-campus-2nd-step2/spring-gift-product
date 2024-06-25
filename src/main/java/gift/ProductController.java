@@ -14,17 +14,23 @@ public class ProductController {
     private ProductService productService = new ProductService();
 
     @GetMapping("/api/products")
-    public List<Product> getAllProducts() {
-        return productService.getAllProducts();
+    public ResponseEntity<List<Product>> getAllProducts() {
+        try {
+            List<Product> products = productService.getAllProducts();
+            return new ResponseEntity<>(products, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("/api/products/{id}")
-    public Product getProductById(@PathVariable Long id) {
+    public ResponseEntity<Product> getProductById(@PathVariable Long id) {
         try {
-            return productService.getProductById(id);
+            Product product = productService.getProductById(id);
+            return new ResponseEntity<>(product, HttpStatus.OK);
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            return null;
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
