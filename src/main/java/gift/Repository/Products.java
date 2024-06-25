@@ -21,10 +21,11 @@ public class Products {
     }
     public boolean deleteProduct(Long id){
         if(products.containsKey(id)){
-            return false;
+            products.remove(id);
+            return true;
         }
-        products.remove(id);
-        return true;
+
+        return false;
     }
     public boolean updateProduct(Product product){
         if(products.containsKey(product.getId())){
