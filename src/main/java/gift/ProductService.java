@@ -16,4 +16,7 @@ public class ProductService {
         return new ArrayList<>();
     }
 
+    public void createProduct(Product product) {
+        products.put(product.getId(), product);
+    }
 }
