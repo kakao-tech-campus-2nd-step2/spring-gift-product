@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,6 +32,14 @@ public class ProductController {
         }
         var objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(new ArrayList<Product>(products.values()));
+    }
+
+    @PutMapping("/api/products")
+    public void UpdateProductsName(@RequestParam(name = "id") Long id, @RequestParam(name = "name") String name) {
+        var product = products.get(id);
+        var newProduct = new Product(product.id(), name, product.price(), product.imageUrl());
+        products.remove(id);
+        products.put(listId.getAndIncrement(), newProduct);
     }
 
 }
