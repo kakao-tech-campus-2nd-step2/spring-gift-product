@@ -38,4 +38,14 @@ public class ProductController {
         return product;
     }
 
+    @PutMapping("/{id}")
+    public Product updateProduct(@PathVariable Long id, @RequestBody Product product) {
+        if (!products.containsKey(id)) {
+            throw new NoSuchElementException("상품이 없습니다.");
+        }
+        product.setId(id);
+        products.put(id, product);
+        return product;
+    }
+
 }
