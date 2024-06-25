@@ -57,5 +57,27 @@ class ProductControllerTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
+    @Test
+    @DisplayName("POST Product - Success")
+    void addProduct_Success() throws Exception {
+        when(products.add(any(Product.class))).thenReturn(true);
 
+        mvc.perform(post("/product")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(product)))
+            .andExpect(status().isCreated())
+            .andExpect(content().string("OK"));
+    }
+
+    @Test
+    @DisplayName("POST Product - Bad Request")
+    void addProduct_BadRequest() throws Exception {
+        when(products.add(any(Product.class))).thenReturn(false);
+
+        mvc.perform(post("/product")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(badProduct)))
+            .andExpect(status().isBadRequest())
+            .andExpect(content().string("올바르지 않은 요청"));
+    }
 }
