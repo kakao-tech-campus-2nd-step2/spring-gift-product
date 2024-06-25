@@ -7,6 +7,14 @@ public class Product {
     private Long price;
     private String imageUrl;
 
+    public Product () {}
+
+    public Product(String name, Long price, String imageUrl) {
+        this.name = name;
+        this.price = price;
+        this.imageUrl = imageUrl;
+    }
+
     public Long getId() {
         return id;
     }
