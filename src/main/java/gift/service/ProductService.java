@@ -39,11 +39,12 @@ public class ProductService {
                 .toList();
     }
 
-/*
-    public void deleteById(Long id){
-
+    public Long deleteById(Long id){
+        productRepository.findById(id)
+                .orElseThrow(()-> new IllegalArgumentException("해당 상품이 존재하지 않습니다."));
+        return productRepository.delete(id);
     }
-
+/*
     public void updateById(Long id){
 
     } */
