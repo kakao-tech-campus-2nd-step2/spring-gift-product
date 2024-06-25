@@ -28,7 +28,7 @@ public class ProductService {
     }
 
     public void updateProduct(Long id, Product product) {
-        if(id.equals(product.id())) {
+        if(!id.equals(product.id())) {
             throw new IllegalArgumentException(
                 "[ERROR] 요청한 상품의 ID와 상품 정보의 ID가 동일하지 않습니다."
             );
