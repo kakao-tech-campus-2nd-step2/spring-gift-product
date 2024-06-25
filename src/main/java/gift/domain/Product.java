@@ -1,19 +1,19 @@
 package gift.domain;
 
 public class Product {
-    int id;
+    Long id;
     String name;
     int price;
     String imageUrl;
 
-    public Product(int id, String name, int price, String imageUrl) {
+    public Product(Long id, String name, int price, String imageUrl) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.imageUrl = imageUrl;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
@@ -29,7 +29,7 @@ public class Product {
         return imageUrl;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
