@@ -2,7 +2,9 @@ package gift;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.springframework.http.HttpStatus;import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -63,5 +65,14 @@ public class ProductController {
         var product=new Product(id,name,price,imageUrl);
         products.put(id,product);
         return product;
+    }
+    //삭제
+    @DeleteMapping("/{id}")
+    public String deleteProduct(@PathVariable("id") Long id){
+        if(!products.containsKey(id)){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found");
+        }
+        products.remove(id);
+        return "삭제되었습니다.";
     }
 }
