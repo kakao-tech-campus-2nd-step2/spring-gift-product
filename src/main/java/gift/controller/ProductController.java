@@ -3,6 +3,7 @@ package gift.controller;
 import gift.model.Product;
 import java.util.HashMap;
 import java.util.Map;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -28,6 +29,11 @@ public class ProductController {
     @PutMapping("/api/products")
     public void updateProduct(@RequestBody Product product) {
         products.put(product.id(), product);
+    }
+
+    @DeleteMapping("/api/products")
+    public void deleteProduct(@RequestParam("id") Long id) {
+        products.remove(id);
     }
 
 }
