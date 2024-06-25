@@ -11,18 +11,14 @@
   * 일급 컬렉션
 
 ### Controller 사용 방법
-* CREATE  
+* CREATE - POST
   * 상품 추가: **/products/create**
-* READ
+* READ - GET
   * 상품 전체 조회: **/products/read**
   * id가 i인 상품 조회: **/products/i/read**
-* UPDATE
+* UPDATE _ PATCH
   * id가 i인 상품 수정: **/products/i/update**
-  * id가 i인 상품의 id만 수정: **/products/i/update/id**
-  * id가 i인 상품의 이름만 수정: **/products/i/update/name**
-  * id가 i인 상품의 가격만 수정: **/products/i/update/price**
-  * id가 i인 상품의 이미지만 수정: **/products/i/update/img**
-* DELETE
+* DELETE - DELETE
   * 상품 전체 삭제: **/products/delete** 
   * id가 i인 상품 삭제: **/products/i/delete**
  
