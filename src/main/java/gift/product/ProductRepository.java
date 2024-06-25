@@ -14,4 +14,11 @@ public class ProductRepository {
     public List<Product> findAllProducts() {
         return new ArrayList<>(products.values());
     }
+
+    public Product createProduct(Product product) {
+        Long productId = ++counter;
+        product.setId(productId);
+        products.put(productId, product);
+        return products.get(productId);
+    }
 }
