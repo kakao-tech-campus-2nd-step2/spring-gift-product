@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class MemoryProductRepository implements ProductRepository {
 
     private Map<Long, Product> db = new HashMap<>();
