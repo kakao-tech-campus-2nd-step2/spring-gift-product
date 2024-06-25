@@ -22,34 +22,35 @@ public class ProductController {
 
     //전체 product 목록 조회
     @GetMapping
-    public Products getProduct(){
+    public Products getProduct() {
         return products;
     }
 
     //product 추가
     @PostMapping
-    public ResponseEntity<String> addProduct(@RequestBody Product product){
-        if(products.add(product)){
+    public ResponseEntity<String> addProduct(@RequestBody Product product) {
+        if (products.add(product)) {
             return new ResponseEntity<>("OK", HttpStatus.CREATED);
         }
-        return new ResponseEntity<>("올바르지 않은 요청",HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("올바르지 않은 요청", HttpStatus.BAD_REQUEST);
     }
 
     //product 수정
     @PatchMapping("/edit/{id}")
-    public String editProduct(@PathVariable("id") Long id, @RequestBody Product product){
-        if(products.edit(id,product)){
-            return "product edit success";
+    public ResponseEntity<String> editProduct(@PathVariable("id") Long id,
+        @RequestBody Product product) {
+        if (products.edit(id, product)) {
+            return new ResponseEntity<>("product delete success", HttpStatus.OK);
         }
-        return "올바르지 않은 요청";
+        return new ResponseEntity<>("올바르지 않은 요청", HttpStatus.BAD_REQUEST);
     }
 
     //product 삭제
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteProduct(@PathVariable("id") Long id){
-        if(products.delete(id)){
-            return new ResponseEntity<>("product delete success",HttpStatus.NO_CONTENT);
+    public ResponseEntity<String> deleteProduct(@PathVariable("id") Long id) {
+        if (products.delete(id)) {
+            return new ResponseEntity<>("product delete success", HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>("올바르지 않은 요청",HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("올바르지 않은 요청", HttpStatus.BAD_REQUEST);
     }
 }
