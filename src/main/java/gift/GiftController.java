@@ -18,6 +18,13 @@ public class GiftController {
     public Collection<Gift> getAllgifts(){
         return gifts.values();
     }
+    @GetMapping("/{id}")
+    public Gift getGift(@PathVariable Long id){
+        if(!gifts.containsKey(id)){
+            throw new IllegalArgumentException("찾는 상품이 없습니다!");
+        }
+        return gifts.get(id);
+    }
 
     @PostMapping
     public Gift addGift(@RequestBody Gift giftreq){
