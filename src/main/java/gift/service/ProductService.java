@@ -25,11 +25,14 @@ public class ProductService {
         return productRepository.save(product.toEntity()).toDto();
     }
 
-    /*
-    public Product findById(int id){
+
+    public ProductResponseDto findById(Long id){
+        return productRepository.findById(id)
+                .orElseThrow(()-> new IllegalArgumentException("해당 상품이 존재하지 않습니다."))
+                .toDto();
 
     }
-
+/*
     public List<Product> findAll(){
 
     }
