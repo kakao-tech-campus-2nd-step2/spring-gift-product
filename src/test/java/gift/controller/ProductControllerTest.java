@@ -65,4 +65,27 @@ public class ProductControllerTest {
 
     }
 
+    @Test
+    @DisplayName("단일 상품 조회 기능 확인")
+    void checkSelectProductById() {
+        //given
+        Product tempProduct1 = new Product("콜라", 1500L, "image1.jpg");
+        Product tempProduct2 = new Product("레모네이드", 2500L, "image2.jpg");
+        Product selectedProduct1;
+        Product selectedProduct2;
+        //when
+        Product addedProduct1 = productController.addProduct(tempProduct1);
+        Product addedProduct2 = productController.addProduct(tempProduct2);
+        selectedProduct1 = productController.selectProductById(1L);
+        selectedProduct2 = productController.selectProductById(2L);
+        //then
+        assertEquals("콜라", selectedProduct1.getName());
+        assertEquals(1500L, selectedProduct1.getPrice());
+        assertEquals("image1.jpg", selectedProduct1.getImageUrl());
+
+        assertEquals("레모네이드", selectedProduct2.getName());
+        assertEquals(2500L, selectedProduct2.getPrice());
+        assertEquals("image2.jpg", selectedProduct2.getImageUrl());
+    }
+
 }
