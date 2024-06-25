@@ -73,4 +73,25 @@ class ProductServiceTest {
         //then
         assertThat(product).isEqualTo(product2);
     }
+
+    @Test
+    @DisplayName("updateProduct test")
+    void updateProductTest() throws Exception {
+        //given
+        ProductService productService = new ProductService();
+        Product product1 = new Product(1L, "product1", 10000, null);
+        Product product2 = new Product(2L, "product2", 20000, null);
+        Product newProduct = new Product(1L, "product3", 30000, null);
+
+        productService.addProduct(product1);
+        productService.addProduct(product2);
+
+
+        //when
+        productService.updateProduct(newProduct);
+        Product updatedProduct = productService.getProductById(1L);
+
+        //then
+        assertThat(updatedProduct).isEqualTo(newProduct);
+    }
 }

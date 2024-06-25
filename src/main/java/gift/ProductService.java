@@ -26,4 +26,8 @@ public class ProductService {
     public void addProduct(Product product) {
         products.put(product.getId(), product);
     }
+
+    public void updateProduct(Product product) {
+        products.put(product.getId(), product);
+    }
 }
