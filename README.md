@@ -2,9 +2,7 @@
 ### 클래스
 * ProductController - controller
   * 상품에 대한 연산을 처리하는 핸들러가 모여 있는 클래스
-  * CRUD 연산을 처리한다.
-* ProductView - view
-  * controller가 처리한 결과를 반환하는 클래스
+  * CRUD 연산을 처리하고 결과를 반환한다.
 * Product - model
   * 상품 하나하나에 대한 정보를 담는 클래스
   * Service로 분리하지 않고 로직도 포함한다.
