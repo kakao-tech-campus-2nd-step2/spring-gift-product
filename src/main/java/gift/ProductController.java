@@ -32,6 +32,19 @@ public class ProductController {
         products.put(product.id(), product);
     }
 
+    @PutMapping("/products/{id}")
+    public void updateProduct(
+            @PathVariable Long id,
+            @RequestBody ProductUpdateRequest productUpdateRequest
+    ) {
+        Product originalProduct = products.get(id);
+        if (originalProduct == null) {
+            throw new ProductNotFoundException();
+        }
+        Product updatedProduct = applyUpdate(originalProduct, productUpdateRequest);
+        products.put(id, updatedProduct);
+    }
+
     private Product productOf(ProductCreateRequest productCreateRequest) {
         return new Product(
                 products.size() + 1L,
@@ -39,5 +52,23 @@ public class ProductController {
                 productCreateRequest.price(),
                 productCreateRequest.imageUrl()
         );
+    }
+
+    private Product applyUpdate(Product originalProduct, ProductUpdateRequest productUpdateRequest) {
+        String name = originalProduct.name();
+        if (productUpdateRequest.name() != null) {
+            name = productUpdateRequest.name();
+        }
+
+        Integer price = originalProduct.price();
+        if (productUpdateRequest.price() != null) {
+            price = productUpdateRequest.price();
+        }
+
+        String imageUrl = originalProduct.imageUrl();
+        if (productUpdateRequest.imageUrl() != null) {
+            imageUrl = productUpdateRequest.imageUrl();
+        }
+        return new Product(originalProduct.id(), name, price, imageUrl);
     }
 }
