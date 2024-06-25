@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+
 public class ProductController {
 
     private final Map<Long, ProductVo> products = new HashMap<>();
@@ -24,8 +25,16 @@ public class ProductController {
         products.put(idCounter.incrementAndGet(), product);
     }
 
-    public void modifyProduct(ProductVo product) {
-        products.put(product.getId(), product);
+    @PostMapping("/modify")
+    public void modifyProduct(@RequestParam("id") Long id, @RequestParam(value="name", defaultValue="NULL") String name, @RequestParam(value="price", defaultValue="-1") int price, @RequestParam(value="imageUrl", defaultValue="NULL") String imageUrl) {
+        ProductVo product = products.get(id);
+        if(!name.equals("NULL"))
+            product.setName(name);
+        if(price != -1)
+            product.setPrice(price);
+        if(!imageUrl.equals("NULL"))
+            product.setImageUrl(imageUrl);
+        products.put(id, product);
     }
 
     public ProductVo selectProduct(Long id) {
