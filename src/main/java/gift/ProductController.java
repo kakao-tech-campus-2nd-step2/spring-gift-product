@@ -36,7 +36,7 @@ public class ProductController {
         product.setId(id);
         products.put(product.getId(), product);
 
-        return new ResponseEntity<>(product, HttpStatus.CREATED);
+        return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
 }

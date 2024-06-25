@@ -58,4 +58,34 @@ public class ProductControllerTest {
                 .andExpect(jsonPath("$.price").value(sampleProduct.getPrice()))
                 .andExpect(jsonPath("$.imageUrl").value(sampleProduct.getImageUrl()));
     }
+
+    @Test
+    @DisplayName("상품 수정 테스트")
+    void updateProductTest() throws Exception {
+
+        String productJson = objectMapper.writeValueAsString(sampleProduct);
+        String response = mockMvc.perform(post("/api/products")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(productJson))
+                .andExpect(status().isCreated())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        Product addedProduct = objectMapper.readValue(response, Product.class);
+
+        addedProduct.setName("아이스 카페 아메리카노 T updated");
+        addedProduct.setPrice(5000L);
+        String updatedProductJson = objectMapper.writeValueAsString(addedProduct);
+
+        mockMvc.perform(put("/api/products/" + addedProduct.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(updatedProductJson))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.id").value(addedProduct.getId()))
+                .andExpect(jsonPath("$.name").value("아이스 카페 아메리카노 T updated"))
+                .andExpect(jsonPath("$.price").value(5000L));
+    }
+
 }
