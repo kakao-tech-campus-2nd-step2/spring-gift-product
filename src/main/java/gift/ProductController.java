@@ -9,13 +9,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/api/products")
 public class ProductController {
     private ProductService productService = new ProductService();
 
-    @GetMapping("/api/products")
+    @GetMapping
     public ResponseEntity<List<Product>> getAllProducts() {
         try {
             List<Product> products = productService.getAllProducts();
@@ -25,7 +27,7 @@ public class ProductController {
         }
     }
 
-    @GetMapping("/api/products/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable Long id) {
         try {
             Product product = productService.getProductById(id);
@@ -36,13 +38,13 @@ public class ProductController {
         }
     }
 
-    @PostMapping("/api/products")
+    @PostMapping
     public ResponseEntity<Product> addProduct(@RequestBody Product product) {
         productService.addProduct(product);
         return new ResponseEntity<>(product, HttpStatus.CREATED);
     }
 
-    @PutMapping("/api/products/{id}")
+    @PutMapping("{id}")
     public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product product) {
         try {
             productService.updateProduct(id, product);
@@ -52,7 +54,7 @@ public class ProductController {
         }
     }
 
-    @DeleteMapping("/api/products/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Product> deleteProduct(@PathVariable Long id) {
         try {
             productService.deleteProduct(id);
