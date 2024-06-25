@@ -4,6 +4,8 @@ import Model.Item;
 import java.util.HashMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,5 +22,13 @@ public class ItemController {
     @GetMapping("list")
     public HashMap<Long,Item> findItemList(){
         return list;
+    }
+
+    @PostMapping
+    public String CreateItem(@RequestBody Item item){
+        if(list.containsKey(item.getId()))
+            return "이미 존재하는 id";
+        list.put(item.getId(), item);
+        return "Ok";
     }
 }
