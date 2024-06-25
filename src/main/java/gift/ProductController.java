@@ -14,9 +14,12 @@ public class ProductController {
         return  product;
     }
     @PutMapping("/{id}")
-    public Product updateProduct(@PathVariable Long id, @RequestBody Product product) {
-        products.put(id, product);
-        return  product;
+    public Object updateProduct(@PathVariable Long id, @RequestBody Product product) {
+        if(products.containsKey(id)){
+            products.put(id, product);
+            return  product;
+        }
+        return "Update failed.";
     }
 
     // 특정 상품 조회를 위한 GET 메서드
