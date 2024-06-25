@@ -45,12 +45,11 @@ public class ProductController {
         return repository.edit(id, form);
     }
 
-    // 수정 필요
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<String> deleteProduct(@PathVariable Long id) {
         boolean result = repository.delete(id);
         if (result) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Successfully deleted");
+            return ResponseEntity.status(HttpStatus.OK).body("Successfully deleted");
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad request");
     }
