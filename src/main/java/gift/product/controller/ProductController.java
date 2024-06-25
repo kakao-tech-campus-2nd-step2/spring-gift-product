@@ -20,11 +20,12 @@ public class ProductController {
     public void addProduct(@RequestParam("name") String name, @RequestParam("price") int price, @RequestParam("imageUrl") String imageUrl) {
         ProductVo product = new ProductVo();
 
+        product.setId(idCounter.incrementAndGet());
         product.setName(name);
         product.setPrice(price);
         product.setImageUrl(imageUrl);
 
-        products.put(idCounter.incrementAndGet(), product);
+        products.put(product.getId(), product);
     }
 
     @GetMapping("/modify")
