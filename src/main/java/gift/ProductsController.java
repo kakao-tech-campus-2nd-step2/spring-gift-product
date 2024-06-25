@@ -3,10 +3,14 @@ package gift;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/api/products")
@@ -23,4 +27,17 @@ public class ProductsController {
         return product;
     }
 
+    @GetMapping
+    public Product[] getAllProducts() {
+        return products.values().toArray(new Product[0]);
+    }
+
+    @GetMapping("/{id}")
+    public Product getOneProduct(@PathVariable Long id) {
+        Product product = products.get(id);
+        if (product == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return product;
+    }
 }
