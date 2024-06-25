@@ -41,15 +41,11 @@
   - 힌트: if 조건절에서 값을 return하는 방식으로 구현하면 else를 사용하지 않아도 된다.
 
 # 프로젝트 구조
-- src/main/java
+- src/main/java/gift
   - controller
     - ProductController.java
-  - domain
-    - ProductDTO.java
-  - service
-    - ProductService.java
-  - repository
-    - ProductDAO.java
+  - model
+    - Product.java
   - Application.java
 
 # 상품 도메인 정의
