@@ -1,5 +1,6 @@
 package gift.controller;
 
+import gift.dto.ProductResponseDto;
 import gift.model.Product;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,18 +18,21 @@ public class ProductController {
     private final Map<Long, Product> products = new HashMap<>();
 
     @GetMapping("/api/products")
-    public Product getProduct(@RequestParam("id") Long id) {
-        return products.get(id);
+    public ProductResponseDto getProduct(@RequestParam("id") Long id) {
+        if (!products.containsKey(id)) {
+            return null;
+        }
+        return new ProductResponseDto(products.get(id));
     }
 
     @PostMapping("/api/products")
-    public void addProduct(@RequestBody Product product) {
-        products.put(1L, product);
+    public void addProduct(@RequestBody ProductResponseDto productResponseDto) {
+        products.put(1L, new Product(productResponseDto));
     }
 
     @PutMapping("/api/products")
-    public void updateProduct(@RequestBody Product product) {
-        products.put(product.id(), product);
+    public void updateProduct(@RequestBody ProductResponseDto productResponseDto) {
+        products.put(productResponseDto.id(), new Product(productResponseDto));
     }
 
     @DeleteMapping("/api/products")
