@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class PdController {
     private final Map<Long, Product> products = new HashMap<>();
-    long currentId = 1;
 
     @GetMapping("/products")
     public Map<Long, Product> getAllProducts(){
@@ -21,9 +20,7 @@ public class PdController {
 
     @PostMapping("/products")
     public void putProduct(@RequestBody Product product){
-        long id = currentId++;
-        Product newProduct = new Product(id, product.name(), product.price(), product.imageUrl());
-        products.put(id, newProduct);
+        products.put(product.id(), product);
     }
     @PutMapping("/products/{id}")
     public void updateProduct(@PathVariable Long id, @RequestBody Product product) {
