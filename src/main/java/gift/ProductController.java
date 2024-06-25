@@ -11,4 +11,15 @@ public class ProductController {
         products.put(id, product);
         return product;
     }
+    // 특정 상품 조회를 위한 GET 메서드
+    @GetMapping("/products/{id}")
+    public Product getProduct(@PathVariable Long id) {
+        return products.get(id);
+    }
+
+    // 전체 상품 리스트 조회를 위한 GET 메서드
+    @GetMapping("/products")
+    public Map<Long, Product> getAllProducts() {
+        return products;
+    }
 }
