@@ -8,7 +8,7 @@ import java.util.*;
 @Repository
 public class ProductMemoryRepository implements ProductRepository{
 
-    private static Map<Long, Product> products = new HashMap<>();
+    private final static Map<Long, Product> products = new HashMap<>();
     private static long sequence = 0L;
 
     @Override
