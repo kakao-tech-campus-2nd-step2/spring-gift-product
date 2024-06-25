@@ -33,5 +33,14 @@ public class ProductController {
         return "올바르지 않은 요청";
     }
 
+    //product 수정
+    @PatchMapping("/edit/{id}")
+    public String editProduct(@PathVariable("id") Long id, @RequestBody Product product){
+        if(products.edit(id,product)){
+            return "product edit success";
+        }
+        return "올바르지 않은 요청";
+    }
+
 
 }
