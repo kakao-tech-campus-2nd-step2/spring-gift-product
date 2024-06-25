@@ -4,6 +4,8 @@ import gift.dto.ProductResponseDto;
 import gift.model.Product;
 import java.util.HashMap;
 import java.util.Map;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,11 +20,14 @@ public class ProductController {
     private final Map<Long, Product> products = new HashMap<>();
 
     @GetMapping("/api/products")
-    public ProductResponseDto getProduct(@RequestParam("id") Long id) {
-        if (!products.containsKey(id)) {
-            return null;
+    public ResponseEntity<ProductResponseDto> getProduct(@RequestParam("id") Long id) {
+
+        Product product = products.get(id);
+        if (product == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ProductResponseDto(products.get(id));
+        ProductResponseDto productResponseDto = new ProductResponseDto(product);
+        return new ResponseEntity<>(productResponseDto, HttpStatus.OK);
     }
 
     @PostMapping("/api/products")
