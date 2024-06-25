@@ -37,4 +37,22 @@ public class ProductController {
     public void deleteProductController(@PathVariable Long id){
         products.remove(id);
     }
+
+    //상품 업데이트
+    @PutMapping("/updateProduct/{id}")
+    public void updateProductController(@PathVariable Long id, @RequestBody Product newProduct){
+        if(products.containsKey(id)){
+            Product oldProduct = products.get(id);
+            if(newProduct.getName() != null){
+                oldProduct.setName(newProduct.getName());
+            }
+            if(newProduct.getPrice() != 0){
+                oldProduct.setPrice(newProduct.getPrice());
+            }
+            if(newProduct.getImageUrl() != null){
+                oldProduct.setImageUrl(newProduct.getImageUrl());
+            }
+            products.replace(id, oldProduct);
+        }
+    }
 }
