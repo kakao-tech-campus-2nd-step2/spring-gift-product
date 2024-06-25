@@ -44,11 +44,13 @@ public class GiftController {
         return gift;
     }
     @DeleteMapping("/{id}")
-    public void deleteGift(@PathVariable Long id){
+    public String deleteGift(@PathVariable Long id){
         if(!gifts.containsKey(id)){
             throw new IllegalArgumentException("삭제할 상품이 없습니다!");
         }
+        String temp = gifts.get(id).name();
         gifts.remove(id);
+        return temp + "가 삭제완료되었습니다!";
     }
 
     private Gift makeGiftComponent(Long id,Gift giftreq){
