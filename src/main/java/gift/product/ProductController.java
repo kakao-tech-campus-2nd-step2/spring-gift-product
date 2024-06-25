@@ -46,7 +46,8 @@ public class ProductController {
         return new ProductVo();
     }
 
-    public void deleteProduct(Long id) {
+    @GetMapping("/delete")
+    public void deleteProduct(@RequestParam("id") Long id) {
         products.remove(id);
     }
 }
