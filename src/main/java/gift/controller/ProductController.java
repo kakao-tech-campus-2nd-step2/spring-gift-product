@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,6 +42,21 @@ public class ProductController {
         products.put(prod.getId(), prod);
         return new ResponseEntity<>(prod, HttpStatus.CREATED);
     }
+
+    // 상품 수정 기능
+    @PutMapping("/put/{id}")
+    public ResponseEntity<Product> updateProduct(@RequestBody Product updProduct) {
+        Product prod = products.get(updProduct.getId());
+        if (prod == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        prod.setId(updProduct.getId());
+        prod.setName(updProduct.getName());
+        prod.setPrice(updProduct.getPrice());
+        prod.setImageUrl(updProduct.getImageUrl());
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    
 
 
 
