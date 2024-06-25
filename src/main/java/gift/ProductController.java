@@ -29,7 +29,7 @@ public class ProductController {
         return new ArrayList<>(products.values());
     }
 
-    @PutMapping("/{id}")
+    @PostMapping("/{id}")
     public Product updateProduct(@PathVariable Long id, @RequestBody Map<String, Object> productData) {
         Product product = products.get(id);
         if (product != null) {
@@ -41,5 +41,10 @@ public class ProductController {
             return product;
         }
         return null;
+    }
+
+    @DeleteMapping("/{id}")
+    public boolean deleteProduct(@PathVariable Long id) {
+        return products.remove(id) != null;
     }
 }
