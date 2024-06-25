@@ -1,0 +1,8 @@
+POST http://localhost:8080/api/products
+Content-Type: application/json
+
+{
+  "name": "상품1",
+  "price": 3000,
+  "imageUrl": "imageUrl123"
+}

@@ -1,0 +1,8 @@
+PUT http://localhost:8080/api/products/1
+Content-Type: application/json
+
+{
+  "name": "수정된 이름",
+  "price": 7777,
+  "imageUrl": "수정된 URL"
+}
