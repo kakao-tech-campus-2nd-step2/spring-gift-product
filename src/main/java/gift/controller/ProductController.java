@@ -46,10 +46,10 @@ public class ProductController {
 
     //product 삭제
     @DeleteMapping("/delete/{id}")
-    public String deleteProduct(@PathVariable("id") Long id){
+    public ResponseEntity<String> deleteProduct(@PathVariable("id") Long id){
         if(products.delete(id)){
-            return "product delete success";
+            return new ResponseEntity<>("product delete success",HttpStatus.NO_CONTENT);
         }
-        return "올바르지 않은 요청";
+        return new ResponseEntity<>("올바르지 않은 요청",HttpStatus.BAD_REQUEST);
     }
 }
