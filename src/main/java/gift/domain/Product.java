@@ -1,13 +1,11 @@
 package gift.domain;
 
 
-//import lombok 사용불가
 public class Product {
     private Long id;
     private String name;
     private Long price;
     private String description;
-    //@Coullum()
     private String imageUrl;
 
     public Product(Long id, String name, Long price, String description, String imageUrl) {
@@ -18,7 +16,6 @@ public class Product {
         this.imageUrl = imageUrl;
     }
 
-    // Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public String getName() { return name; }
