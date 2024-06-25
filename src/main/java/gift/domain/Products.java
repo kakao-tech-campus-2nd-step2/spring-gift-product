@@ -11,8 +11,12 @@ public class Products {
         return products;
     }
 
-    public void add(Product product) {
-        products.put(product.getId(), product);
+    public boolean add(Product product) {
+        if(product.getId() !=null){
+            products.put(product.getId(), product);
+            return true;
+        }
+        return false;
     }
 
     public boolean delete(Long id) {
