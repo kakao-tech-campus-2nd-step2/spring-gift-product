@@ -4,10 +4,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,6 +34,22 @@ public class ProductController {
         }
         var objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(new ArrayList<Product>(products.values()));
+    }
+
+    @PutMapping("/api/products")
+    public void UpdateProductsName(@RequestParam(name = "id") Long id,
+        @RequestParam(name = "name") String name) {
+        var productList = products.entrySet().stream().filter(x -> x.getValue().id().equals(id))
+            .map(Entry::getKey).toList();
+        if (productList.isEmpty()) {
+            return;
+        }
+        var sampleProduct = products.get(productList.getFirst());
+        for (Long l : productList) {
+            products.remove(l);
+            products.put(l, new Product(sampleProduct.id(), name,
+                sampleProduct.price(), sampleProduct.imageUrl()));
+        }
     }
 
 }
