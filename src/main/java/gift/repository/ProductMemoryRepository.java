@@ -33,4 +33,9 @@ public class ProductMemoryRepository implements ProductRepository{
         products.remove(id);
         return id;
     }
+
+    //테스트용 Map 초기화 함수입니다.
+    public void clear(){
+        products.clear();
+    }
 }
