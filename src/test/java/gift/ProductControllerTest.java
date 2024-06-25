@@ -36,12 +36,14 @@ class ProductControllerTest {
 
     private Product product;
     private Product badProduct;
+    private Product newProduct;
 
 
     @BeforeEach
     void setUp() {
         product = new Product(1L, "TestName", 4500, "http://imageUrl.com");
         badProduct =new Product(null, "TestName", 4500, "http://imageUrl.com");
+        newProduct =new Product(1L, "changedName", 3000, "http://imageUrl.com");
     }
 
     @Test
@@ -109,6 +111,40 @@ class ProductControllerTest {
             .andExpect(status().isCreated());
 
         mvc.perform(delete("/product/delete/2"))
+            .andExpect(status().isBadRequest())
+            .andExpect(content().string("올바르지 않은 요청"));
+    }
+
+    @Test
+    @DisplayName("edit Product - Success")
+    void editProduct_Success() throws Exception {
+        when(products.add(any(Product.class))).thenReturn(true); // 필요한 경우 설정을 추가해야 할 수 있습니다.
+
+        mvc.perform(post("/product")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(product)))
+            .andExpect(status().isCreated());
+
+        mvc.perform(patch("/product/edit/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content((objectMapper.writeValueAsString(newProduct))))
+            .andExpect(status().isOk())
+            .andExpect(content().string("product edit success"));
+    }
+
+    @Test
+    @DisplayName("edit Product - Bad Request")
+    void editProduct_BadRequest() throws Exception {
+        when(products.add(any(Product.class))).thenReturn(true);
+
+        mvc.perform(post("/product")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(product)))
+            .andExpect(status().isCreated());
+
+        mvc.perform(patch("/product/edit/2")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content((objectMapper.writeValueAsString(newProduct))))
             .andExpect(status().isBadRequest())
             .andExpect(content().string("올바르지 않은 요청"));
     }

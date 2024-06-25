@@ -40,7 +40,7 @@ public class ProductController {
     public ResponseEntity<String> editProduct(@PathVariable("id") Long id,
         @RequestBody Product product) {
         if (products.edit(id, product)) {
-            return new ResponseEntity<>("product delete success", HttpStatus.OK);
+            return new ResponseEntity<>("product edit success", HttpStatus.OK);
         }
         return new ResponseEntity<>("올바르지 않은 요청", HttpStatus.BAD_REQUEST);
     }
