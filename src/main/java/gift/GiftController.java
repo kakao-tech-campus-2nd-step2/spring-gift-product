@@ -42,11 +42,7 @@ public class GiftController {
         }
         gifts.remove(id);
     }
-    @PostMapping("/receive")
-    public String age(@RequestParam String name) {
-        System.out.println("결과 " + name);
-        return "result";
-    }
+
     private Gift makeGiftComponent(Long id,Gift giftreq){
         return new Gift(id, giftreq.name(), giftreq.price(), giftreq.imageUrl());
     }
