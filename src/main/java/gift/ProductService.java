@@ -41,5 +41,13 @@ public class ProductService {
         products.put(product.id(), product);
     }
 
+    public void deleteProduct(Long id) {
+        if(!products.containsKey(id)) {
+            throw new IllegalArgumentException(
+                "[ERROR] ID가 " + id + "인 상품을 찾을 수 없어 삭제할 수 없습니다."
+            );
+        }
 
+        products.remove(id);
+    }
 }

@@ -94,4 +94,40 @@ class ProductServiceTest {
         //then
         assertThat(updatedProduct).isEqualTo(newProduct);
     }
+    
+    @Test
+    @DisplayName("deleteProduct test")
+    void deleteProductTest() throws Exception {
+        //given
+        ProductService productService = new ProductService();
+        Product product1 = new Product(1L, "product1", 10000, null);
+        Product product2 = new Product(2L, "product2", 20000, null);
+
+        productService.addProduct(product1);
+        productService.addProduct(product2);
+
+        //when
+        productService.deleteProduct(1L);
+        List<Product> deletedProducts = productService.getAllProducts();
+
+        //then
+        assertThat(deletedProducts).hasSize(1);
+        assertThat(deletedProducts).doesNotContain(product1);
+        assertThat(deletedProducts).contains(product2);
+    }
+
+    @Test
+    @DisplayName("deleteProduct exception test")
+    void deleteProductExceptionTest() throws Exception {
+        //given
+        ProductService productService = new ProductService();
+        Product product1 = new Product(1L, "product1", 10000, null);
+        Product product2 = new Product(2L, "product2", 20000, null);
+
+        productService.addProduct(product1);
+        productService.addProduct(product2);
+
+        //when & then
+        assertThrows(IllegalArgumentException.class, () -> productService.deleteProduct(3L));
+    }
 }
