@@ -1,9 +1,6 @@
 package gift;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -27,5 +24,14 @@ public class ProductController {
         }
         productMap.put(newProduct.id(), newProduct);
         return "상품 등록이 완료되었습니다.";
+    }
+
+    @PutMapping("/api/products/{id}")
+    public String updateProduct(@RequestBody Product updatedProduct, @PathVariable Long id) {
+        if(productMap.containsKey(id)) {
+            productMap.put(id, updatedProduct);
+            return "상품 정보 수정이 완료되었습니다.";
+        }
+        return "해당 상품이 존재하지 않습니다.";
     }
 }
