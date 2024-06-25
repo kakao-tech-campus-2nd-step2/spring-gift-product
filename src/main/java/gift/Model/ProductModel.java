@@ -1,12 +1,12 @@
-package gift;
+package gift.Model;
 
-public class PruductModel {
+public class ProductModel {
     private long id;
     private String name;
     private int price;
     private String imageURL;
 
-    public PruductModel(long id, String name, int price, String imageURL) {
+    public ProductModel(long id, String name, int price, String imageURL) {
         this.id = id;
         this.name = name;
         this.price = price;
