@@ -2,6 +2,7 @@ package gift.Controller;
 
 
 import gift.Model.ProductModel;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,20 +17,26 @@ import java.util.concurrent.atomic.AtomicLong;
 @RequestMapping("/api/products")
 public class ProductController {
     private final Map<Long, ProductModel> products = new HashMap<>();
-    private final AtomicLong counter = new AtomicLong(); // 객체의 고유 ID 생성
+    private final AtomicLong counter = new AtomicLong();
+
+    private HttpHeaders jsonHeaders() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Content-Type", "application/json");
+        return headers;
+    }
 
     @GetMapping
-    public List<ProductModel> getAllProducts() {
-        return new ArrayList<>(products.values());
+    public ResponseEntity<List<ProductModel>> getAllProducts() {
+        return new ResponseEntity<>(new ArrayList<>(products.values()), jsonHeaders(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ProductModel> getProductById(@PathVariable long id) {
         ProductModel product = products.get(id);
         if (product != null) {
-            return ResponseEntity.ok(product);
+            return new ResponseEntity<>(product, jsonHeaders(), HttpStatus.OK);
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return new ResponseEntity<>(jsonHeaders(), HttpStatus.NOT_FOUND);
         }
     }
 
@@ -38,7 +45,7 @@ public class ProductController {
         long id = counter.incrementAndGet();
         product.setId(id);
         products.put(id, product);
-        return ResponseEntity.status(HttpStatus.CREATED).body(product);
+        return new ResponseEntity<>(product, jsonHeaders(), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
@@ -47,9 +54,9 @@ public class ProductController {
         if (existingProduct != null) {
             product.setId(id);
             products.put(id, product);
-            return ResponseEntity.ok(product);
+            return new ResponseEntity<>(product, jsonHeaders(), HttpStatus.OK);
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return new ResponseEntity<>(jsonHeaders(), HttpStatus.NOT_FOUND);
         }
     }
 
@@ -57,11 +64,9 @@ public class ProductController {
     public ResponseEntity<Void> deleteProduct(@PathVariable long id) {
         ProductModel product = products.remove(id);
         if (product != null) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+            return new ResponseEntity<>(jsonHeaders(), HttpStatus.NO_CONTENT);
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return new ResponseEntity<>(jsonHeaders(), HttpStatus.NOT_FOUND);
         }
     }
-
-
 }
