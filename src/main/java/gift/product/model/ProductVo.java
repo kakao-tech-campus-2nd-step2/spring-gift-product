@@ -1,4 +1,4 @@
-package gift.product;
+package gift.product.model;
 
 public class ProductVo {
 
