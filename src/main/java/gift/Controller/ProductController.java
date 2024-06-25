@@ -1,6 +1,5 @@
 package gift.Controller;
 
-
 import gift.Model.ProductModel;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -33,11 +32,10 @@ public class ProductController {
     @GetMapping("/{id}")
     public ResponseEntity<ProductModel> getProductById(@PathVariable long id) {
         ProductModel product = products.get(id);
-        if (product != null) {
-            return new ResponseEntity<>(product, jsonHeaders(), HttpStatus.OK);
-        } else {
+        if (product == null) {
             return new ResponseEntity<>(jsonHeaders(), HttpStatus.NOT_FOUND);
         }
+        return new ResponseEntity<>(product, jsonHeaders(), HttpStatus.OK);
     }
 
     @PostMapping
@@ -51,22 +49,21 @@ public class ProductController {
     @PutMapping("/{id}")
     public ResponseEntity<ProductModel> updateProduct(@PathVariable long id, @RequestBody ProductModel product) {
         ProductModel existingProduct = products.get(id);
-        if (existingProduct != null) {
-            product.setId(id);
-            products.put(id, product);
-            return new ResponseEntity<>(product, jsonHeaders(), HttpStatus.OK);
-        } else {
+        if (existingProduct == null) {
             return new ResponseEntity<>(jsonHeaders(), HttpStatus.NOT_FOUND);
         }
+        product.setId(id);
+        products.put(id, product);
+        return new ResponseEntity<>(product, jsonHeaders(), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable long id) {
         ProductModel product = products.remove(id);
-        if (product != null) {
-            return new ResponseEntity<>(jsonHeaders(), HttpStatus.NO_CONTENT);
-        } else {
+        if (product == null) {
             return new ResponseEntity<>(jsonHeaders(), HttpStatus.NOT_FOUND);
         }
+        return new ResponseEntity<>(jsonHeaders(), HttpStatus.NO_CONTENT);
     }
 }
+
