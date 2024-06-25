@@ -19,9 +19,7 @@ public class ProductService {
     }
 
     public Long addProduct(ProductDto productDto){
-        Product product = new Product(productDto.getName(),
-                productDto.getPrice(),
-                productDto.getImageUrl());
+        Product product = Product.toEntity(productDto);
 
         productRepository.save(product);
 
