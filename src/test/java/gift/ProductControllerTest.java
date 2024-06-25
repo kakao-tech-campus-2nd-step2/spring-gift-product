@@ -80,4 +80,19 @@ public class ProductControllerTest {
         assertNull(updatedProduct);
     }
 
+    @Test
+    public void 상품_삭제() {
+        boolean result = productController.deleteProduct(1L);
+        assertTrue(result);
+
+        List<Product> productList = productController.getAllProducts();
+        assertTrue(productList.isEmpty());
+    }
+
+    @Test
+    public void 상품_삭제_없는상품() {
+        boolean result = productController.deleteProduct(2L);
+        assertFalse(result);
+    }
+
 }
