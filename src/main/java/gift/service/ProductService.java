@@ -34,6 +34,10 @@ public class ProductService {
         productRepository.update(product);
     }
 
+    public void deleteProduct(Long id) {
+        productRepository.delete(id);
+    }
+
     private void validateProduct(Product product) {
         if (product.getName() == null || product.getName().isEmpty()) {
             throw new IllegalArgumentException("Product name is required");

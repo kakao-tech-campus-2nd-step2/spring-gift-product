@@ -80,4 +80,20 @@ public class ProductController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
+
+        // 이미지 파일 먼저 삭제
+        Product product = productService.getProductById(id);
+        if (product != null && product.getImageUrl() != null && !product.getImageUrl().isEmpty()) {
+            ImageStorageUtil.deleteImage(ImageStorageUtil.decodeBase64ImagePath(product.getImageUrl()));
+        }
+        // product 삭제
+        productService.deleteProduct(id);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+
 }
