@@ -2,6 +2,7 @@ package gift.Repository;
 
 import gift.domain.Product;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Products {
@@ -18,11 +19,11 @@ public class Products {
         products.put(product.getId(),product);
         return true;
     }
-    public boolean deleteProduct(Product product){
-        if(products.containsKey(product.getId())){
+    public boolean deleteProduct(Long id){
+        if(products.containsKey(id)){
             return false;
         }
-        products.remove(product.getId());
+        products.remove(id);
         return true;
     }
     public boolean updateProduct(Product product){
@@ -34,8 +35,10 @@ public class Products {
         return false;
     }
     //모든상품 조회
-    public Map<Long, Product> findAll(){
-        return products;
+    public List<Product> findAll(){
+        return products.values()
+                .stream()
+                .toList();
     }
 
 
