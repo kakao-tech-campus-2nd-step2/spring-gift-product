@@ -1,24 +1,28 @@
 package gift.model;
 
 public class Product {
-    private Long Id;
-    private String Name;
+    private Long id;
+    private String name;
     private int price;
     private String imageUrl;
 
+    public Product(){
+
+    }
+
     public Product(Long id, String name, int price, String imageUrl) {
-        Id = id;
-        Name = name;
+        this.id = id;
+        this.name = name;
         this.price = price;
         this.imageUrl = imageUrl;
     }
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public int getPrice() {
@@ -30,7 +34,7 @@ public class Product {
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
     public void setPrice(int price) {
