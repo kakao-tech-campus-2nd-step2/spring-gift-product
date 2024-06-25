@@ -24,5 +24,14 @@ public class ProductController {
         return products;
     }
 
+    //product 추가
+    @PostMapping
+    public String addProduct(@RequestBody Product product){
+        if(products.add(product)){
+            return "OK";
+        }
+        return "올바르지 않은 요청";
+    }
+
 
 }
