@@ -57,9 +57,9 @@ Content-Type: application/json
 
 상품의 정보를 저장하는 객체
 
-* 필드: `String id`, `String name`, `int price`, `String imageUrl`
+* 필드: `Long id`, `String name`, `int price`, `String imageUrl`
 * 메서드
-  * `public Product(String id, String name, int price, String imageUrl)`
+  * `public Product(Long id, String name, int price, String imageUrl)`
 
 
 
