@@ -19,4 +19,20 @@ public class ProductService {
         return productRepository.findAll();
     }
 
+    public void addProduct(Product product) {
+        validateProduct(product);
+        productRepository.save(product);
+    }
+
+    private void validateProduct(Product product) {
+        if (product.getName() == null || product.getName().isEmpty()) {
+            throw new IllegalArgumentException("Product name is required");
+        }
+        if (product.getPrice() == null || product.getPrice() <= 0) {
+            throw new IllegalArgumentException("Product price must be greater than 0");
+        }
+        if (product.getImageUrl() == null || product.getImageUrl().isEmpty()) {
+            throw new IllegalArgumentException("Product image URL is required");
+        }
+    }
 }
