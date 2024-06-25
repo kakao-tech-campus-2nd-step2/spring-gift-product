@@ -4,6 +4,8 @@ import jakarta.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -52,5 +54,12 @@ public class ProductController {
     public void deleteProduct(@PathVariable Long id) {
         products.remove(id);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Product> getProductById(@PathVariable("id") Long id) {
+        Optional<Product> product = Optional.ofNullable(products.get(id));
+        return product.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
+
 
 }
