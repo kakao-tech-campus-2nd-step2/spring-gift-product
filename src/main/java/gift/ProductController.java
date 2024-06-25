@@ -12,14 +12,14 @@ public class ProductController {
     @PostMapping
     public Product setProduct(@RequestBody Product product) {
         products.put(product.id(), product);
-        return  product;
+        return product;
     }
     // 등록된 상품 업데이트
     @PutMapping("/{id}")
     public Object updateProduct(@PathVariable Long id, @RequestBody Product product) {
         if(products.containsKey(id)){
             products.put(id, product);
-            return  product;
+            return product;
         }
         return "Update failed";
     }
