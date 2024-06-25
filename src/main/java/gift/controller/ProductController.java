@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -22,14 +23,14 @@ public class ProductController {
     private final Map<Long, Product> products = new HashMap<>();
 
     // 상품 조회 기능(전체 조회)
-    @GetMapping("/get")
+    @GetMapping()
     public Collection<Product> getAllProduct() {
         Collection<Product> val = products.values();
         return val;
     }
 
     // 상품 조회 기능(id에 따른 조회)
-    @GetMapping("/get/{id}")
+    @GetMapping("/{id}")
     public Product getProductbyId(@RequestParam(value = "id") Long id) {
         return products.get(id);
     }
@@ -44,7 +45,7 @@ public class ProductController {
     }
 
     // 상품 수정 기능
-    @PutMapping("/put/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Product> updateProduct(@RequestBody Product updProduct) {
         Product prod = products.get(updProduct.getId());
         if (prod == null)
@@ -56,7 +57,14 @@ public class ProductController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    
+
+    // 상품 삭제 기능
+    @DeleteMapping("{id}")
+    public ResponseEntity<Product> deleteProduct(@RequestParam(value = "id") Long id) {
+        products.remove(id);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 
 
