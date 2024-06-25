@@ -20,4 +20,9 @@ public class ProductController {
         return ResponseEntity.ok().body(productsRes);
     }
 
+    @GetMapping("/product")
+    public ResponseEntity<Product> getProduct(@RequestParam Long id) {
+        Product product = products.get(id);
+        return ResponseEntity.ok().body(product);
+    }
 }
