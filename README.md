@@ -69,10 +69,10 @@ Content-Type: application/json
 
 * 엔드포인트
   * `GET /api/products`: 모든 상품 조회
-  * `GET /api/products?id={id}`: id를 통해 상품 조회
+  * `GET /api/products/{id}`: id를 통해 상품 조회
   * `POST /api/products`: JSON을 통해 새로운 상품 추가
-  * `PUT /api/products?id={id}`: 특정 id의 상품 수정
-  * `DELETE /api/products?id={id}`: 특정 id의 상품 삭제
+  * `PUT /api/products/{id}`: 특정 id의 상품 수정
+  * `DELETE /api/products/{id}`: 특정 id의 상품 삭제
 
 
 
