@@ -2,7 +2,10 @@ package gift;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.*;
 
@@ -11,6 +14,12 @@ import java.util.*;
 public class ProductController {
     private Map<Long, Product> products = new HashMap<>();
     private static Long count = 1L;
+
+    @GetMapping("/admin/products")
+    public ModelAndView adminProducts(Model model){
+        model.addAttribute("products", products.values());
+        return new ModelAndView("products");
+    }
 
     @GetMapping("/api/products")
     public String getProducts() {
