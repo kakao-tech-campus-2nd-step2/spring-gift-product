@@ -52,4 +52,32 @@ public class ProductControllerTest {
         assertEquals("https://img1.kakaocdn.net/thumb/C320x320@2x.fwebp.q82/?fname=https%3A%2F%2Fst.kakaocdn.net%2Fproduct%2Fgift%2Fproduct%2F20240405092925_4b920eaeef6a4f0eb2a5c2a434da7ec7.jpg", product.imageUrl);
     }
 
+    @Test
+    public void 상품_수정() {
+        Map<String, Object> updatedProductData = new HashMap<>();
+        updatedProductData.put("name", "오둥이 아닙니다만");
+        updatedProductData.put("price", 35000);
+        updatedProductData.put("imageUrl", "https://img1.kakaocdn.net/thumb/C320x320@2x.fwebp.q82/?fname=https%3A%2F%2Fst.kakaocdn.net%2Fproduct%2Fgift%2Fproduct%2F20240405092925_4b920eaeef6a4f0eb2a5c2a434da7ec7.jpg");
+
+        Product updatedProduct = productController.updateProduct(1L, updatedProductData);
+
+        assertNotNull(updatedProduct);
+        assertEquals(1L, updatedProduct.id);
+        assertEquals("오둥이 아닙니다만", updatedProduct.name);
+        assertEquals(35000, updatedProduct.price);
+        assertEquals("https://img1.kakaocdn.net/thumb/C320x320@2x.fwebp.q82/?fname=https%3A%2F%2Fst.kakaocdn.net%2Fproduct%2Fgift%2Fproduct%2F20240405092925_4b920eaeef6a4f0eb2a5c2a434da7ec7.jpg", updatedProduct.imageUrl);
+    }
+
+    @Test
+    public void 상품_수정_없는상품() {
+        Map<String, Object> updatedProductData = new HashMap<>();
+        updatedProductData.put("name", "오둥이 아닙니다만");
+        updatedProductData.put("price", 35000);
+        updatedProductData.put("imageUrl", "https://img1.kakaocdn.net/thumb/C320x320@2x.fwebp.q82/?fname=https%3A%2F%2Fst.kakaocdn.net%2Fproduct%2Fgift%2Fproduct%2F20240405092925_4b920eaeef6a4f0eb2a5c2a434da7ec7.jpg");
+
+        Product updatedProduct = productController.updateProduct(100L, updatedProductData);
+
+        assertNull(updatedProduct);
+    }
+
 }
