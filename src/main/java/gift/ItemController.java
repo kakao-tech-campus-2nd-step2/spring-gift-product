@@ -17,4 +17,8 @@ public class ItemController {
         return list.get(id);
     }
 
+    @GetMapping("list")
+    public HashMap<Long,Item> findItemList(){
+        return list;
+    }
 }
