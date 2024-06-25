@@ -48,4 +48,9 @@ public class ProductController {
         return product;
     }
 
+    @DeleteMapping("/{id}")
+    public void deleteProduct(@PathVariable Long id) {
+        products.remove(id);
+    }
+
 }
