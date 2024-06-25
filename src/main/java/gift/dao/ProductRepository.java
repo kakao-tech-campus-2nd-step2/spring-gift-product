@@ -1,6 +1,6 @@
 package gift.dao;
 
-import gift.dto.Product;
+import gift.domain.Product;
 
 import java.util.List;
 import java.util.Optional;
