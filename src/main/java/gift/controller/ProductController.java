@@ -1,13 +1,18 @@
 package gift.controller;
 
-import gift.Product;
+import gift.model.Product;
+import gift.model.ProductForm;
 import gift.repository.MemoryProductRepository;
 import java.util.List;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -22,15 +27,31 @@ public class ProductController {
 
     @GetMapping("")
     public List<Product> getAllProducts() {
-        List<Product> products = repository.findAll();
-        return products;
+        return repository.findAll();
     }
 
     @GetMapping("/{id}")
     public Product getProduct(@PathVariable Long id) {
-        Product product = repository.findById(id);
-        return product;
+        return repository.findById(id);
     }
 
+    @PostMapping(path = "", consumes = "application/json")
+    public Product postProduct(@RequestBody ProductForm form) {
+        return repository.save(form);
+    }
 
+    @PutMapping(path = "/{id}", consumes = "application/json")
+    public Product putProduct(@RequestBody ProductForm form, @PathVariable Long id) {
+        return repository.edit(id, form);
+    }
+
+    // 수정 필요
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<String> deleteProduct(@PathVariable Long id) {
+        boolean result = repository.delete(id);
+        if (result) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Successfully deleted");
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad request");
+    }
 }
