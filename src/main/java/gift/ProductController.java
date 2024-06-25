@@ -9,6 +9,7 @@ import java.util.*;
 @RequestMapping("/api/products")
 public class ProductController {
     private final Map<Long, Product> products = new HashMap<>();
+    private Long nextId = 1L;
 
 
     // get all product
@@ -28,6 +29,17 @@ public class ProductController {
         }
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
+
+    // 상품추가
+    @PostMapping
+    public ResponseEntity<Product> addProduct(@RequestBody Product product) {
+        product.setId(nextId++);
+        products.put(product.getId(), product);
+        return new ResponseEntity<>(product, HttpStatus.CREATED);
+    }
+    
+
+
 
 
 }
