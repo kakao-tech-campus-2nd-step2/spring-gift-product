@@ -1,16 +1,16 @@
 package gift.repository;
 
-import gift.Product;
+import gift.model.Product;
+import gift.model.ProductForm;
 import java.util.List;
-import java.util.Map;
 
 public interface ProductRepository {
 
-    Product save(Product product);
+    Product save(ProductForm form);
 
     boolean delete(Long id);
 
-    boolean edit(Long id, Product product);
+    Product edit(Long id, ProductForm form);
 
     Product findById(Long id);
 
