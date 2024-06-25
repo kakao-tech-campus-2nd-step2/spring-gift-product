@@ -3,6 +3,8 @@ package gift.controller;
 
 import gift.domain.Product;
 import gift.domain.Products;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -26,11 +28,11 @@ public class ProductController {
 
     //product 추가
     @PostMapping
-    public String addProduct(@RequestBody Product product){
+    public ResponseEntity<String> addProduct(@RequestBody Product product){
         if(products.add(product)){
-            return "OK";
+            return new ResponseEntity<>("OK", HttpStatus.CREATED);
         }
-        return "올바르지 않은 요청";
+        return new ResponseEntity<>("올바르지 않은 요청",HttpStatus.BAD_REQUEST);
     }
 
     //product 수정
