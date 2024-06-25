@@ -2,20 +2,23 @@ package gift;
 
 import java.util.HashMap;
 import java.util.Map;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
+@RequestMapping("/api/products")
 public class ProductController {
     private final Map<Long, Product> products = new HashMap<>();
-    @GetMapping("/api/products")
-    public Product product(@RequestParam("id") Long id,
-        @RequestParam(value="name",required = false,defaultValue = "이춘식") String name,
-        @RequestParam(value="price",required = false,defaultValue = "2000") int price,
-        @RequestParam(value="imageUrl",required = false,defaultValue = "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg") String imageUrl){
-        var product=new Product(id,name,price,imageUrl);
-        products.put(id,product);
-        return product;
+    //조회
+    @GetMapping("/{id}")
+    public Product getProduct(@PathVariable("id") Long id) throws Exception {
+        if(!products.containsKey(id)){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Product Not Found");
+        }
+        return products.get(id);
     }
 }
