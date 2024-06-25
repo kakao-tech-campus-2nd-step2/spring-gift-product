@@ -85,7 +85,7 @@ Content-Type: application/json
 * 메서드
   * `public List<Product> getAllProducts()`: 모든 상품 조회
   * `public Product getProductById(String id)`: `id`를 통해 상품 조회
-  * `public createProduct(Product product)`: 새로운 상품 추가
+  * `public addProduct(Product product)`: 새로운 상품 추가
     * JSON 형식이 이상할 경우 에러 발생
   * `public Product updateProduct(String id, Product product)`: id를 통해 상품을 검색한 후 상품 수정
     * 존재하지 않는 상품인 경우 예외 발생
