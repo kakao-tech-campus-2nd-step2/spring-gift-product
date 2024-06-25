@@ -24,10 +24,10 @@ public class ProductService {
     }
 
     public void addProduct(Product product) {
-        products.put(product.getId(), product);
+        products.put(product.id(), product);
     }
 
     public void updateProduct(Product product) {
-        products.put(product.getId(), product);
+        products.put(product.id(), product);
     }
 }
