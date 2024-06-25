@@ -15,7 +15,7 @@ public class ProductRepositoryTest {
     }
 
     @Test
-    void 모든_상품_조회() {
+    void 모든_상품_추가_이후_조회() {
         // given
         productRepository.createProduct(new Product(0L, "productA", 1000, "imageUrlA"));
         productRepository.createProduct(new Product(0L, "productB", 2000, "imageUrlB"));
