@@ -84,16 +84,26 @@ public class ProductController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
 
-        // 이미지 파일 먼저 삭제
         Product product = productService.getProductById(id);
         if (product != null && product.getImageUrl() != null && !product.getImageUrl().isEmpty()) {
             ImageStorageUtil.deleteImage(ImageStorageUtil.decodeBase64ImagePath(product.getImageUrl()));
         }
-        // product 삭제
         productService.deleteProduct(id);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @GetMapping(value = "/images/{base64EncodedPath}", produces = MediaType.IMAGE_JPEG_VALUE)
+    public ResponseEntity<byte[]> getImageByEncodedPath(@PathVariable String base64EncodedPath) {
+        // 이미지 경로 디코딩
+        String imagePath = ImageStorageUtil.decodeBase64ImagePath(base64EncodedPath);
 
+        // 이미지 바이트 전환
+        try {
+            byte[] imageBytes = java.nio.file.Files.readAllBytes(new File(imagePath).toPath());
+            return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageBytes);
+        } catch (IOException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
