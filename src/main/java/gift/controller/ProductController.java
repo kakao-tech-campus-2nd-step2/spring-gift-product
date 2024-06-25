@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
+@RequestMapping("/api/products")
 public class ProductController {
     private final ProductService productService;
 
@@ -17,14 +19,23 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @PostMapping("/api/products")
+    @PostMapping
     public ResponseEntity<ProductResponseDto> addProduct(@RequestBody ProductRequestDto request) {
         ProductResponseDto createdProduct = productService.save(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdProduct);
     }
 
+    @GetMapping("/{id}")
+    public ProductResponseDto getProduct(@PathVariable Long id){
+        try{
+            return productService.findById(id);
+        } catch (IllegalArgumentException e){
+             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+    }
+
     /*
-    @GetMapping("/api/products")
+    @GetMapping
     public Product getProducts() {
     }
 
