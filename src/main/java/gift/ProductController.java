@@ -19,6 +19,10 @@ import org.springframework.web.server.ResponseStatusException;
 public class ProductController {
     private final Map<Long, Product> products = new HashMap<>();
     //조회
+    @GetMapping()
+    public Map<Long, Product> getAllProduct(){
+        return products;
+    }
     @GetMapping("/{id}")
     public Product getProduct(@PathVariable("id") Long id) throws Exception {
         if(!products.containsKey(id)){
