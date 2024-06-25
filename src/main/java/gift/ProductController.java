@@ -2,7 +2,9 @@ package gift;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -20,5 +22,10 @@ public class ProductController {
         Product product = new Product(id, name, price, imageUrl);
         products.put(id, product);
         return product;
+    }
+
+    @GetMapping
+    public List<Product> getAllProducts() {
+        return new ArrayList<>(products.values());
     }
 }
