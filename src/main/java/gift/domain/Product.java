@@ -1,4 +1,6 @@
-package gift.dto;
+package gift.domain;
+
+import gift.dto.ProductRequest;
 
 public class Product {
 
@@ -24,9 +26,9 @@ public class Product {
         return imageUrl;
     }
 
-    public void update(Product product) {
-        this.name = product.getName();
-        this.price = product.getPrice();
-        this.imageUrl = product.getImageUrl();
+    public void update(ProductRequest request) {
+        this.name = request.getName();
+        this.price = request.getPrice();
+        this.imageUrl = request.getImageUrl();
     }
 }
