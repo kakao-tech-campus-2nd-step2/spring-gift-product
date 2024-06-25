@@ -30,13 +30,16 @@ public class ProductService {
         return productRepository.findById(id)
                 .orElseThrow(()-> new IllegalArgumentException("해당 상품이 존재하지 않습니다."))
                 .toDto();
-
     }
+
+    public List<ProductResponseDto> findAll(){
+        return productRepository.findAll()
+                .stream()
+                .map(Product::toDto)
+                .toList();
+    }
+
 /*
-    public List<Product> findAll(){
-
-    }
-
     public void deleteById(Long id){
 
     }
