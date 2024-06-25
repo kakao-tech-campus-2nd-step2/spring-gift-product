@@ -17,4 +17,10 @@ public class ProductController {
     public Map<Long, Product> getProductsController(){
         return this.products;
     }
+
+    //id 상품 하나 반환
+    @GetMapping("/getProduct/{id}")
+    public Product getProductByIdController(@PathVariable Long id){
+        return products.get(id);
+    }
 }
