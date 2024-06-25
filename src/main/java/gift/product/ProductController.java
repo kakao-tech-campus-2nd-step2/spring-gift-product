@@ -16,7 +16,7 @@ public class ProductController {
     private final Map<Long, ProductVo> products = new HashMap<>();
     private final AtomicLong idCounter = new AtomicLong();
 
-    @PostMapping("/add")
+    @GetMapping("/add")
     public void addProduct(@RequestParam("name") String name, @RequestParam("price") int price, @RequestParam("imageUrl") String imageUrl) {
         ProductVo product = new ProductVo();
 
@@ -27,7 +27,7 @@ public class ProductController {
         products.put(idCounter.incrementAndGet(), product);
     }
 
-    @PostMapping("/modify")
+    @GetMapping("/modify")
     public void modifyProduct(@RequestParam("id") Long id, @RequestParam(value="name", defaultValue="NULL") String name, @RequestParam(value="price", defaultValue="-1") int price, @RequestParam(value="imageUrl", defaultValue="NULL") String imageUrl) {
         ProductVo product = products.get(id);
         if(!name.equals("NULL"))
