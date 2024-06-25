@@ -19,7 +19,7 @@ public class ProductController {
             products.put(id, product);
             return  product;
         }
-        return "Update failed.";
+        return "Update failed";
     }
 
     // 특정 상품 조회를 위한 GET 메서드
@@ -34,7 +34,11 @@ public class ProductController {
         return products.values();
     }
     @DeleteMapping("/{id}")
-    public void DeleteProduct(@PathVariable Long id){
-        products.remove(id);
+    public String DeleteProduct(@PathVariable Long id){
+        if(products.containsKey(id)) {
+            products.remove(id);
+            return "Delete Successful";
+        }
+        return "Delete failed";
     }
 }
