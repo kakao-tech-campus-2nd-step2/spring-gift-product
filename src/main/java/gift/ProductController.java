@@ -65,9 +65,4 @@ public class ProductController {
         products.put(id, product);
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
-
-
-
-
-
 }
