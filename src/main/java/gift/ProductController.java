@@ -1,5 +1,6 @@
 package gift;
 
+import jakarta.annotation.PostConstruct;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,15 +13,18 @@ public class ProductController {
     private Long nextId = 1L;
 
 
+    @PostConstruct
+    public void init() {
+        // 초기 데이터 설정
+        products.put(8146027L, new Product(8146027L, "아이스 카페 아메리카노 T", 4500, "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg"));
+        products.put(4565455L, new Product(4565455L, "아이스 카페 라테 T", 5500, "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg"));
+        products.put(1234567L, new Product(1234567L, "뜨거운 아이스 아메리카노 T", 6500, "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg"));
+    }
+
     // get all product
     @GetMapping
     public ResponseEntity<List<Product>> getAllProducts() {
-        List<Product> products = new ArrayList<>();
-        products.add(new Product(8146027L, "아이스 카페 아메리카노 T", 4500, "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg"));
-        products.add(new Product(4565455L, "아이스 카페 라테 T", 5500, "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg"));
-        products.add(new Product(1234567L, "뜨거운 아이스 아메리카노 T", 6500, "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg"));
-
-        return new ResponseEntity<>(products, HttpStatus.OK);
+        return new ResponseEntity<>(new ArrayList<>(products.values()), HttpStatus.OK);
     }
 
     // 상품 조회
