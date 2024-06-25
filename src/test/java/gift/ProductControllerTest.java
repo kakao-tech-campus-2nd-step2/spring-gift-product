@@ -34,6 +34,15 @@ public class ProductControllerTest {
     }
 
     @Test
+    @DisplayName("상품 조회 테스트")
+    void getProductsTest() throws Exception {
+        mockMvc.perform(get("/api/products")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
     @DisplayName("상품 추가 테스트")
     public void addProductTest() throws Exception {
 
