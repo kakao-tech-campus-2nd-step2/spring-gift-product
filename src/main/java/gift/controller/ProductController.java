@@ -1,10 +1,8 @@
 package gift.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import gift.controller.dto.Product;
+import gift.dto.Product;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.atomic.AtomicLong;
