@@ -88,4 +88,25 @@ public class ProductControllerTest {
                 .andExpect(jsonPath("$.price").value(5000L));
     }
 
+    @Test
+    @DisplayName("상품 삭제 테스트")
+    void deleteProductTest() throws Exception {
+
+        String productJson = objectMapper.writeValueAsString(sampleProduct);
+        String response = mockMvc.perform(post("/api/products")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(productJson))
+                .andExpect(status().isCreated())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        Product addedProduct = objectMapper.readValue(response, Product.class);
+
+        mockMvc.perform(delete("/api/products/" + addedProduct.getId())
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent());
+
+    }
+
 }
