@@ -13,7 +13,7 @@ public class ProductService {
         if(products.isEmpty()) {
             return null;
         }
-        return new ArrayList<>();
+        return new ArrayList<>(products.values());
     }
 
     public void addProduct(Product product) {
