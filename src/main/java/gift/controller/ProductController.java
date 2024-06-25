@@ -42,5 +42,12 @@ public class ProductController {
         return "올바르지 않은 요청";
     }
 
-
+    //product 삭제
+    @DeleteMapping("/delete/{id}")
+    public String deleteProduct(@PathVariable("id") Long id){
+        if(products.delete(id)){
+            return "product delete success";
+        }
+        return "올바르지 않은 요청";
+    }
 }
