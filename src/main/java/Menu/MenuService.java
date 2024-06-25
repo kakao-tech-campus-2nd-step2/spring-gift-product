@@ -10,10 +10,9 @@ public class MenuService {
         this.menuRepository = menuRepository;
     }
 
-    public Long save(String name,int price, String imageUrl){
+    public Menu save(String name,int price, String imageUrl){
         Menu menu = new Menu(name,price,imageUrl);
-        return menuRepository.save(menu)
-                .getId();
+        return menuRepository.save(menu);
     }
 
 }
