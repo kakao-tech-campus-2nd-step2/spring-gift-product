@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProductController {
 
     private final Map<Long, Product> products = new HashMap<>();
+    private static Long sequence = 0L;
 
     @GetMapping("/api/products")
     public ResponseEntity<ProductResponseDto> getProduct(@RequestParam("id") Long id) {
@@ -32,7 +33,7 @@ public class ProductController {
 
     @PostMapping("/api/products")
     public void addProduct(@RequestBody ProductResponseDto productResponseDto) {
-        products.put(1L, new Product(productResponseDto));
+        products.put(++sequence, new Product(productResponseDto));
     }
 
     @PutMapping("/api/products")
