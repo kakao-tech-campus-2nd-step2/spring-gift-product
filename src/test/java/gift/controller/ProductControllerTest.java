@@ -88,4 +88,20 @@ public class ProductControllerTest {
         assertEquals("image2.jpg", selectedProduct2.getImageUrl());
     }
 
+    @Test
+    @DisplayName("상품 삭제 기능 확인")
+    void checkDeleteProduct() {
+        //given
+        Product tempProduct1 = new Product("콜라", 1500L, "image1.jpg");
+        Long selecteLong;
+        //when
+        Product addedProduct1 = productController.addProduct(tempProduct1);
+        selecteLong = productController.deleteProduct(1L);
+
+        //then
+        assertEquals(1L, selecteLong);
+        assertThrows(IllegalArgumentException.class,
+            () -> productController.deleteProduct(2L));
+        assertEquals(0,productController.selectAllProduct().size());
+    }
 }
