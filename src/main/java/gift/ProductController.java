@@ -45,6 +45,11 @@ public class ProductController {
         products.put(id, updatedProduct);
     }
 
+    @DeleteMapping("/products/{id}")
+    public void deleteProduct(@PathVariable Long id) {
+        products.remove(id);
+    }
+
     private Product productOf(ProductCreateRequest productCreateRequest) {
         return new Product(
                 products.size() + 1L,
