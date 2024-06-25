@@ -4,17 +4,18 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-
+@RequestMapping("/product")
 public class ProductController {
 
     private final Map<Long, ProductVo> products = new HashMap<>();
     private final AtomicLong idCounter = new AtomicLong();
 
-    @PostMapping("/product")
+    @PostMapping("/add")
     public void addProduct(@RequestParam("name") String name, @RequestParam("price") int price, @RequestParam("imageUrl") String imageUrl) {
         ProductVo product = new ProductVo();
 
