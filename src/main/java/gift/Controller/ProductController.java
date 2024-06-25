@@ -23,4 +23,12 @@ public class ProductController {
     public Product getProductByIdController(@PathVariable Long id){
         return products.get(id);
     }
+
+    //상품 추가
+    @PostMapping("/postProduct")
+    public void postProductController(@RequestBody Product product){
+        id++;
+        product.setId(id);
+        products.put(id, product);
+    }
 }
