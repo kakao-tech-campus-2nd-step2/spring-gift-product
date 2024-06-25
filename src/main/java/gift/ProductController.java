@@ -34,4 +34,13 @@ public class ProductController {
         }
         return "해당 상품이 존재하지 않습니다.";
     }
+
+    @DeleteMapping("api/products/{id}")
+    public String deleteProduct(@PathVariable Long id) {
+        if(productMap.containsKey(id)) {
+            productMap.remove(id);
+            return "상품 삭제가 완료되었습니다.";
+        }
+        return "해당 상품이 존재하지 않습니다";
+    }
 }
