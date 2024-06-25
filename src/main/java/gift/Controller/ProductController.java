@@ -31,4 +31,10 @@ public class ProductController {
         product.setId(id);
         products.put(id, product);
     }
+
+    //상품 삭제
+    @DeleteMapping("/deleteProduct/{id}")
+    public void deleteProductController(@PathVariable Long id){
+        products.remove(id);
+    }
 }
