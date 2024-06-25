@@ -38,6 +38,7 @@ public class ProductController {
         return new ResponseEntity<>(product, jsonHeaders(), HttpStatus.OK);
     }
 
+    
     @PostMapping
     public ResponseEntity<ProductModel> createProduct(@RequestBody ProductModel product) {
         long id = counter.incrementAndGet();
@@ -45,6 +46,7 @@ public class ProductController {
         products.put(id, product);
         return new ResponseEntity<>(product, jsonHeaders(), HttpStatus.CREATED);
     }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<ProductModel> updateProduct(@PathVariable long id, @RequestBody ProductModel product) {
@@ -56,6 +58,7 @@ public class ProductController {
         products.put(id, product);
         return new ResponseEntity<>(product, jsonHeaders(), HttpStatus.OK);
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable long id) {
