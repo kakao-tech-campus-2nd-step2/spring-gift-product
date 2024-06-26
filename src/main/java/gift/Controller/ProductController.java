@@ -34,12 +34,13 @@ public class ProductController {
   }
 
   @PostMapping
-  public void createProduct() {
+  public void createProduct(@Validated @RequestBody Product.CreateProduct create) {
     productService.createProduct(create);
   }
 
   @PutMapping("/{id}")
-  public void updateProduct(@PathVariable long id) {
+  public void updateProduct(@Validated @RequestBody Product.UpdateProduct update,
+      @PathVariable long id) {
     productService.updateProduct(update, id);
   }
 
