@@ -35,8 +35,8 @@ public class ProductController {
 
     // 상품 추가
     @PostMapping
-    public ProductResponse addProduct(@RequestBody ProductRequest productRequest) {
-        return productService.createProduct(productRequest);
+    public ProductResponse addProduct(@RequestBody ProductRequest request) {
+        return productService.createProduct(request);
     }
 
     // 상품 하나 삭제
