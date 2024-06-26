@@ -3,10 +3,7 @@ package gift.controller;
 import gift.vo.Product;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,6 +15,7 @@ import java.util.Map;
 public class ProductController {
 
     private final Map<Long, Product> products = new HashMap<>();
+    private Long sequenceId = 1L;
 
     /**
      * 상품 조회 - 전체
@@ -39,6 +37,20 @@ public class ProductController {
         if (product == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+        return ResponseEntity.ok(product);
+    }
+
+    /**
+     * 상품 추가
+     * @param product 추가할 상품 (JSON 형식)
+     * @return ResponseEntity로 Response 받음
+     */
+    @PostMapping("")
+    public ResponseEntity<Product> addProduct(@RequestBody Product product) {
+        synchronized (this) {
+            product.setId(sequenceId++);
+        }
+        products.put(product.getId(), product);
         return ResponseEntity.ok(product);
     }
 
