@@ -1,7 +1,6 @@
 package com.kakaotech2.j20.controller;
 
-import com.kakaotech2.j20.ProductManager;
-import org.springframework.web.bind.annotation.GetMapping;
+import com.kakaotech2.j20.service.ProductService;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -12,9 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ProductController {
 
-    private final ProductManager pm;
+    private final ProductService pm;
 
-    public ProductController(ProductManager pm) {
+    public ProductController(ProductService pm) {
         this.pm = pm;
     }
 
