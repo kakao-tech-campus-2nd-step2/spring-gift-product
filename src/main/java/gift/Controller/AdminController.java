@@ -29,7 +29,7 @@ public class AdminController {
     }
     //상품추가 Post
     @PostMapping("/add")
-    public String addProduct(Model model, Product product){
+    public String addProduct(Model model,@ModelAttribute Product product){
         if(products.addProduct(product)){
             return "redirect:/products";
         }
@@ -49,7 +49,7 @@ public class AdminController {
     }
 
     @PostMapping("/update/{id}")
-    public String updateProduct(@PathVariable("id") Long id, Model model, Product product){
+    public String updateProduct(@PathVariable("id") Long id, Model model, @ModelAttribute Product product){
         if(products.updateProduct(product)){
             return "redirect:/products";
         }
