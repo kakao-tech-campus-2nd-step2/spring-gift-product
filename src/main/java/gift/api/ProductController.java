@@ -1,7 +1,6 @@
 package gift.api;
 
 import gift.application.ProductService;
-import gift.domain.Product;
 import gift.dto.ProductRequest;
 import gift.dto.ProductResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,9 +39,13 @@ public class ProductController {
         return productService.createProduct(productRequest);
     }
 
-    // 상품 수정
-
     // 상품 하나 삭제
+    @DeleteMapping("/{id}")
+    public Long deleteProduct(@PathVariable Long id) {
+        return productService.deleteProductById(id);
+    }
 
     // 상품 전체 삭제
+
+    // 상품 수정
 }

@@ -43,4 +43,9 @@ public class ProductService {
         return new ProductResponse(product);
     }
 
+    public Long deleteProductById(Long id) {
+        productRepository.deleteById(id);
+        return id;
+    }
+
 }
