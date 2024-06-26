@@ -4,7 +4,7 @@ public class Product {
 
     private static Long idCounter = 1L;
 
-    private Long id;
+    private final Long id;
     private String name;
     private Integer price;
     private String imageUrl;
