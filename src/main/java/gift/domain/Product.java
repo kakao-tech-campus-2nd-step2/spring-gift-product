@@ -27,8 +27,8 @@ public class Product {
     }
 
     public void update(ProductRequest request) {
-        this.name = request.getName();
-        this.price = request.getPrice();
-        this.imageUrl = request.getImageUrl();
+        this.name = request.name();
+        this.price = request.price();
+        this.imageUrl = request.imageUrl();
     }
 }
