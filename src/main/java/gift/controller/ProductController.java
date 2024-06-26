@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -24,9 +23,13 @@ public class ProductController {
     private final AtomicLong orderId = new AtomicLong(1);
 
     @PostMapping("/api/products")
-    public ResponseEntity<Product> AddProduct(@RequestBody Product product) {
+    public ResponseEntity<?> AddProduct(@RequestBody Product product) {
         var newProduct = new Product(product.id(), product.name(), product.price(),
             product.imageUrl());
+        if (newProduct.id() == null || newProduct.name().isEmpty() || newProduct.price() < 0
+            || newProduct.imageUrl().isEmpty()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Invalid Request");
+        }
         products.put(orderId.getAndIncrement(), newProduct);
         return ResponseEntity.status(HttpStatus.CREATED).body(newProduct);
     }
@@ -40,46 +43,46 @@ public class ProductController {
     }
 
     @GetMapping("/api/products/{id}")
-    public ResponseEntity<Product> GetProduct(@PathVariable(name = "id") Long id) {
+    public ResponseEntity<?> GetProduct(@PathVariable(name = "id") Long id) {
         var productList = products.entrySet().stream().filter(x -> x.getValue().id().equals(id))
             .toList();
         if (productList.isEmpty()) {
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("There is No Product with id:" + id);
         }
         return ResponseEntity.ok().body(productList.getFirst().getValue());
     }
 
     @PutMapping("/api/products/{id}")
-    public ResponseEntity<Product> UpdateProductsName(@PathVariable Long id,
-        @RequestParam(name = "name") String name) {
-
+    public ResponseEntity<?> UpdateProductsName(@PathVariable(name = "id") Long id,
+        @RequestBody Product product) {
+        if (product.id() == null || product.name().isEmpty() || product.price() < 0
+            || product.imageUrl().isEmpty()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Invalid Request");
+        }
         var productList = products.entrySet().stream().filter(x -> x.getValue().id().equals(id))
             .map(Entry::getKey).toList();
         if (productList.isEmpty()) {
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product is not Exist");
         }
-        var sampleProduct = products.get(productList.getFirst());
-        productList.forEach(l -> updateElement(name, l, sampleProduct));
+        products.remove(id);
+        products.put(id, product);
         return ResponseEntity.ok().body(products.get(productList.getFirst()));
     }
 
-    private void updateElement(String name, Long l, Product sampleProduct) {
-        products.remove(l);
-        products.put(l, new Product(sampleProduct.id(), name, sampleProduct.price(),
-            sampleProduct.imageUrl()));
-    }
 
     @DeleteMapping("/api/products/{id}")
-    public ResponseEntity<Product> DeleteProduct(@PathVariable Long productId) {
+    public ResponseEntity<?> DeleteProduct(@PathVariable(name = "id") Long productId) {
         var keyList = products.entrySet().stream().filter(x -> x.getValue().id().equals(productId))
             .map(Entry::getKey).toList();
+        var deletedProducts = keyList.stream()
+            .map(products::get)
+            .toList();
         if (keyList.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product is not exist");
         }
         keyList.forEach(products::remove);
-        return ResponseEntity.noContent().
-
-            build();
+        return ResponseEntity.ok(deletedProducts);
     }
 }
 
