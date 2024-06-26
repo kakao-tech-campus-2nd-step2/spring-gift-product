@@ -32,4 +32,9 @@ public class ProductController {
         return updatedProduct;
     }
 
+    @DeleteMapping("/{id}")
+    public Product deleteProduct(@PathVariable(value = "id") long id){
+        return products.remove(id);
+    }
+
 }
