@@ -25,10 +25,18 @@
     <p th:text="'Price: ' + ${product.price}"></p>
     <img th:src="${product.imageUrl}" th:alt="${product.name}" style="max-width: 100px;">
     <br>
-    <button class="edit-button">Edit</button>
+    <button th:attr="data-id=${product.id}" class="edit-button">Edit</button>
     <button class="delete-button">Delete</button>
 </div>
 <script>
+    document.querySelectorAll('.edit-button').forEach(button => {
+        button.addEventListener('click', function() {
+            const productId = this.getAttribute('data-id');
+            if (productId) {
+                location.href = `/api/products/edit/${productId}`;
+            }
+        });
+    });
     document.querySelectorAll('.delete-button').forEach(button => {
     button.addEventListener('click', function() {
         const productElement = this.closest('.product');

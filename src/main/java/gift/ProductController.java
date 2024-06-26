@@ -25,7 +25,11 @@ public class ProductController {
         }
         return "Update failed";
     }
-
+    // 등록된 전체 상품 리스트 조회
+    @GetMapping("/edit/{id}")
+    public String moveToEditProduct(Model model) {
+        return "editProduct";
+    }
     // 등록된 전체 상품 리스트 조회
     @GetMapping
     public String getproductList(Model model) {
