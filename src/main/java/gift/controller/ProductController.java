@@ -46,16 +46,17 @@ public class ProductController {
 
     // 상품 수정 기능
     @PutMapping("/{id}")
-    public ResponseEntity<Product> updateProduct(@RequestBody Product updProduct) {
-        Product prod = products.get(updProduct.getId());
+    public ResponseEntity<Product> updateProduct(@RequestParam Long id, @RequestBody Product updProduct) {
+        Product prod = products.get(id);
         if (prod == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         prod.setId(updProduct.getId());
         prod.setName(updProduct.getName());
         prod.setPrice(updProduct.getPrice());
         prod.setImageUrl(updProduct.getImageUrl());
+        products.put(id, prod);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(prod,HttpStatus.OK);
     }
 
     // 상품 삭제 기능
