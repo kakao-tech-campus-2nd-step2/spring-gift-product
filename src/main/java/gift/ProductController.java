@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.*;
 
@@ -18,7 +19,22 @@ public class ProductController {
     @GetMapping("/admin/products")
     public ModelAndView adminProducts(Model model){
         model.addAttribute("products", products.values());
-        return new ModelAndView("products");
+        return new ModelAndView("admin/products");
+    }
+    @GetMapping("/admin/add")
+    public ModelAndView adminProductsAdd(Model model){
+        //model.addAttribute("products", products.values());
+        return new ModelAndView("admin/add");
+    }
+    @GetMapping("/admin/modify")
+    public ModelAndView adminProductsModify(Model model){
+        //model.addAttribute("products", products.values());
+        return new ModelAndView("admin/modify");
+    }
+    @GetMapping("/admin/delete")
+    public ModelAndView adminProductsDelete(Model model){
+        //model.addAttribute("products", products.values());
+        return new ModelAndView("admin/delete");
     }
 
     @GetMapping("/api/products")
@@ -33,14 +49,14 @@ public class ProductController {
         return allProducts;
     }
 
-    @PostMapping("/api/products")
+    @PostMapping("/api/products/add")
     public void addProduct(@RequestParam("id") int id, @RequestParam("name") String name, @RequestParam("price") int price, @RequestParam("imageUrl") String imageUrl) {
         Product product = new Product(id, name, price, imageUrl);
         products.put(count, product);
         count++;
     }
 
-    @DeleteMapping("/api/products")
+    @PostMapping("/api/products/delete")
     public void deleteProduct(@RequestParam("id") int id) {
         Iterator<Map.Entry<Long, Product>> iterator = products.entrySet().iterator();
         while (iterator.hasNext()) {
@@ -51,7 +67,7 @@ public class ProductController {
         }
     }
 
-    @PutMapping("/api/products")
+    @PostMapping("/api/products/modify")
     public void modifyProduct(@RequestParam("id") int id, @RequestParam("name") String name, @RequestParam("price") int price, @RequestParam("imageUrl") String imageUrl) {
         Iterator<Map.Entry<Long, Product>> iterator = products.entrySet().iterator();
         while (iterator.hasNext()) {
