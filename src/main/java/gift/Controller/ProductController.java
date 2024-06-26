@@ -25,4 +25,10 @@ public class ProductController {
         return new ResponseEntity<>(product,HttpStatus.CREATED);
     }
 
+    @GetMapping
+    public ResponseEntity<List<Product>> getAllProducts(){
+        List<Product> products = productRepository.getAllProducts();
+        return new ResponseEntity<>(products,HttpStatus.OK);
+    }
+
 }
