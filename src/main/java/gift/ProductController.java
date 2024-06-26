@@ -59,4 +59,18 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.CONFLICT).body("존재하지 않는 id입니다.");
     }
 
+    // UPDATE - 상품 업데이트
+    @PutMapping("/product/{id}")
+    public ResponseEntity<String> updateProduct(@PathVariable Long id, @RequestParam("product") Product updateproduct) {
+        for (Product product : products.values()) {
+            if(product.id() == id){
+                products.values().remove(product);
+                products.put(++sequence, updateproduct);
+                return ResponseEntity.status(HttpStatus.CREATED).body("Product updated successfully.");
+            }
+        }
+        return ResponseEntity.status(HttpStatus.CONFLICT).body("존재하지 않는 id입니다.");
+    }
+
+
 }
