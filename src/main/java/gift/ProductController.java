@@ -10,7 +10,7 @@ import java.util.Map;
 
 
 @RestController
-@RequestMapping("/api/products")
+@RequestMapping("/api")
 public class ProductController {
     private final Map<Long, Product> products = new HashMap<>();
     
