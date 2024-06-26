@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>매니저 화면</title>
+</head>
+<body>
+<h1>Manager Employees</h1>
+
+<form th:action="@{/api/products/new}" method="get" style="margin-bottom: 20px;">
+    <button type="submit">상품 저장</button>
+</form>
+
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Image</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="productDto : ${productDtos}">
+        <td th:text="${productDto.name()}"></td>
+        <td th:text="${productDto.price()}"></td>
+        <td th:text="${productDto.imageUrl()}"></td>
+        <td>
+            <form th:action="@{/api/products/{id}/edit(id=${productDto.id()})}" method="get" style="display:inline;">
+                <button type="submit">Edit</button>
+            </form>
+            <form th:action="@{/api/products/{id}/delete(id=${productDto.id()})}" method="post" style="display:inline;">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
