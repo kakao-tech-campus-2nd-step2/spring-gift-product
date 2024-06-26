@@ -1,47 +1,48 @@
 package gift.DTO;
 
 public class ProductDTO {
-  private Long id;
-  private String name;
-  private Integer price;
-  private String imageUrl;
 
-  public ProductDTO(Long id, String name, Integer price, String imageUrl) {
-    this.id = id;
-    this.name = name;
-    this.price = price;
-    this.imageUrl = imageUrl;
-  }
+    private Long id;
+    private String name;
+    private Integer price;
+    private String imageUrl;
 
-  public Long getId() {
-    return id;
-  }
+    public ProductDTO(Long id, String name, Integer price, String imageUrl) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.imageUrl = imageUrl;
+    }
 
-  public void setId(Long id) {
-    this.id = id;
-  }
+    public Long getId() {
+        return id;
+    }
 
-  public String getName() {
-    return name;
-  }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-  public void setName(String name) {
-    this.name = name;
-  }
+    public String getName() {
+        return name;
+    }
 
-  public Integer getPrice() {
-    return price;
-  }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-  public void setPrice(Integer price) {
-    this.price = price;
-  }
+    public Integer getPrice() {
+        return price;
+    }
 
-  public String getImageUrl() {
-    return imageUrl;
-  }
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
 
-  public void setImageUrl(String imageUrl) {
-    this.imageUrl = imageUrl;
-  }
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 }
