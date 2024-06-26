@@ -35,4 +35,39 @@ public class ProductController {
     public Product deleteProduct(@PathVariable(value = "id") long id) {
         return products.remove(id);
     }
+
+    @PutMapping("/api/products/{id}")
+    public Product updateProduct(
+        @PathVariable("id") long id,
+        @RequestParam(value = "newId", required = false) Long newId,
+        @RequestParam(value = "name", required = false) String name,
+        @RequestParam(value = "price", required = false) Long price,
+        @RequestParam(value = "imageUrl", required = false) String imageUrl
+    ) {
+        Product existingProduct = products.get(id);
+
+        long targetId = id;
+        if (newId != null) {
+            targetId = newId;
+            products.remove(id);
+        }
+        String updatedName = existingProduct.name();
+        if (name != null) {
+            updatedName = name;
+        }
+
+        long updatedPrice = existingProduct.price();
+        if (price != null) {
+            updatedPrice = price;
+        }
+
+        String updatedImageUrl = existingProduct.imageUrl();
+        if (imageUrl != null) {
+            updatedImageUrl = imageUrl;
+        }
+
+        Product updatedProduct = new Product(targetId, updatedName, updatedPrice, updatedImageUrl);
+        products.put(targetId, updatedProduct);
+        return updatedProduct;
+    }
 }
