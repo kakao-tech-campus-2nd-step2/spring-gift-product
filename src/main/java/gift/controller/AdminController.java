@@ -69,7 +69,4 @@ public class AdminController {
         giftDao.deleteById(id);
         return "redirect:/admin";
     }
-
-
-
 }

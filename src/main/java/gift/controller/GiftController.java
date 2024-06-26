@@ -14,7 +14,6 @@ import java.util.concurrent.atomic.AtomicLong;
 @RestController
 @RequestMapping("/api/products")
 public class GiftController {
-
     private GiftDao giftDao;
 
     GiftController(GiftDao giftDao){
@@ -45,11 +44,5 @@ public class GiftController {
     public void deleteGift(@PathVariable Long id){
         giftDao.deleteById(id);
     }
-
-
-
-
-
-
 }
 
