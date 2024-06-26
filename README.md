@@ -91,3 +91,36 @@ Content-Type: application/json
     * 존재하지 않는 상품인 경우 예외 발생
   * `public void deleteProduct(Long id)`: 특정 id의 상품 삭제
     * 존재하지 않는 상품인 경우 예외 발생
+
+
+
+---
+
+## 2단계(관리자 화면) 요구사항
+
+ ### 2단계 기능 목록
+
+> 각 페이지는 /src/resources/templates 경로에 저장
+
+**product_list.html**
+
+* 모든 상품을 리스트로 조회하는 메인 페이지
+* 각 상품마다 update, delete 버튼 존재
+  * update 버튼은 `product_new_form.html` 페이지로 이동
+  * delete 버튼은 추가적인 조작없이 delete method 전송을 통해 삭제 후 메인 페이지 새로 고침
+* 새 상품을 추가하는 버튼 존재
+  * 버튼을 누르면 `product_new_form.html` 페이지로 이동
+
+
+
+**product_new_form.html**
+
+* 새 상품을 추가하는 페이지
+* 각 정보를 html 폼으로 입력받아 서버로 전송하면 json 형태로 전송받아 저장
+
+
+
+**product_update_form.html**
+
+* 상품을 수정하는 페이지
+* 각 정보를 html 폼으로 입력받아 서버로 전송하면 json 형태로 전송받아 기존 정보를 대체/저장
