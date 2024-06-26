@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>상품 관리</title>
+</head>
+<body>
+<a th:href="@{/add}"><button>상품 추가</button></a>
+<button type="submit">선택된 상품들 일괄 삭제</button>
+<div>
+    <table>
+        <thead>
+        <tr>
+            <th>선택</th>
+            <th>Actions</th>
+            <th>ID</th>
+            <th>NAME</th>
+            <th>PRICE</th>
+            <th>IMAGE</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="product : ${products}">
+            <td>
+                <input type="checkbox" th:value="${product.id}" name="productIds"/>
+            </td>
+            <td>
+                <button type="submit">삭제</button>
+                <button type="submit">수정</button>
+            </td>
+            <td th:text="${product.id}">id</td>
+            <td th:text="${product.name}">name</td>
+            <td th:text="${product.price}">price</td>
+            <td>
+                <img th:src="${product.imageUrl}" width="200" height="200" alt="Product Image"/>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+</a>
+
+</body>
+</html>

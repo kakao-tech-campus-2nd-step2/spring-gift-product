@@ -1,54 +1,24 @@
 package gift;
 
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.*;
 
-@RestController
+@Controller
 public class ProductController {
-    private final Map<Long, Product> products = new HashMap<>();
+    ProductMemoryDB productDB = ProductMemoryDB.getInstance();
 
-    //Create
-    //상품 추가
-    @PostMapping("api/products")
-    public String addProduct(@RequestBody Product product) {
-가        if (products.containsKey(product.getId())) {
-            return "추가 실패, 해당 id를 가진 상품이 이미 존재합니다.";
-        }
-        products.put(product.getId(), product);
-        return "상품 추가 성공!";
-    }
-    //Read
-    //등록된 상품들의 리스트 반환
-    @GetMapping("api/products")
-    public List<Product> getProducts() {
-        List<Product> productList = new ArrayList<>();
+    @GetMapping("/")
+    public String getProducts(Model model) {
 
-        for (Map.Entry<Long, Product> entry : products.entrySet()) {
-            productList.add(entry.getValue());
-        }
+        model.addAttribute("products", productDB.getProducts());
+        System.out.println("hello");
+        return "version-SSR/index.html";
+    }
 
-        return productList;
-    }
-    //Update
-    //해당 id를 가진 상품 정보를 수정
-    @PutMapping("api/products/{id}")
-    public String updateProduct(@PathVariable("id") Long id, @RequestBody Product product) {
-        if (products.containsKey(id)) {
-            products.put(id, product);
-            return "상품 수정 성공!";
-        }
-        return "수정 실패, 해당 id를 가진 상품이 존재하지 않습니다";
-    }
-    //Delete
-    //해당 id를 가진 상품을 삭제
-    @DeleteMapping("api/products/{id}")
-    public String deleteProduct(@PathVariable("id") Long id) {
-        if (products.containsKey(id)) {
-            products.remove(id);
-            return "상품 삭제 성공!";
-        }
-        return "삭제 실패, 해당 id를 가진 상품이 존재하지 않습니다";
-    }
 
 }
