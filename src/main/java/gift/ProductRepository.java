@@ -32,10 +32,16 @@ public class ProductRepository {
         return product;
     }
 
+    public void deleteProduct(Long id) throws ProductNotFoundException{
+        validateProduct(id);
+        products.remove(id);
+    }
+
     private void validateProduct(Long id) throws ProductNotFoundException{
         Product product = products.get(id);
         if (product == null){
             throw new ProductNotFoundException("product is not found");
         }
     }
+
 }
