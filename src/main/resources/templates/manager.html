@@ -7,7 +7,7 @@
 <body>
 <h1>Manager Employees</h1>
 
-<form th:action="@{/api/products/new}" method="get" style="margin-bottom: 20px;">
+<form th:action="@{/products/new}" method="get" style="margin-bottom: 20px;">
     <button type="submit">상품 저장</button>
 </form>
 
@@ -25,10 +25,10 @@
         <td th:text="${productDto.price()}"></td>
         <td th:text="${productDto.imageUrl()}"></td>
         <td>
-            <form th:action="@{/api/products/{id}/edit(id=${productDto.id()})}" method="get" style="display:inline;">
+            <form th:action="@{/products/{id}/edit(id=${productDto.id()})}" method="get" style="display:inline;">
                 <button type="submit">Edit</button>
             </form>
-            <form th:action="@{/api/products/{id}/delete(id=${productDto.id()})}" method="post" style="display:inline;">
+            <form th:action="@{/products/{id}/delete(id=${productDto.id()})}" method="post" style="display:inline;">
                 <button type="submit">Delete</button>
             </form>
         </td>
