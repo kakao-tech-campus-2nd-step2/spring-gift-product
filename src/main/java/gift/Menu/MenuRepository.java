@@ -8,7 +8,7 @@ import java.util.Map;
 
 @Repository
 public class MenuRepository {
-    private static final Map<Long,Menu> menus = new HashMap<>();
+    private final Map<Long,Menu> menus = new HashMap<>();
     private Long id = 1L;
 
     public Menu save(Menu menu){
@@ -16,10 +16,11 @@ public class MenuRepository {
         menus.put(id++,menu);
         return menu;
     }
-    public void delete(Menu menu){
-        menus.remove(menu.getId());
+    public Long delete(Long id){
+        menus.remove(id);
+        return id;
     }
-    public static List<Menu> findAll(){
+    public List<Menu> findAll(){
         return menus.values()
                 .stream()
                 .toList();
