@@ -1,7 +1,7 @@
 # Read Me First
 The following was discovered as part of building this project:
 
-* The original package name 'com.kakaotech2.20jcode' is invalid and this project uses 'com.kakaotech2._jcode' instead.
+* The original package name 'com.kakaotech2.20jcode' is invalid and this project uses 'com.kakaotech2.j20' instead.
 
 # Getting Started
 
