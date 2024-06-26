@@ -2,6 +2,7 @@ package gift.controller;
 
 import gift.model.Product;
 import gift.service.ProductService;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,22 +45,23 @@ public class ProductController {
 
     //상품 단일 조회 기능
     @GetMapping("/{id}")
-    public String showOneProduct(@PathVariable Long id, Model model) {
-        Product product = productService.selectProductById(id);
-        model.addAttribute("product", product);
+    public String showOneProduct(@PathVariable("id") Long id, Model model) {
+        List<Product> products = new ArrayList<>();
+        products.add(productService.selectProductById(id));
+        model.addAttribute("products", products);
         return "products_list";
     }
 
     //상품 삭제 기능
     @GetMapping("/{id}/delete")
-    public String deleteProduct(@PathVariable Long id, Model model) {
+    public String deleteProduct(@PathVariable("id") Long id, Model model) {
         productService.deleteProduct(id);
         return "redirect:/products";
     }
 
     //상품 수정 폼 페이지
     @GetMapping("/{id}/update")
-    public String updateProductForm(@PathVariable Long id, Model model) {
+    public String updateProductForm(@PathVariable("id") Long id, Model model) {
         Product product = productService.selectProductById(id);
         model.addAttribute("product", product);
         return "update_form";
@@ -67,7 +69,7 @@ public class ProductController {
 
     //상품 수정 기능
     @PostMapping("/{id}")
-    public String updateProduct(@PathVariable Long id, Product updateProduct) {
+    public String updateProduct(@PathVariable("id") Long id, Product updateProduct) {
         productService.updateProduct(id, updateProduct);
         return "redirect:/products/" + id;
     }
