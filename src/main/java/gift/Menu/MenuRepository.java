@@ -1,4 +1,4 @@
-package Menu;
+package gift.Menu;
 
 import org.springframework.stereotype.Repository;
 

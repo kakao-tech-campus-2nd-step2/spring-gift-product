@@ -1,4 +1,4 @@
-package Menu;
+package gift.Menu;
 
 public record MenuRequest(
         String name,
