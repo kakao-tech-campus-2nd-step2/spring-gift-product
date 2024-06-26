@@ -1,29 +1,42 @@
-# spring-gift-product
+# spring-gift-product 웹 페이지
 - 상품을 조회, 추가, 수정, 삭제할 수 있는 간단한 HTTP API를 구현한다.
-- HTTP 요청, 응답은 JSON 형식으로 주고받는다.
 - 별도 DB 없이 적절한 자바 컬렉션 프레임워크를 사용하여 저장한다.
+- 관리자 웹페이지를 구현한다.
+	- Thymeleaf를 사용하여 서버 사이드 렌더링으로 구현한다.
+	- 상품 이미지는 파일 업로드가 아닌 URL을 직접 입력한다.
 
 ## 기능 요구사항 명세
-### 상품 추가
-- 입력받은 payload에 맞는 product 객체를 생성하여 저장.
-```
-POST /api/products/{id}
-```
-
-### 상품 조회
-- 모든 상품 정보들의 리스트를 JSON으로 반환.
+### 상품 조회 페이지
+- 모든 상품들의 정보를 나타내는 페이지를 서버 사이드 렌더링하여 반환.
 ```
 GET /api/products
 ```
+### 상품 추가 페이지
+- 추가할 상품의 정보를 폼 태그에 입력하는 페이지.
+```
+GET /api/products/add
+```
+
+### 상품 수정 페이지
+- 상품의 정보를 수정할 수 있는 폼 태그 페이지.
+```
+GET /api/products/modify
+```
+
+### 상품 추가
+- HTML 폼 정보에 맞게 상품을 추가하고 목록 페이지로 리다이렉션.
+```
+POST /api/products/add
+```
 
 ### 상품 수정
-- payload에 맞게 상품의 정보를 수정.
+- 수정된 정보에 맞게 상품을 수정하고 목록 페이지로 리다이렉션.
 ```
-PUT /api/products/{id}
+PUT /api/products/modify
 ```
 
 ### 상품 삭제
-- 명시된 id에 부합하는 상품을 삭제.
+- 해당하는 상품을 삭제.
 ```
 DELETE /api/products/{id}
 ```
