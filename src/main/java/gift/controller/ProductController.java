@@ -54,4 +54,29 @@ public class ProductController {
         return ResponseEntity.ok(product);
     }
 
+    /**
+     * 상품 수정
+     * @param product 수정할 상품 (JSON 형식)
+     *    ㄴ받는 Product에 id 필드 값이 포함 되어 있어야 한다.
+     * @return 수정된 상품
+     */
+    @PutMapping("")
+    public ResponseEntity<Product> updateProduct(@RequestBody Product product) {
+        Long productId = product.getId();
+        if (!productExists(productId)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        products.put(productId, product);
+        return ResponseEntity.ok(product);
+    }
+
+    /**
+     * 상품 존재 여부 확인
+     * @param id Product Id
+     * @return 존재하면 true, 그렇지 않으면 false
+     */
+    public boolean productExists(Long id) {
+        return products.containsKey(id);
+    }
+
 }
