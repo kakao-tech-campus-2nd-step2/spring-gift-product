@@ -46,7 +46,6 @@ public class ProductController {
             throw new IllegalArgumentException("존재하지 않는 상품입니다.");
         }
         Product product = products.get(id);
-        product.setId(id);
         product.setName(productDTO.name());
         product.setPrice(productDTO.price());
         product.setImageUrl(productDTO.imageUrl());
