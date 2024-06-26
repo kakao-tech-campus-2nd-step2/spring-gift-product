@@ -5,6 +5,7 @@ import gift.product.model.Product;
 import gift.product.service.ProductService;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -46,5 +47,12 @@ public class ProductController {
     public ResponseEntity<Product> updateProduct(@PathVariable(name = "id") Long id, @RequestBody ProductDTO productDTO) {
         Product product = productService.updateProduct(id, productDTO);
         return ResponseEntity.ok(product);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable(name = "id") Long id) {
+        productService.deleteProduct(id);
+
+        return ResponseEntity.ok().build();
     }
 }

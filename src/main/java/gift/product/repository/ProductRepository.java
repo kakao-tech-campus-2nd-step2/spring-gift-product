@@ -30,4 +30,8 @@ public class ProductRepository {
         Long id = product.getId();
         products.put(id, product);
     }
+
+    public void delete(Long id) {
+        products.remove(id);
+    }
 }
