@@ -52,4 +52,17 @@ public class ProductService {
         productRepository.deleteAll();
     }
 
+    public Long updateProduct(Long id, ProductRequest request) {
+        if (!id.equals(request.id())) {
+            deleteProductById(id);
+            createProduct(request);
+            return request.id();
+        }
+        Product product = productRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("해당 상품은 존재하지 않습니다")
+        );
+        product.update(request);
+        return product.getId();
+    }
+
 }

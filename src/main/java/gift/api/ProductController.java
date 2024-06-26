@@ -52,4 +52,8 @@ public class ProductController {
     }
 
     // 상품 수정
+    @PatchMapping("/{id}")
+    public Long updateProduct(@PathVariable Long id, @RequestBody ProductRequest request) {
+        return productService.updateProduct(id, request);
+    }
 }
