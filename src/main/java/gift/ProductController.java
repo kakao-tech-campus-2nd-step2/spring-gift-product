@@ -40,8 +40,18 @@ public class ProductController {
 
     @PutMapping("/{productId}")
     public ResponseEntity<ProductModel> 상품수정(@PathVariable("productId") long id, @RequestBody ProductModel updatedProduct) {
-        ProductModel product = productService.updateProduct(id, updatedProduct);
-        return product != null ? ResponseEntity.ok(product) : ResponseEntity.notFound().build();
+        ProductModel existingProduct = productService.getProductById(id);
+        if (existingProduct != null) {
+            // 업데이트할 내용을 설정
+            existingProduct.setCategory(updatedProduct.getCategory());
+            existingProduct.setName(updatedProduct.getName());
+            existingProduct.setPrice(updatedProduct.getPrice());
+
+            ProductModel updated = productService.updateProduct(id, existingProduct);
+            return ResponseEntity.ok(updated);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @DeleteMapping("/{productId}")

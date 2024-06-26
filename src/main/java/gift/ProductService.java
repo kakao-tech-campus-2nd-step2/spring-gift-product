@@ -33,9 +33,11 @@ public class ProductService {
     public ProductModel updateProduct(long id, ProductModel updatedProduct) {
         ProductModel product = products.get(id);
         if (product != null) {
-            updatedProduct.id = id;
-            products.put(id, updatedProduct);
-            return updatedProduct;
+            product.category = updatedProduct.category; // 카테고리 업데이트
+            product.name = updatedProduct.name; // 이름 업데이트
+            product.price = updatedProduct.price; // 가격 업데이트
+            products.put(id, product);
+            return product;
         }
         return null;
     }
