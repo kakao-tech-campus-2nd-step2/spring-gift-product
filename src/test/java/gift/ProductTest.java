@@ -9,6 +9,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 public class ProductTest {
+
     private final ProductService productService = new ProductService();
 
     @AfterEach
@@ -69,10 +70,10 @@ public class ProductTest {
     @Test
     public void deleteProduct() {
         ProductDTO productDTO = new ProductDTO("사과", 3000, "사진링크");
-        Product apple = productService.insertProduct(productDTO);
+        productService.insertProduct(productDTO);
 
         productDTO = new ProductDTO("바나나", 1500, "사진링크2");
-        Product banana = productService.insertProduct(productDTO);
+        productService.insertProduct(productDTO);
 
         productService.deleteProduct(1L);
 
