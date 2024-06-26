@@ -23,17 +23,14 @@ public class ProductController {
     }
     @GetMapping("/admin/add")
     public ModelAndView adminProductsAdd(Model model){
-        //model.addAttribute("products", products.values());
         return new ModelAndView("admin/add");
     }
     @GetMapping("/admin/modify")
     public ModelAndView adminProductsModify(Model model){
-        //model.addAttribute("products", products.values());
         return new ModelAndView("admin/modify");
     }
     @GetMapping("/admin/delete")
     public ModelAndView adminProductsDelete(Model model){
-        //model.addAttribute("products", products.values());
         return new ModelAndView("admin/delete");
     }
 
