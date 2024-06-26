@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -75,5 +76,11 @@ public class ProductController {
                 product.getPrice(),
                 product.getImageUrl()
         );
+    }
+
+    @DeleteMapping("/products/{productId}")
+    public boolean deleteProduct(@PathVariable Long productId) {
+        Product removedProduct = products.remove(productId);
+        return removedProduct != null;
     }
 }
