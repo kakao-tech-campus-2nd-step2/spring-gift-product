@@ -1,9 +1,4 @@
 package gift.model;
-/*
-- 데이터 구조를 정의, 비즈니스 로직을 포함하지 않음
-- DTO 클래스 포함
-- 주로 JSON 형태의 데이터를 표현하는데 사용
- */
 
 public class Product {
     // 필드 생성
