@@ -30,4 +30,9 @@ public class ProductController {
     public List<Product> getAllProduct() {
         return products.values().stream().collect(Collectors.toList());
     }
+
+    @DeleteMapping("/api/products/{id}")
+    public Product deleteProduct(@PathVariable(value = "id") long id) {
+        return products.remove(id);
+    }
 }
