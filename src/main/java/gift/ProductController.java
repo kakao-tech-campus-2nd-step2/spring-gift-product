@@ -4,7 +4,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RequestMapping("/api")
@@ -27,6 +29,28 @@ public class ProductController {
         } else {
             return new ResponseEntity(HttpStatus.CONFLICT);
         }
+    }
+
+    @GetMapping("/products")
+    public ResponseEntity<List<Product>> getAllProducts() {
+        List<Product> productsList = new ArrayList<>();
+
+        products.forEach((key, value) -> {
+            productsList.add(value);
+        });
+
+        return new ResponseEntity(productsList, HttpStatus.OK);
+    }
+
+    @GetMapping("/products/{id}")
+    public ResponseEntity<Product> getProduct(@PathVariable("id") Long id) {
+        Product product = products.get(id);
+
+        if (product != null) {
+            return new ResponseEntity<>(product, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
 }
