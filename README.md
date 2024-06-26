@@ -2,10 +2,13 @@
 
 ## Step1 상품 API
 
+- [x] Product 클래스 생성
+- [x] Products 클래스 생성
+  - [x] Bean등록
+  - [x] DI
 - [ ] CRUD
-  - Product 클래스 생성
-  - [ ] GetMapping
-    - [ ] Test
+  - [x] GetMapping
+    - [x] Test
   - [ ] PostMapping
     - [ ] Test
   - [ ] PatchMapping
