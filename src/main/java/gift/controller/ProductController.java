@@ -36,6 +36,13 @@ public class ProductController {
         return ResponseEntity.ok(product);
     }
 
+    @PostMapping
+    public ResponseEntity<Product> addProduct(@RequestBody ProductRequestDto productRequestDto) {
+        Product product = convertToProduct(productRequestDto);
+        Product createdProduct = productService.addProduct(product);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdProduct);
+    }
+
     //DTO 변환 메서드
     private Product convertToProduct(ProductRequestDto productRequestDto) {
         Product product = new Product();
