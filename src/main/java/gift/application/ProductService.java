@@ -30,8 +30,11 @@ public class ProductService {
         return responseList;
     }
 
-    public Optional<Product> getProductById(Long id) {
-        return productRepository.findById(id);
+    public ProductResponse getProductById(Long id) {
+        Product product = productRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("해당 상품은 존재하지 않습니다")
+        );
+        return new ProductResponse(product);
     }
 
 }
