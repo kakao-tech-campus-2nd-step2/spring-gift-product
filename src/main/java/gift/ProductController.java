@@ -37,6 +37,14 @@ public class ProductController {
         return "redirect:/api/products";
     }
 
+    @PostMapping("/api/products/{id}")
+    public String deleteProduct(@PathVariable(name = "id") Long id) {
+        if(productMap.containsKey(id)) {
+            productMap.remove(id);
+        }
+        return "redirect:/api/products";
+    }
+
     @PutMapping("/api/products/{id}")
     public String updateProduct(@RequestBody Product updatedProduct, @PathVariable(name = "id") Long id) {
         if(productMap.containsKey(id)) {
@@ -44,14 +52,5 @@ public class ProductController {
             return "상품 정보 수정이 완료되었습니다.";
         }
         return "해당 상품이 존재하지 않습니다.";
-    }
-
-    @DeleteMapping("/api/products/{id}")
-    public String deleteProduct(@PathVariable(name = "id") Long id) {
-        if(productMap.containsKey(id)) {
-            productMap.remove(id);
-            return "상품 삭제가 완료되었습니다.";
-        }
-        return "해당 상품이 존재하지 않습니다";
     }
 }
