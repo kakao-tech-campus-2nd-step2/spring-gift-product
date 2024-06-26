@@ -28,4 +28,10 @@ public class ProductController {
         model.addAttribute("productDto", new ProductRequestDto());
         return "products/add";
     }
+
+    @PostMapping
+    public String addProduct(@ModelAttribute ProductRequestDto productDto) {
+        productService.save(productDto);
+        return "redirect:/products";
+    }
 }
