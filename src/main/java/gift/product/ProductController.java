@@ -34,7 +34,7 @@ public class ProductController {
 
     @GetMapping("/products/{productId}")
     public ProductResDto getProduct(@PathVariable Long productId) {
-        Product product = products.get(productId);
+        Product product = getProductById(productId);
 
         return new ProductResDto(
                 product.getId(),
@@ -64,7 +64,7 @@ public class ProductController {
 
     @PutMapping("/products/{productId}")
     public ProductResDto updateProduct(@PathVariable Long productId, @RequestBody ProductReqDto productReqDto) {
-        Product product = products.get(productId);
+        Product product = getProductById(productId);
 
         product.setName(productReqDto.name());
         product.setPrice(productReqDto.price());
@@ -80,7 +80,18 @@ public class ProductController {
 
     @DeleteMapping("/products/{productId}")
     public boolean deleteProduct(@PathVariable Long productId) {
-        Product removedProduct = products.remove(productId);
+        Product product = getProductById(productId);
+        Product removedProduct = products.remove(product.getId());
         return removedProduct != null;
+    }
+
+    private Product getProductById(Long productId) {
+        Product product = products.get(productId);
+
+        if (product == null) {
+            throw new IllegalArgumentException("Product not found");
+        }
+
+        return product;
     }
 }
