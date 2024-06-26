@@ -26,4 +26,8 @@ public class MenuService {
         Long deletedId = menuRepository.delete(id);
         return id;
     }
+
+    public Menu update(Long id, String name, int price, String imageUrl) {
+        return menuRepository.update(id,name,price,imageUrl);
+    }
 }
