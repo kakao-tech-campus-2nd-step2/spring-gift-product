@@ -2,6 +2,8 @@ package gift.Controller;
 
 import gift.Model.Product;
 import java.util.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,5 +22,10 @@ public class ProductController {
         Product newProduct = new Product(id, name, price, imageUrl);
         products.put(id, newProduct);
         return newProduct;
+    }
+
+    @GetMapping("/api/products/{id}")
+    public Product getProduct(@PathVariable(value = "id") long id) {
+        return products.get(id);
     }
 }
