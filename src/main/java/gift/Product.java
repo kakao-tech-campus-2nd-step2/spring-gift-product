@@ -6,6 +6,18 @@ public class Product {
     private Long id;
     private String name;
     private int price;
+    private String imageUrl;
+
+    public Product(Long id, String name, int price, String imageUrl) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.imageUrl = imageUrl;
+    }
+
+    public Product() {
+    }
+
 
     public void setId(Long id) {
         this.id = id;
@@ -21,18 +33,6 @@ public class Product {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
-    }
-
-    private String imageUrl;
-
-    public Product(Long id, String name, int price, String imageUrl) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.imageUrl = imageUrl;
-    }
-
-    public Product() {
     }
 
     public Long getId() {
