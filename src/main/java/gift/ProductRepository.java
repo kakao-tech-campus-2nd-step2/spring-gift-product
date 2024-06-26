@@ -23,8 +23,13 @@ public class ProductRepository {
         return products.get(id);
     }
 
-    public void updateProduct(Long id, Product updateProduct) {
-        
+    public Product updateProduct(Long id, Product updateProduct) throws ProductNotFoundException{
+        Product product = findById(id);
+        product.setName(updateProduct.getName());
+        product.setPrice(updateProduct.getPrice());
+        product.setImageUrl(updateProduct.getImageUrl());
+        products.put(id, product);
+        return product;
     }
 
     private void validateProduct(Long id) throws ProductNotFoundException{
