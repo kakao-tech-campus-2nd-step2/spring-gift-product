@@ -42,7 +42,14 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.CREATED).body("Product added successfully.");
     }
 
-
+    // DELETE - 상품 삭제
+    public ResponseEntity<String> deleteProduct(@PathVariable Long id) {
+        if (!products.containsKey(id)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("존재하지 않는 상품입니다.");
+        }
+        products.remove(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Product deleted successfully.");
+    }
 
 
 
