@@ -8,6 +8,7 @@ import gift.repository.ProductRepositoryImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -39,7 +40,7 @@ class ProductControllerTest {
 
         assertNotNull(products);
         assertEquals(2, products.size());
-        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
 
@@ -50,7 +51,7 @@ class ProductControllerTest {
         productService.createProduct(product);
 
         ResponseEntity<Product> response = productController.getProductById(1L);
-        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
         assertEquals(1L, response.getBody().getId());
         assertEquals("Product1", response.getBody().getName());
@@ -64,7 +65,7 @@ class ProductControllerTest {
         Product product = new Product(null, "Product1", 100, "http://example.com/image1");
 
         ResponseEntity<Product> response = productController.createProduct(product);
-        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
         assertEquals(1L, response.getBody().getId());
         assertEquals("Product1", response.getBody().getName());
@@ -80,7 +81,7 @@ class ProductControllerTest {
 
         Product updatedProduct = new Product(1L, "UpdatedProduct1", 150, "http://example.com/updated_image1");
         ResponseEntity<Product> response = productController.updateProduct(1L, updatedProduct);
-        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
         assertEquals("UpdatedProduct1", response.getBody().getName());
         assertEquals(150, response.getBody().getPrice());
@@ -94,7 +95,7 @@ class ProductControllerTest {
         productService.createProduct(product);
 
         ResponseEntity<Void> response = productController.deleteProduct(1L);
-        assertEquals(204, response.getStatusCodeValue());
+        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
 
         Product foundProduct = productService.getProductById(1L);
         assertNull(foundProduct);
