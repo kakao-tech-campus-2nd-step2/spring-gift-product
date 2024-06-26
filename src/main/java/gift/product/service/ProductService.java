@@ -3,6 +3,7 @@ package gift.product.service;
 import gift.product.dto.ProductDTO;
 import gift.product.model.Product;
 import gift.product.repository.ProductRepository;
+import java.util.List;
 
 public class ProductService {
 
@@ -19,5 +20,11 @@ public class ProductService {
         return product;
     }
 
+    public List<Product> getProductAll() {
+        return productRepository.findAll();
+    }
 
+    public Product getProduct(Long id) {
+        return productRepository.findById(id);
+    }
 }
