@@ -64,6 +64,11 @@ public class AdminController {
         return "redirect:/admin";
 
     }
+    @PostMapping("/admin/delete/{id}")
+    public String giftDelete(@PathVariable("id") Long id){
+        giftDao.deleteById(id);
+        return "redirect:/admin";
+    }
 
 
 

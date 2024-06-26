@@ -23,6 +23,7 @@ public class GiftDao {
         }
         return gifts.get(id);
     }
+
     public Collection<Gift> findAll(){
         return gifts.values();
     }
