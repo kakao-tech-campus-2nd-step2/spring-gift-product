@@ -38,21 +38,21 @@
                 </thead>
 
                 <tbody>
-                <tr th:each="product:${products}">
+                <tr th:each="product:${products}" class="align-middle">
                     <td th:text="${product.id}">상품 일련번호</td>
                     <td th:text="${product.name}">상품 이름</td>
                     <td th:text="${product.price}">상품 가격</td>
                     <td>
-                        <a th:href="${product.imageUrl}"
-                           th:text="${product.imageUrl}">상품 이미지
+                        <a th:href="${product.imageUrl}">
+                            <img th:src="${product.imageUrl}" alt="Not found image" style="width: 40px; height:40px;"/>
                         </a>
                     </td>
                     <td>
                         <form role="form" th:action="@{/api/products/{pid}(pid=${product.id})}" method="post">
-                            <button class="btn btn-secondary"
+                            <button type="button" class="btn btn-secondary"
                                     th:onclick="|location.href='@{/api/products/{pid}(pid=${product.id})}'|">
                                 수정 </button>
-                            <input type="submit" value="삭제" class="btn btn-danger">
+                            <button type="submit" class="btn btn-danger">삭제</button>
                         </form>
                     </td>
                 </tr>
