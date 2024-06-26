@@ -58,9 +58,9 @@ public class ProductController {
     public ResponseEntity<Product> deleteProduct(@PathVariable Long id) {
         try {
             productService.deleteProduct(id);
-            return new ResponseEntity<>(productService.getProductById(id), HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(productService.getProductById(id), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 }
