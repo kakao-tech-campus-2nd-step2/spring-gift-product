@@ -2,7 +2,23 @@
 
 # 프로젝트 요구사항
 
-## 기능 요구사항
+## 프로그래밍 요구 사항
+- 자바 코드 컨벤션을 지키면서 프로그래밍한다.
+  - 기본적으로 Google Java Style Guide를 원칙으로 한다.
+  - 단, 들여쓰기는 '2 spaces'가 아닌 '4 spaces'로 한다.
+- indent(인덴트, 들여쓰기) depth를 3이 넘지 않도록 구현한다. 2까지만 허용한다.
+  - 예를 들어 while문 안에 if문이 있으면 들여쓰기는 2이다.
+  - 힌트: indent(인덴트, 들여쓰기) depth를 줄이는 좋은 방법은 함수(또는 메서드)를 분리하면 된다.
+- 3항 연산자를 쓰지 않는다.
+- 함수(또는 메서드)의 길이가 15라인을 넘어가지 않도록 구현한다.
+  - 함수(또는 메서드)가 한 가지 일만 잘 하도록 구현한다.
+- else 예약어를 쓰지 않는다.
+  - else를 쓰지 말라고 하니 switch/case로 구현하는 경우가 있는데 switch/case도 허용하지 않는다.
+  - 힌트: if 조건절에서 값을 return하는 방식으로 구현하면 else를 사용하지 않아도 된다.
+
+# STEP-1
+
+## 기능 요구 사항
 
 - 상품을 조회, 추가, 수정, 삭제 (CRUD) 할 수 있는 간단한 HTTP API를 구현한다
   - 현재는 별도의 DB가 없어서 적절한 JCF를 사용하여 메모리에 저장한다.
@@ -10,7 +26,7 @@
   - 아래의 예시와 같이 구현한다.
 
 - REQUSET
-```GET /api/products HTTP/1.1```
+  ```GET /api/products HTTP/1.1```
 - Response
     ```
     HTTP/1.1 200 
@@ -26,21 +42,7 @@
     ]
     ```
 
-## 프로그래밍 요구 사항
-- 자바 코드 컨벤션을 지키면서 프로그래밍한다.
-  - 기본적으로 Google Java Style Guide를 원칙으로 한다.
-  - 단, 들여쓰기는 '2 spaces'가 아닌 '4 spaces'로 한다.
-- indent(인덴트, 들여쓰기) depth를 3이 넘지 않도록 구현한다. 2까지만 허용한다.
-  - 예를 들어 while문 안에 if문이 있으면 들여쓰기는 2이다.
-  - 힌트: indent(인덴트, 들여쓰기) depth를 줄이는 좋은 방법은 함수(또는 메서드)를 분리하면 된다.
-- 3항 연산자를 쓰지 않는다.
-- 함수(또는 메서드)의 길이가 15라인을 넘어가지 않도록 구현한다.
-  - 함수(또는 메서드)가 한 가지 일만 잘 하도록 구현한다.
-- else 예약어를 쓰지 않는다.
-  - else를 쓰지 말라고 하니 switch/case로 구현하는 경우가 있는데 switch/case도 허용하지 않는다.
-  - 힌트: if 조건절에서 값을 return하는 방식으로 구현하면 else를 사용하지 않아도 된다.
-
-# 프로젝트 구조
+## 프로젝트 구조
 - src/main/java/gift
   - controller
     - ProductController.java
@@ -48,7 +50,7 @@
     - Product.java
   - Application.java
 
-# 상품 도메인 정의
+## 상품 도메인 정의
 
 - 상품의 상태 정보
   - Long타입의 id
@@ -57,7 +59,7 @@
   - String타입의 이미지 URL
 
 
-# 프로젝트 기능
+## 프로젝트 기능
 
 - 전체 상품 조회
 - 단일 상품 조회
@@ -65,7 +67,7 @@
 - 상품 삭제
 - 상품 수정
 
-# 해당 API
+## 해당 API
 
 1. 전체 상품 조회
 - HTTP method: GET
@@ -167,3 +169,39 @@
       }
     ]
     ```
+
+# STEP-2
+
+## 기능 요구 사항
+
+- 상품을 조회, 추가, 수정, 삭제할 수 있는 관리자 화면을 구현한다.
+- Thymeleaf를 사용하여 서버 사이드 렌더링을 구현한다.
+- 기본적으로는 HTML 폼 전송 등을 이용한 페이지 이동을 기반으로 하지만, 자바스크립트를 이용한 비동기 작업에 관심이 있다면 이미 만든 상품 API를 이용하여 AJAX 등의 방식을 적용할 수 있다.
+- 상품 이미지의 경우, 파일을 업로드하지 않고 URL을 직접 입력한다.
+
+## dependency 추가사항
+- Thymleaf
+
+## 프로젝트 구조
+- src/main/java/gift
+  - controller
+    - ProductController.java
+  - model
+    - Product.java
+  - service
+    - ProductService.java
+  - Application.java
+- src/resources/templates
+  - create_form.html
+  - update_form.html
+  - product_list.html
+
+## template의 역할
+- product_list.html
+  - 상품의 `정보` (id, 이름, 가격, 이미지)와 `버튼`(수정, 삭제)가 한줄.
+  - 이러한 줄들이 아래로 쭉 전체 나열 된다.
+  - 그리고 맨 위에 `상품 추가`버튼이 존재
+- create_form.html
+  - `상품 추가`버튼을 눌렀을 때 `form`을 통해 추가할 상품의 정보를 기입
+- update_form.html
+  - `상품 수정`버튼을 눌렀을 때 `form`을 통해 변경할 상품의 정보를 기입
