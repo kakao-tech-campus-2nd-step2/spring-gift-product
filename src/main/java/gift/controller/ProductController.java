@@ -71,6 +71,20 @@ public class ProductController {
     }
 
     /**
+     * 상품 삭제
+     * @param id 삭제할 상품의 ID
+     * @return HTTP State - No Content
+     */
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable(value = "id") Long id) {
+        if (!productExists(id)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        products.remove(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    /**
      * 상품 존재 여부 확인
      * @param id Product Id
      * @return 존재하면 true, 그렇지 않으면 false
