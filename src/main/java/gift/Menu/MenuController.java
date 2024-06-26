@@ -34,5 +34,19 @@ public class MenuController {
         return deletedId;
     }
 
+    @PutMapping("/{id}")
+    public Menu update(
+            @PathVariable("id") Long id,
+            @RequestBody MenuRequest request
+    ){
+        Menu updatedMenu = menuService.update(
+                id,
+                request.name(),
+                request.price(),
+                request.imageUrl()
+        );
+        return updatedMenu;
+    }
+
 
 }
