@@ -8,7 +8,9 @@ import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,6 +35,16 @@ public class ProductController {
         long id = product.id();
         products.put(id, product);
         return new ResponseEntity<>(product, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/products/{id}")
+    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product product) {
+        if (!products.containsKey(id)) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Product updatedProduct = new Product(id, product.name(), product.price(), product.imageUrl());
+        products.put(id, updatedProduct);
+        return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
     }
 
 
