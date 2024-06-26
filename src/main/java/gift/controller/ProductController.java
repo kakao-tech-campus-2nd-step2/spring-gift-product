@@ -1,10 +1,7 @@
 package gift.controller;
 import gift.domain.Product;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,5 +29,13 @@ public class ProductController {
     @GetMapping
     public ResponseEntity<List<Product>> getProducts() {
         return ResponseEntity.ok(new ArrayList<>(products.values()));
+    }
+
+    // POST : 새로운 상품 추가
+    @PostMapping
+    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
+        product.setId(sequenceId++);
+        products.put(product.getId(), product);
+        return ResponseEntity.ok(product);
     }
 }
