@@ -18,13 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProductController {
 
     private final Map<Long, Product> products = new HashMap<>();
+    private static long sequence = 0L;
 
     @PostMapping("/api/product")
     public void registerProduct(@RequestBody ProductDTO productDTO) {
-        if (products.containsKey(productDTO.id())) {
-            throw new IllegalArgumentException("이미 존재하는 상품입니다.");
-        }
-        products.put(productDTO.id(), productDTO.toEntity());
+        sequence++;
+        products.put(sequence, productDTO.toEntity(sequence));
     }
 
     @GetMapping("/api/products")
