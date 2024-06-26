@@ -1,4 +1,4 @@
-package com.kakaotech2._jcode;
+package com.kakaotech2.j20;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

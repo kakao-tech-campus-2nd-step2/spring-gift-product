@@ -1,4 +1,4 @@
-package com.kakaotech2._jcode;
+package com.kakaotech2.j20;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

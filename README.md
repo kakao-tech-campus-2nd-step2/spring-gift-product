@@ -1,23 +1,37 @@
 # BE-kakao-gift
 카카오테크 캠퍼스 Step2 카카오 선물하기 백엔드 클론 프로젝트 레포지토리입니다.
 
-## **코드리뷰 관련: PR시, 아래 내용을 포함하여 코멘트 남겨주세요.**
-Pull Request 제목과 내용은 아래와 같이 작성 해주세요.
+## 부산대 BE 이영준
 
-**1. PR 제목:**
+# 구현 기능
 
->- PR 제목 : 부산대 BE_라이언_1주차 과제
+## ProductController.class
 
-</br>
+### method
 
-**1. PR 내용:**
+- getList : 상품들의 목록을 반환합니다.
+- add : 새 상품을 추가합니다.
+- delete : 기존 상품을 삭제합니다
+- update : 기존 상품을 수정합니다.
 
->- 코드 작성하면서 어려웠던 점
->- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
+## Product.class
 
-</br>
+### member
 
-</div>
-</details>
+- id : long
+- name : string
+- price : int
+- imageUrl : string
 
----
+## ProductMananger.class
+
+### method
+
+- read : 상품 목록을 데이터에서 조회해옵니다.
+- create : 새로운 상품을 추가
+- delete : 상품을 삭제합니다.
+- update : 기존 상품을 수정합니다.
+
+
+# 기타 유의사항
+
