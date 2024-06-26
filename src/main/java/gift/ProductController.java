@@ -19,14 +19,14 @@ public class ProductController {
 
     // 모든 상품을 보여주는 페이지
     @GetMapping
-    public String showAllProducts(Model model) {
+    public String AllProducts(Model model) {
         model.addAttribute("products", products.values());
         return "Products"; // products.html Thymeleaf 템플릿으로 렌더링
     }
 
     // 상품 추가 폼 페이지
     @GetMapping("/add")
-    public String showAddProductForm(Model model) {
+    public String addProductForm(Model model) {
         model.addAttribute("product", new Product());
         return "Add_product"; // Add_product.html Thymeleaf 템플릿으로 렌더링
     }
@@ -40,7 +40,7 @@ public class ProductController {
 
     // 상품 수정 폼 페이지
     @GetMapping("/edit/{id}")
-    public String showEditProductForm(@PathVariable Long id, Model model) {
+    public String EditProductForm(@PathVariable Long id, Model model) {
         Product product = products.get(id);
         model.addAttribute("product", product);
         return "Edit_product"; // edit_product.html Thymeleaf 템플릿으로 렌더링
@@ -48,7 +48,7 @@ public class ProductController {
 
     // 실제 상품 수정 처리
     @PostMapping("/update/{id}")
-    public String updateProduct(@PathVariable Long id, @ModelAttribute Product product) {
+    public String editProduct(@PathVariable Long id, @ModelAttribute Product product) {
         product.setId(id);
         products.put(id, product);
         return "redirect:/admin/products"; // 상품 목록 페이지로 바로가기

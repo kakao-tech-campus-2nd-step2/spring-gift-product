@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Edit Product</title>
+  <title>상품 수정</title>
   <link rel="stylesheet" th:href="@{/css/Add_Edit_product.css}">
 </head>
 <body>
-<h1>Edit Product</h1>
+<h1>상품 수정/h1>
 <form th:action="@{/admin/products/update/{id}(id=${product.id})}" th:object="${product}" method="post">
 <!--  무결성 문제로 인해 id는 수정 불가능하게 설정-->
   <div>
@@ -21,7 +21,7 @@
     <input type="text" id="imageUrl" th:field="*{imageUrl}" required />
   </div>
   <div>
-    <button type="submit">Update Product</button>
+    <button type="submit">수정하기</button>
   </div>
 </form>
 </body>
