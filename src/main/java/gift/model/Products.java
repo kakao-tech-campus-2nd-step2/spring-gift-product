@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
-public class Products implements RepositoryInterface<Product, Long>{
+public class Products implements ProductRepository{
     private final TreeMap<Long, Product> products;
 
     public Products() {
@@ -31,3 +31,4 @@ public class Products implements RepositoryInterface<Product, Long>{
         return new ArrayList<>(products.values());
     }
 }
+
