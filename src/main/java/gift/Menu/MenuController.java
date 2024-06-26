@@ -19,10 +19,19 @@ public class MenuController {
         Menu newMenu = menuService.save(request.name(),request.price(),request.imageUrl());
         return newMenu;
     }
+
     @GetMapping
     public List<Menu> read(){
         List<Menu> menus = menuService.findall();
         return menus;
+    }
+
+    @DeleteMapping("/{id}")
+    public Long delete(
+            @PathVariable("id") Long id
+    ){
+        Long deletedId = menuService.delete(id);
+        return deletedId;
     }
 
 
