@@ -36,7 +36,7 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Product> updataProduct(@PathVariable long id, @RequestBody Product updatedProduct) {
+    public ResponseEntity<Product> updateProduct(@PathVariable long id, @RequestBody Product updatedProduct) {
         if (!products.containsKey(id)) {
             return ResponseEntity.notFound().build();
         }
@@ -53,6 +53,5 @@ public class ProductController {
         }
         return ResponseEntity.ok().build();
     }
-
 
 }
