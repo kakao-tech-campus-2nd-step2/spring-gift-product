@@ -1,4 +1,5 @@
 # spring-gift-product
+# step 1
 ## 기능 요구 사항
 * 상품을 조회, 추가, 수정, 삭제할 수 있는 간단한 HTTP API를 구현한다.
 * HTTP 요청과 응답은 JSON 형식으로 주고받는다.
@@ -56,3 +57,10 @@ public class Product {
 * product 삭제
   * /api/products/:id
   * 없으면 error 발생
+# step 2
+### /api/products/admin
+상품 관리
+### /api/products/admin/add
+상품 추가
+### /api/products/admin/:id
+상품 편집 및 삭제 가능
