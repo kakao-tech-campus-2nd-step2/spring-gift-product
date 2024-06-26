@@ -2,6 +2,8 @@ package gift.Menu;
 
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class MenuService {
     private final MenuRepository menuRepository;
@@ -15,4 +17,8 @@ public class MenuService {
         return menuRepository.save(menu);
     }
 
+    public List<Menu> findall() {
+        List<Menu> menus = MenuRepository.findAll();
+        return menus;
+    }
 }
