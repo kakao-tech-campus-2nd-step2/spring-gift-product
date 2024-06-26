@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>상품 목록</title>
+    <link href="../static/css/bootstrap.min.css"
+          th:href="@{/css/bootstrap.min.css}"
+          rel="stylesheet">
+</head>
+<body>
+
+    <div class="container">
+        <div class="py-5 text-center">
+            <h2>상품 목록</h2>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <button class="btn btn-primary"
+                        th:onclick="|location.href='@{/api/products/add}'|"
+                        type="button">
+                        상품 등록
+                </button>
+            </div>
+        </div>
+
+        <hr class="mt-5 pt-3">
+        <div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Product ID</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Image</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="product:${products}">
+                    <td th:text="${product.id}">상품 일련번호</td>
+                    <td th:text="${product.name}">상품 이름</td>
+                    <td th:text="${product.price}">상품 가격</td>
+                    <td>
+                        <a th:href="${product.imageUrl}"
+                           th:text="${product.imageUrl}">상품 이미지
+                        </a>
+                    </td>
+                    <td>
+                        <form role="form" th:action="@{/api/products/{pid}(pid=${product.id})}" method="post">
+                            <button class="btn btn-secondary"
+                                    th:onclick="|location.href='@{/api/products/{pid}(pid=${product.id})}'|">
+                                수정 </button>
+                            <input type="submit" value="삭제" class="btn btn-danger">
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
