@@ -1,2 +1,3 @@
-package gift.dto;public record ProductsDTO() {
-}
+package gift.dto;
+
+public record ProductsDTO(ProductDTO[] products) { }
