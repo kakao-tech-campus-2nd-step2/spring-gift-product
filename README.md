@@ -1,7 +1,7 @@
 # spring-gift-product
->>2단계 관리자 페이지
+> 2단계 관리자 페이지
 
->> 타임리프를 활용한 관리자 페이지 SSR
+> 타임리프를 활용한 관리자 페이지 SSR
 
 ## step2 - ToDo List
 - controller
