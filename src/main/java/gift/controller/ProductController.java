@@ -2,12 +2,15 @@ package gift.controller;
 
 import gift.dto.ProductResponseDto;
 import gift.model.Product;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,7 +24,20 @@ public class ProductController {
     private static Long sequence = 0L;
 
     @GetMapping("/api/products")
-    public ResponseEntity<ProductResponseDto> getProduct(@RequestParam("id") Long id) {
+    public ResponseEntity<List<ProductResponseDto>> getAllProducts() {
+
+        List<Product> productsList = products.values().stream().toList();
+        if(productsList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        List<ProductResponseDto> dtoList = productsList.stream()
+            .map(ProductResponseDto::new)
+            .toList();
+        return new ResponseEntity<>(dtoList, HttpStatus.OK);
+    }
+
+    @GetMapping("/api/products/{id}")
+    public ResponseEntity<ProductResponseDto> getProduct(@PathVariable Long id) {
 
         Product product = products.get(id);
         if (product == null) {
