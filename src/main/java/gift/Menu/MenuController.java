@@ -1,12 +1,14 @@
 package gift.Menu;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
+import java.util.LinkedList;
 import java.util.List;
+import org.springframework.ui.Model;
 
 @SpringBootApplication
-@RestController
+@Controller
 @RequestMapping("/menu")
 public class MenuController {
     MenuRepository menuRepository = new MenuRepository();
@@ -21,8 +23,9 @@ public class MenuController {
     }
 
     @GetMapping
-    public List<Menu> read(){
+    public List<Menu> read(Model model){
         List<Menu> menus = menuService.findall();
+        model.addAttribute("menus", menus);
         return menus;
     }
 
