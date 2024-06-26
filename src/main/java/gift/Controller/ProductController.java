@@ -29,4 +29,13 @@ public class ProductController {
         if (product != null) return "제거 성공";
         return "제거 실패";
     }
+
+    // key값이 id인 데이터 업데이트
+    @PutMapping("/products/{id}")
+    public String updateProduct(@PathVariable Long id, @RequestBody Product product){
+        products.put(id, product);
+
+        if(products.get(product.id()) == product) return "업데이트 성공.";
+        return "업데이트 실패.";
+    }
 }
