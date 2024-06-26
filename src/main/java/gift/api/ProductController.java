@@ -2,10 +2,12 @@ package gift.api;
 
 import gift.application.ProductService;
 import gift.domain.Product;
+import gift.dto.ProductResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/products")
@@ -26,6 +28,14 @@ public class ProductController {
     }
 
     // 상품 상세 조회
+    @GetMapping("/{id}")
+    @ResponseBody
+    public ProductResponse getProductById(@PathVariable Long id) {
+        Product product = productService.getProductById(id).orElseThrow(
+                () -> new IllegalArgumentException("해당 상품은 존재하지 않습니다")
+        );
+        return new ProductResponse(product);
+    }
 
     // 상품 추가
 
