@@ -2,21 +2,17 @@ package gift.controller;
 
 import gift.model.Product;
 import gift.service.ProductService;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequestMapping("api/products")
+
+@Controller
+@RequestMapping("/products")
 public class ProductController {
 
     private final ProductService productService;
@@ -25,50 +21,54 @@ public class ProductController {
         this.productService = productService;
     }
 
-    //상품 추가 기능
-    @PostMapping
-    public Product addProduct(@RequestBody Product product) {
-        product.setId(idCounter);
-        products.put(idCounter++, product);
-        return product;
+    //상품 전체 조회 페이지
+    @GetMapping
+    public String showProductList(Model model) {
+        List<Product> products = productService.selectAllProduct();
+        model.addAttribute("products", products);
+        return "products_list";
     }
 
-    //상품 전체 조회 기능
-    @GetMapping
-    public List<Product> selectAllProduct() {
-        return new ArrayList<>(products.values());
+    //상품 추가 폼 페이지
+    @GetMapping("/new")
+    public String createProductForm() {
+        return "create_form";
+    }
+
+    //상품 추가 데이터 응답
+    @PostMapping("/new")
+    public String create(Product formProduct) {
+        productService.addProduct(formProduct);
+        return "redirect:/products";
     }
 
     //상품 단일 조회 기능
     @GetMapping("/{id}")
-    public Product selectProductById(@PathVariable Long id) {
-        return products.get(id);
+    public String showOneProduct(@PathVariable Long id, Model model) {
+        Product product = productService.selectProductById(id);
+        model.addAttribute("product", product);
+        return "products_list";
     }
 
     //상품 삭제 기능
-    @DeleteMapping("/{id}")
-    public Long deleteProduct(@PathVariable Long id) {
-        Product existingProduct = products.get(id);
-        if (existingProduct != null) {
-            products.remove(id);
-            return id;
-        } else {
-            throw new IllegalArgumentException("No Exists Product By Id");
-        }
+    @GetMapping("/{id}/delete")
+    public String deleteProduct(@PathVariable Long id, Model model) {
+        productService.deleteProduct(id);
+        return "redirect:/products";
+    }
+
+    //상품 수정 폼 페이지
+    @GetMapping("/{id}/update")
+    public String updateProductForm(@PathVariable Long id, Model model) {
+        Product product = productService.selectProductById(id);
+        model.addAttribute("product", product);
+        return "update_form";
     }
 
     //상품 수정 기능
-    @PutMapping("/{id}")
-    public Product updateProduct(@PathVariable Long id, @RequestBody Product product) {
-        Product existingProduct = products.get(id);
-        if (existingProduct != null) {
-            product.setName(product.getName());
-            product.setPrice(product.getPrice());
-            product.setImageUrl(product.getImageUrl());
-            products.put(id, product);
-            return product;
-        } else {
-            throw new IllegalArgumentException("No Exists Product By Id");
-        }
+    @PostMapping("/{id}")
+    public String updateProduct(@PathVariable Long id, Product updateProduct) {
+        productService.updateProduct(id, updateProduct);
+        return "redirect:/products/" + id;
     }
 }

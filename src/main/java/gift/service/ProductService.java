@@ -29,11 +29,10 @@ public class ProductService {
     }
 
     //상품 삭제 기능
-    public Long deleteProduct(Long id) {
+    public void deleteProduct(Long id) {
         Product existingProduct = products.get(id);
         if (existingProduct != null) {
             products.remove(id);
-            return id;
         } else {
             throw new IllegalArgumentException("No Exists Product By Id");
         }
