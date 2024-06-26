@@ -27,4 +27,20 @@ public class AdminProductController {
         return "product";
     }
 
+    @PostMapping("/add")
+    public String addProduct(@RequestParam String name,
+                             @RequestParam Long price,
+                             @RequestParam String description,
+                             @RequestPart String imageUrl) {
+
+            // 제품 정보 저장
+            Product product = new Product(null, name, price, description, imageUrl);
+            productService.addProduct(product);
+
+            return "redirect:/admin/products";
+
+    }
+
+
+
 }
