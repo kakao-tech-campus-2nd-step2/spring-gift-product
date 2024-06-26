@@ -6,6 +6,9 @@ public class ProductModel {
     private int price;
     private String imageURL;
 
+    public ProductModel() {
+    }
+
     public ProductModel(long id, String name, int price, String imageURL) {
         this.id = id;
         this.name = name;
