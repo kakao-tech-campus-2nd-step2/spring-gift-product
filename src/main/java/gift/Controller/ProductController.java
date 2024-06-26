@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class ProductController {
+
     private final Map<Long, Product> products = new HashMap<>();
 
     @PostMapping("/api/products")
