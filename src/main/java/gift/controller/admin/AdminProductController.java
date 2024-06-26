@@ -41,6 +41,26 @@ public class AdminProductController {
 
     }
 
+    @PostMapping("/update/{id}")
+    public String updateProduct(@PathVariable Long id,
+                                @RequestParam String name,
+                                @RequestParam Long price,
+                                @RequestParam String description,
+                                @RequestPart String imageUrl) {
+            Product product = productService.getProductById(id);
+
+
+            product.setName(name);
+            product.setPrice(price);
+            product.setDescription(description);
+            product.setImageUrl(imageUrl);
+
+            productService.updateProduct(product);
+
+            return "redirect:/admin/products";
+
+    }
+
 
 
 }
