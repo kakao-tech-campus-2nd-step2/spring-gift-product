@@ -1,10 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>상품 추가 페이지</title>
 </head>
 <body>
+<h1>Add Product</h1>
+<form id="productForm">
+    <label for="productID">Product ID:</label>
+    <input type="number" id="productID" name="productID" required><br><br>
 
+    <label for="productName">Product Name:</label>
+    <input type="text" id="productName" name="productName" required><br><br>
+
+    <label for="productPrice">Price:</label>
+    <input type="number" id="productPrice" name="productPrice" required><br><br>
+
+    <label for="productImage">Image URL:</label>
+    <input type="url" id="productImage" name="productImage" required><br><br>
+
+    <input type="submit" value="Add Product">
+</form>
+
+<script>
+        document.getElementById("productForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            var pId = document.getElementById("productID").value;
+            var pName = document.getElementById("productName").value;
+            var pPrice = document.getElementById("productPrice").value;
+            var pImage = document.getElementById("productImage").value;
+
+            var product = {
+                id: pId,
+                name: pName,
+                price: pPrice,
+                image: pImage
+            };
+
+            fetch('/api/products', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(product)
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Product added!');
+                window.location.href = "/api/products";
+            })
+            .catch(error => console.error('Error adding product:', error));
+        });
+    </script>
 </body>
 </html>

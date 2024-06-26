@@ -1,10 +1,53 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org", lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>상품 관리 페이지</title>
+    <style>
+        .product {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            width: 200px;
+            display: inline-block;
+            vertical-align: top;
+        }
+    </style>
 </head>
 <body>
+<div>
+    <h1>Manage Products</h1>
+    <input type="button" value="Add Product" onClick="location.href='/api/products/add'">
+</div>
+<div th:each="product : ${products}" class="product" th:attr="data-id=${product.id}">
+    <h3>상품 ID: <span th:text="${product.id}"></span></h3>
+    <h3 th:text="${product.name}"></h3>
+    <p th:text="'Price: ' + ${product.price}"></p>
+    <img th:src="${product.imageUrl}" th:alt="${product.name}" style="max-width: 100px;">
+    <br>
+    <button class="edit-button">Edit</button>
+    <button class="delete-button">Delete</button>
+</div>
+<script>
+    document.querySelectorAll('.delete-button').forEach(button => {
+    button.addEventListener('click', function() {
+        const productElement = this.closest('.product');
+        const productId = productElement.getAttribute('data-id');
 
+        if (confirm('Want to delete this product?')) {
+            fetch(`/api/products/${productId}`, {
+                method: 'DELETE'
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network error');
+                }
+                productElement.remove();
+            })
+            .catch(error => console.error('Error deleting product:', error));
+        }
+    });
+});
+</script>
 </body>
 </html>

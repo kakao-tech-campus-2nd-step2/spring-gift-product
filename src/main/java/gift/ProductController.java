@@ -1,12 +1,13 @@
 package gift;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+
 @RequestMapping("/api/products")
-@RestController
+@Controller
 public class ProductController {
     private final Map<Long, Product> products = new HashMap<>();
     // 새로운 상품 등록
@@ -25,24 +26,23 @@ public class ProductController {
         return "Update failed";
     }
 
-    // 등록된 특정 상품 조회
-    @GetMapping("/{id}")
-    public Product getProduct(@PathVariable Long id) {
-        return products.get(id);
-    }
-
     // 등록된 전체 상품 리스트 조회
     @GetMapping
-    public Collection<Product> getAllProducts() {
-        return products.values();
+    public String getproductList(Model model) {
+        model.addAttribute("products", products.values());
+        return "productManage";
+    }
+    // 상품 추가 페이지 표시
+    @GetMapping("/add")
+    public String movtoAddProduct(Model model) {
+        return "addProduct";
     }
     // 등록된 상품 삭제
     @DeleteMapping("/{id}")
     public String DeleteProduct(@PathVariable Long id){
         if(products.containsKey(id)) {
             products.remove(id);
-            return "Delete Successful";
         }
-        return "Delete failed";
+        return "productManage";
     }
 }
