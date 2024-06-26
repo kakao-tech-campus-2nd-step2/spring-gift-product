@@ -20,6 +20,10 @@ public class ProductController {
         return products.get(id);
     }
 
-
+    @PostMapping
+    public Product addProduct(@RequestBody Product newProduct){
+        products.put(newProduct.id(), newProduct);
+        return newProduct;
+    }
 
 }
