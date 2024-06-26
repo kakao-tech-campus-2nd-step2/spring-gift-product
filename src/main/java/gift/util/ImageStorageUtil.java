@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 
 public class ImageStorageUtil {
-    private static final String STORAGE_PATH = "/Users/hansol/Desktop/temp/kakao_step2_1/spring-gift-product/src/main/java/gift/imageStorage/";
+    private static final String STORAGE_PATH = "/Users/hansol/Desktop/temp/kakao_step2_1/kakao_step2_1_2/spring-gift-product/src/main/java/gift/imageStorage/";
 
     public static String saveImage(MultipartFile imageFile, Long productId) throws IOException {
 
