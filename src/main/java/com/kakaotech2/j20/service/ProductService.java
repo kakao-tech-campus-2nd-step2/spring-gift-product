@@ -3,7 +3,7 @@ package com.kakaotech2.j20.service;
 import com.kakaotech2.j20.Product;
 import java.util.List;
 
-public interface ProductManager {
+public interface ProductService {
     //상품 리스트 전체 조회
     List<Product> readAll();
     //새 상품 생성
