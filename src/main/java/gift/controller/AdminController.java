@@ -26,7 +26,7 @@ public class AdminController {
 
     @GetMapping("/admin/create")
     public String giftCreate(){
-        return "createForm";
+        return "create_form";
     }
 
     @PostMapping("/admin/create")
@@ -38,6 +38,15 @@ public class AdminController {
         return "redirect:/admin";
 
     }
+
+    @GetMapping("/admin/detail/{id}")
+    public String detail(Model model,@PathVariable("id") Long id){
+        Gift gift = giftDao.findById(id);
+        model.addAttribute("gift",gift);
+        return "gift_detail";
+    }
+
+
 
 
 

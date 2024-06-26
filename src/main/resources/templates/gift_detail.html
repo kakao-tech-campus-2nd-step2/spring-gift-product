@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>gift detail</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+이름 : <div th:text="${gift.name}"></div>
+가격 : <div th:text="${gift.price}"></div>
+이미지 : <div th:text="${gift.imageUrl}"></div>
+</body>
+</html>

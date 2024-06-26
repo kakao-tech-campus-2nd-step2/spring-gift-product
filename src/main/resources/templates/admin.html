@@ -19,7 +19,7 @@
         <tbody>
         <tr th:each="gift : ${giftlist}">
             <td th:text="${gift.id}"></td>
-            <td th:text="${gift.name}"></td>
+            <td><a th:href="@{|/admin/detail/${gift.id}|}" th:text="${gift.name}"></a></td>
             <td th:text="${gift.price}"></td>
             <td th:text="${gift.imageUrl}"></td>
         </tr>
