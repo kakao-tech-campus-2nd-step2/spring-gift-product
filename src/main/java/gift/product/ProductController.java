@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -57,6 +58,22 @@ public class ProductController {
                 newProduct.getName(),
                 newProduct.getPrice(),
                 newProduct.getImageUrl()
+        );
+    }
+
+    @PutMapping("/products/{productId}")
+    public ProductResDto updateProduct(@PathVariable Long productId, @RequestBody ProductReqDto productReqDto) {
+        Product product = products.get(productId);
+
+        product.setName(productReqDto.name());
+        product.setPrice(productReqDto.price());
+        product.setImageUrl(productReqDto.imageUrl());
+
+        return new ProductResDto(
+                product.getId(),
+                product.getName(),
+                product.getPrice(),
+                product.getImageUrl()
         );
     }
 }
