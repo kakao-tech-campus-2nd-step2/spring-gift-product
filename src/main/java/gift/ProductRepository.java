@@ -19,12 +19,11 @@ public class ProductRepository {
     }
 
     public Product findById(Long id) throws ProductNotFoundException{
-        if(validateProduct(id)){
-            return products.get(id);
-        }
+        validateProduct(id);
+        return products.get(id);
     }
 
-    private Boolean validateProduct(Long id) throws ProductNotFoundException{
+    private boolean validateProduct(Long id) throws ProductNotFoundException{
         Product product = products.get(id);
         if (product == null){
             throw new ProductNotFoundException("product is not found");
