@@ -1,7 +1,6 @@
-package Menu;
+package gift.Menu;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +18,11 @@ public class MenuController {
     ) {
         Menu newMenu = menuService.save(request.name(),request.price(),request.imageUrl());
         return newMenu;
+    }
+    @GetMapping
+    public List<Menu> read(){
+        List<Menu> menus = menuService.findall();
+        return menus;
     }
 
 
