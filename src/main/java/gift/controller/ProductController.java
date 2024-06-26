@@ -21,6 +21,9 @@ public class ProductController {
 
     @PostMapping("/api/product")
     public void registerProduct(@RequestBody ProductDTO productDTO) {
+        if (products.containsKey(productDTO.id())) {
+            throw new IllegalArgumentException("이미 존재하는 상품입니다.");
+        }
         products.put(productDTO.id(), productDTO.toEntity());
     }
 
@@ -31,11 +34,17 @@ public class ProductController {
 
     @GetMapping("/api/product/{id}")
     public Product getProduct(@PathVariable("id") Long id) {
+        if (!products.containsKey(id)) {
+            throw new IllegalArgumentException("존재하지 않는 상품입니다.");
+        }
         return products.get(id);
     }
 
     @PutMapping("/api/product/{id}")
     public void updateProduct(@PathVariable("id") Long id, @RequestBody ProductDTO productDTO) {
+        if (!products.containsKey(id)) {
+            throw new IllegalArgumentException("존재하지 않는 상품입니다.");
+        }
         Product product = products.get(id);
         product.setId(id);
         product.setName(productDTO.name());
@@ -47,6 +56,9 @@ public class ProductController {
 
     @DeleteMapping("/api/product/{id}")
     public void deleteProduct(@PathVariable("id") Long id) {
+        if (!products.containsKey(id)) {
+            throw new IllegalArgumentException("존재하지 않는 상품입니다.");
+        }
         products.remove(id);
     }
 }
