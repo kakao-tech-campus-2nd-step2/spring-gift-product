@@ -1,6 +1,10 @@
 package gift.controller;
+
 import gift.model.Product;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,7 +17,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
-    private final Map<Long, Product> producsts = new HashMap<>();
+    private final Map<Long, Product> products = new HashMap<>();
 
     /**
      * 새 상품을 생성하고 맵에 저장함
@@ -23,7 +27,7 @@ public class ProductController {
      */
     @PostMapping
     public Product createProduct(@RequestBody Product product) {
-        producsts.put(product.id(), product);
+        products.put(product.id(), product);
         return product;
     }
 
@@ -35,27 +39,36 @@ public class ProductController {
      */
     @GetMapping("/{id}")
     public Product getProduct(@PathVariable Long id) {
-        return producsts.get(id);
+        Product product = products.get(id);
+        if (product == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found with id " + id);
+        }
+        return product;
     }
 
     /**
      * 모든 상품을 반환함
      *
-     * @return 모든 상품이 포함된 맵 반환
+     * @return 모든 상품이 포함된 리스트 반환
      */
     @GetMapping("/all")
     public List<Product> getProducts() {
-        return new ArrayList<>(producsts.values());
+        return new ArrayList<>(products.values());
     }
 
     /**
      * 주어진 ID에 해당하는 상품을 삭제함
      *
      * @param id 삭제할 상품의 ID
+     * @return 응답 엔티티
      */
     @DeleteMapping("/{id}")
-    public void deleteProduct(@PathVariable Long id) {
-        producsts.remove(id);
+    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
+        if (!products.containsKey(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found with id " + id);
+        }
+        products.remove(id);
+        return ResponseEntity.noContent().build();
     }
 
     /**
@@ -66,8 +79,11 @@ public class ProductController {
      * @return 갱신된 상품 객체 반환
      */
     @PutMapping("/{id}")
-    public Product updateProduct(@PathVariable Long id, Product product) {
-        producsts.put(id, product);
+    public Product updateProduct(@PathVariable Long id, @RequestBody Product product) {
+        if (!products.containsKey(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found with id " + id);
+        }
+        products.put(id, product);
         return product;
     }
 }
