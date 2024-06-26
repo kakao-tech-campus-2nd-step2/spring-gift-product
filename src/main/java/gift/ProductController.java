@@ -21,13 +21,20 @@ public class ProductController {
         return "products";
     }
 
-    @PostMapping("/api/products")
-    public String addProduct(@RequestBody Product newProduct) {
-        if(productMap.containsKey(newProduct.id())) {
-            return "이미 상품이 등록되어있습니다.";
+    @GetMapping("/api/products/add")
+    public String addProductForm(Model model) {
+        return "addForm";
+    }
+
+    @PostMapping("/api/products/add")
+    public String addProduct(@RequestParam("id") Long id,
+                             @RequestParam("name") String name,
+                             @RequestParam("price") Long price,
+                             @RequestParam("imageUrl") String imageUrl) {
+        if(!productMap.containsKey(id)) {
+            productMap.put(id, new Product(id, name, price, imageUrl));
         }
-        productMap.put(newProduct.id(), newProduct);
-        return "상품 등록이 완료되었습니다.";
+        return "redirect:/api/products";
     }
 
     @PutMapping("/api/products/{id}")
