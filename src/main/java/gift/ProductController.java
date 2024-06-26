@@ -2,45 +2,62 @@ package gift;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 
-@RestController
-@RequestMapping("/api/products")
+@Controller
+@RequestMapping("/admin/products")
 public class ProductController {
 
     private final Map<Long, Product> products = new HashMap<>();
 
-    //상품 반환
-    @GetMapping("/{id}")
-    public Product getProduct(@PathVariable Long id) {
-        return products.get(id); // 예시 ID를 사용하여 제품을 검색
+    // 모든 상품을 보여주는 페이지
+    @GetMapping
+    public String showAllProducts(Model model) {
+        model.addAttribute("products", products.values());
+        return "Products"; // products.html Thymeleaf 템플릿으로 렌더링
     }
-    //상품 추가
+
+    // 상품 추가 폼 페이지
+    @GetMapping("/add")
+    public String showAddProductForm(Model model) {
+        model.addAttribute("product", new Product());
+        return "Add_product"; // Add_product.html Thymeleaf 템플릿으로 렌더링
+    }
+
+    // 실제 상품 추가 처리
     @PostMapping
-    public void addProduct(@RequestBody Product product) {
-
+    public String addProduct(@ModelAttribute Product product) {
         products.put(product.getId(), product);
+        return "redirect:/admin/products"; // 상품 목록 페이지로 바로가기
     }
-    //상품 수정
-    @PutMapping("/{id}")
-    public void updateProduct(@PathVariable Long id, @RequestBody Product product) {
 
-        product.setId(id); // URL의 ID로 제품 ID 설정
+    // 상품 수정 폼 페이지
+    @GetMapping("/edit/{id}")
+    public String showEditProductForm(@PathVariable Long id, Model model) {
+        Product product = products.get(id);
+        model.addAttribute("product", product);
+        return "Edit_product"; // edit_product.html Thymeleaf 템플릿으로 렌더링
+    }
+
+    // 실제 상품 수정 처리
+    @PostMapping("/update/{id}")
+    public String updateProduct(@PathVariable Long id, @ModelAttribute Product product) {
+        product.setId(id);
         products.put(id, product);
+        return "redirect:/admin/products"; // 상품 목록 페이지로 바로가기
     }
-    //상품 삭제
-    @DeleteMapping("/{id}")
-    public void deleteProduct(@PathVariable Long id) {
 
+    // 상품 삭제 처리
+    @GetMapping("/delete/{id}")
+    public String deleteProduct(@PathVariable Long id) {
         products.remove(id);
+        return "redirect:/admin/products"; // 상품 목록 페이지로 바로가기
     }
-
 }
