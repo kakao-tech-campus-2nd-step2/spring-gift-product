@@ -18,7 +18,12 @@ public class MenuService {
     }
 
     public List<Menu> findall() {
-        List<Menu> menus = MenuRepository.findAll();
+        List<Menu> menus = menuRepository.findAll();
         return menus;
+    }
+
+    public Long delete(Long id) {
+        Long deletedId = menuRepository.delete(id);
+        return id;
     }
 }
