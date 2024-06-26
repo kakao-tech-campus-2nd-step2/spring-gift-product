@@ -7,6 +7,7 @@ import gift.model.ProductRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,5 +38,13 @@ public class ProductController {
     @PostMapping("/api/products")
     public void productSave(@RequestBody ProductRequest newProduct){
         productRepository.save(newProduct.toModel());
+    }
+
+    @PatchMapping("/api/products/{id}")
+    public void productModify(@PathVariable("id") Long id, @RequestBody ProductRequest modifyProduct){
+        if(productRepository.find(id) == null){
+            throw new IllegalArgumentException();
+        }
+        productRepository.save(modifyProduct.toModel(id));
     }
 }
