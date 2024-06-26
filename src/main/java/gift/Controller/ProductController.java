@@ -38,7 +38,7 @@ public class ProductController {
         return new ResponseEntity<>(product, jsonHeaders(), HttpStatus.OK);
     }
 
-    
+
     @PostMapping
     public ResponseEntity<ProductModel> createProduct(@RequestBody ProductModel product) {
         long id = counter.incrementAndGet();
