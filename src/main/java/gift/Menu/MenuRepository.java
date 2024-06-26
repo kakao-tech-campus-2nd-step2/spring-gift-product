@@ -26,4 +26,9 @@ public class MenuRepository {
                 .toList();
     }
 
+    public Menu update(Long id, String name, int price, String imageUrl) {
+        Menu updatedMenu = menus.get(id);
+        updatedMenu.update(name,price,imageUrl);
+        return updatedMenu;
+    }
 }
