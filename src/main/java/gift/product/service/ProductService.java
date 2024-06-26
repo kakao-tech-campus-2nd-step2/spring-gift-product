@@ -27,4 +27,10 @@ public class ProductService {
     public Product getProduct(Long id) {
         return productRepository.findById(id);
     }
+
+    public Product updateProduct(Long id, ProductDTO productDTO) {
+        Product product = new Product(id, productDTO.name(), productDTO.price(), productDTO.imageUrl());
+        productRepository.update(product);
+        return product;
+    }
 }
