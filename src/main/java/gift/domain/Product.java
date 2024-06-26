@@ -1,44 +1,49 @@
-package dto;
+package gift.domain;
 
-public class ProductResponseDto {
+import gift.dto.ProductResponseDto;
+
+public class Product {
     private Long id;
     private String name;
     private int price;
     private String imageUrl;
 
-    public ProductResponseDto(Long id, String name, int price, String imageUrl){
-        this.id = id;
+    public Product(String name, int price, String imageUrl){
         this.name = name;
         this.price = price;
         this.imageUrl = imageUrl;
+    }
+
+    public ProductResponseDto toDto(){
+        return new ProductResponseDto(this.id, this.name, this.price, this.imageUrl);
     }
 
     public Long getId() {
         return id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
+    public int getPrice() {
+        return price;
+    }
+
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
     }
 
     public void setImageUrl(String imageUrl) {

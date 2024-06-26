@@ -1,12 +1,12 @@
-package service;
+package gift.service;
 
-import domain.Product;
-import dto.ProductRequestDto;
-import dto.ProductResponseDto;
-import exception.ProductNotFoundException;
+import gift.domain.Product;
+import gift.dto.ProductRequestDto;
+import gift.dto.ProductResponseDto;
+import gift.exception.ProductNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import repository.ProductRepository;
+import gift.repository.ProductRepository;
 
 import java.util.List;
 

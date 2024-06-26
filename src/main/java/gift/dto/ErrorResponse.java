@@ -1,4 +1,4 @@
-package dto;
+package gift.dto;
 
 public class ErrorResponse {
     private String message;
