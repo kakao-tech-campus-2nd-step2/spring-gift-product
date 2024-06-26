@@ -30,6 +30,15 @@ public class ProductController {
 		return ResponseEntity.ok(productList);
 	}
 	
+	@GetMapping("/{id}")
+	public ResponseEntity<Product> getProductById(@PathVariable("id") long id){
+		Product product = products.get(id);
+		if(product == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		return ResponseEntity.ok(product);
+	}
+	
 	@PostMapping
 	public ResponseEntity<Product> addProduct(@RequestBody Product request){
 		products.put(request.getId(), request);
