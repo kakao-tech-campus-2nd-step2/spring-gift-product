@@ -38,4 +38,16 @@ public class ProductController {
         if(products.get(product.id()) == product) return "업데이트 성공.";
         return "업데이트 실패.";
     }
+
+    // HashMap에 있는 모든 데이터 불러오기
+    @GetMapping("/products")
+    public Collection<Product> viewAllProducts(){
+        return products.values();
+    }
+
+    // key값이 id인 데이터 불러오기
+    @GetMapping("/products/{id}")
+    public Product viewProduct(@PathVariable Long id){
+        return products.get(id);
+    }
 }
