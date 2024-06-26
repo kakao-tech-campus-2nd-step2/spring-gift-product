@@ -18,4 +18,13 @@ public class ProductController {
     public Collection<Product> getProducts() {
         return products.values();
     }
+
+    @GetMapping("/{sequence}")
+    public Product getProduct(@PathVariable("sequence") Long sequence) {
+        Product product = products.get(sequence);
+        if (product == null) {
+            throw new IllegalArgumentException("존재하지 않는 상품입니다.");
+        }
+        return product;
+    }
 }

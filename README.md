@@ -14,7 +14,7 @@ HTTP 요청과 응답은 JSON 형식으로 주고받음
 
 - 한 상품 조회
 
-    상품 id로 GET
+    상품 sequence로 GET
     
     ex) **GET** /api/products/1
     
