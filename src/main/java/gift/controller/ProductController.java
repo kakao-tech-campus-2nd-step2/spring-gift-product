@@ -22,4 +22,10 @@ public class ProductController {
         model.addAttribute("products", productService.findAll());
         return "products/list";
     }
+
+    @GetMapping("/new")
+    public String showAddProductForm(Model model){
+        model.addAttribute("productDto", new ProductRequestDto());
+        return "products/add";
+    }
 }
