@@ -3,9 +3,6 @@ package gift;
 import jakarta.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,7 +40,7 @@ public class ProductController {
     @PutMapping("/{id}")
     public Product updateProduct(@PathVariable Long id, @RequestBody Product product) {
         if (!products.containsKey(id)) {
-            throw new NoSuchElementException("상품이 없습니다.");
+            throw new IllegalArgumentException("상품이 없습니다.");
         }
         product.setId(id);
         products.put(id, product);
@@ -52,13 +49,18 @@ public class ProductController {
 
     @DeleteMapping("/{id}")
     public void deleteProduct(@PathVariable Long id) {
+        if (!products.containsKey(id)) {
+            throw new IllegalArgumentException("상품이 없습니다.");
+        }
         products.remove(id);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable("id") Long id) {
-        Optional<Product> product = Optional.ofNullable(products.get(id));
-        return product.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    public Object getProductById(@PathVariable("id") Long id) {
+        if (!products.containsKey(id)) {
+            throw new IllegalArgumentException("상품이 없습니다.");
+        }
+        return products.get(id);
     }
 
 
