@@ -43,6 +43,16 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdProduct);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody ProductRequestDto productRequestDto) {
+        Product product = convertToProduct(productRequestDto);
+        Product updatedProduct = productService.updateProduct(id, product);
+        if (updatedProduct == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        return ResponseEntity.ok(updatedProduct);
+    }
+
     //DTO 변환 메서드
     private Product convertToProduct(ProductRequestDto productRequestDto) {
         Product product = new Product();
