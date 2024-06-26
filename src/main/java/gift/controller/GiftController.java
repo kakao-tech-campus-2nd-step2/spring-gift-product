@@ -2,6 +2,8 @@ package gift.controller;
 
 
 import gift.entity.Gift;
+import gift.entity.GiftDao;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -12,50 +14,42 @@ import java.util.concurrent.atomic.AtomicLong;
 @RestController
 @RequestMapping("/api/products")
 public class GiftController {
-    private final Map<Long, Gift> gifts = new HashMap<>();
-    private final AtomicLong idGenerator = new AtomicLong();
 
-    @GetMapping
-    public Collection<Gift> getAllgifts(){
-        return gifts.values();
-    }
-    @GetMapping("/{id}")
-    public Gift getGift(@PathVariable Long id){
-        if(!gifts.containsKey(id)){
-            throw new IllegalArgumentException("찾는 상품이 없습니다!");
-        }
-        return gifts.get(id);
+    private GiftDao giftDao;
+
+    GiftController(GiftDao giftDao){
+        this.giftDao = giftDao;
     }
 
     @PostMapping
     public Gift addGift(@RequestBody Gift giftreq){
-        long id = idGenerator.incrementAndGet();
-        Gift gift = makeGiftComponent(id,giftreq);
-        gifts.put(id,gift);
+        Gift gift = giftDao.save(giftreq);
         return gift;
     }
+    @GetMapping("/{id}")
+    public Gift getGift(@PathVariable Long id){
+        return giftDao.findById(id);
+    }
+
+    @GetMapping
+    public Collection<Gift> getAllGift(){
+        return giftDao.findAll();
+    }
+
     @PutMapping("/{id}")
-    public Gift updateGift(@PathVariable Long id,@RequestBody Gift giftreq){
-        if(!gifts.containsKey(id)){
-            throw new IllegalArgumentException("찾는 상품이 없습니다!");
-        }
-        Gift gift = makeGiftComponent(id,giftreq);
-        gifts.put(id,gift);
+    public Gift updateGift(@PathVariable Long id , @RequestBody Gift giftreq){
+        Gift gift = giftDao.updateById(id,giftreq);
         return gift;
     }
     @DeleteMapping("/{id}")
-    public String deleteGift(@PathVariable Long id){
-        if(!gifts.containsKey(id)){
-            throw new IllegalArgumentException("삭제할 상품이 없습니다!");
-        }
-        String temp = gifts.get(id).name();
-        gifts.remove(id);
-        return temp + "가 삭제완료되었습니다!";
+    public void deleteGift(@PathVariable Long id){
+        giftDao.deleteById(id);
     }
 
-    private Gift makeGiftComponent(Long id,Gift giftreq){
-        return new Gift(id, giftreq.name(), giftreq.price(), giftreq.imageUrl());
-    }
+
+
+
+
 
 }
 
