@@ -2,7 +2,9 @@ package com.kakaotech2.j20.service;
 
 import com.kakaotech2.j20.Product;
 import java.util.List;
+import org.springframework.stereotype.Service;
 
+@Service
 public interface ProductService {
     //상품 리스트 전체 조회
     List<Product> readAll();
