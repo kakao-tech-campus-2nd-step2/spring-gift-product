@@ -23,7 +23,7 @@ public class ProductController {
     private final AtomicLong orderId = new AtomicLong(1);
 
     @PostMapping("/api/products")
-    public ResponseEntity<?> AddProduct(@RequestBody Product product) {
+    public ResponseEntity<?> addProduct(@RequestBody Product product) {
         var newProduct = new Product(product.id(), product.name(), product.price(),
             product.imageUrl());
         if (newProduct.id() == null || newProduct.name().isEmpty() || newProduct.price() < 0
@@ -35,7 +35,7 @@ public class ProductController {
     }
 
     @GetMapping("/api/products")
-    public ResponseEntity<Collection<Product>> GetAllProducts() {
+    public ResponseEntity<Collection<Product>> getAllProducts() {
         if (products.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
@@ -43,7 +43,7 @@ public class ProductController {
     }
 
     @GetMapping("/api/products/{id}")
-    public ResponseEntity<?> GetProduct(@PathVariable(name = "id") Long id) {
+    public ResponseEntity<?> getProduct(@PathVariable(name = "id") Long id) {
         var productList = products.entrySet().stream().filter(x -> x.getValue().id().equals(id))
             .toList();
         if (productList.isEmpty()) {
@@ -54,7 +54,7 @@ public class ProductController {
     }
 
     @PutMapping("/api/products/{id}")
-    public ResponseEntity<?> UpdateProductsName(@PathVariable(name = "id") Long id,
+    public ResponseEntity<?> updateProductsName(@PathVariable(name = "id") Long id,
         @RequestBody Product product) {
         if (product.id() == null || product.name().isEmpty() || product.price() < 0
             || product.imageUrl().isEmpty()) {
@@ -72,7 +72,7 @@ public class ProductController {
 
 
     @DeleteMapping("/api/products/{id}")
-    public ResponseEntity<?> DeleteProduct(@PathVariable(name = "id") Long productId) {
+    public ResponseEntity<?> deleteProduct(@PathVariable(name = "id") Long productId) {
         var keyList = products.entrySet().stream().filter(x -> x.getValue().id().equals(productId))
             .map(Entry::getKey).toList();
         var deletedProducts = keyList.stream()
