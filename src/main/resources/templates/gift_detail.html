@@ -8,5 +8,7 @@
 이름 : <div th:text="${gift.name}"></div>
 가격 : <div th:text="${gift.price}"></div>
 이미지 : <div th:text="${gift.imageUrl}"></div>
+
+<a th:href="@{|/admin/modify/${gift.id}|}" class="btn btn-primary">상품 수정</a>
 </body>
 </html>

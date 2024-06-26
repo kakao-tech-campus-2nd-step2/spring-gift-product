@@ -47,9 +47,23 @@ public class AdminController {
     }
 
 
+    @GetMapping("/admin/modify/{id}")
+    public String giftModify(Model model,@PathVariable("id") Long id){
+        Gift gift = giftDao.findById(id);
+        model.addAttribute("gift",gift);
+        return "modify_form";
 
+    }
+    @PostMapping("/admin/modify/{id}")
+    public String giftModify(@PathVariable("id") Long id,
+                             @RequestParam(value="name")String name,
+                             @RequestParam(value="price")int price,
+                             @RequestParam(value ="imageUrl")String imageUrl){
+        Gift gift = new Gift(0,name,price,imageUrl);
+        giftDao.updateById(id,gift);
+        return "redirect:/admin";
 
-
+    }
 
 
 
