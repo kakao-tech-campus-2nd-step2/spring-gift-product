@@ -45,4 +45,18 @@ public class ProductController {
         products.remove(id);
         return ResponseEntity.noContent().build();
     }
+
+    // PUT : 특정 상품 정보 수정
+    @PutMapping("/{id}")
+    public ResponseEntity<Product> updateProduct(@PathVariable(value = "id") Long id, @RequestBody Product updatedProduct) {
+        Product product = products.get(id);
+        product.setName(updatedProduct.getName());
+        product.setPrice(updatedProduct.getPrice());
+        product.setImageUrl(updatedProduct.getImageUrl());
+        products.put(id, product);
+        return ResponseEntity.ok(product);
+    }
+
+
+
 }
