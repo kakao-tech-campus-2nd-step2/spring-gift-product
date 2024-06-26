@@ -34,4 +34,10 @@ public class ProductController {
         productService.save(productDto);
         return "redirect:/products";
     }
+
+    @GetMapping("/edit/{id}")
+    public String showEditProductForm(@PathVariable Long id, Model model){
+        model.addAttribute("productDto", productService.findById(id));
+        return "products/edit";
+    }
 }
