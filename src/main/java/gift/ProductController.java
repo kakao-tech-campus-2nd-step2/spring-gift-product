@@ -10,17 +10,18 @@ import java.util.*;
 @RequestMapping("/api/products")
 public class ProductController {
     private final Map<Long, Product> products = new HashMap<>();
-    private Long nextId = 1L;
+    private Long nextId = 1L;  // 새로운 상품이 추가될 때 사용할 다음 ID 값
 
 
     @GetMapping
     public ResponseEntity<List<Product>> getProducts() {
+        // products에 저장된 모든 상품을 반환
         return ResponseEntity.ok(new ArrayList<>(products.values()));
     }
 
     @PostMapping
-    public ResponseEntity<Product> addProduct(@RequestBody Product product) {
-        product.setId(nextId++);
+    public ResponseEntity<Product> addProduct(@RequestBody Product product) {  // response body에 있는 JSON 데이터를 Product 객체로 변환
+        product.setId(nextId++);  // 상품의 id 설정
         products.put(product.getId(), product);
 
         return new ResponseEntity<>(product, HttpStatus.CREATED);
@@ -28,10 +29,12 @@ public class ProductController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Product> updateProduct(@PathVariable("id") Long id, @RequestBody Product product) {
+        // 요청받은 id를 가진 상품이 존재하지 않는 경우
         if(!products.containsKey(id)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
+        // 상품 정보 수정
         product.setId(id);
         products.put(product.getId(), product);
 
@@ -40,10 +43,12 @@ public class ProductController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable("id") Long id) {
+        // 요청받은 id를 가진 상품이 존재하지 않는 경우
         if(!products.containsKey(id)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
+        // 요청받은 id를 가진 상품을 삭제
         products.remove(id);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
