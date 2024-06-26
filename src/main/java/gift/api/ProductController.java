@@ -46,6 +46,10 @@ public class ProductController {
     }
 
     // 상품 전체 삭제
+    @DeleteMapping
+    public void deleteAllProducts() {
+        productService.deleteAllProducts();
+    }
 
     // 상품 수정
 }

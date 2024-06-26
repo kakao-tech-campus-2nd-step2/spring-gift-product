@@ -48,4 +48,8 @@ public class ProductService {
         return id;
     }
 
+    public void deleteAllProducts() {
+        productRepository.deleteAll();
+    }
+
 }
