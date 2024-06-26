@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -40,4 +42,21 @@ public class ProductController {
         );
     }
 
+    @PostMapping("/products")
+    public ProductResDto addProduct(@RequestBody ProductReqDto productReqDto) {
+        Product newProduct = new Product(
+                productReqDto.name(),
+                productReqDto.price(),
+                productReqDto.imageUrl()
+        );
+
+        products.put(newProduct.getId(), newProduct);
+
+        return new ProductResDto(
+                newProduct.getId(),
+                newProduct.getName(),
+                newProduct.getPrice(),
+                newProduct.getImageUrl()
+        );
+    }
 }
