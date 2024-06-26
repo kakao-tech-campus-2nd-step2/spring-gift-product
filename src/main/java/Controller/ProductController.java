@@ -41,6 +41,16 @@ public class ProductController {
             products.put(product.getId(), product);
             return;
         }
-        System.out.println("{%d}에 매칭되는 Product가 이미 존재하지 않습니다.");
+        System.out.println("{%d}에 매칭되는 Product가 이미 존재하지 않습니다.".formatted(id));
     }
+
+    @DeleteMapping("/{id:[1-9][0-9]*}")
+    public void deleteProduct(@PathVariable Long id){
+        if(products.containsKey(id)){
+            products.remove(id);
+            return;
+        }
+        System.out.println("{%d}에 매칭되는 Product가 이미 존재하지 않습니다.".formatted(id));
+    }
+
 }
