@@ -26,9 +26,8 @@ public class ProductController {
         if (products.get(requestDto.getId()) == null) {
             products.put(requestDto.getId(), product);
             return new ResponseEntity(HttpStatus.CREATED);
-        } else {
-            return new ResponseEntity(HttpStatus.CONFLICT);
         }
+        return new ResponseEntity(HttpStatus.CONFLICT);
     }
 
     @GetMapping("/products")
@@ -56,20 +55,16 @@ public class ProductController {
     @PutMapping("/products")
     public ResponseEntity putProduct(@RequestBody ProductRequestDto requestDto) {
         Product originProduct = products.get(requestDto.getId());
-
         if (originProduct == null) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
-
         products.remove(requestDto.getId());
-
         Product updateProduct = new Product(
                 requestDto.getId(),
                 requestDto.getName(),
                 requestDto.getPrice(),
                 requestDto.getImageUrl()
         );
-
         products.put(requestDto.getId(), updateProduct);
 
         return new ResponseEntity(HttpStatus.CREATED);
