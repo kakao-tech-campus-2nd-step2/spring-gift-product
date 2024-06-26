@@ -1,20 +1,24 @@
 package gift;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@RestController
+@Controller
 public class ProductController {
     private final Map<Long, Product> productMap = new HashMap<>();
 
     @GetMapping("/api/products")
-    public List<Product> getProducts() {
-        return productMap.values()
+    public String getProducts(Model model) {
+        List<Product> products = productMap.values()
                 .stream()
                 .toList();
+        model.addAttribute("products", products);
+        return "products";
     }
 
     @PostMapping("/api/products")
