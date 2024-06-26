@@ -53,4 +53,26 @@ public class ProductController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @PutMapping("/products")
+    public ResponseEntity putProduct(@RequestBody ProductRequestDto requestDto) {
+        Product originProduct = products.get(requestDto.getId());
+
+        if (originProduct == null) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+
+        products.remove(requestDto.getId());
+
+        Product updateProduct = new Product(
+                requestDto.getId(),
+                requestDto.getName(),
+                requestDto.getPrice(),
+                requestDto.getImageUrl()
+        );
+
+        products.put(requestDto.getId(), updateProduct);
+
+        return new ResponseEntity(HttpStatus.CREATED);
+    }
+
 }
