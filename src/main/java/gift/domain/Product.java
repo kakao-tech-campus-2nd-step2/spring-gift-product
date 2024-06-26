@@ -4,6 +4,7 @@ import gift.dto.ProductRequest;
 
 public class Product {
 
+    private Long id;
     private String name;
     private int price;
     private String imageUrl;
@@ -12,6 +13,10 @@ public class Product {
         this.name = name;
         this.price = price;
         this.imageUrl = imageUrl;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getName() {
