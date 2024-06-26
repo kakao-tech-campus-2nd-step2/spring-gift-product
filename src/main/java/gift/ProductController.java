@@ -12,7 +12,7 @@ import java.util.*;
 
 
 @RestController
-public class ProductController {
+public class  ProductController {
     private Map<Long, Product> products = new HashMap<>();
     private static Long count = 1L;
 
@@ -47,8 +47,10 @@ public class ProductController {
     }
 
     @PostMapping("/api/products/add")
-    public void addProduct(@RequestParam("id") int id, @RequestParam("name") String name, @RequestParam("price") int price, @RequestParam("imageUrl") String imageUrl) {
-        Product product = new Product(id, name, price, imageUrl);
+    public void addProduct(@RequestParam("id") int id, @RequestParam("name") String name,
+                           @RequestParam("price") int price, @RequestParam("imageUrl") String imageUrl,
+                           @RequestParam("options") String options) {
+        Product product = new Product(id, name, price, imageUrl,options);
         products.put(count, product);
         count++;
     }
@@ -65,7 +67,7 @@ public class ProductController {
     }
 
     @PostMapping("/api/products/modify")
-    public void modifyProduct(@RequestParam("id") int id, @RequestParam("name") String name, @RequestParam("price") int price, @RequestParam("imageUrl") String imageUrl) {
+    public void modifyProduct(@RequestParam("id") int id, @RequestParam("name") String name, @RequestParam("price") int price, @RequestParam("imageUrl") String imageUrl, @RequestParam("options") String options) {
         Iterator<Map.Entry<Long, Product>> iterator = products.entrySet().iterator();
         while (iterator.hasNext()) {
             Map.Entry<Long, Product> entry = iterator.next();
@@ -73,6 +75,7 @@ public class ProductController {
                 entry.getValue().name = name;
                 entry.getValue().price = price;
                 entry.getValue().imageUrl = imageUrl;
+                entry.getValue().options = Arrays.stream(options.split(",")).toList();
             }
         }
     }
