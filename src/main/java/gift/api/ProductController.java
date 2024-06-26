@@ -30,10 +30,7 @@ public class ProductController {
     @GetMapping("/{id}")
     @ResponseBody
     public ProductResponse getProductById(@PathVariable Long id) {
-        Product product = productService.getProductById(id).orElseThrow(
-                () -> new IllegalArgumentException("해당 상품은 존재하지 않습니다")
-        );
-        return new ProductResponse(product);
+        return productService.getProductById(id);
     }
 
     // 상품 추가
