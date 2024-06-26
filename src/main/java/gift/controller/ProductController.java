@@ -49,7 +49,9 @@ public class ProductController {
 
     @PostMapping("/api/products")
     public void addProduct(@RequestBody ProductResponseDto productResponseDto) {
-        products.put(++sequence, new Product(productResponseDto));
+        Long id = ++sequence;
+        Product product = new Product(id, productResponseDto);
+        products.put(id, product);
     }
 
     @PutMapping("/api/products")

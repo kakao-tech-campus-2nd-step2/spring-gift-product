@@ -8,13 +8,19 @@ public class Product {
     private int price;
     private String imageUrl;
 
+    public Product(Long id, ProductResponseDto productResponseDto) {
+        this.id = id;
+        this.name = productResponseDto.name();
+        this.price = productResponseDto.price();
+        this.imageUrl = productResponseDto.imageUrl();
+    }
+
     public Product(ProductResponseDto productResponseDto) {
         this.id = productResponseDto.id();
         this.name = productResponseDto.name();
         this.price = productResponseDto.price();
         this.imageUrl = productResponseDto.imageUrl();
     }
-
 
     public Long getId() {
         return id;
