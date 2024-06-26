@@ -53,6 +53,15 @@ public class ProductController {
         return ResponseEntity.ok(updatedProduct);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
+        boolean isDeleted = productService.deleteProduct(id);
+        if (!isDeleted) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.noContent().build();
+    }
+
     //DTO 변환 메서드
     private Product convertToProduct(ProductRequestDto productRequestDto) {
         Product product = new Product();
