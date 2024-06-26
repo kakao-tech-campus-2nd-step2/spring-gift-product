@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import Model.Product;
@@ -20,5 +22,14 @@ public class ProductController {
             return null;
         }
         return products.get(id);
+    }
+
+    @PostMapping
+    public void addProduct(@RequestBody Product product){
+        if(!products.containsKey(product.getId())){
+            products.put(product.getId(), product);
+            return;
+        }
+        System.out.println("{%d}에 매칭되는 Product가 이미 존재합니다.".formatted(product.getId()));
     }
 }
