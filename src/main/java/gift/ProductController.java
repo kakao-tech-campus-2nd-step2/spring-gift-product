@@ -26,4 +26,10 @@ public class ProductController {
         return newProduct;
     }
 
+    @PutMapping("/{id}")
+    public Product updateProduct(@PathVariable(value = "id") long id, @RequestBody Product updatedProduct){
+        products.put(id, updatedProduct);
+        return updatedProduct;
+    }
+
 }
