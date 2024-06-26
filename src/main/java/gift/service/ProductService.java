@@ -5,7 +5,6 @@ import gift.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -20,8 +19,8 @@ public class ProductService {
     }
 
     public Product getProductById(Long id) {
-        return Optional.ofNullable(productRepository.findById(id))
-                .orElseThrow(() -> new IllegalArgumentException("Product not found"));
+        return productRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Product not found with id: " + id));
     }
 
     public void addProduct(Product product) {

@@ -3,10 +3,7 @@ package gift.repository;
 import gift.domain.Product;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Repository
 public class InMemoryProductRepository implements ProductRepository {
@@ -19,8 +16,8 @@ public class InMemoryProductRepository implements ProductRepository {
     }
 
     @Override
-    public Product findById(Long id) {
-        return products.get(id);
+    public Optional<Product> findById(Long id) {
+        return Optional.ofNullable(products.get(id));
     }
 
     @Override
