@@ -1,10 +1,12 @@
 package gift.Repository;
 
 import gift.domain.Product;
+import org.springframework.stereotype.Repository;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+@Repository
 public class Products {
     private final Map<Long, Product> products;
     public Products(){
@@ -40,6 +42,13 @@ public class Products {
         return products.values()
                 .stream()
                 .toList();
+    }
+    //단건 조회
+    public Product getProduct(Long id){
+        return findAll().stream()
+                .filter(p->p.getId().equals(id))
+                .findFirst()
+                .orElse(null);
     }
 
 
