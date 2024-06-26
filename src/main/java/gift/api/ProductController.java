@@ -2,6 +2,7 @@ package gift.api;
 
 import gift.application.ProductService;
 import gift.domain.Product;
+import gift.dto.ProductRequest;
 import gift.dto.ProductResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +35,10 @@ public class ProductController {
     }
 
     // 상품 추가
+    @PostMapping
+    public ProductResponse addProduct(@RequestBody ProductRequest productRequest) {
+        return productService.createProduct(productRequest);
+    }
 
     // 상품 수정
 
