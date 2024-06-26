@@ -38,4 +38,11 @@ public class ProductController {
         products.put(product.getId(), product);
         return ResponseEntity.ok(product);
     }
+
+    // DELETE : 특정 상품 삭제
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable(value = "id") Long id) {
+        products.remove(id);
+        return ResponseEntity.noContent().build();
+    }
 }
