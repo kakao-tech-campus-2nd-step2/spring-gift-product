@@ -1,9 +1,10 @@
 package gift.controller;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import gift.model.Product;
-import java.util.ArrayList;
+import gift.service.ProductService;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -11,11 +12,11 @@ import org.junit.jupiter.api.Test;
 
 public class ProductControllerTest {
 
-    private ProductController productController;
+    private ProductService productService;
 
     @BeforeEach
     public void setUp() {
-        productController = new ProductController();
+        productService = new ProductService();
     }
 
     @Test
@@ -25,7 +26,7 @@ public class ProductControllerTest {
         Product tempProduct = new Product("아이스 카페 아메리카노 T", 4500L,
             "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg");
         //when
-        Product addedProduct = productController.addProduct(tempProduct);
+        Product addedProduct = productService.addProduct(tempProduct);
         //then
         assertEquals(1L, addedProduct.getId());
         assertEquals("아이스 카페 아메리카노 T", addedProduct.getName());
@@ -44,10 +45,10 @@ public class ProductControllerTest {
         Product tempProduct3 = new Product("밀크쉐이크", 3000L, "image3.jpg");
         List<Product> tempList;
         //when
-        Product addedProduct1 = productController.addProduct(tempProduct1);
-        Product addedProduct2 = productController.addProduct(tempProduct2);
-        Product addedProduct3 = productController.addProduct(tempProduct3);
-        tempList = productController.selectAllProduct();
+        Product addedProduct1 = productService.addProduct(tempProduct1);
+        Product addedProduct2 = productService.addProduct(tempProduct2);
+        Product addedProduct3 = productService.addProduct(tempProduct3);
+        tempList = productService.selectAllProduct();
         //then
         assertEquals(3, tempList.size());
 
@@ -74,10 +75,10 @@ public class ProductControllerTest {
         Product selectedProduct1;
         Product selectedProduct2;
         //when
-        Product addedProduct1 = productController.addProduct(tempProduct1);
-        Product addedProduct2 = productController.addProduct(tempProduct2);
-        selectedProduct1 = productController.selectProductById(1L);
-        selectedProduct2 = productController.selectProductById(2L);
+        Product addedProduct1 = productService.addProduct(tempProduct1);
+        Product addedProduct2 = productService.addProduct(tempProduct2);
+        selectedProduct1 = productService.selectProductById(1L);
+        selectedProduct2 = productService.selectProductById(2L);
         //then
         assertEquals("콜라", selectedProduct1.getName());
         assertEquals(1500L, selectedProduct1.getPrice());
@@ -95,14 +96,13 @@ public class ProductControllerTest {
         Product tempProduct1 = new Product("콜라", 1500L, "image1.jpg");
         Long selecteLong;
         //when
-        Product addedProduct1 = productController.addProduct(tempProduct1);
-        selecteLong = productController.deleteProduct(1L);
+        Product addedProduct1 = productService.addProduct(tempProduct1);
+        productService.deleteProduct(1L);
 
         //then
-        assertEquals(1L, selecteLong);
         assertThrows(IllegalArgumentException.class,
-            () -> productController.deleteProduct(2L));
-        assertEquals(0, productController.selectAllProduct().size());
+            () -> productService.deleteProduct(2L));
+        assertEquals(0, productService.selectAllProduct().size());
     }
 
     @Test
@@ -112,13 +112,13 @@ public class ProductControllerTest {
         Product tempProduct1 = new Product("콜라", 1500L, "image1.jpg");
         Product tempProduct2 = new Product("아이스크림", 1000L, "image1.jpg");
         //when
-        productController.addProduct(tempProduct1);
-        Product updatedProduct1 = productController.updateProduct(1L, tempProduct2);
+        productService.addProduct(tempProduct1);
+        Product updatedProduct1 = productService.updateProduct(1L, tempProduct2);
         //then
         assertEquals("아이스크림", updatedProduct1.getName());
         assertEquals(1000L, updatedProduct1.getPrice());
         assertThrows(IllegalArgumentException.class,
-            () -> productController.updateProduct(2L, tempProduct2));
-        assertEquals(1,productController.selectAllProduct().size());
+            () -> productService.updateProduct(2L, tempProduct2));
+        assertEquals(1, productService.selectAllProduct().size());
     }
 }
