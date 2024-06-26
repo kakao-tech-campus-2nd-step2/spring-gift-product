@@ -1,6 +1,7 @@
 package gift.controller;
 
 import gift.model.Product;
+import gift.service.ProductService;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,8 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/products")
 public class ProductController {
 
-    private final Map<Long, Product> products = new HashMap<>();
-    private Long idCounter = 1L;
+    private final ProductService productService;
+
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
 
     //상품 추가 기능
     @PostMapping
