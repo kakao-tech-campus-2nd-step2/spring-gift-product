@@ -28,4 +28,10 @@ public class Product {
     public String getImgUrl() {
         return imgUrl;
     }
+
+    public void setId(Long id) {
+        if(this.id == null){
+            this.id = id;
+        }
+    }
 }
