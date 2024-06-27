@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Admin Product Form</title>
+</head>
+<body>
+  <h1>Add New Product</h1>
+  <form th:action="@{'/admin/add'}">
+    <input type="hidden"/>
+    <div>
+      <label for="name">Name</label>
+      <input type="text" id="name" required/>
+    </div>
+    <div>
+      <label for="price">Price</label>
+      <input type="number" id="price" required/>
+    </div>
+    <div>
+      <label for="imageUrl">Image URL</label>
+      <input type="text" id="imageUrl" required/>
+    </div>
+    <div>
+      <button type="submit">Save</button>
+      <a th:href="@{/admin}">Cancel</a>
+    </div>
+  </form>
+</body>
+</html>

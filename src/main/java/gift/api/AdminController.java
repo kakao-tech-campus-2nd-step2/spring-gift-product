@@ -30,7 +30,7 @@ public class AdminController {
     @GetMapping("/add")
     public String showAddProductForm(Model model) {
         model.addAttribute("product", new Product());
-        return "admin-product-form";
+        return "product-add-form";
     }
 
     // 상품 추가
