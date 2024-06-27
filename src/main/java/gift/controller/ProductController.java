@@ -1,5 +1,7 @@
-package gift;
+package gift.controller;
 
+import gift.model.ProductRecord;
+import gift.repository.ProductDAO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;

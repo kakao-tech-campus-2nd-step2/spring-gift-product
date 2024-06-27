@@ -1,4 +1,4 @@
-package gift;
+package gift.model;
 
 public record ProductRecord(long id, String name, int price, String imageUrl) {
     public ProductRecord withId(long id) {

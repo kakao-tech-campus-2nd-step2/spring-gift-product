@@ -1,5 +1,6 @@
-package gift;
+package gift.repository;
 
+import gift.model.ProductRecord;
 import org.springframework.dao.DuplicateKeyException;
 
 import java.util.HashMap;
