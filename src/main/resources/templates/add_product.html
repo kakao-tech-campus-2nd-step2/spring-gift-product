@@ -6,7 +6,10 @@
 <body>
 <h1 th:text="${product == null || product.id() == 0} ? 'Create Product' : 'Edit Product'"></h1>
 <form th:action="@{${product == null || product.id() == 0} ? '/admin/products' : '/admin/products/edit/' + ${product.id()}}" th:object="${product}" method="post">
-  <input type="hidden" th:field="*{id}" />
+  <div>
+    <label for="id">Id</label>
+    <input type="number" id="id" th:field="*{id}" />
+  </div>
   <div>
     <label for="name">Name</label>
     <input type="text" id="name" th:field="*{name}" required/>
