@@ -4,10 +4,8 @@ import gift.product.model.ProductVo;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/product")
@@ -16,7 +14,7 @@ public class ProductController {
     private final Map<Long, ProductVo> products = new HashMap<>();
     private final AtomicLong idCounter = new AtomicLong();
 
-    @GetMapping("/add")
+    @GetMapping("/new")
     public void addProduct(@RequestParam("name") String name, @RequestParam("price") int price, @RequestParam("imageUrl") String imageUrl) {
         ProductVo product = new ProductVo();
 
@@ -47,8 +45,8 @@ public class ProductController {
         return new ProductVo();
     }
 
-    @GetMapping("/delete")
-    public void deleteProduct(@RequestParam("id") Long id) {
+    @GetMapping("/delete/{id}")
+    public void deleteProduct(@PathVariable Long id) {
         products.remove(id);
     }
 }
