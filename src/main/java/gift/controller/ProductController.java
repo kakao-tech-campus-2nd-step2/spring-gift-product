@@ -62,22 +62,24 @@ public class ProductController {
     }
 
     @PostMapping("/update")
-    public String updateProduct(@RequestBody ProductDto productDto, Model model) {
+    public ResponseEntity<String> updateProduct(@RequestBody ProductDto productDto, Model model) {
         try {
             productService.updateProduct(productDto);
+            return ResponseEntity.ok(populateModelWithProducts(model));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return populateModelWithProducts(model);
+        return null;
     }
 
     @PostMapping("/delete")
-    public String deleteProduct(@RequestParam Long id, Model model) {
+    public ResponseEntity<String> deleteProduct(@RequestParam Long id, Model model) {
         try {
             productService.deleteProduct(id);
+            return ResponseEntity.ok(populateModelWithProducts(model));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return populateModelWithProducts(model);
+        return null;
     }
 }

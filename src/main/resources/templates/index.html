@@ -13,25 +13,29 @@
     <th>Name</th>
     <th>Price</th>
     <th>ImageUrl</th>
+    <th>Update</th>
+    <th>Delete</th>
   </tr>
   <tr th:each="product : ${products}">
     <td th:text="${product.id}"></td>
     <td th:text="${product.name}"></td>
     <td th:text="${product.price}"></td>
     <td><img th:src="${product.imageUrl}" alt="Product Image"></td>
+    <td>
+      <button th:onclick="|openUpdateModal(${product.id})|">Update</button>
+    </td>
+    <td>
+      <button th:onclick="|deleteProduct(${product.id})|">Delete</button>
+    </td>
   </tr>
 </table>
+<button onclick="openAddModal()">Add Product</button>
 
-<!-- Add Product Button -->
-<button onclick="openModal()">Add Product</button>
-
-<!-- 모달 창 -->
-<div id="myModal" class="modal">
-  <!-- 모달 창 내용 -->
+<!-- Modal -->
+<div id="addModal" class="modal">
   <div class="modal-content">
-    <span class="close" onclick="closeModal()">&times;</span>
+    <span class="close" onclick="closeAddModal()">&times;</span>
     <h2>Add Product Form</h2>
-    <!-- 여기에 폼 내용 추가 -->
     <form id="addProductForm">
       <label for="id">Id:</label>
       <input type="text" id="id" name="id" required><br><br>
@@ -41,30 +45,64 @@
       <input type="text" id="price" name="price" required><br><br>
       <label for="imageUrl">Image URL:</label>
       <input type="text" id="imageUrl" name="imageUrl" required><br><br>
-      <button type="button" onclick="submitForm()">Add</button>
+      <button type="button" onclick="submitAddForm()">Add</button>
+    </form>
+  </div>
+</div>
+
+<!-- Update Modal -->
+<div id="updateModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeUpdateModal()">&times;</span>
+    <h2>Update Product Form</h2>
+    <form id="updateProductForm">
+      <input type="hidden" id="updateId" name="id">
+      <label for="updateName">Name:</label>
+      <input type="text" id="updateName" name="name" required><br><br>
+      <label for="updatePrice">Price:</label>
+      <input type="text" id="updatePrice" name="price" required><br><br>
+      <label for="updateImageUrl">Image URL:</label>
+      <input type="text" id="updateImageUrl" name="imageUrl" required><br><br>
+      <button type="button" onclick="submitUpdateForm()">Update</button>
     </form>
   </div>
 </div>
 
 <script>
-  function openModal() {
-    var modal = document.getElementById("myModal");
+  function openAddModal() {
+    var modal = document.getElementById("addModal");
     modal.style.display = "block";
   }
 
-  function closeModal() {
-    var modal = document.getElementById("myModal");
+  function closeAddModal() {
+    var modal = document.getElementById("addModal");
     modal.style.display = "none";
   }
 
-  window.onclick = function(event) {
-    var modal = document.getElementById("myModal");
-    if (event.target == modal) {
+  function openUpdateModal(id) {
+    console.log(id);
+    var modal = document.getElementById("updateModal");
+    document.getElementById("updateId").value = parseInt(id);
+    modal.style.display = "block";
+  }
+
+  function closeUpdateModal() {
+    var modal = document.getElementById("updateModal");
+    modal.style.display = "none";
+  }
+
+  window.onclick = function (event) {
+    var modal = document.getElementById("addModal");
+    if (event.target === modal) {
       modal.style.display = "none";
+    }
+    var updateModal = document.getElementById("updateModal");
+    if (event.target === updateModal) {
+      updateModal.style.display = "none";
     }
   }
 
-  function submitForm() {
+  function submitAddForm() {
     var form = document.getElementById('addProductForm');
     var formData = new FormData(form);
     var jsonObject = {};
@@ -81,7 +119,54 @@
     })
     .then(response => {
       if (response.ok) {
-        closeModal();
+        closeAddModal();
+        window.location.reload();
+      } else {
+        console.error('Error:', response.statusText);
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+  }
+
+  function submitUpdateForm() {
+    var form = document.getElementById('updateProductForm');
+    var formData = new FormData(form);
+    var jsonObject = {};
+    formData.forEach((value, key) => {
+      jsonObject[key] = value;
+    });
+
+    fetch('/api/products/update', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(jsonObject)
+    })
+    .then(response => {
+      if (response.ok) {
+        closeUpdateModal();
+        window.location.reload();
+      } else {
+        console.error('Error:', response.statusText);
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+  }
+
+  function deleteProduct(id) {
+    fetch('/api/products/delete?id=' + id, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => {
+      if (response.ok) {
         window.location.reload();
       } else {
         console.error('Error:', response.statusText);
@@ -92,6 +177,5 @@
     });
   }
 </script>
-
 </body>
 </html>
