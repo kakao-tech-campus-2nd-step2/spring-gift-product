@@ -3,6 +3,7 @@ package gift;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
@@ -18,7 +19,7 @@ public class ProductRepository {
             .usingGeneratedKeyColumns("id");
     }
 
-    public Optional<Product> findById(int id) {
+    public Optional<Product> findById(long id) {
         List<Product> products = jdbcTemplate.query("SELECT * FROM products WHERE id = ?",
             new Object[]{id}, (resultSet, rowNum) ->
             new Product(
@@ -39,6 +40,20 @@ public class ProductRepository {
                     resultSet.getInt("price"),
                     resultSet.getString("imgUrl")
                 ));
+    }
+
+    public Product save(Product product) {
+        if (product.getId() == 0) {
+            Number newId = simpleJdbcInsert.executeAndReturnKey(new MapSqlParameterSource()
+                .addValue("name", product.getName())
+                .addValue("price",product.getPrice())
+                .addValue("imgUrl",product.getImgUrl()));
+            product.setId(newId.longValue());
+            return product;
+        }
+        jdbcTemplate.update("UPDATE products SET name = ?, price = ?, imgUrl = ? WHERE id = ?",
+            product.getName(), product.getPrice(), product.getImgUrl(), product.getId());
+        return product;
     }
 
     public void deleteById(long id) {
