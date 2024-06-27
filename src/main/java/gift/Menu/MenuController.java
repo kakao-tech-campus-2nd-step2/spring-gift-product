@@ -29,13 +29,6 @@ public class MenuController {
         return menus;
     }
 
-    @DeleteMapping("/{id}")
-    public Long delete(
-            @PathVariable("id") Long id
-    ){
-        Long deletedId = menuService.delete(id);
-        return deletedId;
-    }
 
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Long id, Model model) {
@@ -57,6 +50,15 @@ public class MenuController {
                 request.imageUrl()
         );
 
+        List<Menu> menus = menuService.findall();
+        model.addAttribute("menus", menus);
+        return "Menu";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable("id") Long id, Model model){
+        Menu menu = menuService.findById(id);
+        menuService.delete(id);
         List<Menu> menus = menuService.findall();
         model.addAttribute("menus", menus);
         return "Menu";
