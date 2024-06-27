@@ -35,6 +35,13 @@ public class ProductMemeberRepository implements ProductRepository {
         return new ArrayList<>(products.values());
     }
 
+    @Override
+    public Optional<Product> deleteById(Long id){
+        Optional<Product> product = findById(id);
+        products.remove(id);
+        return product;
+    }
+
 
 
 
