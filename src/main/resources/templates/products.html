@@ -10,14 +10,14 @@
 <div class="container">
   <h1>Manage <strong>Products</strong></h1>
   <div class="button-group">
-    <button class="btn btn-danger"><i class="fa-solid fa-circle-minus"></i>Delete</button>
+    <button class="btn btn-danger" onclick="deleteSelectedProducts()"><i class="fa-solid fa-circle-minus"></i>Delete</button>
     <a href="/products/new"><button class="btn btn-success"><i class="fa-solid fa-circle-plus"></i>Add New Product</button></a>
   </div>
   <div class="products">
     <table class="table">
       <thead>
       <tr>
-        <th><input type="checkbox"></th>
+        <th><input type="checkbox" id="selectAll" onchange="toggleCheckboxes()"></th>
         <th>Image</th>
         <th>Id</th>
         <th>Name</th>
@@ -27,7 +27,7 @@
       </thead>
       <tbody>
       <tr th:each="product : ${products}">
-        <td><input type="checkbox"></td>
+        <td><input type="checkbox" class="product-checkbox" th:value="${product.id}"></td>
         <td><a th:href="@{'/products/' + ${product.id}}">
           <img th:src="@{${product.imageUrl}}" alt="no image" class="product-image"/></a></td>
         <td><a th:href="@{'/products/' + ${product.id}}" th:text="${product.id}"></a></td>
