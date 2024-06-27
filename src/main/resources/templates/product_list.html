@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>상품 목록</title>
+</head>
+<body>
+  <h1>상품 목록</h1>
+  <form action="/admin/products/add" method="get" style="display:inline;">
+    <button type="submit">상품 추가</button>
+  </form>
+  <table>
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>상품 이름</th>
+      <th>가격</th>
+      <th>Image URL</th>
+      <th> 수정 및 삭제</th>
+    </tr>
+    </thead>
+    <tbody>
+      <td>id</td>
+      <td>name</td>
+      <td>price</td>
+      <td><a href="imageurl">imageurl</a></td>
+      <td>
+        <form action="/admin/products/edit/id" method="get" style="display:inline;">
+          <button type="submit">수정</button>
+        </form>
+        <form action="/admin/products/delete/id" method="post" style="display:inline;">
+          <input type="hidden" name="_method" value="delete"/>
+          <button type="submit">삭제</button>
+        </form>
+      </td>
+    </tbody>
+  </table>
+</body>
+</html>
