@@ -2,7 +2,6 @@ package gift.Controller;
 
 import gift.Model.Product;
 import java.util.*;
-import java.util.stream.Collectors;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
