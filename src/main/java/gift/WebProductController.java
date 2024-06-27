@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class WebProductController {
-
     private final ProductController productController;
 
     public WebProductController(ProductController productController) {
@@ -19,6 +18,13 @@ public class WebProductController {
         Collection<Product> products = productController.getAllProducts().getBody();
         model.addAttribute("productsList", products);
         return "index";
+    }
+
+    @GetMapping("/showNewProducts")
+    public String showNewProducts(Model model) {
+        Product product = new Product();
+        model.addAttribute("product", product);
+        return "newProduct";
     }
 
 }
