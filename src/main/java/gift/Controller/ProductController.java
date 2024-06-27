@@ -1,6 +1,8 @@
-package Controller;
+package gift.Controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,14 +12,19 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import Model.Product;
+import gift.Model.Product;
 
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
     private final Map<Long, Product> products = new HashMap<>();
 
-    @GetMapping("/{id:[1-9][0-9}*}")
+    @GetMapping("/")
+    public List<Product> getAllProducts(){
+        return new ArrayList<>(products.values());
+    }
+
+    @GetMapping("/{id}")
     public Product getProduct(@PathVariable Long id){
         if(!products.containsKey(id)){
             System.out.println("{%d}에 매칭되는 Product가 없습니다.".formatted(id));
@@ -26,16 +33,17 @@ public class ProductController {
         return products.get(id);
     }
 
-    @PostMapping
+    @PostMapping()
     public void addProduct(@RequestBody Product product){
         if(!products.containsKey(product.getId())){
             products.put(product.getId(), product);
+            System.out.println("추가됨");
             return;
         }
         System.out.println("{%d}에 매칭되는 Product가 이미 존재합니다.".formatted(product.getId()));
     }
 
-    @PutMapping("/{id:[1-9][0-9]*}")
+    @PutMapping("/{id}")
     public void updateProduct(@RequestBody Product product, @PathVariable Long id){
         if(products.containsKey(product.getId())){
             products.put(product.getId(), product);
@@ -44,7 +52,7 @@ public class ProductController {
         System.out.println("{%d}에 매칭되는 Product가 이미 존재하지 않습니다.".formatted(id));
     }
 
-    @DeleteMapping("/{id:[1-9][0-9]*}")
+    @DeleteMapping("/{id}")
     public void deleteProduct(@PathVariable Long id){
         if(products.containsKey(id)){
             products.remove(id);
