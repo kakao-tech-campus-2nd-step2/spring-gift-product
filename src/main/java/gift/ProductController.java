@@ -33,4 +33,13 @@ public class ProductController {
         return ResponseEntity.status(201).body(product);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product product) {
+        if (!products.containsKey(id)) {
+            return ResponseEntity.notFound().build();
+        }
+        products.put(id, product);
+        return ResponseEntity.ok(product);
+    }
+
 }
