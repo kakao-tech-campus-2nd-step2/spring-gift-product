@@ -16,27 +16,27 @@ public class ProductRepository {
     }
 
     public List<Product> findAll() {
-        String sql = "SELECT * FROM product";
+        String sql = "SELECT * FROM kakaoProduct";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Product.class));
     }
 
     public Product findById(Long id) {
-        String sql = "SELECT * FROM product WHERE id = ?";
+        String sql = "SELECT * FROM kakaoProduct WHERE id = ?";
         return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Product.class), id);
     }
 
     public void save(Product product) {
-        String sql = "INSERT INTO product (name, price, image_url) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO kakaoProduct (name, price, image_url) VALUES (?, ?, ?)";
         jdbcTemplate.update(sql, product.getName(), product.getPrice(), product.getImageUrl());
     }
 
     public void update(Product product) {
-        String sql = "UPDATE product SET name = ?, price = ?, image_url = ? WHERE id = ?";
+        String sql = "UPDATE kakaoProduct SET name = ?, price = ?, image_url = ? WHERE id = ?";
         jdbcTemplate.update(sql, product.getName(), product.getPrice(), product.getImageUrl(), product.getId());
     }
 
     public void delete(Long id) {
-        String sql = "DELETE FROM product WHERE id = ?";
+        String sql = "DELETE FROM kakaoProduct WHERE id = ?";
         jdbcTemplate.update(sql, id);
     }
 
