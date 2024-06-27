@@ -8,28 +8,29 @@
 <h1>Edit Product</h1>
 <form id="editForm">
     <label for="id">ID:</label>
-    <input type="number" id="id" name="id" th:value="${product.id}" readonly>
-    <br>
+    <input type="number" id="id" name="id" th:value="${product.id}" readonly><br><br>
+
     <label for="name">Name:</label>
-    <input type="text" id="name" name="name" th:value="${product.name}">
-    <br>
+    <input type="text" id="name" name="name" th:value="${product.name}"><br><br>
+
     <label for="price">Price:</label>
-    <input type="number" id="price" name="price" th:value="${product.price}">
-    <br>
+    <input type="number" id="price" name="price" th:value="${product.price}"><br><br>
+
     <label for="url">Url:</label>
-    <input type="url" id="url" name="url" th:value="${product.imageUrl}">
-    <br>
+    <input type="url" id="url" name="url" th:value="${product.imageUrl}"><br><br>
+
     <input type="submit" value="Save">
 </form>
 <script>
     document.getElementById("editForm").addEventListener("submit", function(event) {
             event.preventDefault();
+            var pId = document.getElementById("id").value
 
             var product = {
-                id: document.getElementById("productID").value,
-                name: document.getElementById("productName").value,
-                price: document.getElementById("productPrice").value,
-                imageUrl: document.getElementById("productImage").value
+                id: pId,
+                name: document.getElementById("name").value,
+                price: document.getElementById("price").value,
+                imageUrl: document.getElementById("url").value
             };
 
             fetch('/api/products/'+ pId, {
