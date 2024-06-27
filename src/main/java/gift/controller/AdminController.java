@@ -54,7 +54,7 @@ public class AdminController {
         return "modify_form";
 
     }
-    @PostMapping("/admin/modify/{id}")
+    @PutMapping("/admin/modify/{id}")
     public String giftModify(@PathVariable("id") Long id,
                              @RequestParam(value="name")String name,
                              @RequestParam(value="price")int price,
@@ -64,7 +64,7 @@ public class AdminController {
         return "redirect:/admin";
 
     }
-    @PostMapping("/admin/delete/{id}")
+    @DeleteMapping("/admin/delete/{id}")
     public String giftDelete(@PathVariable("id") Long id){
         giftDao.deleteById(id);
         return "redirect:/admin";

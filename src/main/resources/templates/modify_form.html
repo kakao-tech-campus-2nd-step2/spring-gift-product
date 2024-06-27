@@ -9,13 +9,14 @@
     <div th:text="${gift.name}"></div>
     <h5 class="my-3 border-bottom pb-2">상품수정</h5>
     <form th:action="@{|/admin/modify/${gift.id}|}" method="post">
+        <input type="hidden" name="_method" value="put">
         <div class="mb-3">
             <label for="name" class="form-label">상품명</label>
             <input type="text" name="name" id="name" class="form-control">
         </div>
         <div class="mb-3">
             <label for="price" class="form-label">가격</label>
-            <textarea name="price" id="price" class="form-control" ></textarea>
+            <input type="number" name="price" id="price" class="form-control" value="${gift.price}">
         </div>
         <div class="mb-3">
             <label for="imageUrl" class="form-label">이미지Url</label>

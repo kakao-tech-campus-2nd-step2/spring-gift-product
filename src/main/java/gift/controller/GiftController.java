@@ -35,7 +35,7 @@ public class GiftController {
         return giftDao.findAll();
     }
 
-    @PutMapping("/{id}")
+    @PostMapping("/{id}")
     public Gift updateGift(@PathVariable Long id , @RequestBody Gift giftreq){
         Gift gift = giftDao.updateById(id,giftreq);
         return gift;
