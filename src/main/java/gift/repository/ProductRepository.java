@@ -14,6 +14,7 @@ public class ProductRepository {
     JdbcTemplate jdbcTemplate;
 
     private final RowMapper<Product> productRowMapper = (rs, rowNum) -> new Product(
+        rs.getLong("id"),
         rs.getString("name"),
         rs.getLong("price"),
         rs.getString("imageUrl")

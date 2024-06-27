@@ -23,7 +23,7 @@ public class ProductControllerTest {
     @DisplayName("상품 추가 기능 확인")
     void checkAddProductMethod() {
         //given
-        Product tempProduct = new Product("아이스 카페 아메리카노 T", 4500L,
+        Product tempProduct = new Product(1234L,"아이스 카페 아메리카노 T", 4500L,
             "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg");
         //when
         Product addedProduct = productService.addProduct(tempProduct);
@@ -40,9 +40,9 @@ public class ProductControllerTest {
     @DisplayName("상품 전체 조회 기능 확인")
     void checkSelectAllProduct() {
         //given
-        Product tempProduct1 = new Product("콜라", 1500L, "image1.jpg");
-        Product tempProduct2 = new Product("레모네이드", 2500L, "image2.jpg");
-        Product tempProduct3 = new Product("밀크쉐이크", 3000L, "image3.jpg");
+        Product tempProduct1 = new Product(1111L,"콜라", 1500L, "image1.jpg");
+        Product tempProduct2 = new Product(2222L,"레모네이드", 2500L, "image2.jpg");
+        Product tempProduct3 = new Product(3333L,"밀크쉐이크", 3000L, "image3.jpg");
         List<Product> tempList;
         //when
         Product addedProduct1 = productService.addProduct(tempProduct1);
@@ -70,8 +70,8 @@ public class ProductControllerTest {
     @DisplayName("단일 상품 조회 기능 확인")
     void checkSelectProductById() {
         //given
-        Product tempProduct1 = new Product("콜라", 1500L, "image1.jpg");
-        Product tempProduct2 = new Product("레모네이드", 2500L, "image2.jpg");
+        Product tempProduct1 = new Product(1111L,"콜라", 1500L, "image1.jpg");
+        Product tempProduct2 = new Product(2222L,"레모네이드", 2500L, "image2.jpg");
         Product selectedProduct1;
         Product selectedProduct2;
         //when
@@ -93,7 +93,7 @@ public class ProductControllerTest {
     @DisplayName("상품 삭제 기능 확인")
     void checkDeleteProduct() {
         //given
-        Product tempProduct1 = new Product("콜라", 1500L, "image1.jpg");
+        Product tempProduct1 = new Product(1111L,"콜라", 1500L, "image1.jpg");
         Long selecteLong;
         //when
         Product addedProduct1 = productService.addProduct(tempProduct1);
@@ -109,8 +109,8 @@ public class ProductControllerTest {
     @DisplayName("상품 수정 기능 확인")
     void checkUpdateProduct() {
         //given
-        Product tempProduct1 = new Product("콜라", 1500L, "image1.jpg");
-        Product tempProduct2 = new Product("아이스크림", 1000L, "image1.jpg");
+        Product tempProduct1 = new Product(1111L,"콜라", 1500L, "image1.jpg");
+        Product tempProduct2 = new Product(2222L,"아이스크림", 1000L, "image1.jpg");
         //when
         productService.addProduct(tempProduct1);
         Product updatedProduct1 = productService.updateProduct(1L, tempProduct2);
