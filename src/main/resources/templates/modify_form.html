@@ -3,28 +3,60 @@
 <head>
     <title>Modify Form</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        .form-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #f9f9f9;
+        }
+        .form-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            font-weight: bold;
+        }
+        .form-control {
+            margin-bottom: 15px;
+        }
+        .btn-submit {
+            display: block;
+            width: 100%;
+        }
+        .gift-name {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-<div class = "container">
-    <div th:text="${gift.name}"></div>
-    <h5 class="my-3 border-bottom pb-2">상품수정</h5>
-    <form th:action="@{|/admin/modify/${gift.id}|}" method="post">
-        <input type="hidden" name="_method" value="put">
-        <div class="mb-3">
-            <label for="name" class="form-label">상품명</label>
-            <input type="text" name="name" id="name" class="form-control">
-        </div>
-        <div class="mb-3">
-            <label for="price" class="form-label">가격</label>
-            <input type="number" name="price" id="price" class="form-control" value="${gift.price}">
-        </div>
-        <div class="mb-3">
-            <label for="imageUrl" class="form-label">이미지Url</label>
-            <input name="imageUrl" id="imageUrl" class="form-control"></input>
-        </div>
-        <input type="submit" value="수정하기" class="btn btn-primary my-2">
-    </form>
+<div class="container">
+    <div class="form-container">
+        <div class="gift-name" th:text="${gift.name}"></div>
+        <h5 class="form-header">상품 수정</h5>
+        <form th:action="@{|/admin/modify/${gift.id}|}" method="post">
+            <input type="hidden" name="_method" value="put">
+            <div class="form-group">
+                <label for="name" class="form-label">상품명</label>
+                <input type="text" name="name" id="name" class="form-control" >
+            </div>
+            <div class="form-group">
+                <label for="price" class="form-label">가격</label>
+                <input type="number" name="price" id="price" class="form-control" >
+            </div>
+            <div class="form-group">
+                <label for="imageUrl" class="form-label">이미지 URL</label>
+                <input type="text" name="imageUrl" id="imageUrl" class="form-control">
+            </div>
+            <input type="submit" value="수정하기" class="btn btn-primary btn-submit">
+        </form>
+    </div>
 </div>
-
 </body>
 </html>
