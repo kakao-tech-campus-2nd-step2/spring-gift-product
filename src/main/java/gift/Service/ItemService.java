@@ -1,7 +1,7 @@
 package gift.Service;
 
-import Model.Item;
-import Model.ItemDTO;
+import gift.Model.Item;
+import gift.Model.ItemDTO;
 import java.util.HashMap;
 import org.springframework.stereotype.Service;
 
