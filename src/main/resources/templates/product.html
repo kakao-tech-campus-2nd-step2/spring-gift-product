@@ -43,22 +43,24 @@
     </thead>
     <tbody th:each="product : ${productList}">
     <tr>
-        <td>
-            <input type="number" id="id-[[${product.id}]]" name="id" th:value="${product.id}" form="form-modify-[[${product.id}]]" />
-        </td>
-        <td>
-            <input type="text" id="name-[[${product.id}]]" name="name" th:value="${product.name}" form="form-modify-[[${product.id}]]" />
-        </td>
-        <td>
-            <input type="number" id="price-[[${product.id}]]" name="price" th:value="${product.price}" form="form-modify-[[${product.id}]]" />
-        </td>
-        <td>
-            <input type="text" id="imageUrl-[[${product.id}]]" name="imageUrl" th:value="${product.imageUrl}" form="form-modify-[[${product.id}]]" />
-        </td>
-        <td>
-            <form id="form-modify-[[${product.id}]]" th:action="@{/product/modify/{id}(id=${product.id})}" method="post">
+        <form th:action="@{/product/modify}" method="post">
+            <td>
+                <input type="number" id="id-[[${product.id}]]" name="id" th:value="${product.id}" readonly />
+            </td>
+            <td>
+                <input type="text" id="name-[[${product.id}]]" name="name" th:value="${product.name}" />
+            </td>
+            <td>
+                <input type="number" id="price-[[${product.id}]]" name="price" th:value="${product.price}" />
+            </td>
+            <td>
+                <input type="text" id="imageUrl-[[${product.id}]]" name="imageUrl" th:value="${product.imageUrl}" />
+            </td>
+            <td>
                 <button type="submit">수정</button>
-            </form>
+            </td>
+        </form>
+        <td>
             <form th:action="@{/product/delete/{id}(id=${product.id})}" method="post">
                 <button type="submit">삭제</button>
             </form>
