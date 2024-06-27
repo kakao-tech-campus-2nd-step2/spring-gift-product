@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -34,6 +35,19 @@ public class ProductViewController {
         Long id = ++sequence;
         Product product = new Product(id, name, price, imageUrl);
         products.put(id, product);
+        return "redirect:/step2/products";
+    }
+
+    @GetMapping("/step2/products/{id}/edit")
+    public String editForm(@PathVariable Long id, Model model) {
+        model.addAttribute("product", products.get(id));
+        return "editForm";
+    }
+
+    @PostMapping("/step2/products/{id}/edit")
+    public String editProduct(@PathVariable Long id, @RequestParam String name,
+        @RequestParam int price, @RequestParam String imageUrl) {
+        products.put(id, new Product(id, name, price, imageUrl));
         return "redirect:/step2/products";
     }
 
