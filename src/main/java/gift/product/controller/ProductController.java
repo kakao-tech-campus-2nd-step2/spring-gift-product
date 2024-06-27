@@ -14,7 +14,7 @@ public class ProductController {
     private final Map<Long, ProductVo> products = new HashMap<>();
     private final AtomicLong idCounter = new AtomicLong();
 
-    @GetMapping("/new")
+    @PostMapping("/new")
     public void addProduct(@RequestParam("name") String name, @RequestParam("price") int price, @RequestParam("imageUrl") String imageUrl) {
         ProductVo product = new ProductVo();
 
