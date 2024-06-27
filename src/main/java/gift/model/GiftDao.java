@@ -1,42 +1,38 @@
 package gift.model;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
-
-import java.util.*;
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.List;
 
 @Repository
 public class GiftDao {
     private final JdbcTemplate jdbcTemplate;
-    private final AtomicLong idGenerator = new AtomicLong();
 
+    @Autowired
     public GiftDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
     public void create(Gift gift) {
-        long id = idGenerator.incrementAndGet();
-        String sql = "INSERT INTO gift (id, name, price, imageUrl) VALUES (?, ?, ?, ?)";
-        jdbcTemplate.update(sql,id,gift.getName(),gift.getPrice(),gift.getImageUrl());
-
+        String sql = "INSERT INTO gift (name, price, imageUrl) VALUES (?, ?, ?)";
+        jdbcTemplate.update(sql, gift.getName(), gift.getPrice(), gift.getImageUrl());
     }
 
     public Gift findById(Long id) {
         String sql = "SELECT * FROM gift WHERE id = ?";
-        return jdbcTemplate.queryForObject(sql,(rs,rowNum)->
+        return jdbcTemplate.queryForObject(sql, (rs, rowNum) ->
                 new Gift(
                         rs.getLong("id"),
                         rs.getString("name"),
                         rs.getInt("price"),
                         rs.getString("imageUrl")
-                ),id);
+                ), id);
     }
+
     public List<Gift> findAll() {
         String sql = "SELECT * FROM gift";
-        return jdbcTemplate.query(sql,(rs,rowNum)->
+        return jdbcTemplate.query(sql, (rs, rowNum) ->
                 new Gift(
                         rs.getLong("id"),
                         rs.getString("name"),
@@ -44,14 +40,14 @@ public class GiftDao {
                         rs.getString("imageUrl")
                 ));
     }
-    public void updateById(Gift gift,Long id) {
+
+    public void updateById(Gift gift, Long id) {
         String sql = "UPDATE gift SET name = ?, price = ?, imageUrl = ? WHERE id = ?";
-        jdbcTemplate.update(sql,gift.getName(),gift.getPrice(),gift.getImageUrl(),id);
+        jdbcTemplate.update(sql, gift.getName(), gift.getPrice(), gift.getImageUrl(), id);
     }
+
     public void deleteById(Long id) {
         String sql = "DELETE FROM gift WHERE id = ?";
-        jdbcTemplate.update(sql,id);
+        jdbcTemplate.update(sql, id);
     }
-
-
 }
