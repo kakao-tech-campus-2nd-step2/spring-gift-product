@@ -204,6 +204,32 @@
                 }
             }
         };
+
+        /**
+         * 상품 추가 모달을 표시합니다.
+         */
+        const showAddProductModal = () => {
+            document.getElementById('modalTitle').textContent = '상품 추가';
+            document.getElementById('productForm').reset();
+            document.getElementById('productId').value = '';
+            document.getElementById('productModal').style.display = 'block';
+        };
+
+        /**
+         * 상품 수정 모달을 표시합니다.
+         * @param {number} id - 상품 ID
+         */
+        const showEditProductModal = (id) => {
+            const product = products.find(p => p.id === id);
+            if (product) {
+                document.getElementById('modalTitle').textContent = '상품 수정';
+                document.getElementById('productId').value = product.id;
+                document.getElementById('productName').value = product.name;
+                document.getElementById('productPrice').value = product.price;
+                document.getElementById('productImagePath').value = product.imagePath;
+                document.getElementById('productModal').style.display = 'block';
+            }
+        };
     </script>
 </body>
 </html>
