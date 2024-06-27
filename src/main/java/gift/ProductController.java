@@ -23,4 +23,13 @@ public class ProductController {
     public Product getProductById(@PathVariable Long id) {
         return productService.getProductById(id);
     }
+
+    @PostMapping
+    public Object addProduct(@RequestBody Product product) {
+        String result = productService.addProduct(product);
+        if (result != null) {
+            return result; // 오류 메시지 반환
+        }
+        return product; // 성공 시 추가된 Product 반환
+    }
 }
