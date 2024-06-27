@@ -3,7 +3,6 @@ package com.kakaotech2.j20;
 public class Product {
 
     private final long id;
-
     private String name;
 
     private int price;

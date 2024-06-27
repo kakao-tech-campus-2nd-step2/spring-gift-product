@@ -1,6 +1,12 @@
 package com.kakaotech2.j20.controller;
 
+import com.kakaotech2.j20.DTO.ProductDTO;
 import com.kakaotech2.j20.service.ProductService;
+import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -17,6 +23,10 @@ public class ProductController {
         this.pm = pm;
     }
 
+    @GetMapping("/api/products")
+    public List<ProductDTO> getList(){
+        return pm.readAll();
+    }
 
 
 }
