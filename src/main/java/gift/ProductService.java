@@ -10,4 +10,8 @@ public class ProductService {
     public List<Product> getAllProducts() {
         return new ArrayList<>(products.values());
     }
+
+    public Product getProductById(Long id) {
+        return products.get(id);
+    }
 }
