@@ -10,10 +10,15 @@ public class ProductController {
     private final Map<Long, Product> products = new HashMap<>();
     private long nextId = 1L;
 
+    @GetMapping
+    public Map<Long, Product> getAllProducts() {
+        return products;
+    }
+
     @PostMapping
-    public Product addProduct(@RequestBody Product product) {
+    public Product addProduct(@RequestBody Product receivedData) {
         long id = nextId++;
-        product.setId(id);
+        Product product = new Product(id, receivedData.getName(), receivedData.getPrice(), receivedData.getImageUrl());
         products.put(id, product);
         return product;
     }
