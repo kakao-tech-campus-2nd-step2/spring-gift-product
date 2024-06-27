@@ -1,15 +1,16 @@
-package gift.model;
+package gift.model.dao;
 
+import gift.model.Product;
 import gift.model.repository.ProductRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 import java.util.UUID;
 
-public class Products implements ProductRepository {
+public class MapProductDao implements ProductRepository {
     private final TreeMap<Long, Product> products;
 
-    public Products() {
+    public MapProductDao() {
         this.products = new TreeMap<>();
     }
 
