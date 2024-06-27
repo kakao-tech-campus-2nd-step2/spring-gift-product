@@ -18,4 +18,10 @@ public class AdminController {
         model.addAttribute("products", new ArrayList<>(products.values()));
         return "product_list";
     }
+
+    @GetMapping("/add")
+    public String showAddProductForm(Model model) {
+        model.addAttribute("product",new Product(0,"",0,""));
+        return "add_product_form";
+    }
 }
