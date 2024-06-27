@@ -36,5 +36,7 @@ public class ProductController {
         existingProduct.setImageUrl(newProductData.getImageUrl());
         return existingProduct;
     }
-
+    public Product deleteProduct(long id) {
+        return products.remove(id);
+    }
 }

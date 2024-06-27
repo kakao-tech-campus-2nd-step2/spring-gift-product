@@ -32,6 +32,9 @@ public class HttpProductHandler implements HttpHandler {
                 case "PUT":
                     handlePutRequest(exchange);
                     break;
+                case "DELETE":
+                    handleDeleteRequest(exchange);
+                    break;
                 default:
                     exchange.sendResponseHeaders(405, -1); // Method Not Allowed
                     break;
@@ -100,5 +103,35 @@ public class HttpProductHandler implements HttpHandler {
             os.write(responseJson.getBytes());
         }
     }
+    private void handleDeleteRequest(HttpExchange exchange) throws IOException {
+        String path = exchange.getRequestURI().getPath();
+        String[] pathParts = path.split("/");
+        if (pathParts.length != 4) {
+            exchange.sendResponseHeaders(400, -1); // Bad Request
+            return;
+        }
 
+        long id;
+        try {
+            id = Long.parseLong(pathParts[3]);
+        } catch (NumberFormatException e) {
+            exchange.sendResponseHeaders(400, -1); // Bad Request
+            return;
+        }
+
+        Product deletedProduct = productController.deleteProduct(id);
+
+        if (deletedProduct == null) {
+            exchange.sendResponseHeaders(404, -1); // Not Found
+            return;
+        }
+
+        String responseJson = objectMapper.writeValueAsString(deletedProduct);
+        exchange.getResponseHeaders().set("Content-Type", "application/json");
+        exchange.sendResponseHeaders(200, responseJson.getBytes().length);
+
+        try (OutputStream os = exchange.getResponseBody()) {
+            os.write(responseJson.getBytes());
+        }
+    }
 }
