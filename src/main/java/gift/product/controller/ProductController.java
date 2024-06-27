@@ -3,50 +3,61 @@ package gift.product.controller;
 import gift.product.model.ProductVo;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicLong;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import org.springframework.web.bind.annotation.*;
-
-@RestController
+@Controller
 @RequestMapping("/product")
 public class ProductController {
 
     private final Map<Long, ProductVo> products = new HashMap<>();
-    private final AtomicLong idCounter = new AtomicLong();
 
-    @PostMapping("/new")
-    public void addProduct(@RequestParam("name") String name, @RequestParam("price") int price, @RequestParam("imageUrl") String imageUrl) {
-        ProductVo product = new ProductVo();
+    @PostMapping("/add")
+    public String addProduct(@ModelAttribute ProductVo productVo, Model model) {
+        products.put(productVo.getId(), productVo);
 
-        product.setId(idCounter.incrementAndGet());
+        model.addAttribute("productList", products.values());
+        return "product-list";
+    }
+
+    @PostMapping("/modify/{id}")
+    public String modifyProduct(@PathVariable Long id,
+        @RequestParam("name") String name,
+        @RequestParam("price") int price,
+        @RequestParam("imageUrl") String imageUrl,
+        Model model) {
+        ProductVo product = products.get(id);
         product.setName(name);
         product.setPrice(price);
         product.setImageUrl(imageUrl);
-
-        products.put(product.getId(), product);
-    }
-
-    @GetMapping("/modify")
-    public void modifyProduct(@RequestParam("id") Long id, @RequestParam(value="name", defaultValue="NULL") String name, @RequestParam(value="price", defaultValue="-1") int price, @RequestParam(value="imageUrl", defaultValue="NULL") String imageUrl) {
-        ProductVo product = products.get(id);
-        if(!name.equals("NULL"))
-            product.setName(name);
-        if(price != -1)
-            product.setPrice(price);
-        if(!imageUrl.equals("NULL"))
-            product.setImageUrl(imageUrl);
         products.put(id, product);
+
+        model.addAttribute("productList", products.values());
+        return "product-list";
     }
 
-    @GetMapping("/select")
-    public ProductVo selectProduct(@RequestParam("id") Long id) {
-        if(products.get(id) != null)
-            return products.get(id);
-        return new ProductVo();
-    }
-
-    @GetMapping("/delete/{id}")
-    public void deleteProduct(@PathVariable Long id) {
+    @PostMapping("/delete/{id}")
+    public String deleteProduct(@PathVariable Long id, Model model) {
         products.remove(id);
+        model.addAttribute("productList", products.values());
+        return "product-list";
+    }
+
+    @GetMapping("/listup")
+    public String listup(Model model) {
+        model.addAttribute("productList", products.values());
+        return "product-list";  // Ensure this matches the name of your Thymeleaf template
+    }
+
+    @GetMapping
+    public String listAllProducts(Model model) {
+        model.addAttribute("productList", products.values());
+        return "product-list";
     }
 }
