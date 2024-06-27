@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>상품 관리</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<h1>🔎상품 목록</h1>
+<table>
+    <thead>
+    <tr>
+        <th>상품명</th>
+        <th>가격</th>
+        <th>이미지</th>
+        <th>액션</th>
+    </tr>
+    </thead>
+    <tbody id="product-list">
+    <tr th:each="product : ${products}">
+        <td th:text="${product.name}">상품명</td>
+        <td th:text="${product.price}">가격</td>
+        <td><img th:src="${product.imageUrl}" alt="상품 이미지" width="100"></td>
+    </tr>
+    </tbody>
+</table>
+
+<br>
+
+<script>
+    function fetchProducts() {
+        $.get("/api/products", function(data) {
+            var productList = $("#product-list");
+            productList.empty();
+            data.forEach(function(product) {
+                productList.append(`
+                    <tr>
+                        <td>${product.name}</td>
+                        <td>${product.price}</td>
+                        <td><img src="${product.imageUrl}" alt="상품 이미지" width="100"></td>
+                    </tr>
+                `);
+            });
+        });
+    }
+
+    $(document).ready(function() {
+        fetchProducts();
+    });
+</script>
+</body>
+</html>

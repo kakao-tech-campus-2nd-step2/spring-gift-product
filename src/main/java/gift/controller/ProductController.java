@@ -1,5 +1,6 @@
 package gift.controller;
 
+import org.springframework.ui.Model;
 import gift.vo.Product;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,13 @@ public class ProductController {
 
     private final Map<Long, Product> products = new HashMap<>();
     private Long sequenceId = 1L;
+
+    @GetMapping("/")
+    public String index(Model model) {
+        List<Product> productList = new ArrayList<>(products.values());
+        model.addAttribute("products", productList);
+        return "index";
+    }
 
     /**
      * 상품 조회 - 전체
