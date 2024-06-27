@@ -1,5 +1,7 @@
 package gift.dto;
 
+import gift.domain.Product;
+
 public class ProductResponseDto {
     private Long id;
     private String name;
@@ -13,6 +15,9 @@ public class ProductResponseDto {
         this.imageUrl = imageUrl;
     }
 
+    public Product toEntity() {
+        return new Product(this.id,this.name,this.price,this.imageUrl);
+    }
     public Long getId() {
         return id;
     }
