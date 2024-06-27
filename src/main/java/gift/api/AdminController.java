@@ -26,6 +26,12 @@ public class AdminController {
         return "admin-product-list";
     }
 
+    // 상품 추가 폼 표시
+    @GetMapping("/add")
+    public String showAddForm() {
+        return "admin-product-form";
+    }
+
     // 상품 추가
     @PostMapping
     public ProductResponse addProduct(@RequestBody ProductRequest request) {
