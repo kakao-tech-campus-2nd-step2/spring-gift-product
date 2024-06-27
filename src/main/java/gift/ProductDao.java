@@ -22,4 +22,10 @@ public class ProductDao {
             .param(List.of(product.name(), product.price(), product.imageUrl()))
             .update();
     }
+
+    public void update(long id, Product product) {
+        jdbcClient.sql("update product set name = ?, price = ?, imageUrl = ? where id = ?")
+            .param(List.of(product.name(), product.price(), product.imageUrl(), id))
+            .update();
+    }
 }
