@@ -109,6 +109,25 @@
   </div>
 </div>
 
+<script>
+  function deleteHandler(id) {
+    fetch(`/product/delete/${id}`, {
+      method: 'DELETE'
+    })
+    .then(response => {
+      if (response.status===204) {
+        alert("상품이 삭제되었습니다.");
+        window.location.reload();
+      } else {
+        return response.text().then(text => { throw new Error(text) });
+      }
+    })
+    .catch(error => alert('Error: ' + error.message));
 
+  }
+
+
+
+</script>
 </body>
 </html>
