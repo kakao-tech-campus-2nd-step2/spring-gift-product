@@ -30,14 +30,11 @@ public class AdminController {
     }
 
     @PostMapping("/admin/create")
-    public String giftCreate(@RequestParam(value="name")String name,
-                             @RequestParam(value="price")int price,
-                             @RequestParam(value ="imageUrl")String imageUrl){
-        Gift gift = new Gift(0,name,price,imageUrl);
+    public String giftCreate(@ModelAttribute Gift gift) {
         giftDao.save(gift);
         return "redirect:/admin";
-
     }
+
 
     @GetMapping("/admin/detail/{id}")
     public String detail(Model model,@PathVariable("id") Long id){
@@ -56,10 +53,7 @@ public class AdminController {
     }
     @PutMapping("/admin/modify/{id}")
     public String giftModify(@PathVariable("id") Long id,
-                             @RequestParam(value="name")String name,
-                             @RequestParam(value="price")int price,
-                             @RequestParam(value ="imageUrl")String imageUrl){
-        Gift gift = new Gift(0,name,price,imageUrl);
+                             @ModelAttribute Gift gift){
         giftDao.updateById(id,gift);
         return "redirect:/admin";
 

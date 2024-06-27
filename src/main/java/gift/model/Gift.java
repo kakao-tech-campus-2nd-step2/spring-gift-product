@@ -6,6 +6,9 @@ public class Gift {
     private int price;
     private String imageUrl;
 
+    public Gift() {
+    }
+
     public Gift(long id, String name, int price, String imageUrl) {
         this.id = id;
         this.name = name;
@@ -45,8 +48,5 @@ public class Gift {
         this.imageUrl = imageUrl;
     }
 
-    @Override
-    public String toString() {
-        return STR."Gift{id=\{id}, name='\{name}\{'\''}, price=\{price}, imageUrl='\{imageUrl}\{'\''}\{'}'}";
-    }
+
 }
