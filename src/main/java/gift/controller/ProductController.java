@@ -6,6 +6,7 @@ import gift.model.Product;
 import gift.model.ProductRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,5 +47,16 @@ public class ProductController {
             throw new IllegalArgumentException();
         }
         productRepository.save(modifyProduct.toModel(id));
+    }
+
+    @DeleteMapping("/api/products/{id}")
+    public void productDelete(@PathVariable("id") Long id){
+        Product findedProduct;
+        if((findedProduct = productRepository.find(id)) == null){
+            throw new IllegalArgumentException();
+        }
+
+        findedProduct.delete();
+        productRepository.save(findedProduct);
     }
 }
