@@ -46,16 +46,39 @@
 <body>
     <div id="content">
         <h1 id="header">상품 등록</h1>
-        <form>
-            상품 이름: <input type="text"><br>
+        <form onsubmit="
+        event.preventDefault();
+        addProduct();
+        ">
+            상품 이름: <input type="text" id="name"><br>
             <div class="space"></div>
-            상품 가격: <input type="text"><br>
+            상품 가격: <input type="text" id="price"><br>
             <div class="space"></div>
-            상품 이미지 URL: <input type="text">
-            <button>등록</button>
+            상품 이미지 URL: <input type="text" id="imageUrl">
+            <button type="submit">등록</button>
         </form>
     </div>
-    
+    <script>
+        function addProduct() {
+            const name = document.getElementById("name").value;
+            const price = parseInt(document.getElementById("price").value);
+            const imageUrl = document.getElementById("imageUrl").value;
 
+            fetch('/api/products', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({name: name, price: price, imageUrl: imageUrl})
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = '/products'
+                } else {
+                    alert("상품 생성 중 오류 발생");
+                }
+            })
+        }
+    </script>
 </body>
 </html>
