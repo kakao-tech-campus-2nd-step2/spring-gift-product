@@ -2,9 +2,13 @@ package gift.dto;
 
 //import com.sun.istack.NotNull;
 
+import gift.entity.Product;
+
 public class CreateProduct {
 
-    public static class Response{
+
+
+    public static class Request{
         //@NotNull
         private Long id;
         //@NotNull
@@ -13,6 +17,13 @@ public class CreateProduct {
         private int price;
         //@NotNull
         private String imageUrl;
+
+        public Request(Long id, String name, int price,String imageUrl) {
+            this.id=id;
+            this.name=name;
+            this.price=price;
+            this.imageUrl=imageUrl;
+        }
 
         public Long getId() {
             return id;
@@ -49,7 +60,7 @@ public class CreateProduct {
 
     }
 
-    public static class Request{
+    public static class Response{
         //@NotNull
         private Long id;
         //@NotNull
@@ -59,6 +70,12 @@ public class CreateProduct {
         //@NotNull
         private String imageUrl;
 
+        public Response(Long id, String name, int price,String imageUrl) {
+            this.id=id;
+            this.name=name;
+            this.price=price;
+            this.imageUrl=imageUrl;
+        }
         public Long getId() {
             return id;
         }
@@ -90,5 +107,9 @@ public class CreateProduct {
         public void setImageUrl(String imageUrl) {
             this.imageUrl = imageUrl;
         }
+
+        //public static Response fromEntity(Product product) {
+          //  return new Response(p)
+        //}
     }
 }
