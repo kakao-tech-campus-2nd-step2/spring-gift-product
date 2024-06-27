@@ -42,4 +42,13 @@ public class ProductController {
         return ResponseEntity.ok(product);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
+        if (!products.containsKey(id)) {
+            return ResponseEntity.notFound().build();
+        }
+        products.remove(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }
