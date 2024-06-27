@@ -51,7 +51,7 @@
                   th:onclick="|location.href='@{/step2/products/{id}/edit(id=${product.id})}'|" type="button">수정</button>
           <button class="btn btn-danger"
                   onclick="location.href='products.html'"
-                  th:onclick="|location.href='@{/step2/products/delete(id=${product.id})}'|" type="button">삭제</button>
+                  th:onclick="|deleteConfirm([[${product.id}]])|" type="button">삭제</button>
         </td>
       </tr>
       </tbody>
@@ -59,4 +59,28 @@
   </div>
 </div>
 </body>
+
+<script th:inline="javascript">
+
+  function deleteConfirm(id) {
+
+    if (!confirm('해당 제품을 삭제할까요?')) {
+      return false;
+    }
+
+    let form = document.createElement('form');
+    let obj;
+    obj = document.createElement('input');
+    obj.setAttribute('type', 'hidden');
+    obj.setAttribute('name', 'id')
+    obj.setAttribute('value', id);
+
+    form.appendChild(obj);
+    form.setAttribute('method', 'post');
+    form.setAttribute('action', '/step2/products/delete');
+    document.body.appendChild(form);
+    form.submit();
+  }
+</script>
+
 </html>

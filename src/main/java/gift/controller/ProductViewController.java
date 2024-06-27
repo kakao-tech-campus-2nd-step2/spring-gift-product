@@ -51,7 +51,7 @@ public class ProductViewController {
         return "redirect:/step2/products";
     }
 
-    @GetMapping("/step2/products/delete")
+    @PostMapping("/step2/products/delete")
     public String deleteProduct(@RequestParam("id") Long id) {
         products.remove(id);
         return "redirect:/step2/products";
