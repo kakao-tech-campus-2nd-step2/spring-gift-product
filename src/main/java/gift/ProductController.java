@@ -1,8 +1,9 @@
 package gift;
 
+
 import org.springframework.web.bind.annotation.*;
-
-
+import org.springframework.ui.Model;
+import org.springframework.stereotype.Controller;
 import java.util.List;
 
 @RestController
@@ -15,40 +16,25 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<Product> getAllProducts() {
-        return productService.getAllProducts();
+    public String getAllProducts(Model model) {
+        model.addAttribute("products", productService.getAllProducts());
+        return "index";//index.html로 매핑(메인 화면)
     }
 
-    @GetMapping("/{id}")
-    public Product getProductById(@PathVariable Long id) {
-        return productService.getProductById(id);
+
+    @GetMapping("/add")
+    public String addProductForm(Model model) {
+        model.addAttribute("product", new Product());
+        return "addProduct";//addProduct.html로 매핑(상품 추가 화면)
     }
 
     @PostMapping
-    public Object addProduct(@RequestBody Product product) {
-        String result = productService.addProduct(product);
-        if (result != null) {
-            return result; // 오류 메시지 반환
-        }
-        return product; // 성공 시 추가된 Product 반환
+    public String addProduct(@ModelAttribute Product product) {
+        productService.addProduct(product);
+        return "redirect:/api/products";
     }
 
 
 
-    @DeleteMapping("/{id}")
-    public String deleteProduct(@PathVariable Long id) {
-        return productService.deleteProduct(id); // 성공 시 null 반환, 오류 시 오류 메시지 반환
-    }
-
-    @PutMapping("/{id}")
-    public Object modifyProduct(@PathVariable Long id, @RequestBody Product product) {
-        Product modifiedProduct = productService.modifyProduct(id, product);
-        if (modifiedProduct.getId() != id) {
-            return "id 변경 불가능";
-        }
-        if (modifiedProduct == null) {
-            return "Product not found"; // 오류 메시지 반환
-        }
-        return modifiedProduct; // 성공 시 수정된 Product 반환
-    }
+    //수정, 삭제 기능 추가 할 것.
 }
