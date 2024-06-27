@@ -28,7 +28,7 @@ public class AdminController {
 
     // 상품 추가 폼 표시
     @GetMapping("/add")
-    public String showAddForm() {
+    public String showAddProductForm() {
         return "admin-product-form";
     }
 
