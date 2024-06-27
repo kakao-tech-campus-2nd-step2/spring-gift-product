@@ -3,6 +3,7 @@ package gift.controller;
 
 import gift.model.Gift;
 import gift.model.GiftDao;
+import gift.service.GiftService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,10 +12,10 @@ import java.util.Collection;
 
 @Controller
 public class AdminController {
-    private GiftDao giftDao;
+    private GiftService giftService;
 
-    AdminController(GiftDao giftDao){
-        this.giftDao = giftDao;
+    AdminController(GiftService giftService){
+        this.giftService = giftService;
     }
 
     @GetMapping
@@ -24,7 +25,7 @@ public class AdminController {
 
     @GetMapping("/admin")
     public String adminHome(Model model){
-        Collection<Gift> giftlist = giftDao.findAll();
+        Collection<Gift> giftlist = giftService.getAllGifts();
         model.addAttribute("giftlist",giftlist);
         return "admin";
     }
@@ -36,14 +37,14 @@ public class AdminController {
 
     @PostMapping("/admin/create")
     public String giftCreate(@ModelAttribute Gift gift) {
-        giftDao.create(gift);
+        giftService.addGift(gift);
         return "redirect:/admin";
     }
 
 
     @GetMapping("/admin/detail/{id}")
     public String detail(Model model,@PathVariable("id") Long id){
-        Gift gift = giftDao.findById(id);
+        Gift gift = giftService.getGift(id);
         model.addAttribute("gift",gift);
         return "gift_detail";
     }
@@ -51,7 +52,7 @@ public class AdminController {
 
     @GetMapping("/admin/modify/{id}")
     public String giftModify(Model model,@PathVariable("id") Long id){
-        Gift gift = giftDao.findById(id);
+        Gift gift = giftService.getGift(id);
         model.addAttribute("gift",gift);
         return "modify_form";
 
@@ -59,13 +60,13 @@ public class AdminController {
     @PutMapping("/admin/modify/{id}")
     public String giftModify(@PathVariable("id") Long id,
                              @ModelAttribute Gift gift){
-        giftDao.updateById(gift,id);
+        giftService.updateGift(gift,id);
         return "redirect:/admin";
 
     }
     @DeleteMapping("/admin/delete/{id}")
     public String giftDelete(@PathVariable("id") Long id){
-        giftDao.deleteById(id);
+        giftService.deleteGift(id);
         return "redirect:/admin";
     }
 }
