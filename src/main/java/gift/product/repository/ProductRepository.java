@@ -81,6 +81,8 @@ public class ProductRepository {
     }
 
     public void delete(Long id) {
-        products.remove(id);
+        var sql = "DELETE FROM Product WHERE id = ?";
+
+        jdbcTemplate.update(sql, id);
     }
 }
