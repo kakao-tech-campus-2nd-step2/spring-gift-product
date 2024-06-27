@@ -205,3 +205,33 @@
   - `상품 추가`버튼을 눌렀을 때 `form`을 통해 추가할 상품의 정보를 기입
 - update_form.html
   - `상품 수정`버튼을 눌렀을 때 `form`을 통해 변경할 상품의 정보를 기입
+
+
+
+# STEP-3
+
+## 기능 요구 사항
+
+- 상품 정보에 옵션을 추가한다. 상품과 옵션 모델 간의 관계를 고려하여 설계하고 구현한다.
+  - 상품에는 항상 하나 이상의 옵션이 있어야 한다.
+  - 옵션이 결과적으로 상품을 사고 팔게 되는 단위이다.
+
+## dependency 추가사항
+- JDBC
+
+## 프로젝트 구조
+- src/main/java/gift
+  - controller
+    - ProductController.java
+  - model
+    - Product.java
+  - service
+    - ProductService.java
+  - Repository
+    - ProductRepository.java
+  - Application.java
+- src/resources/templates
+  - create_form.html
+  - update_form.html
+  - product_list.html
+
