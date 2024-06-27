@@ -20,7 +20,7 @@ public class ProductRepository {
     }
 
     public Optional<Product> findById(long id) {
-        List<Product> products = jdbcTemplate.query("SELECT * FROM products WHERE id = ?",
+        List<Product> products = jdbcTemplate.query("SELECT * FROM product WHERE id = ?",
             new Object[]{id}, (resultSet, rowNum) ->
             new Product(
                 resultSet.getLong("id"),
@@ -32,7 +32,7 @@ public class ProductRepository {
     }
 
     public List<Product> findAll() {
-        return jdbcTemplate.query("SELECT * FROM products",
+        return jdbcTemplate.query("SELECT * FROM product",
             (resultSet, rowNum) ->
                 new Product(
                     resultSet.getLong("id"),
@@ -51,7 +51,7 @@ public class ProductRepository {
             product.setId(newId.longValue());
             return product;
         }
-        jdbcTemplate.update("UPDATE products SET name = ?, price = ?, imgUrl = ? WHERE id = ?",
+        jdbcTemplate.update("UPDATE product SET name = ?, price = ?, imgUrl = ? WHERE id = ?",
             product.getName(), product.getPrice(), product.getImgUrl(), product.getId());
         return product;
     }
