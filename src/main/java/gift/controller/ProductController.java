@@ -74,13 +74,12 @@ public class ProductController {
      * @return 수정된 상품
      */
     @PutMapping("")
-    public ResponseEntity<Product> updateProduct(@RequestBody Product product) {
-        Long productId = product.getId();
-        if (!productExists(productId)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    public ResponseEntity<Void> updateProduct(@RequestBody Product product) {
+        Boolean result = dao.updateProduct(product);
+        if (result) {
+            return ResponseEntity.noContent().build();
         }
-        products.put(productId, product);
-        return ResponseEntity.ok(product);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
     /**

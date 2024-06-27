@@ -41,4 +41,17 @@ public class ProductDao {
         return resultRowNum == 1;
     }
 
+    public Boolean updateProduct(Product product) {
+        String sql = "UPDATE PRODUCT SET name = :name, price = :price, image_url = :image_url "
+                + "WHERE id = :id";
+        int resultRowNum = this.jdbcClient.sql(sql)
+                .param("name", product.getName())
+                .param("price", product.getPrice())
+                .param("image_url", product.getImageUrl())
+                .param("id", product.getId())
+                .update();
+        return resultRowNum == 1;
+    }
+
+
 }
