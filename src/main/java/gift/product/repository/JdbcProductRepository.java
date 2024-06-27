@@ -20,6 +20,12 @@ public class JdbcProductRepository implements ProductRepository {
         return jdbcTemplate.query(sql, productRowMapper());
     }
 
+    @Override
+    public Product findProductById(Long id) {
+        String sql = "select * from product where id = ?";
+        return jdbcTemplate.queryForObject(sql, productRowMapper(), id);
+    }
+
     private RowMapper<Product> productRowMapper() {
         return (rs, rowNum) -> {
             Product product = new Product();
