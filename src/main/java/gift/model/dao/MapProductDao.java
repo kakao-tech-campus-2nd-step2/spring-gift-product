@@ -16,13 +16,20 @@ public class MapProductDao implements ProductRepository {
 
     @Override
     public void save(Product entity) {
-        if(entity.getId() == null){
+        if(entity.isNew()){
             Long newId = null;
             while(newId == null || products.containsKey(newId)){
                 newId = UUID.randomUUID().getLeastSignificantBits() & Long.MAX_VALUE;
             }
             entity.setId(newId);
+            products.put(entity.getId(), entity);
+            return;
         }
+        update(entity);
+    }
+
+    @Override
+    public void update(Product entity) {
         products.put(entity.getId(), entity);
     }
 
