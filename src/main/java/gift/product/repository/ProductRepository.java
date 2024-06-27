@@ -75,8 +75,9 @@ public class ProductRepository {
     }
 
     public void update(Product product) {
-        Long id = product.getId();
-        products.put(id, product);
+        var sql = "UPDATE Product SET name = ?, price = ?, imageUrl = ? WHERE id = ?";
+
+        jdbcTemplate.update(sql, product.getName(), product.getPrice(), product.getImageUrl(), product.getId());
     }
 
     public void delete(Long id) {
