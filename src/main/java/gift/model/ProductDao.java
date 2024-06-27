@@ -4,26 +4,21 @@ import gift.controller.ProductRequest;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicLong;
 
 @Component
 public class ProductDao {
     private final JdbcClient jdbcClient;
-    private final Map<Long, Product> products = new HashMap<>();
-    private final AtomicLong idGenerator = new AtomicLong();
 
     public ProductDao(JdbcClient jdbcClient) {
         this.jdbcClient = jdbcClient;
     }
 
-    public Product updateById(long id, ProductRequest request) {
-        Product newProduct = new Product(id, request.name(), request.price(), request.imageUrl());
-        products.replace(id, newProduct);
-        return newProduct;
+    public void updateById(long id, ProductRequest request) {
+        var sql = "update product set name = ?, price = ?, imageUrl = ? where id = ?";
+        jdbcClient.sql(sql)
+                .params(request.name(), request.price(), request.imageUrl(), id)
+                .update();
     }
 
     public void save(ProductRequest request) {
