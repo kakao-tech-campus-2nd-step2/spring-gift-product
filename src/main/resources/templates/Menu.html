@@ -14,8 +14,28 @@
     <tr th:each="menu : ${menus}">
         <td th:text="${menu.name}">Menu Name</td>
         <td th:text="${menu.price}">Menu Price</td>
-        <td><img th:src="${menu.imageUrl}" alt="Menu Image"></td>
+        <td><img th:src="@{${menu.imageUrl}}" alt="Menu Image"></td>
     </tr>
 </table>
+
+    <form th:action="@{/menu}" method="post">
+        <ul>
+            <li>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" />
+            </li>
+            <li>
+                <label for="price">Price:</label>
+                <input type="number" id="price" name="price" />
+            </li>
+            <li>
+                <label for="imageUrl">ImageUrl:</label>
+                <input type="url" id="imageUrl" name="image" />
+            </li>
+            <li class="button">
+                <button type="submit">Send your message</button>
+            </li>
+        </ul>
+    </form>
 </body>
 </html>

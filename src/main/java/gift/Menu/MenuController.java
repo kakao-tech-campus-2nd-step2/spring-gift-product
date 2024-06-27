@@ -15,11 +15,11 @@ public class MenuController {
     MenuService menuService = new MenuService(menuRepository);
 
     @PostMapping
-    public Menu save(
-            @RequestBody MenuRequest request
+    public String save(
+            @ModelAttribute MenuRequest request
     ) {
         Menu newMenu = menuService.save(request.name(),request.price(),request.imageUrl());
-        return newMenu;
+        return "redirect:/menu";
     }
 
     @GetMapping
