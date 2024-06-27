@@ -29,6 +29,12 @@ public class AdminController {
         return "admin/products";
     }
 
+    @PostMapping
+    public String deleteProduct(Product product, RedirectAttributes redirectAttributes) {
+        productRepository.delete(product.getId());
+        return "redirect:/admin/products";
+    }
+
     @GetMapping("/insert")
     public String insertForm() {
         return "admin/insertForm";

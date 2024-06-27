@@ -24,6 +24,7 @@
           <th class="text-center">상품명</th>
           <th class="text-center">가격</th>
           <th class="text-center">상품 이미지</th>
+          <th></th>
         </tr>
         </thead>
         <tbody>
@@ -37,8 +38,17 @@
             <td class="text-center">
               <span th:text="${product.price}">가격 tmp</span>
             </td>
+            <td class="text-center" style="max-width: 200px; word-break: break-all">
+              <span class="w" th:text="${product.imageUrl}">상품 이미지 tmp</span>
+            </td>
             <td class="text-center">
-              <span th:text="${product.imageUrl}">상품 이미지 tmp</span>
+              <form th:action method="post">
+                <input type="hidden" id="id" name="id" th:value="${product.id}">
+                <input type="hidden" id="name" name="name" th:value="${product.name}">
+                <input type="hidden" id="price" name="price" th:value="${product.price}">
+                <input type="hidden" id="imageUrl" name="imageUrl" th:value="${product.imageUrl}">
+                <button type="submit">삭제</button>
+              </form>
             </td>
           </tr>
         </tbody>
