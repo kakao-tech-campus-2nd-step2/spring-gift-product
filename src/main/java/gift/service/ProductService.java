@@ -1,32 +1,34 @@
 package gift.service;
 
 import gift.model.Product;
+import gift.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService {
-  private final Map<Long, Product> products = new HashMap<>();
-  private Long nextId = 1L;
+
+  private final ProductRepository productRepository;
+
+  public ProductService(ProductRepository productRepository) {
+    this.productRepository = productRepository;
+  }
 
   public List<Product> findAll() {
-    return new ArrayList<>(products.values());
+    return productRepository.findAll();
   }
 
   public Optional<Product> findById(Long id) {
-    return Optional.ofNullable(products.get(id));
+    return productRepository.findById(id);
   }
 
   public Product save(Product product) {
-    if (product.getId() == null) {
-      product.setId(nextId++);
-    }
-    products.put(product.getId(), product);
-    return product;
+    return productRepository.save(product);
   }
 
   public void deleteById(Long id) {
-    products.remove(id);
+    productRepository.deleteById(id);
   }
 }
