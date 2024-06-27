@@ -1,17 +1,17 @@
 package gift.controller;
 
-import gift.dto.ProductDto;
+import gift.dto.request.ProductRequestDto;
+import gift.dto.response.ProductResponseDto;
 import gift.service.ProductService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-@RestController
-@RequestMapping("/api/products")
+@Controller
+@RequestMapping("products")
+
 public class ProductController {
     
     private final ProductService productService;
@@ -20,36 +20,46 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping("/{id}")
-    public ProductDto getProduct(@PathVariable("id") Long id){
-        return productService.findProductById(id);
-    }
-
     @GetMapping()
-    public List<ProductDto> getAll(){
-        return productService.findAllProducts();
+    public String getAll(Model model){
+        List<ProductResponseDto> productDtos = productService.findAllProducts();
+        model.addAttribute("productDtos", productDtos);
+        return "manager";
     }
 
-    @PostMapping()
-    public ResponseEntity<Map<String, Long>> add(@RequestBody ProductDto productDto){
-        Long savedId = productService.addProduct(productDto);
-        Map<String, Long> response = new HashMap<>();
-        response.put("id", savedId);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    @GetMapping("/new")
+    public String addForm(){
+        return "addForm";
     }
 
-    @PutMapping("/{id}")
-    public ProductDto update(@PathVariable("id") Long id,
+    @PostMapping("/new")
+    public String add(@ModelAttribute ProductRequestDto productDto){
+        productService.addProduct(productDto);
+        return "redirect:/products";
+    }
+
+    @GetMapping("/{id}/edit")
+    public String editForm(@PathVariable("id") Long id,
+                             Model model){
+        ProductResponseDto productDto = productService.findProductById(id);
+
+        model.addAttribute("productDto", productDto);
+
+        return "editForm";
+    }
+
+    @PostMapping("/{id}/edit")
+    public String update(@PathVariable("id") Long id,
                              @RequestParam("price") int price){
-        return productService.updateProduct(id, price);
+        productService.updateProduct(id, price);
+        return "redirect:/products";
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Map<String, Long>> delete(@PathVariable("id") Long id){
-        Long deletedId = productService.deleteProduct(id);
-        Map<String, Long> response = new HashMap<>();
-        response.put("id", deletedId);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+    @PostMapping("/{id}/delete")
+    public String delete(@PathVariable("id") Long id){
+        productService.deleteProduct(id);
+        return "redirect:/products";
+
     }
 
 }

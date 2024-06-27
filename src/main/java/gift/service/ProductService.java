@@ -1,7 +1,10 @@
 package gift.service;
 
 import gift.domain.Product;
-import gift.dto.ProductDto;
+
+import gift.dto.request.ProductRequestDto;
+import gift.dto.response.ProductResponseDto;
+
 import gift.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +21,8 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public Long addProduct(ProductDto productDto){
+
+    public Long addProduct(ProductRequestDto productDto){
         Product product = Product.toEntity(productDto);
 
         productRepository.save(product);
@@ -26,30 +30,31 @@ public class ProductService {
         return product.getId();
     }
 
-    public ProductDto findProductById(Long id){
+    public ProductResponseDto findProductById(Long id){
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("해당 상품은 존재하지 않습니다."));
-        return ProductDto.toDto(product);
+        return ProductResponseDto.from(product);
     }
 
-    public List<ProductDto> findAllProducts(){
+    public List<ProductResponseDto> findAllProducts(){
         return productRepository.findAll().stream()
-                .map(ProductDto::toDto)
+                .map(ProductResponseDto::from)
                 .collect(Collectors.toList());
     }
 
-    public ProductDto updateProduct(Long id, int price){
-        Product product = productRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("해당 상품은 존재하지 않습니다."));
+    public void updateProduct(Long id, int price){
+        int updatedRow = productRepository.update(id, price);
 
-        product.setPrice(price);
-
-        return ProductDto.toDto(product);
+        if(updatedRow == 0){
+            throw new NoSuchElementException("해당 상품은 존재하지 않습니다.");
+        }
     }
 
-    public Long deleteProduct(Long id){
-        Product findProduct = productRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("해당 상품은 존재하지 않습니다."));
-        return productRepository.delete(findProduct.getId());
+    public void deleteProduct(Long id){
+        int deletedRow = productRepository.delete(id);
+
+        if(deletedRow == 0){
+            throw new NoSuchElementException("해당 상품은 존재하지 않습니다.");
+        }
     }
 }

@@ -1,6 +1,8 @@
 package gift.domain;
 
 import gift.dto.ProductDto;
+import gift.dto.request.ProductRequestDto;
+
 
 public class Product {
     private Long id;
@@ -12,6 +14,13 @@ public class Product {
     }
 
     public Product(String name, int price, String imageUrl) {
+        this.name = name;
+        this.price = price;
+        this.imageUrl = imageUrl;
+    }
+
+    public Product(Long id, String name, int price, String imageUrl) {
+        this.id = id;
         this.name = name;
         this.price = price;
         this.imageUrl = imageUrl;
@@ -49,7 +58,7 @@ public class Product {
         this.imageUrl = imageUrl;
     }
 
-    public static Product toEntity(ProductDto productDto){
-        return new Product(productDto.getName(), productDto.getPrice(), productDto.getImageUrl());
+    public static Product toEntity(ProductRequestDto productDto){
+        return new Product(productDto.name(), productDto.price(), productDto.imageUrl());
     }
 }
