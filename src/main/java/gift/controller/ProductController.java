@@ -17,6 +17,7 @@ import java.util.List;
 @Controller
 public class ProductController {
     @Autowired
+//    @Qualifier("MEMORY DATABASE") memory db사용시
     @Qualifier("H2 DATABASE")
     ProductDB productDB;
 
@@ -38,14 +39,17 @@ public class ProductController {
 
     @PostMapping("/add")
     public String addProduct(Product product) {
-        productDB.addProduct(product);
-        return "redirect:/";
+        try {
+            productDB.addProduct(product);
+            return "redirect:/";
+        } catch (Exception e) {
+            return "version-SSR/add-error.html";
+        }
     }
 
     //상품 삭제하기
     @PostMapping("/deleteSelected")
     public String deleteSelectedProduct(@RequestParam("productIds") List<Long> productIds) {
-        System.out.println("선택");
         productDB.removeProducts(productIds);
         return "redirect:/";
     }
