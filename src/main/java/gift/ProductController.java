@@ -17,17 +17,23 @@ public class ProductController {
 
     @GetMapping
     public String getProducts(Model model) {
-        // products에 저장된 모든 상품을 반환
+        // products에 저장된 모든 상품
         model.addAttribute("products", new ArrayList<>(products.values()));
         return "productList";
     }
 
     @PostMapping
-    public ResponseEntity<Product> addProduct(@RequestBody Product product) {  // response body에 있는 JSON 데이터를 Product 객체로 변환
+    public String addProduct(@ModelAttribute Product product) {
         product.setId(nextId++);  // 상품의 id 설정
         products.put(product.getId(), product);
 
-        return new ResponseEntity<>(product, HttpStatus.CREATED);
+        return "redirect:/api/products";  // 새로운 상품 추가 후 상품 조회 화면으로 리다이렉트
+    }
+
+    @GetMapping("/new")
+    public String showAddProductForm(Model model) {
+        model.addAttribute("product", new Product());
+        return "addProduct";
     }
 
     @PutMapping("/{id}")
