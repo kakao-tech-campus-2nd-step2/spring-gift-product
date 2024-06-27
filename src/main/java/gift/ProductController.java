@@ -56,5 +56,12 @@ public class ProductController {
         }
     }
 
-
+    @PostMapping("/delete")
+    public void deleteProduct(@RequestParam Long id) {
+        try {
+            productService.deleteProduct(id);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }

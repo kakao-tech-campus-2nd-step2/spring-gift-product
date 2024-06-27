@@ -40,4 +40,11 @@ public class ProductService {
         }
         productRepository.updateProduct(productRequestDto);
     }
+
+    public void deleteProduct(Long id) {
+        if (!productRepository.isExistProductId(id)) {
+            throw new NoSuchElementException("Invalid Product ID");
+        }
+        productRepository.deleteProduct(id);
+    }
 }

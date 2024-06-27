@@ -34,4 +34,8 @@ public class ProductRepository {
     public void updateProduct(ProductRequestDto productRequestDto) {
         products.replace(productRequestDto.getId(), productRequestDto.toProduct());
     }
+
+    public void deleteProduct(Long id) {
+        products.remove(id);
+    }
 }
