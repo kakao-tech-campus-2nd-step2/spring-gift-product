@@ -45,7 +45,7 @@ public class ProductRepositoryImpl implements ProductRepository {
         int start = page * size;
         int end = Math.min((page + 1) * size, products.size());
         return products.values().stream()
-            .sorted(Comparator.comparing(Product::getId))
+            .sorted(Comparator.comparing(Product::getId).reversed())
             .collect(Collectors.toList())
             .subList(start, end);
     }
