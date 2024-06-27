@@ -69,6 +69,22 @@
             fetchProducts();
         });
     }
+
+    function updateProduct(id) {
+        let name = prompt("Enter new product name:");
+        let price = prompt("Enter new product price:");
+        let imageUrl = prompt("Enter new image URL:");
+
+        fetch(`/products/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ name, price, imageUrl })
+        }).then(response => {
+            fetchProducts();
+        });
+    }
 </script>
 </body>
 </html>
