@@ -15,6 +15,14 @@ public class Product {
         this.isDeleted = Boolean.FALSE;
     }
 
+    public Product(Long id, String name, Integer price, String imgUrl, Boolean isDeleted) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.imgUrl = imgUrl;
+        this.isDeleted = isDeleted;
+    }
+
     public Long getId() {
         return id;
     }
@@ -40,8 +48,11 @@ public class Product {
             this.id = id;
         }
     }
-
     public void delete(){
         this.isDeleted = Boolean.TRUE;
+    }
+
+    public boolean isNew(){
+        return this.id == null;
     }
 }
