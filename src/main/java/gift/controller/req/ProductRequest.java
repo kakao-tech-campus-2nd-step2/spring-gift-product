@@ -2,13 +2,17 @@ package gift.controller.req;
 
 import gift.model.Product;
 
-public record ProductRequest(String name, Integer price, String imgUrl) {
+public record ProductRequest(
+        String name,
+        Integer price,
+        String imgUrl
+) {
 
-    public Product toModel(){
+    public Product toModel() {
         return new Product(null, name(), price(), imgUrl());
     }
 
-    public Product toModel(final Long id){
+    public Product toModel(final Long id) {
         return new Product(id, name(), price(), imgUrl());
     }
 }
