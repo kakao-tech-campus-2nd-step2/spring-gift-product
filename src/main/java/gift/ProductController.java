@@ -57,5 +57,5 @@ public class ProductController {
         products.remove(id);
         return "redirect:/products";
     }
-    
+
 }
