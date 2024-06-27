@@ -21,14 +21,21 @@ public class GiftDao {
 
     public Gift findById(Long id) {
         String sql = "SELECT * FROM gift WHERE id = ?";
-        return jdbcTemplate.queryForObject(sql, (rs, rowNum) ->
+        List<Gift> results = jdbcTemplate.query(sql, (rs, rowNum) ->
                 new Gift(
                         rs.getLong("id"),
                         rs.getString("name"),
                         rs.getInt("price"),
                         rs.getString("imageUrl")
                 ), id);
+
+        if (results.isEmpty()) {
+            return null; // 또는 예외 처리를 수행할 수 있음
+        } else {
+            return results.get(0);
+        }
     }
+
 
     public List<Gift> findAll() {
         String sql = "SELECT * FROM gift";
