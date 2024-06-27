@@ -27,5 +27,5 @@
 
 ### 기능 구현 목록
 
-- [ ] ProductRepository Interface를 사용하여 JDBCProductRepositoryTest 구현
-- [ ] ProductRepository Interface를 구현한 JDBCTemplateProductRepository 구현
+- [ ] ProductRepository Interface를 사용하여 JDBCProductDao 구현
+- [ ] ProductRepository Interface를 구현한 JDBCTemplateDao 구현
