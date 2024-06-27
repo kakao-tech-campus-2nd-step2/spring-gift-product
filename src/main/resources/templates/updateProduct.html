@@ -8,6 +8,7 @@
     <div>
         <h1>Update Product</h1>
         <form th:action="@{/saveProducts}" th:object="${product}" method="post">
+            <input type="hidden" th:field="*{id}">
             <div>
                 <label th:for="name">Name</label>
                 <input type="text" id="name" th:field="*{name}" placeholder="상품명을 입력하세요">
