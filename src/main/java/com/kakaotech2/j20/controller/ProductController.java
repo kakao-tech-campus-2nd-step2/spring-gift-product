@@ -3,6 +3,7 @@ package com.kakaotech2.j20.controller;
 import com.kakaotech2.j20.DTO.ProductDTO;
 import com.kakaotech2.j20.service.ProductService;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
