@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
+  <title>admin - products</title>
+</head>
+<body>
+  <div class="container" style="display: flex; flex-direction: column; justify-content: center; margin-top: 50px;">
+    <h2 class="py-4 text-center border-bottom mb-5">상품 전체 목록</h2>
+    <div>
+      <table class="table">
+        <thead>
+        <tr>
+          <th class="text-center">상품 ID</th>
+          <th class="text-center">상품명</th>
+          <th class="text-center">가격</th>
+          <th class="text-center">상품 이미지</th>
+        </tr>
+        </thead>
+        <tbody>
+          <tr th:each="product:${products}">
+            <td class="text-center">
+              <span th:text="${product.id}">상품 ID tmp</span>
+            </td>
+            <td class="text-center">
+              <span th:text="${product.name}">상품명 tmp</span>
+            </td>
+            <td class="text-center">
+              <span th:text="${product.price}">가격 tmp</span>
+            </td>
+            <td class="text-center">
+              <span th:text="${product.imageUrl}">상품 이미지 tmp</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>
