@@ -30,9 +30,9 @@ public class ProductController {
     }
 
     @PostMapping("/product")
-    public ResponseEntity<Long> createProduct(@RequestBody ProductRequest request) {
-        long id = productDao.save(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(id);
+    public ResponseEntity<Void> createProduct(@RequestBody ProductRequest request) {
+        productDao.save(request);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("/product/{id}")

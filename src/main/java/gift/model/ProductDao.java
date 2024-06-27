@@ -20,11 +20,10 @@ public class ProductDao {
         return newProduct;
     }
 
-    public Long save(ProductRequest request) {
+    public void save(ProductRequest request) {
         long id = idGenerator.incrementAndGet();
         Product product = new Product(id, request.name(), request.price(), request.imageUrl());
         products.put(id, product);
-        return id;
     }
 
     public Product findById(long id) {
