@@ -32,71 +32,97 @@
 * 상품 삭제: 상품 ID를 통해 기존의 상품 정보를 삭제합니다.
 
 # API 명세서
-## 1. 상품 조회
-* URL: api/products
-* Method: GET
+## 1. 모든 상품 조회
+* URL: `api/products`
+* Method: `GET`
 * Request: 없음
 * Response:
-Status: 200 OK
-Body:
-[
+ - Status: `200 OK`
+ - Body:
+  ```json
+  [
+    {
+      "id": 8146027,
+      "name": "아이스 카페 아메리카노 T",
+      "price": 4500,
+      "imageUrl": "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg"
+    }
+  ]
+  ```
+
+## 2. 특정 상품 조회
+* URL: `api/products/{id}`
+* Method: `GET`
+* Request: 없음
+* Response:
+ - Status: `200 OK`
+ - Body:
+  ```json
+    {
+      "id": 8146027,
+      "name": "아이스 카페 아메리카노 T",
+      "price": 4500,
+      "imageUrl": "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg"
+    }
+  ```
+
+## 3. 상품 추가
+* URL: `api/products`
+* Method: `POST`
+* Request:
+ - Body:
+  ```json
   {
     "id": 8146027,
     "name": "아이스 카페 아메리카노 T",
     "price": 4500,
     "imageUrl": "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg"
   }
-]
-
-## 2. 상품 추가
-* URL: api/products
-* Method: POST
-* Request:
-Body:
-{
-  "id": 8146027,
-  "name": "아이스 카페 아메리카노 T",
-  "price": 4500,
-  "imageUrl": "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg"
-}
+  ```
 * Response:
-Status: 201 OK
-Body:
-{
-  "id": 8146027,
-  "name": "아이스 카페 아메리카노 T",
-  "price": 4500,
-  "imageUrl": "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg"
-}
+ - Status: `201 OK`
+ - Body:
+  ```json
+  {
+    "id": 8146027,
+    "name": "아이스 카페 아메리카노 T",
+    "price": 4500,
+    "imageUrl": "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg"
+  }
+  ```
 
-## 3. 상품 수정
-* URL: api/products/{id}
-* Method: PUT
+## 4. 상품 수정
+* URL: `api/products/{id}`
+* Method: `PUT`
 * Request:
-Path Variable: 'id' (수정할 상품의 ID)
-Body:
-{
-  "name": "아이스 카페 아메리카노 L",
-  "price": 5000,
-  "imageUrl": "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg"
-}
+ - Path Variable: 'id' (수정할 상품의 ID)
+ - Body:
+  ```json
+  {
+    "name": "아이스 카페 아메리카노 L",
+    "price": 5000,
+    "imageUrl": "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg"
+  }
+  ```
 * Reponse:
-Body:
-{
-  "id": 8146027,
-  "name": "아이스 카페 아메리카노 L",
-  "price": 5000,
-  "imageUrl": "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg"
-}
-Eroor Response:
-Status: 404 Not Found
+ - Body:
+  ```json
+  {
+    "id": 8146027,
+    "name": "아이스 카페 아메리카노 L",
+    "price": 5000,
+    "imageUrl": "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg"
+  }
+  ```
+* Eroor Response:
+ - Status: `404 Not Found`
 
-## 4. 상품 삭제
-* URL: api/products/{id}
-* Method: DELETE
+## 5. 상품 삭제
+* URL: `api/products/{id}`
+* Method: `DELETE`
 * Request:
-Path Variable: 'id' (수정할 상품의 ID)
+ - Path Variable: 'id' (수정할 상품의 ID)
 * Reponse:
-Status: 204 No Content
-Error Response:
-Status: 404 Not Found
+ - Status: `204 No Content`
+* Error Response:
+ - Status: `404 Not Found`
