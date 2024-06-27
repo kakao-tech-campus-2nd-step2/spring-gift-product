@@ -1,9 +1,6 @@
 package gift.product;
 
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,11 +14,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class ProductController {
 
-    private final Map<Long, Product> products = new HashMap<>();
+    private final ProductRepository productRepository;
+
+    private static final Integer NO_OF_ROWS_AFFECTED = 1;
+
+    public ProductController(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
 
     @GetMapping("/products")
     public List<ProductResDto> getProducts() {
-        Collection<Product> productList = products.values();
+        List<Product> productList = productRepository.findProducts();
 
         return productList.stream()
                 .map(product -> new ProductResDto(
@@ -52,7 +55,7 @@ public class ProductController {
                 productReqDto.imageUrl()
         );
 
-        products.put(newProduct.getId(), newProduct);
+        productRepository.addProduct(newProduct);
 
         return new ProductResDto(
                 newProduct.getId(),
@@ -63,30 +66,24 @@ public class ProductController {
     }
 
     @PutMapping("/products/{productId}")
-    public ProductResDto updateProduct(@PathVariable Long productId, @RequestBody ProductReqDto productReqDto) {
-        Product product = getProductById(productId);
+    public Boolean updateProduct(@PathVariable Long productId, @RequestBody ProductReqDto productReqDto) {
+        Integer noOfRowsAffected = productRepository.updateProduct(productId, new Product(
+                productReqDto.name(),
+                productReqDto.price(),
+                productReqDto.imageUrl()
+        ));
 
-        product.setName(productReqDto.name());
-        product.setPrice(productReqDto.price());
-        product.setImageUrl(productReqDto.imageUrl());
-
-        return new ProductResDto(
-                product.getId(),
-                product.getName(),
-                product.getPrice(),
-                product.getImageUrl()
-        );
+        return NO_OF_ROWS_AFFECTED.equals(noOfRowsAffected); // 수정된 행의 개수 반환 - 1이면 성공, 0이면 실패
     }
 
     @DeleteMapping("/products/{productId}")
-    public boolean deleteProduct(@PathVariable Long productId) {
-        Product product = getProductById(productId);
-        Product removedProduct = products.remove(product.getId());
-        return removedProduct != null;
+    public Boolean deleteProduct(@PathVariable Long productId) {
+        Integer noOfRowsAffected = productRepository.deleteProduct(productId);
+        return NO_OF_ROWS_AFFECTED.equals(noOfRowsAffected); // 삭제된 행의 개수 반환 - 1이면 성공, 0이면 실패
     }
 
     private Product getProductById(Long productId) {
-        Product product = products.get(productId);
+        Product product = productRepository.findProductById(productId);
 
         if (product == null) {
             throw new IllegalArgumentException("Product not found");
