@@ -3,6 +3,7 @@ package gift;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,11 +44,20 @@ public class ProductController {
     }
 
     @PutMapping("/{sequence}")
-    public Product updateProduct(@PathVariable("sequence") long sequence, @RequestBody Product product) {
-        if(!products.containsKey(sequence)) {
+    public Product updateProduct(@PathVariable("sequence") long sequence,
+        @RequestBody Product product) {
+        if (!products.containsKey(sequence)) {
             throw new IllegalArgumentException("존재하지 않는 상품입니다.");
         }
         products.replace(sequence, product);
         return product;
+    }
+
+    @DeleteMapping("/{sequence}")
+    public void deleteProduct(@PathVariable("sequence") long sequence) {
+        if (!products.containsKey(sequence)) {
+            throw new IllegalArgumentException("존재하지 않는 상품입니다.");
+        }
+        products.remove(sequence);
     }
 }
