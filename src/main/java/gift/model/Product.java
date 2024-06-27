@@ -29,6 +29,33 @@ public class Product {
         setImage(image);
     }
 
+    // 빈 문자열을 받으면 수정하지 않는다는 의미를 살리기 위해 특수한 생성자 사용
+    public Product(String id, String name, String price, String image) {
+        this.id = -1;
+        this.name = null;
+        this.price = -1;
+        this.image = null;
+
+        ignoreEmptyString(id, name, price, image);
+    }
+
+    // 빈 문자열을 무시하고 필드에 값 할당
+    private void ignoreEmptyString(String id, String name, String price, String image) {
+        if (!id.equals("")) {
+            // html의 input이 number였으므로 파싱이 실패할 수는 없다.
+            setId(Long.parseLong(id));
+        }
+        if (!name.equals("")) {
+            setName(name);
+        }
+        if (!price.equals("")) {
+            setPrice(Integer.parseInt(price));
+        }
+        if (!image.equals("")) {
+            setImage(image);
+        }
+    }
+
     // getter는 JSON으로 바꿀 수 있도록 public으로 선언
     public long getId() {
         return id;
@@ -83,25 +110,33 @@ public class Product {
 
     // 상품의 id를 수정. patch이므로 id가 -1이면 무시.
     private void updateId(long id) {
-        if (id == -1) return;
+        if (id == -1) {
+            return;
+        }
         setId(id);
     }
 
     // 상품의 이름을 수정. patch이므로 null이면 무시.
     private void updateName(String name) {
-        if (name == null) return;
+        if (name == null) {
+            return;
+        }
         setName(name);
     }
 
     // 상품의 가격을 수정
     private void updatePrice(int price) {
-        if (price == -1) return;
+        if (price == -1) {
+            return;
+        }
         setPrice(price);
     }
 
     // 상품의 이미지 주소를 수정
     private void updateImg(String img) {
-        if (img == null) return;
+        if (img == null) {
+            return;
+        }
         setImage(img);
     }
 

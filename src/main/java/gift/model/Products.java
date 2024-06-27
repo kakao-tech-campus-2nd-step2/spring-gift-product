@@ -60,7 +60,7 @@ public class Products {
     }
 
     // 상품 수정하기 (patch)
-    public Product updateProduct(int targetId, Product product) {
+    public Product updateProduct(long targetId, Product product) {
         // 이미 존재하는 id로 수정하면 안됨(자신 포함)
         long id = product.getId();
         verifyProductAlreadyExist(id);
