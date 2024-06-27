@@ -53,4 +53,15 @@ public class ProductController {
 
     }
 
+    @DeleteMapping("/products/{id}")
+    public ResponseEntity<String> deleteMethod(@PathVariable("id") Long id) {
+        boolean isExist = products.containsKey(id);
+        if (isExist) {
+            products.remove(id);
+            return ResponseEntity.status(HttpStatus.OK).body("Delete Complete.");
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product not Exist");
+
+    }
+
 }
