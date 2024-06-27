@@ -30,10 +30,18 @@ document.addEventListener('DOMContentLoaded', function () {
         .catch(error => console.error('상품 목록 조회 에러: ', error));
     }
 
-    // 상품 추가 폼 열기
+    // 상품 추가 or 수정 폼 열기
     function openFormModal(product = null) {
-        document.getElementById('form-title').textContent = '상품 추가';
-        productForm.reset();
+        if (product) {
+            document.getElementById('form-title').textContent = '상품 수정';
+            document.getElementById('product-id').value = product.id;
+            document.getElementById('name').value = product.name;
+            document.getElementById('price').value = product.price;
+            document.getElementById('imageUrl').value = product.imageUrl;
+        } else {
+            document.getElementById('form-title').textContent = '상품 추가';
+            productForm.reset();
+        }
         productFormModal.style.display = 'block';
     }
 
@@ -45,19 +53,40 @@ document.addEventListener('DOMContentLoaded', function () {
     // 상품 추가 및 수정 처리
     productForm.addEventListener('submit', function (event) {
         event.preventDefault();
+        const id = document.getElementById('product-id').value;
         const name = document.getElementById('name').value;
         const price = document.getElementById('price').value;
         const imageUrl = document.getElementById('imageUrl').value;
 
         const product = { name, price, imageUrl };
 
-        axios.post(apiEndpoint, product)
-        .then(response => {
-            fetchProducts();
-            closeFormModal();
-        })
-        .catch(error => console.error('상품 추가 에러: ', error));
+        if (id) {
+            // 상품 수정
+            axios.put(`${apiEndpoint}/${id}`, product)
+            .then(response => {
+                fetchProducts();
+                closeFormModal();
+            })
+            .catch(error => console.error('상품 수정 에러: ', error));
+        } else {
+            // 상품 추가
+            axios.post(apiEndpoint, product)
+            .then(response => {
+                fetchProducts();
+                closeFormModal();
+            })
+            .catch(error => console.error('상품 추가 에러: ', error));
+        }
     });
+
+    // 상품 수정 함수
+    window.editProduct = function (id) {
+        axios.get(`${apiEndpoint}/${id}`)
+        .then(response => {
+            openFormModal(response.data);
+        })
+        .catch(error => console.error('상품 단건 조회 에러: ', error));
+    };
 
     addProductBtn.addEventListener('click', () => openFormModal());
     closeModalBtn.addEventListener('click', closeFormModal);
