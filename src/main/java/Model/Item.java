@@ -13,10 +13,6 @@ public class Item {
         this.imgUrl = imgUrl;
     }
 
-    public Long getId() {
-        return id;
-    }
-
     public String getName() {
         return name;
     }
