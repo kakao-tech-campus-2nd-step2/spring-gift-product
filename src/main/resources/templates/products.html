@@ -27,10 +27,11 @@
       <tbody>
       <tr th:each="product : ${products}">
         <td><input type="checkbox"></td>
-        <td><img th:src="@{${product.imageUrl}}" alt="no image" class="product-image"/></td>
-        <td th:text="${product.id}"></td>
-        <td th:text="${product.name}"></td>
-        <td th:text="${product.price}"></td>
+        <td><a th:href="@{'/products/' + ${product.id}}">
+          <img th:src="@{${product.imageUrl}}" alt="no image" class="product-image"/></a></td>
+        <td><a th:href="@{'/products/' + ${product.id}}" th:text="${product.id}"></a></td>
+        <td><a th:href="@{'/products/' + ${product.id}}" th:text="${product.name}"></a></td>
+        <td><a th:href="@{'/products/' + ${product.id}}" th:text="${product.price}"></a></td>
         <td>
           <button class="icon-btn"><i class="fa-solid fa-pen"></i></button>
           <button class="icon-btn"><i class="fa-solid fa-trash-can"></i></button>

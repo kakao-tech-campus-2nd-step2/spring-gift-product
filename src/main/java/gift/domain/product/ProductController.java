@@ -49,14 +49,17 @@ public class ProductController {
     }
 
     @GetMapping("/{productId}")
-    public ResponseEntity<Product> readById(@PathVariable long productId) {
+    public String readById(@PathVariable long productId, Model model) {
         Product product = productRepository.get(productId);
 
         if (product == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return "error";
         }
-        return new ResponseEntity<>(product, HttpStatus.OK);
+        model.addAttribute("product", product);
+
+        return "product";
     }
+
 
     @PutMapping("/{productId}")
     public ResponseEntity<Product> update(@PathVariable long productId, @RequestBody Product productDTO) {
