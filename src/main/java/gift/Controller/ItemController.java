@@ -5,6 +5,7 @@ import gift.Service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,7 +39,7 @@ public class ItemController {
     }
 
     @GetMapping("/update/{id}")
-    public String updatePage(@PathVariable Long id,Model model){
+    public String getUpdateForm(@PathVariable Long id,Model model){
         ItemDTO itemDTO = itemService.findItem(id);
         model.addAttribute("item",itemDTO);
         model.addAttribute("id",id);
@@ -47,6 +48,12 @@ public class ItemController {
     @PutMapping("/update/{id}")
     public String updateItem(@PathVariable Long id,@ModelAttribute ItemDTO itemDTO){
         itemService.updateItem(itemDTO,id);
+        return "redirect:/product/list";
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public String deleteItem(@PathVariable Long id){
+        itemService.deleteItem(id);
         return "redirect:/product/list";
     }
 }
