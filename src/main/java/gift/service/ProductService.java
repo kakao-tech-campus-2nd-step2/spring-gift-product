@@ -10,5 +10,5 @@ public interface ProductService {
     void createProduct(Product product);
     void updateProduct(Long id, Product product);
     void deleteProduct(Long id);
-    public List<Product> getProducts(int page, int size);
+    List<Product> getProducts(int page, int size);
 }
