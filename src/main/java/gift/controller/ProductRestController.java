@@ -2,13 +2,17 @@ package gift.controller;
 
 import gift.dto.Product;
 import gift.db.ProductMemoryDB;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
 @RestController
 public class ProductRestController {
-    ProductMemoryDB productDB = ProductMemoryDB.getInstance();
+    @Autowired
+    @Qualifier("MEMORY DATABASE")
+    ProductMemoryDB productDB;
     //Create
     //상품 추가
     @PostMapping("api/products")

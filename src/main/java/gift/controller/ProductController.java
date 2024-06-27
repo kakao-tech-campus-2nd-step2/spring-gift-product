@@ -4,6 +4,7 @@ import gift.dto.Product;
 import gift.db.ProductDB;
 import gift.db.ProductMemoryDB;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,13 +16,9 @@ import java.util.List;
 
 @Controller
 public class ProductController {
-    //ProductDB productDB = ProductMemoryDB.getInstance();//or
-//    ProductDB productDB = new ProductH2DB();
     @Autowired
+    @Qualifier("H2 DATABASE")
     ProductDB productDB;
-
-
-
 
     //상품 보여주기
     @GetMapping("/")
@@ -44,6 +41,7 @@ public class ProductController {
         productDB.addProduct(product);
         return "redirect:/";
     }
+
     //상품 삭제하기
     @PostMapping("/deleteSelected")
     public String deleteSelectedProduct(@RequestParam("productIds") List<Long> productIds) {
@@ -51,22 +49,24 @@ public class ProductController {
         productDB.removeProducts(productIds);
         return "redirect:/";
     }
+
     @PostMapping("/delete")
-    public String deleteProduct(@RequestParam("productId") Long productId ){
+    public String deleteProduct(@RequestParam("productId") Long productId) {
         productDB.removeProduct(productId);
         System.out.println(productId);
         return "redirect:/";
     }
+
     //상품 수정하기
     @GetMapping("/edit/{id}")
-    public String getEditForm(@PathVariable("id") long id, Model model){
+    public String getEditForm(@PathVariable("id") long id, Model model) {
         System.out.println(id);
-
         model.addAttribute("product", productDB.getProduct(id)); // Add an empty Product object for the form
         return "version-SSR/edit-form.html";
     }
+
     @PostMapping("/edit")
-    public String getEditForm(Product product){
+    public String getEditForm(Product product) {
         productDB.editProduct(product);
         return "redirect:/";
     }

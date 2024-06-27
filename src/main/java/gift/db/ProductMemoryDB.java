@@ -1,17 +1,20 @@
-package gift;
+package gift.db;
 
+
+import gift.dto.Product;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-public class ProductMemoryDB {
-    private static final ProductMemoryDB INSTANCE = new ProductMemoryDB();
-
+@Component
+@Qualifier("MEMORY DATABASE")
+public class ProductMemoryDB implements ProductDB {
     private final Map<Long, Product> products = new HashMap<>();
 
-    // Private constructor to prevent instantiation
     private ProductMemoryDB() {
         //초기 상품
         Product defaultProduct1 = new Product(1L, "Americano", 4500, "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg");
@@ -24,46 +27,44 @@ public class ProductMemoryDB {
         products.put(4L, defaultProduct4);
     }
 
-    public static ProductMemoryDB getInstance() {
-        return INSTANCE;
-    }
-
     // Example method to interact with the products map
+    @Override
     public void addProduct(Product product) {
         products.put(product.getId(), product);
     }
 
+    @Override
     public Product getProduct(Long id) {
         return products.get(id);
     }
-    public List<Product> getProducts(){
+
+    @Override
+    public List<Product> getProducts() {
         List<Product> productList = new ArrayList<>();
         for (Map.Entry<Long, Product> entry : products.entrySet()) {
             productList.add(entry.getValue());
         }
         return productList;
-
-
+    }
+    @Override
+    public void removeProduct(Long id) {
+        products.remove(id);
     }
 
+    @Override
+    public void removeProducts(List<Long> productIds) {
+        for (Long id : productIds) {
+            products.remove(id);
+        }
+    }
+    @Override
+    public void editProduct(Product product) {
+        products.put(product.getId(), product);
+    }
     public boolean hasProductId(Long id) {
         if (products.containsKey(id)) {
             return true;
         }
         return false;
     }
-
-    public void removeProduct(Long id) {
-        products.remove(id);
-    }
-    public void removeProducts(List<Long> productIds){
-        for (Long id : productIds) {
-            products.remove(id);
-        }
-    }
-
-    public void editProduct(Product product) {
-        products.put(product.getId(), product);
-    }
-
 }
