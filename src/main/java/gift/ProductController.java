@@ -10,4 +10,10 @@ import org.springframework.web.bind.annotation.*;
 public class ProductController {
     private final Map<Long, Product> products = new HashMap<>();
     private long currentId = 1;
+
+    @GetMapping
+    public List<Product> getAllProducts() {
+        return new ArrayList<>(products.values());
+    }
+
 }
