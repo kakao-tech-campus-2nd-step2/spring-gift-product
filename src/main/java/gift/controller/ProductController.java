@@ -22,7 +22,7 @@ public class ProductController {
 
     @GetMapping
     public String getProducts(Model model) {
-        model.addAttribute("products", new ArrayList<>(products.values()));
+        model.addAttribute("products", productRepository.findAll());
         return "products";
     }
 
@@ -34,31 +34,27 @@ public class ProductController {
 
     @PostMapping
     public String createProduct(@ModelAttribute Product product) {
-        product.setId(sequenceId++);
-        products.put(product.getId(), product);
+        productRepository.save(product);
         return "redirect:/api/products";
     }
 
     @GetMapping("/edit/{id}")
     public String editProductForm(@PathVariable Long id, Model model) {
-        Product product = products.get(id);
+        Product product = productRepository.findById(id);
         model.addAttribute("product", product);
         return "productForm";
     }
 
     @PostMapping("/edit/{id}")
     public String updateProduct(@PathVariable Long id, @ModelAttribute Product updatedProduct) {
-        Product product = products.get(id);
-        product.setName(updatedProduct.getName());
-        product.setPrice(updatedProduct.getPrice());
-        product.setImageUrl(updatedProduct.getImageUrl());
-        products.put(id, product);
+        updatedProduct.setId(id);
+        productRepository.update(updatedProduct);
         return "redirect:/api/products";
     }
 
     @PostMapping("/delete/{id}")
     public String deleteProduct(@PathVariable Long id) {
-        products.remove(id);
+        productRepository.delete(id);
         return "redirect:/api/products";
     }
 }
