@@ -27,12 +27,18 @@
             <td colspan="6">No Products Available</td>
         </tr>
         <tr th:each="product : ${products}">
-            <td th:text="${product.id()}"/>
-            <td th:text="${product.name()}"/>
-            <td th:text="${product.price()}"/>
-            <td th:text="${product.imageUrl()}"/>
+            <td th:text="${product.id}"/>
+            <td th:text="${product.name}"/>
+            <td th:text="${product.price}"/>
+            <td th:text="${product.imageUrl}"/>
             <td>수정</td>
-            <td>삭제</td>
+            <td>
+                <form th:action="@{/admin/product/delete/{id}(id=${product.id})}" method="post">
+                    <input type="hidden" name="_method" value="delete" />
+                    <button type="submit">삭제</button>
+                </form>
+
+            </td>
         </tr>
         </tbody>
     </table>

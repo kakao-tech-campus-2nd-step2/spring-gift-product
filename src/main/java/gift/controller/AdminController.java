@@ -5,6 +5,8 @@ import gift.model.ProductDao;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -22,5 +24,11 @@ public class AdminController {
         List<Product> products = productDao.findAll();
         model.addAttribute("products", products);
         return "index";
+    }
+
+    @PostMapping("/admin/product/delete/{id}")
+    public String delete(@PathVariable("id") Long id) {
+        productDao.deleteById(id);
+        return "redirect:/";
     }
 }
