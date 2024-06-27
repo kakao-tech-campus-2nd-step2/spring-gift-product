@@ -21,7 +21,7 @@ public class GiftDao {
 
     public Gift findById(Long id) {
         String sql = "SELECT * FROM gift WHERE id = ?";
-        List<Gift> results = jdbcTemplate.query(sql, (rs, rowNum) ->
+        Gift result = jdbcTemplate.queryForObject(sql, (rs, rowNum) ->
                 new Gift(
                         rs.getLong("id"),
                         rs.getString("name"),
@@ -29,11 +29,7 @@ public class GiftDao {
                         rs.getString("imageUrl")
                 ), id);
 
-        if (results.isEmpty()) {
-            return null; // 또는 예외 처리를 수행할 수 있음
-        } else {
-            return results.get(0);
-        }
+      return result;
     }
 
 
