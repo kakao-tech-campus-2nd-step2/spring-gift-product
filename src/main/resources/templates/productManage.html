@@ -20,10 +20,10 @@
     <input type="button" value="Add Product" onClick="location.href='/api/products/add'">
 </div>
 <div th:each="product : ${products}" class="product" th:attr="data-id=${product.id}">
-    <h3>상품 ID: <span th:text="${product.id}"></span></h3>
-    <h3 th:text="${product.name}"></h3>
-    <p th:text="'Price: ' + ${product.price}"></p>
-    <img th:src="${product.imageUrl}" th:alt="${product.name}" style="max-width: 100px;">
+    <h3>Product ID: <span th:text="${product.id}"></span></h3>
+    <h3>Name:  <span th:text="${product.name}"></span></h3>
+    <h3>Price:  <span th:text="${product.price}"></span></h3>
+    <img th:src="${product.imageUrl}" th:alt="${product.name}" style="max-width: 200px;">
     <br>
     <button th:attr="data-id=${product.id}" class="edit-button">Edit</button>
     <button class="delete-button">Delete</button>
@@ -40,7 +40,7 @@
     document.querySelectorAll('.delete-button').forEach(button => {
     button.addEventListener('click', function() {
         const productElement = this.closest('.product');
-        const productId = productElement.getAttribute('data-id');
+        const productId = productElement.dataset.id;
 
         if (confirm('Delete this product?')) {
             fetch(`/api/products/${productId}`, {

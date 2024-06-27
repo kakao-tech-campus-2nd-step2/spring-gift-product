@@ -12,7 +12,7 @@ import java.util.*;
 @Controller
 public class ProductController {
     private final Map<Long, Product> products = new HashMap<>();
-    
+
     // 새로운 상품 등록
     @PostMapping
     public ResponseEntity<String> setProduct(@RequestBody Product product) {

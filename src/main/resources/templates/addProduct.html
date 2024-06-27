@@ -26,16 +26,11 @@
         document.getElementById("productForm").addEventListener("submit", function(event) {
             event.preventDefault();
 
-            var pId = document.getElementById("productID").value;
-            var pName = document.getElementById("productName").value;
-            var pPrice = document.getElementById("productPrice").value;
-            var pImage = document.getElementById("productImage").value;
-
             var product = {
-                id: pId,
-                name: pName,
-                price: pPrice,
-                imageUrl: pImage
+                id: document.getElementById("productID").value,
+                name: document.getElementById("productName").value,
+                price: document.getElementById("productPrice").value,
+                imageUrl: document.getElementById("productImage").value
             };
 
             fetch('/api/products', {

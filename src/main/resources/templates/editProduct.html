@@ -25,17 +25,13 @@
     document.getElementById("editForm").addEventListener("submit", function(event) {
             event.preventDefault();
 
-            var pId = document.getElementById("id").value;
-            var pName = document.getElementById("name").value;
-            var pPrice = document.getElementById("price").value;
-            var pImage = document.getElementById("url").value;
-
             var product = {
-                id: pId,
-                name: pName,
-                price: pPrice,
-                imageUrl: pImage
+                id: document.getElementById("productID").value,
+                name: document.getElementById("productName").value,
+                price: document.getElementById("productPrice").value,
+                imageUrl: document.getElementById("productImage").value
             };
+
             fetch('/api/products/'+ pId, {
                 method: 'PUT',
                 headers: {
