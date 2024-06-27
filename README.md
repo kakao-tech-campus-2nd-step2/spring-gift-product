@@ -74,3 +74,10 @@
                       "price": 4700,
                       "imageUrl": "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg"
                     }
+## step 2: 관리자 화면
+
+### 상품을 조회, 추가, 수정, 삭제할 수 있는 관리자 화면 구현
+-> HTML, Thymeleaf 로 구현
+## step 3: 데이터베이스 적용
+H2 데이터베이스 저장 및 schema.sql 작성
+
