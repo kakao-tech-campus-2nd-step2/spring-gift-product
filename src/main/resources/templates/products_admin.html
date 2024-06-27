@@ -15,12 +15,19 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="product : ${products}">
-        <td th:text="${product.id}">0</td>
-        <td th:text="${product.name}">Sample Name</td>
-        <td th:text="${product.price}">0.0</td>
-        <td th:text="${product.imageUrl}">Sample Url</td>
-    </tr>
+    <th:block th:if="${#lists.isEmpty(products)}">
+        <tr>
+            <td colspan="4">데이터가 존재하지 않습니다.</td>
+        </tr>
+    </th:block>
+    <th:block th:unless="${#lists.isEmpty(products)}">
+        <tr th:each="product : ${products}">
+            <td th:text="${product.id}">0</td>
+            <td th:text="${product.name}">Sample Name</td>
+            <td th:text="${product.price}">0.0</td>
+            <td th:text="${product.imageUrl}">Sample Url</td>
+        </tr>
+    </th:block>
     </tbody>
 </table>
 </body>
