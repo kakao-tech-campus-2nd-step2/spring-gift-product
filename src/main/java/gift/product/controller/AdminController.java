@@ -7,7 +7,9 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/admin/products")
@@ -25,6 +27,17 @@ public class AdminController {
         List<Product> products = productRepository.findAll();
         model.addAttribute("products", products);
         return "admin/products";
+    }
+
+    @GetMapping("/insert")
+    public String insertForm() {
+        return "admin/insertForm";
+    }
+
+    @PostMapping("/insert")
+    public String insertProduct(Product product, RedirectAttributes redirectAttributes) {
+        productRepository.save(product);
+        return "redirect:/admin/products";
     }
 
     @PostConstruct
