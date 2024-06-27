@@ -5,7 +5,7 @@
 </head>
 <body>
 <h1>Delete Product</h1>
-<form th:action="@{/api/products/delete}" th:object="${productDto}" method="post">
+<form th:action="@{/api/products/delete}" th:object="${productDto}" method="get">
   <!-- Thymeleaf의 hidden 필드를 사용하여 Delete 메서드로 오버라이딩 -->
   <input type="hidden" name="_method" value="delete"/>
 
@@ -13,18 +13,7 @@
     <label for="id">ID:</label>
     <input type="number" id="id" th:field="*{id}" placeholder="Enter product ID"/>
   </div>
-  <div>
-    <label for="name">Name:</label>
-    <input type="text" id="name" th:field="*{name}" placeholder="Enter product name"/>
-  </div>
-  <div>
-    <label for="price">Price:</label>
-    <input type="number" id="price" th:field="*{price}" placeholder="Enter product price"/>
-  </div>
-  <div>
-    <label for="imageUrl">Image URL:</label>
-    <input type="text" id="imageUrl" th:field="*{imageUrl}" placeholder="Enter image URL"/>
-  </div>
+
   <div>
     <button type="submit">Update Product</button>
   </div>

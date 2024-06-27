@@ -5,9 +5,9 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
-<div th:if="${not #lists.isEmpty(products)}">
+<div th:if="${not #lists.isEmpty(productDto)}">
   <ul>
-    <li th:each="product : ${products}">
+    <li th:each="product : ${productDto}">
       <span th:text="${product.id}">Id</span>
       <span th:text="${product.name}">Product Name</span>
       <span th:text="${product.price}">Price</span>
@@ -15,7 +15,7 @@
     </li>
   </ul>
 </div>
-<div th:if="${#lists.isEmpty(products)}">
+<div th:if="${#lists.isEmpty(productDto)}">
   No products available.
 </div>
 <div>
