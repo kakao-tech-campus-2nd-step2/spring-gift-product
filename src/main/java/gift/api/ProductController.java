@@ -27,7 +27,7 @@ public class ProductController {
 
     // 상품 상세 조회
     @GetMapping("/{id}")
-    public ProductResponse getProduct(@PathVariable Long id) {
+    public ProductResponse getProduct(@PathVariable("id") Long id) {
         return productService.getProductById(id);
     }
 
@@ -39,7 +39,7 @@ public class ProductController {
 
     // 상품 하나 삭제
     @DeleteMapping("/{id}")
-    public Long deleteProduct(@PathVariable Long id) {
+    public Long deleteProduct(@PathVariable("id") Long id) {
         return productService.deleteProductById(id);
     }
 
@@ -51,7 +51,7 @@ public class ProductController {
 
     // 상품 수정
     @PatchMapping("/{id}")
-    public Long updateProduct(@PathVariable Long id, @RequestBody ProductRequest request) {
+    public Long updateProduct(@PathVariable("id") Long id, @RequestBody ProductRequest request) {
         return productService.updateProduct(id, request);
     }
 }
