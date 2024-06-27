@@ -1,6 +1,8 @@
 package gift;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,8 +13,8 @@ public class ProductController {
     private long nextId = 1L;
 
     @GetMapping
-    public Map<Long, Product> getAllProducts() {
-        return products;
+    public List<Product> getAllProducts() {
+        return new ArrayList<>(products.values());
     }
 
     @PostMapping
