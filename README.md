@@ -212,9 +212,11 @@
 
 ## 기능 요구 사항
 
-- 상품 정보에 옵션을 추가한다. 상품과 옵션 모델 간의 관계를 고려하여 설계하고 구현한다.
-  - 상품에는 항상 하나 이상의 옵션이 있어야 한다.
-  - 옵션이 결과적으로 상품을 사고 팔게 되는 단위이다.
+- 자바 컬렉션 프레임워크를 사용하여 메모리에 저장하던 상품 정보를 데이터베이스에 저장한다.
+
+## 프로그래밍 요구 사항
+- 메모리에 저장하고 있던 모든 코드를 제거하고 H2 데이터베이스를 사용하도록 변경한다.
+- 사용하는 테이블은 애플리케이션이 실행될 때 구축되어야 한다.
 
 ## dependency 추가사항
 - JDBC
@@ -230,8 +232,13 @@
   - Repository
     - ProductRepository.java
   - Application.java
-- src/resources/templates
-  - create_form.html
-  - update_form.html
-  - product_list.html
+- src/resources
+  - application.properties
+  - templates
+    - create_form.html
+    - update_form.html
+    - product_list.html
+  - sql
+    - data.sql
+    - schema.sql
 
