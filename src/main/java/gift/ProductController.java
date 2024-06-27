@@ -36,18 +36,26 @@ public class ProductController {
         return "addProduct";
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable("id") Long id, @RequestBody Product product) {
-        // 요청받은 id를 가진 상품이 존재하지 않는 경우
-        if(!products.containsKey(id)) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    @GetMapping("/{id}/edit")
+    public String showEditProductForm(@PathVariable("id") Long id, Model model) {
+        Product product = products.get(id);
+
+        if(product == null) {
+            return "redirect:/api/products";
         }
 
+        model.addAttribute("product", product);
+
+        return "editProduct";
+    }
+
+    @PostMapping("/{id}")
+    public String EditProduct(@PathVariable("id") Long id, @ModelAttribute Product product) {
         // 상품 정보 수정
         product.setId(id);
         products.put(product.getId(), product);
 
-        return new ResponseEntity<>(product, HttpStatus.OK);
+        return "redirect:/api/products";
     }
 
     @DeleteMapping("/{id}")

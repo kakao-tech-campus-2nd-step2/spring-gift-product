@@ -27,7 +27,9 @@
             <td th:text="${product.name}"></td>
             <td th:text="${product.price}"></td>
             <td><img th:src="${product.imageUrl}" alt="product image" width="100"></td>
-            <td></td>
+            <td>
+                <a th:href="@{/api/products/{id}/edit(id=${product.id})}">Edit</a>
+            </td>
         </tr>
         </tbody>
     </table>
