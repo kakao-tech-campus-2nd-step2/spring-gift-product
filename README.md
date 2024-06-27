@@ -52,3 +52,20 @@ ___
 
 - [x] : CSS 사용
   - `Bootstrap`을 사용해 디자인
+
+## Step3 - 데이터베이스 적용
+___
+
+### 기능 요구사항
+자바 컬렉션 프레임워크를 사용하여 메모리에 저장하던 상품 정보를 데이터베이스에 저장한다.
+
+### 구현할 기능 목록
+
+- [x] : ProductRepository
+  - 상품 정보를 저장, 조회, 수정, 삭제하는 기능을 구현
+  - `JdbcClient`를 사용해 데이터베이스와 통신
+
+- [x] : ProductController
+  - 데이터에 접근 및 조작하는 기능을 `ProductRepository`로 위임
+  - `ProductRepository`를 사용해 상품 정보를 저장, 조회, 수정, 삭제
+
