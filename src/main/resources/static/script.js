@@ -41,6 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             document.getElementById('form-title').textContent = '상품 추가';
             productForm.reset();
+            document.getElementById('product-id').value = '';  // id 필드 초기화
         }
         productFormModal.style.display = 'block';
     }
