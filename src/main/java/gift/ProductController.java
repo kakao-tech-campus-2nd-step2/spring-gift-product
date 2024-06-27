@@ -53,7 +53,7 @@ public class ProductController {
     public String EditProduct(@PathVariable("id") Long id, @ModelAttribute Product product) {
         // 상품 정보 수정
         product.setId(id);
-        products.put(product.getId(), product);
+        products.put(id, product);
 
         return "redirect:/api/products";
     }
