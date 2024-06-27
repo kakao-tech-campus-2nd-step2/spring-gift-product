@@ -1,19 +1,23 @@
 package gift;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 public class ProductController {
-    private final Map<Long, Product> products = new HashMap<>();
+    private final ProductRepository products;
+
+    @Autowired
+    public ProductController(ProductRepository products) {
+        this.products = products;
+    }
 
     @GetMapping("/products")
     public List<ProductResponse> getAllProducts() {
         return products
-                .values()
+                .findAll()
                 .stream()
                 .map(ProductResponse::from)
                 .toList();
@@ -25,11 +29,13 @@ public class ProductController {
     }
 
     @PostMapping("/products")
-    public void addProduct(
+    public ProductResponse addProduct(
             @RequestBody ProductCreateRequest productCreateRequest
     ) {
         Product product = productOf(productCreateRequest);
-        products.put(product.id(), product);
+        products.save(product.id(), product);
+
+        return ProductResponse.from(product);
     }
 
     @PutMapping("/products/{id}")
@@ -42,7 +48,7 @@ public class ProductController {
             throw new ProductNotFoundException();
         }
         Product updatedProduct = applyUpdate(originalProduct, productUpdateRequest);
-        products.put(id, updatedProduct);
+        products.save(id, updatedProduct);
     }
 
     @DeleteMapping("/products/{id}")
