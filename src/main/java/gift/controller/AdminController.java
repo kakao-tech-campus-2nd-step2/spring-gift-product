@@ -20,15 +20,16 @@ public class AdminController {
     }
 
     @GetMapping("/product-management")
-    public String productManage() {
+    public String productManage(Model model) {
+        model.addAttribute("products",products.getProducts());
 
         return "product-manage";
 
     }
 
     @GetMapping("/product-add")
-    public String productAdd() {
-
+    public String productAdd(Model model) {
+        model.addAttribute("product", new Product());
         return "product-add";
 
     }
