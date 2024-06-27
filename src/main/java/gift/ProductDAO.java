@@ -10,7 +10,7 @@ public class ProductDAO {
     private Map<Long, ProductRecord> records = new HashMap<Long, ProductRecord>();
     private long idTraker = 1;
 
-    private boolean isRecordExist(long id) {
+    public boolean isRecordExist(long id) {
         if (records.containsKey(id)) {
             return true;
         }
@@ -50,5 +50,16 @@ public class ProductDAO {
             throw new NoSuchElementException("Record not found");
         }
         records.remove(id);
+    }
+
+    public ProductRecord replaceRecord(long id, ProductRecord product) throws NoSuchElementException {
+        if (!isRecordExist(id)) {
+            throw new NoSuchElementException("Record not found");
+        }
+
+        ProductRecord record = new ProductRecord(id, product.name(), product.price(), product.imageUrl());
+        records.put(id, record);
+
+        return record;
     }
 }
