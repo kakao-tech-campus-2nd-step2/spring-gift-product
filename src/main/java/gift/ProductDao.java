@@ -16,4 +16,10 @@ public class ProductDao {
                     .query(Product.class)
                     .list();
     }
+
+    public void insert(Product product) {
+        jdbcClient.sql("insert into product (name, price, imageUrl) values (?,?,?)")
+            .param(List.of(product.name(), product.price(), product.imageUrl()))
+            .update();
+    }
 }
