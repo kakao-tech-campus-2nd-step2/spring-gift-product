@@ -81,3 +81,20 @@ function saveProduct(id, button) {
         }
     });
 }
+
+function deleteProduct(id) {
+    fetch(`/api/products/${id}`, {
+        method: "DELETE"
+    }).then(response => {
+        if (response.status == 204) {
+            alert("상품 삭제가 완료되었습니다.");
+            loadProducts()
+        } else {
+            alert("상품 삭제가 되지 않았습니다.");
+        }
+    });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    loadProducts();
+})
