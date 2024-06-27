@@ -1,6 +1,7 @@
 package gift.service;
 
 
+import gift.exception.DataNotFoundException;
 import gift.model.Gift;
 import gift.model.GiftDao;
 import org.springframework.stereotype.Service;
@@ -21,8 +22,10 @@ public class GiftService {
     }
 
     public Gift getGift(Long id) {
-        return giftDao.findById(id);
+        Gift gift = giftDao.findById(id);
+        return gift;
     }
+
 
     public void addGift(Gift gift) {
         giftDao.create(gift);

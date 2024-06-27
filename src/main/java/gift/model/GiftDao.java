@@ -1,15 +1,18 @@
 package gift.model;
 
+import gift.exception.DataNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
+import java.util.Collections;
 import java.util.List;
 
 @Repository
 public class GiftDao {
     private final JdbcTemplate jdbcTemplate;
 
-    @Autowired
     public GiftDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
@@ -20,37 +23,50 @@ public class GiftDao {
     }
 
     public Gift findById(Long id) {
-        String sql = "SELECT * FROM gift WHERE id = ?";
-        Gift result = jdbcTemplate.queryForObject(sql, (rs, rowNum) ->
-                new Gift(
-                        rs.getLong("id"),
-                        rs.getString("name"),
-                        rs.getInt("price"),
-                        rs.getString("imageUrl")
-                ), id);
-
-      return result;
+        try {
+            String sql = "SELECT * FROM gift WHERE id = ?";
+            return jdbcTemplate.queryForObject(sql, (rs, rowNum) ->
+                    new Gift(
+                            rs.getLong("id"),
+                            rs.getString("name"),
+                            rs.getInt("price"),
+                            rs.getString("imageUrl")
+                    ), id);
+        } catch (EmptyResultDataAccessException ex) {
+            throw new DataNotFoundException();
+        }
     }
 
-
     public List<Gift> findAll() {
-        String sql = "SELECT * FROM gift";
-        return jdbcTemplate.query(sql, (rs, rowNum) ->
-                new Gift(
-                        rs.getLong("id"),
-                        rs.getString("name"),
-                        rs.getInt("price"),
-                        rs.getString("imageUrl")
-                ));
+        try {
+            String sql = "SELECT * FROM gift";
+            return jdbcTemplate.query(sql, (rs, rowNum) ->
+                    new Gift(
+                            rs.getLong("id"),
+                            rs.getString("name"),
+                            rs.getInt("price"),
+                            rs.getString("imageUrl")
+                    ));
+        } catch (EmptyResultDataAccessException ex) {
+            return Collections.emptyList();
+        }
     }
 
     public void updateById(Gift gift, Long id) {
-        String sql = "UPDATE gift SET name = ?, price = ?, imageUrl = ? WHERE id = ?";
-        jdbcTemplate.update(sql, gift.getName(), gift.getPrice(), gift.getImageUrl(), id);
+        try {
+            String sql = "UPDATE gift SET name = ?, price = ?, imageUrl = ? WHERE id = ?";
+            jdbcTemplate.update(sql, gift.getName(), gift.getPrice(), gift.getImageUrl(), id);
+        } catch (EmptyResultDataAccessException ex) {
+            throw new DataNotFoundException();
+        }
     }
 
     public void deleteById(Long id) {
-        String sql = "DELETE FROM gift WHERE id = ?";
-        jdbcTemplate.update(sql, id);
+        try {
+            String sql = "DELETE FROM gift WHERE id = ?";
+            jdbcTemplate.update(sql, id);
+        } catch (EmptyResultDataAccessException ex) {
+            throw new DataNotFoundException();
+        }
     }
 }
