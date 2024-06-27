@@ -2,11 +2,13 @@ package gift;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.Model;
 
 import java.util.*;
 
-@RestController
+@Controller
 @RequestMapping("/api/products")
 public class ProductController {
     private final Map<Long, Product> products = new HashMap<>();
@@ -14,9 +16,10 @@ public class ProductController {
 
 
     @GetMapping
-    public ResponseEntity<List<Product>> getProducts() {
+    public String getProducts(Model model) {
         // products에 저장된 모든 상품을 반환
-        return ResponseEntity.ok(new ArrayList<>(products.values()));
+        model.addAttribute("products", new ArrayList<>(products.values()));
+        return "productList";
     }
 
     @PostMapping
