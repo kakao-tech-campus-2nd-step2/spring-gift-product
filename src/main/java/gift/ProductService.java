@@ -29,4 +29,15 @@ public class ProductService {
         }
         return "상품이 없습니다.";
     }
+
+    public Product modifyProduct(Long id, Product product) {
+        if (products.containsKey(id)) {
+            products.put(id, product);
+            return product;
+        }
+
+        return null;
+    }
+
+
 }
