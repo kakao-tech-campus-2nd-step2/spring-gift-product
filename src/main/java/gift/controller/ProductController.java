@@ -14,9 +14,6 @@ import java.util.Map;
 @RequestMapping("/api/products")
 public class ProductController {
 
-    private final Map<Long, Product> products = new HashMap<>();
-    private Long sequenceId = 1L;
-
     @GetMapping
     public String getProducts(Model model) {
         model.addAttribute("products", new ArrayList<>(products.values()));
