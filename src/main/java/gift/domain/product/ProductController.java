@@ -36,6 +36,18 @@ public class ProductController {
         return "new-product";
     }
 
+    @GetMapping("/edit/{productId}")
+    public String renderingEditForm(@PathVariable long productId, Model model) {
+        Product product = productRepository.get(productId);
+
+        if (product == null) {
+            return "error";
+        }
+        model.addAttribute("product", product);
+
+        return "edit-product";
+    }
+
     @PostMapping
     public ResponseEntity<Product> create(@RequestBody Product productDTO) {
         Product product = new Product(key.getAndIncrement(), productDTO.getName(),

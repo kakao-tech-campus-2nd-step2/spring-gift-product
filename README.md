@@ -44,6 +44,8 @@
   ![img_11.png](images/img_11.png)
 - [ ] 상품 수정 페이지 만들기
   - 수정 버튼, 취소 버튼
+  
+  ![img_12.png](images/img_12.png)
 - [ ] 상품 추가 버튼 API 연결
 - [ ] 상품 수정 버튼 API 연결
 - [ ] 상품 삭제 버튼 API 연결
