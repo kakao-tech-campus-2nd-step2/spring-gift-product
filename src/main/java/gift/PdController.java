@@ -25,8 +25,9 @@ public class PdController {
     }
 
     @PostMapping("")
-    public void putProduct(@RequestBody Product product){
+    public String putProduct(@RequestBody Product product){
         products.put(product.id(), product);
+        return "redirect:/api/products";
     }
     @PutMapping("/{id}")
     public void updateProduct(@PathVariable Long id, @RequestBody Product product) {
