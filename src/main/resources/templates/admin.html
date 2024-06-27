@@ -53,6 +53,22 @@
             })
             .catch(error => console.error('Error fetching products:', error));
     }
+
+    function createProduct() {
+        let name = prompt("Enter product name:");
+        let price = prompt("Enter product price:");
+        let imageUrl = prompt("Enter image URL:");
+
+        fetch('/products', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ name, price, imageUrl })
+        }).then(response => {
+            fetchProducts();
+        });
+    }
 </script>
 </body>
 </html>
