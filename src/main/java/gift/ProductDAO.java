@@ -34,4 +34,8 @@ public class ProductDAO {
 
         return record;
     }
+
+    public ProductRecord addNewRecord(ProductRecord product) {
+        return addNewRecord(product, getNewId());
+    }
 }
