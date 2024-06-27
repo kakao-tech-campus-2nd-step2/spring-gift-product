@@ -61,7 +61,17 @@ public class ProductRepository {
     }
 
     public Product findById(Long id) {
-        return products.get(id);
+        var sql = "SELECT id, name, price, imageUrl FROM Product WHERE id = ?";
+
+        return jdbcTemplate.queryForObject(sql, (resultSet, rowNum) -> {
+            Product product = new Product(
+                resultSet.getLong("id"),
+                resultSet.getString("name"),
+                resultSet.getInt("price"),
+                resultSet.getString("imageUrl")
+            );
+            return product;
+        }, id);
     }
 
     public void update(Product product) {
