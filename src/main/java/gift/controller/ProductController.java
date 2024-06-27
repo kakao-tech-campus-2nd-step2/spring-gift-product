@@ -1,7 +1,6 @@
 package gift.controller;
 
 import gift.service.ProductService;
-import gift.domain.model.Product;
 import gift.domain.model.ProductDto;
 import java.util.List;
 import org.springframework.stereotype.Controller;
@@ -22,15 +21,22 @@ public class ProductController {
         this.productService = productService;
     }
 
+    private String populateModelWithProducts(Model model) {
+        List<ProductDto> products = productService.getAllProduct();
+        model.addAttribute("products", products);
+        return "product";
+    }
+
     @GetMapping()
-    public Product getProduct(@RequestParam Long id) {
+    public String getProduct(@RequestParam Long id, Model model) {
         try {
-            return productService.getProduct(id);
+            productService.getProduct(id);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return null;
+        return populateModelWithProducts(model);
     }
+
 
     @GetMapping("/all")
     public String getAllProduct(Model model) {
@@ -47,35 +53,29 @@ public class ProductController {
     public String addProduct(@RequestBody ProductDto productDto, Model model) {
         try {
             productService.addProduct(productDto);
-            List<ProductDto> products = productService.getAllProduct();
-            model.addAttribute("products", products);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return "index";
+        return populateModelWithProducts(model);
     }
 
     @PostMapping("/update")
     public String updateProduct(@RequestBody ProductDto productDto, Model model) {
         try {
             productService.updateProduct(productDto);
-            List<ProductDto> products = productService.getAllProduct();
-            model.addAttribute("products", products);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return "index";
+        return populateModelWithProducts(model);
     }
 
     @PostMapping("/delete")
     public String deleteProduct(@RequestParam Long id, Model model) {
         try {
             productService.deleteProduct(id);
-            List<ProductDto> products = productService.getAllProduct();
-            model.addAttribute("products", products);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return "index";
+        return populateModelWithProducts(model);
     }
 }
