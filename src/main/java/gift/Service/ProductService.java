@@ -1,17 +1,17 @@
 package gift.Service;
 
 import gift.domain.Product;
-import gift.domain.ProductDao;
 import gift.domain.ProductDaoImpl;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ProductService {
-    private final ProductDao productDao;
+    private final ProductDaoImpl productDao;
 
-    public ProductService(ProductDao productDao){
+    public ProductService(ProductDaoImpl productDao){
         this.productDao = productDao;
+        productDao.createProductTable();
     }
 
     public List<Product> getAllProducts(){

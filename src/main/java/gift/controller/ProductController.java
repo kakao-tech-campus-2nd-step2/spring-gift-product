@@ -1,9 +1,11 @@
 package gift.controller;
 
 
+import gift.Service.ProductService;
 import gift.domain.Product;
 import gift.domain.Products;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,39 +22,54 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/product")
 public class ProductController {
 
-    Products products = Products.getInstance();
+    ProductService productService;
+
+    //생성자 주입
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
 
     //전체 product 목록 조회
     @GetMapping
-    public Map<Long,Product> getProduct() {
-        return products.getProducts();
+    public List<Product> getProduct() {
+
+        return productService.getAllProducts();
     }
 
     //product 추가
     @PostMapping
     public ResponseEntity<String> addProduct(@RequestBody Product product) {
-        if (products.add(product)) {
-            return new ResponseEntity<>("OK", HttpStatus.CREATED);
+        try {
+            productService.saveProduct(product);
+        } catch (Exception ex) {
+            return new ResponseEntity<>("올바르지 않은 요청", HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>("올바르지 않은 요청", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("OK", HttpStatus.CREATED);
+
     }
 
     //product 수정
     @PatchMapping("/edit/{id}")
     public ResponseEntity<String> editProduct(@PathVariable("id") Long id,
         @RequestBody Product product) {
-        if (products.edit(id, product)) {
-            return new ResponseEntity<>("product edit success", HttpStatus.OK);
+        try {
+            productService.updateProduct(product);
+        } catch (Exception ex) {
+            return new ResponseEntity<>("올바르지 않은 요청", HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>("올바르지 않은 요청", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("product edit success", HttpStatus.OK);
+
     }
 
     //product 삭제
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteProduct(@PathVariable("id") Long id) {
-        if (products.delete(id)) {
-            return new ResponseEntity<>("product delete success", HttpStatus.NO_CONTENT);
+        try {
+            productService.deleteProduct(id);
+        } catch (Exception ex) {
+            return new ResponseEntity<>("올바르지 않은 요청", HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>("올바르지 않은 요청", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("product delete success", HttpStatus.NO_CONTENT);
     }
+
 }

@@ -26,7 +26,7 @@ public class ProductDaoImpl implements ProductDao{
         jdbcTemplate.execute(sql);}
 
     public void save(Product product){
-        String sql ="INSERT INTO products (id,name,price,imageUrl) values(?,?,?)";
+        String sql ="INSERT INTO products (id,name,price,imageUrl) values(?,?,?,?)";
         jdbcTemplate.update(sql,product.getId(),product.getName(),product.getPrice(),product.getImageUrl());
     }
 
