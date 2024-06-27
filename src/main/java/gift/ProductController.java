@@ -9,6 +9,17 @@ import java.util.*;
 public class ProductController {
     private final Map<Long, Product> products = new HashMap<Long, Product>();
 
+    @GetMapping("/products") //조회
+    public List<Product> getMethod() {
+        List<Product> list = new LinkedList<Product>();
+        Iterator<Long> keys = products.keySet().iterator();
+        while (keys.hasNext()) {
+            Long key = keys.next();
+            Product data = products.get(key);
+            list.add(data);
+        }
+        return list;
+    }
 
     @PostMapping ("/products")
     public void postMethod(@RequestBody RequestProduct requestProduct){
