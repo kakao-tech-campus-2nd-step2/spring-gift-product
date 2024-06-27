@@ -3,6 +3,7 @@ package gift;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -34,7 +35,6 @@ public class ProductController {
         return "redirect:/";
     }
     //상품 삭제하기
-    // POST 요청으로 선택된 상품들 삭제
     @PostMapping("/deleteSelected")
     public String deleteSelectedProduct(@RequestParam("productIds") List<Long> productIds) {
         System.out.println("선택");
@@ -45,6 +45,19 @@ public class ProductController {
     public String deleteProduct(@RequestParam("productId") Long productId ){
         productDB.removeProduct(productId);
         System.out.println(productId);
+        return "redirect:/";
+    }
+    //상품 수정하기
+    @GetMapping("/edit/{id}")
+    public String getEditForm(@PathVariable("id") long id, Model model){
+        System.out.println(id);
+
+        model.addAttribute("product", productDB.getProduct(id)); // Add an empty Product object for the form
+        return "version-SSR/edit-form.html";
+    }
+    @PostMapping("/edit")
+    public String getEditForm(Product product){
+        productDB.editProduct(product);
         return "redirect:/";
     }
 

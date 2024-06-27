@@ -62,4 +62,8 @@ public class ProductMemoryDB {
         }
     }
 
+    public void editProduct(Product product) {
+        products.put(product.getId(), product);
+    }
+
 }
