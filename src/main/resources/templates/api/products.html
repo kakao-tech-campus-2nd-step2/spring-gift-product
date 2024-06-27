@@ -52,6 +52,7 @@
     <th>ID</th>
     <th>Name</th>
     <th>Price</th>
+    <th>ImageURL</th>
     <th>Actions</th>
   </tr>
   </thead>
@@ -62,8 +63,9 @@
     <td th:text="${product.id}">ID</td>
     <td th:text="${product.name}">Name</td>
     <td th:text="${product.price}">Price</td>
+    <td th:text="${product.imageUrl()}">ImageUrl</td>
     <td>
-      <a th:href="@{/api/products/{id}(id=${product.id})}">Edit</a>
+      <button class="modify-product-btn" onclick="window.location.href='/api/modify_product'">Modify Product</button>
     </td>
   </tr>
   </tbody>
