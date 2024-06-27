@@ -32,9 +32,23 @@ public class AdminController {
         return "new";
     }
 
+    @GetMapping("admin/product/update/{id}")
+    public String updateProduct(@PathVariable("id") Long id, Model model) {
+        Product product = productDao.findById(id);
+        model.addAttribute("product", product);
+        return "edit";
+    }
+
     @PostMapping("admin/product/new")
     public String newProduct(@ModelAttribute ProductRequest request) {
         productDao.save(request);
+        return "redirect:/";
+    }
+
+    @PostMapping("admin/product/update/{id}")
+    public String updateProduct(@PathVariable("id") Long id,
+                                @ModelAttribute ProductRequest request) {
+        productDao.updateById(id, request);
         return "redirect:/";
     }
 
