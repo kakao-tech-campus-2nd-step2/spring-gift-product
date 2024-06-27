@@ -1,6 +1,10 @@
 package gift;
 
 public record ProductRecord(long id, String name, int price, String imageUrl) {
+    public ProductRecord withId(long id) {
+        return new ProductRecord(id, name, price, imageUrl);
+    }
+
     public ProductRecord getUpdatedRecord(ProductRecord patch) {
         String newName = name;
         if (patch.name != null) {

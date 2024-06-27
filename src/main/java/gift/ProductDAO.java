@@ -31,7 +31,7 @@ public class ProductDAO {
             throw new DuplicateKeyException("A record with the given ID already exists.");
         }
 
-        ProductRecord record = new ProductRecord(id, product.name(), product.price(), product.imageUrl());
+        ProductRecord record = product.withId(id);
         records.put(id, record);
 
         return record;
@@ -57,7 +57,7 @@ public class ProductDAO {
             throw new NoSuchElementException("Record not found");
         }
 
-        ProductRecord record = new ProductRecord(id, product.name(), product.price(), product.imageUrl());
+        ProductRecord record = product.withId(id);
         records.put(id, record);
 
         return record;
