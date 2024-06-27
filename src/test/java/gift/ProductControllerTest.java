@@ -47,7 +47,7 @@ public class ProductControllerTest {
         assertEquals(product.getId(), 1L);
         assertEquals(product.getName(), "카카오 카페모카");
         assertEquals(product.getPrice(), 5200);
-        assertEquals(product.getImageUrl(), "https://example.com/image.jpg");
+        assertEquals(product.getImageUrl(), "http://imageishere.com");
     }
 
     @Test
