@@ -17,26 +17,27 @@ GET /api/products
 GET /api/products/add
 ```
 
-### 상품 수정 페이지
-- 상품의 정보를 수정할 수 있는 폼 태그 페이지.
-```
-GET /api/products/modify
-```
-
 ### 상품 추가
 - HTML 폼 정보에 맞게 상품을 추가하고 목록 페이지로 리다이렉션.
 ```
 POST /api/products/add
 ```
 
+### 상품 수정 페이지
+- 상품의 정보를 수정할 수 있는 폼 태그 페이지.
+```
+GET /api/products/{id}
+```
+
+
 ### 상품 수정
 - 수정된 정보에 맞게 상품을 수정하고 목록 페이지로 리다이렉션.
 ```
-PUT /api/products/modify
+POST /api/products/edit
 ```
 
 ### 상품 삭제
 - 해당하는 상품을 삭제.
 ```
-DELETE /api/products/{id}
+POST /api/products/{id}
 ```
