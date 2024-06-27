@@ -26,39 +26,37 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public Product getProduct(@PathVariable Long id){
-        if(!products.containsKey(id)){
-            System.out.println("{%d}에 매칭되는 Product가 없습니다.".formatted(id));
-            return null;
-        }
         return products.get(id);
     }
 
     @PostMapping()
     public void addProduct(@RequestBody Product product){
-        if(!products.containsKey(product.getId())){
-            products.put(product.getId(), product);
-            System.out.println("추가됨");
+        if(products.containsKey(product.id())){
+            System.out.println("이미 Product가 존재합니다.");
             return;
         }
-        System.out.println("{%d}에 매칭되는 Product가 이미 존재합니다.".formatted(product.getId()));
+        products.put(product.id(), product);
+        System.out.println("추가됨");
     }
 
     @PutMapping("/{id}")
     public void updateProduct(@RequestBody Product product, @PathVariable Long id){
-        if(products.containsKey(product.getId())){
-            products.put(product.getId(), product);
+        if(!products.containsKey(product.id())){
+            System.out.println("{%d}에 매칭되는 Product가 이미 존재하지 않습니다.".formatted(id));
             return;
         }
-        System.out.println("{%d}에 매칭되는 Product가 이미 존재하지 않습니다.".formatted(id));
+        products.put(product.id(), product);
+        System.out.println("수정됨");
     }
 
     @DeleteMapping("/{id}")
     public void deleteProduct(@PathVariable Long id){
         if(products.containsKey(id)){
-            products.remove(id);
+            System.out.println("{%d}에 매칭되는 Product가 이미 존재하지 않습니다.".formatted(id));
             return;
         }
-        System.out.println("{%d}에 매칭되는 Product가 이미 존재하지 않습니다.".formatted(id));
+        products.remove(id);
+        System.out.println("삭제됨");
     }
 
 }
