@@ -30,4 +30,8 @@ public class ProductRepository {
     public void addProduct(ProductRequestDto productRequestDto) {
         products.put(productRequestDto.id, productRequestDto.toProduct());
     }
+
+    public void updateProduct(ProductRequestDto productRequestDto) {
+        products.replace(productRequestDto.getId(), productRequestDto.toProduct());
+    }
 }

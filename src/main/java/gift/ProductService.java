@@ -33,4 +33,11 @@ public class ProductService {
         }
         productRepository.addProduct(productRequestDto);
     }
+
+    public void updateProduct(ProductRequestDto productRequestDto) {
+        if (!productRepository.isExistProductId(productRequestDto.getId())) {
+            throw new NoSuchElementException("Invalid Product ID");
+        }
+        productRepository.updateProduct(productRequestDto);
+    }
 }

@@ -47,5 +47,14 @@ public class ProductController {
         }
     }
 
+    @PostMapping("/update")
+    public void updateProduct(@RequestBody ProductRequestDto productRequestDto) {
+        try {
+            productService.updateProduct(productRequestDto);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
 
 }
