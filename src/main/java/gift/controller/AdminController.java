@@ -31,7 +31,7 @@ public class AdminController {
 
     @PostMapping("/admin/create")
     public String giftCreate(@ModelAttribute Gift gift) {
-        giftDao.save(gift);
+        giftDao.create(gift);
         return "redirect:/admin";
     }
 
@@ -54,7 +54,7 @@ public class AdminController {
     @PutMapping("/admin/modify/{id}")
     public String giftModify(@PathVariable("id") Long id,
                              @ModelAttribute Gift gift){
-        giftDao.updateById(id,gift);
+        giftDao.updateById(gift,id);
         return "redirect:/admin";
 
     }

@@ -17,9 +17,9 @@ public class GiftController {
     }
 
     @PostMapping
-    public Gift addGift(@RequestBody Gift giftreq){
-        Gift gift = giftDao.save(giftreq);
-        return gift;
+    public void addGift(@RequestBody Gift giftreq){
+         giftDao.create(giftreq);
+
     }
 
     @GetMapping("/{id}")
@@ -32,9 +32,9 @@ public class GiftController {
     }
 
     @PostMapping("/{id}")
-    public Gift updateGift(@PathVariable Long id , @RequestBody Gift giftreq){
-        Gift gift = giftDao.updateById(id,giftreq);
-        return gift;
+    public void updateGift(@PathVariable Long id , @RequestBody Gift giftreq){
+        giftDao.updateById(giftreq,id);
+
     }
 
     @DeleteMapping("/{id}")
