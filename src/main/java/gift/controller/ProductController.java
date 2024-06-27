@@ -27,13 +27,19 @@ public class ProductController {
     @GetMapping("/api/products")
     public List<Product> getAllProducts(){
 
-        return productRepository.findAll();
+        return productRepository.findAll().stream()
+                .filter(product -> !product.isDeleted())
+                .toList();
     }
 
     @GetMapping("/api/products/{id}")
     public Product getProduct(@PathVariable("id") Long id){
+        Product findedProduct = productRepository.find(id);
+        if(findedProduct == null || findedProduct.isDeleted()){
+            throw new IllegalArgumentException();
+        }
 
-        return productRepository.find(id);
+        return findedProduct;
     }
 
     @PostMapping("/api/products")
@@ -43,7 +49,8 @@ public class ProductController {
 
     @PatchMapping("/api/products/{id}")
     public void productModify(@PathVariable("id") Long id, @RequestBody ProductRequest modifyProduct){
-        if(productRepository.find(id) == null){
+        Product findedProduct = productRepository.find(id);
+        if(findedProduct == null || findedProduct.isDeleted()){
             throw new IllegalArgumentException();
         }
         productRepository.save(modifyProduct.toModel(id));
