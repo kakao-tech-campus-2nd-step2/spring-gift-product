@@ -4,10 +4,13 @@ import gift.controller.ProductDto;
 import gift.domain.Product;
 import gift.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -38,5 +41,15 @@ public class ProductService {
 
     public Optional<Product> findOne(Long productId){
         return productRepository.findById(productId);
+    }
+
+    public Optional<Product> update(Long productId, ProductDto productDto){
+        Optional<Product> product = productRepository.findById(productId);
+        product.ifPresent(p->{
+            p.setName(productDto.getName());
+            p.setPrice(productDto.getPrice());
+            p.setImageUrl(productDto.getImageUrl());
+        });
+        return product;
     }
 }
