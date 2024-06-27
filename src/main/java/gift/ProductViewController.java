@@ -32,4 +32,10 @@ public class ProductViewController {
         }
         return "productManagement"; // admin 템플릿 파일 이름
     }
+
+    @GetMapping("/form")
+    public String showProductForm(Model model) {
+        model.addAttribute("product", new Product(0L, "", 0, ""));
+        return "productForm"; // 폼 템플릿 파일
+    }
 }
