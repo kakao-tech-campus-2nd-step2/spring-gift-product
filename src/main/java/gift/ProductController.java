@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -35,10 +36,17 @@ public class ProductController {
         return "admin_page";
     }
 
-    // @PostMapping("/new")
-    // public String showProductForm() {
-    //     return "product_form";
-    // }
+    @GetMapping("/new")
+    public String showProductForm(){
+        return "product_form";
+    }
+
+    @PostMapping("/new")
+    public String addProduct(@ModelAttribute Product product, Model model) {
+        Product newProduct = new Product(product.id(), product.name(), product.price(), product.imageUrl());
+        products.put(product.id(), newProduct);
+        return "redirect:/admin";
+    }
 
     // @PutMapping("/products/{id}")
     // public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product product) {

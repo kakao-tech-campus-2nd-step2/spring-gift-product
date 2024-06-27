@@ -6,6 +6,9 @@
     </head>
     <body>
       <p>Product Manage</p>
+      <form action="/admin/new" name="product_form" method="get">
+        <button>add product</button>
+      </form>
       <div>
         <table>
           <thead>
@@ -19,7 +22,7 @@
           <tbody>
             <tr th:each="product: ${products}">
               <td th:text="${product.id()}"></td>
-              <td th:text="${product.name()}"></td>
+              <td th:text="${product.name()}"></td>a
               <td th:text="${product.price()}"></td>
               <td th:text="${product.imageUrl()}"></td>
             </tr>
