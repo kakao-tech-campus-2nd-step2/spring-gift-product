@@ -30,16 +30,16 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<Product> addProduct(@RequestBody Product product) {
-        product.setId(currentId++);  // 새로운 ID를 부여
-        products.put(product.getId(), product);  // 상품을 Map에 저장
-        return new ResponseEntity<>(product, HttpStatus.CREATED);  // 생성된 상품을 201 Created와 함께 반환
+        Product newProduct = new Product(currentId++, product.name(), product.price(), product.imageUrl());
+        products.put(newProduct.id(), newProduct);
+        return new ResponseEntity<>(newProduct, HttpStatus.CREATED);  // 생성된 상품을 201 Created와 함께 반환
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> updateProduct(@PathVariable Long id, @RequestBody Product product) {
         if (products.containsKey(id)) {
-            product.setId(id);  // 기존 ID를 유지
-            products.put(id, product);  // 상품 정보 업데이트
+            Product updatedProduct = new Product(id, product.name(), product.price(), product.imageUrl());
+            products.put(id, updatedProduct);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);  // 성공적으로 업데이트되면 204 No Content 반환
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);  // 상품이 없으면 404 Not Found 반환
