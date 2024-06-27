@@ -1,11 +1,16 @@
 # spring-gift-product
 ## 기능 요구 사항 정리
+### step 1
 상품을 조회, 추가, 수정, 삭제
 - HTTP 요청 및 응답
   - getProduct()
+  - getAllProduct()
   - addProduct()
   - updateProduct()
   - deleteProduct()
 - 자바 컬렉션 프레임워크를 사용한 데이터 저장
-  - ProductController
+  - ProductRepository
     - Map<Long, Product> products
+---
+### step 2
+Thymeleaf 기반 서버 사이드 렌더링 관리자 화명 구현
