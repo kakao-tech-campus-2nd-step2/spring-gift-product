@@ -2,7 +2,10 @@ package gift;
 
 import java.util.HashMap;
 import java.util.Map;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 @RequestMapping("/api/products")
@@ -10,8 +13,10 @@ public class PdController {
     private final Map<Long, Product> products = new HashMap<>();
 
     @GetMapping("")
-    public Map<Long, Product> getAllProducts(){
-        return products;
+    public ModelAndView getAllProducts() {
+        ModelAndView modelAndView = new ModelAndView("api/products");
+        modelAndView.addObject("products", products.values());
+        return modelAndView;
     }
 
     @GetMapping("/{id}")
