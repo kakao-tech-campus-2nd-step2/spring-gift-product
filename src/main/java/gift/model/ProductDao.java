@@ -1,6 +1,7 @@
 package gift.model;
 
 import gift.controller.ProductRequest;
+import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -11,8 +12,13 @@ import java.util.concurrent.atomic.AtomicLong;
 
 @Component
 public class ProductDao {
+    private final JdbcClient jdbcClient;
     private final Map<Long, Product> products = new HashMap<>();
     private final AtomicLong idGenerator = new AtomicLong();
+
+    public ProductDao(JdbcClient jdbcClient) {
+        this.jdbcClient = jdbcClient;
+    }
 
     public Product updateById(long id, ProductRequest request) {
         Product newProduct = new Product(id, request.name(), request.price(), request.imageUrl());
@@ -32,7 +38,10 @@ public class ProductDao {
 
 
     public List<Product> findAll() {
-        return new ArrayList<>(products.values());
+        var sql = "select * from product";
+        return jdbcClient.sql(sql)
+                .query(Product.class)
+                .list();
     }
 
     public void deleteById(long id) {
