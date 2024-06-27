@@ -23,4 +23,11 @@ public class ProductDao {
         return jdbcClient.sql(sql).query(new ProductMapper()).list();
     }
 
+    public Product getProductById(Long id) {
+        String sql = "SELECT * FROM product WHERE id = ?";
+        return jdbcClient.sql(sql)
+                .param(id)
+                .query(new ProductMapper()).single();
+    }
+
 }

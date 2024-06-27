@@ -48,11 +48,8 @@ public class ProductController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProduct(@PathVariable(value = "id") Long id) {
-        Product product = products.get(id);
-        if (product == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-        return ResponseEntity.ok(product);
+        Product product = dao.getProductById(id);
+        return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
     /**
