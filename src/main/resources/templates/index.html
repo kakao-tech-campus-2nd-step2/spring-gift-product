@@ -26,7 +26,7 @@
                 <td th:text="${product.imgUrl}">Image URL</td>
                 <td>
                     <a th:href="@{/showUpdateProducts/{id}(id=${product.id})}">Edit</a>
-                    <a th:href="@{/api/products/delete/{id}(id=${product.id})}">Delete</a>
+                    <a th:href="@{/deleteProduct/{id}(id=${product.id})}">Delete</a>
                 </td>
             </tr>
             </tbody>
