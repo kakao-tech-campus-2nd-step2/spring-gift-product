@@ -47,10 +47,6 @@ public class ProductService {
     public ProductResponseDto updateById(Long id, ProductRequestDto productDto){
         Product product = productRepository.findById(id)
                 .orElseThrow(()-> new ProductNotFoundException("ID가 " + id + "인 상품이 존재하지 않습니다."));
-
-        product.setName(productDto.getName());
-        product.setPrice(productDto.getPrice());
-        product.setImageUrl(productDto.getImageUrl());
-        return product.toDto();
+        return productRepository.update(id, productDto.toEntity()).toDto();
     }
 }
