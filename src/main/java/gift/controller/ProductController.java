@@ -1,5 +1,9 @@
-package gift;
+package gift.controller;
 
+import gift.dto.Product;
+import gift.db.ProductDB;
+import gift.db.ProductMemoryDB;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +15,13 @@ import java.util.List;
 
 @Controller
 public class ProductController {
-    ProductMemoryDB productDB = ProductMemoryDB.getInstance();
+    //ProductDB productDB = ProductMemoryDB.getInstance();//or
+//    ProductDB productDB = new ProductH2DB();
+    @Autowired
+    ProductDB productDB;
+
+
+
 
     //상품 보여주기
     @GetMapping("/")
