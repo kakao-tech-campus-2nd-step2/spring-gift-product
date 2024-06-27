@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -43,5 +44,9 @@ public class ItemController {
         model.addAttribute("id",id);
         return "update";
     }
-
+    @PutMapping("/update/{id}")
+    public String updateItem(@PathVariable Long id,@ModelAttribute ItemDTO itemDTO){
+        itemService.updateItem(itemDTO,id);
+        return "redirect:/product/list";
+    }
 }
