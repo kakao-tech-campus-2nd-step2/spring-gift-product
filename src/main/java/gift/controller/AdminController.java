@@ -23,7 +23,7 @@ public class AdminController {
 
     @GetMapping()
     public String listProducts(Model model) {
-        List<Product> products = productRepository.findAll().stream().filter(product -> !product.isDeleted()).toList();
+        List<Product> products = productRepository.findAll().stream().toList();
         model.addAttribute("products", products);
         return "admin/list";
     }
@@ -31,9 +31,7 @@ public class AdminController {
     @GetMapping("/products/{id}")
     public String showEditProductForm(@PathVariable("id") Long id, Model model) {
         Product product = productRepository.find(id).orElseThrow(IllegalArgumentException::new);
-        if (product.isDeleted()) {
-            throw new IllegalArgumentException();
-        }
+
         model.addAttribute("product", product);
         return "admin/edit";
     }
@@ -49,9 +47,7 @@ public class AdminController {
     public String productModify(@PathVariable("id") Long id, @RequestBody ProductRequest modifyProduct){
 
         Product findedProduct = productRepository.find(id).orElseThrow(IllegalArgumentException::new);
-        if(findedProduct.isDeleted()){
-            throw new IllegalArgumentException();
-        }
+
         productRepository.save(modifyProduct.toModel(id));
         return "admin/list";
     }
@@ -59,9 +55,7 @@ public class AdminController {
     @DeleteMapping("/products/{id}")
     public String productDelete(@PathVariable("id") Long id){
         Product findedProduct = productRepository.find(id).orElseThrow(IllegalArgumentException::new);
-        if(findedProduct.isDeleted()){
-            throw new IllegalArgumentException();
-        }
+
         findedProduct.delete();
         productRepository.save(findedProduct);
         return "admin/list";

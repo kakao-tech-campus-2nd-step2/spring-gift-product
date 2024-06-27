@@ -14,10 +14,10 @@ public enum ProductQuery {
         INSERT INTO products (name, price, image_url, is_deleted) VALUES (?, ?, ?, ?);
     """),
     SELECT_ALL_PRODUCTS("""
-        SELECT * FROM products;
+        SELECT * FROM products WHERE is_deleted = FALSE;
     """),
     SELECT_PRODUCT_BY_ID("""
-        SELECT * FROM products WHERE id = ?;
+        SELECT * FROM products WHERE id = ? AND is_deleted = FALSE;
     """),
     UPDATE_PRODUCT("""
         UPDATE products SET name = ?, price = ?, image_url = ?, is_deleted = ? WHERE id = ?;
