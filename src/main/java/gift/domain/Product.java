@@ -9,6 +9,9 @@ public class Product {
     private int price;
     private String imageUrl;
 
+    public Product() {
+    }
+
     public Product(ProductRequest request) {
         this.id = request.id();
         this.name = request.name();
