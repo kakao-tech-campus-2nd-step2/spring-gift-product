@@ -22,7 +22,6 @@ public class ProductController {
     public String addProduct(@ModelAttribute ProductVo productVo, Model model) {
         productService.addProduct(productVo);
         model.addAttribute("productList", productService.getAllProducts());
-        model.addAttribute("searchResults", null);
         return "product";
     }
 
@@ -30,7 +29,6 @@ public class ProductController {
     public String modifyProduct(@ModelAttribute ProductVo productVo, Model model) {
         productService.modifyProduct(productVo);
         model.addAttribute("productList", productService.getAllProducts());
-        model.addAttribute("searchResults", null);
         return "product";
     }
 
@@ -38,14 +36,12 @@ public class ProductController {
     public String deleteProduct(@PathVariable Long id, Model model) {
         productService.deleteProduct(id);
         model.addAttribute("productList", productService.getAllProducts());
-        model.addAttribute("searchResults", null);
         return "product";
     }
 
     @GetMapping("/listup")
     public String listupProduct(Model model) {
         model.addAttribute("productList", productService.getAllProducts());
-        model.addAttribute("searchResults", null);
         return "product";  // Ensure this matches the name of your Thymeleaf template
     }
 
