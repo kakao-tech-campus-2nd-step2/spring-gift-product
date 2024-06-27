@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -33,6 +34,14 @@ public class ItemController {
     public String createItem(@ModelAttribute("item") ItemDTO itemDTO){
         itemService.insertItem(itemDTO);
         return "redirect:/product/list";
+    }
+
+    @GetMapping("/update/{id}")
+    public String updatePage(@PathVariable Long id,Model model){
+        ItemDTO itemDTO = itemService.findItem(id);
+        model.addAttribute("item",itemDTO);
+        model.addAttribute("id",id);
+        return "update";
     }
 
 }
