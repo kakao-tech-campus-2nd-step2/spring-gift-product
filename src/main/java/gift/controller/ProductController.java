@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Controller
@@ -52,10 +53,15 @@ public class ProductController {
         return product.toDTO();
     }
 
+    @GetMapping("/product")
+    public String updateProductForm(@RequestParam("id") Long id) {
+        return "editProduct";
+    }
+
     @PutMapping("/api/product/{id}")
-    public ProductResponse updateProduct(@PathVariable("id") Long id, @RequestBody ProductRequest productRequest) {
+    public String updateProduct(@PathVariable("id") Long id, @RequestBody ProductRequest productRequest) {
         Product product = productDao.update(id, productRequest);
-        return product.toDTO();
+        return "redirect:/api/products";
     }
 
     @DeleteMapping("/api/product/{id}")
