@@ -1,5 +1,7 @@
 # spring-gift-product
 
+# step 1
+***
 ## 구현할 기능 탐색
 ### POST : /products
 1. 요청을 받는다
@@ -57,3 +59,6 @@
 - 상품 삭제
 ### GlobalExceptionHandler
 - 자원이 존재하지 않는 경우 404 응답을 하는 핸들러
+
+# step2
+***
