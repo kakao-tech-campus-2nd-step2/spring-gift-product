@@ -26,18 +26,6 @@ public class ProductDTO {
     }
 
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
     public String getName() {
         return name;
     }
