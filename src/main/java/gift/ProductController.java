@@ -1,8 +1,6 @@
 package gift;
 
 import jakarta.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -59,14 +57,5 @@ public class ProductController {
         products.remove(id);
         return "redirect:/products";
     }
-
-    @GetMapping("/{id}")
-    public Object getProductById(@PathVariable("id") Long id) {
-        if (!products.containsKey(id)) {
-            throw new IllegalArgumentException("상품이 없습니다.");
-        }
-        return products.get(id);
-    }
-
-
+    
 }
