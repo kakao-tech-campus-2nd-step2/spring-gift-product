@@ -2,6 +2,7 @@ package gift.controller;
 
 
 import gift.controller.req.ProductRequest;
+import gift.controller.res.ProductResponse;
 import gift.model.Product;
 import gift.model.ProductRepository;
 import java.util.List;
@@ -25,21 +26,22 @@ public class ProductController {
     }
 
     @GetMapping("/api/products")
-    public List<Product> getAllProducts(){
+    public List<ProductResponse> getAllProducts(){
 
         return productRepository.findAll().stream()
                 .filter(product -> !product.isDeleted())
+                .map(ProductResponse::fromModel)
                 .toList();
     }
 
     @GetMapping("/api/products/{id}")
-    public Product getProduct(@PathVariable("id") Long id){
+    public ProductResponse getProduct(@PathVariable("id") Long id){
         Product findedProduct = productRepository.find(id);
         if(findedProduct == null || findedProduct.isDeleted()){
             throw new IllegalArgumentException();
         }
 
-        return findedProduct;
+        return ProductResponse.fromModel(findedProduct);
     }
 
     @PostMapping("/api/products")
