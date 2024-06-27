@@ -28,7 +28,7 @@ public class ProductController {
         return "addProduct";//addProduct.html로 매핑(상품 추가 화면)
     }
 
-    @PostMapping
+    @PostMapping("/add")
     public String addProduct(@ModelAttribute Product product) {
         productService.addProduct(product);
         return "redirect:/api/products";//상품 추가 끝나면 메인페이지로~
