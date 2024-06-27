@@ -34,7 +34,19 @@ public class ProductService {
         if (productRepository.isExistProductId(productDto.getId())) {
             throw new IllegalArgumentException("Already Exist Product ID");
         }
+        if (productDto.getId() == null || !isValidLong(productDto.getId())){
+            throw new IllegalArgumentException("Invalid Product ID");
+        }
         productRepository.addProduct(productDto);
+    }
+
+    private boolean isValidLong(Object value) {
+        try {
+            Long.parseLong(value.toString());
+            return true;
+        } catch (NumberFormatException | NullPointerException e) {
+            return false;
+        }
     }
 
     public void updateProduct(ProductDto productDto) {
