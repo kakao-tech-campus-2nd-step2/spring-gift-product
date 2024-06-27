@@ -2,12 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>Manage Products</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
 <div class="container">
   <h1>Manage Products</h1>
-  <a class="btn btn-primary" th:href="@{/products/add}">Add New Product</a>//상품 추가 버튼
+
+<!--  상품 추가 버튼 -->
+  <a class="btn btn-primary" th:href="@{/products/add}">Add New Product</a>
+
   <table class="table table-striped">
     <thead>
     <tr>
@@ -23,7 +26,7 @@
       <td th:text="${product.name}">Product Name</td>
       <td th:text="${product.price}">Product Price</td>
       <td th:text="${product.imageUrl}">Product Image URL</td>
-      //삭제, 수정 버튼 추가할 것
+<!--삭제, 수정 버튼 추가할 것-->
     </tr>
     </tbody>
 
