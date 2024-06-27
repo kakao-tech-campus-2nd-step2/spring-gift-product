@@ -44,6 +44,19 @@ public class JdbcProductRepository implements ProductRepository {
         return findProductById(id);
     }
 
+    @Override
+    public Product updateProduct(Long id, Product product) {
+        String sql = "update product set name = ?, price = ?, imageUrl = ? where id = ?";
+        jdbcTemplate.update(sql, product.getName(), product.getPrice(), product.getImageUrl(), id);
+        return findProductById(id);
+    }
+
+    @Override
+    public boolean isExist(Long id) {
+        String sql = "select exists (select * from product where id = ?)";
+        return jdbcTemplate.queryForObject(sql, new Object[]{id}, Boolean.class);
+    }
+
     private RowMapper<Product> productRowMapper() {
         return (rs, rowNum) -> {
             Product product = new Product();
