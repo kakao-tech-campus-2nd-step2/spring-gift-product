@@ -3,6 +3,8 @@ package gift;
 import jakarta.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -26,8 +28,10 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<Product> getProducts() {
-        return new ArrayList<>(products.values());
+    public String getProducts(Model model) {
+        model.addAttribute("products", new ArrayList<>(products.values()));
+        model.addAttribute("product", new Product()); // Add empty product object for the form
+        return "product-list";
     }
 
     @PostMapping
