@@ -36,7 +36,7 @@ public class PageController {
     // edit-product.html에서 보여줄 attributes를 넣는 함수
     private void addAttributesForEditPage(Product product, Model model) {
         // 수정해야 할 제품 넣어줌
-        model.addAttribute("products", product);
+        model.addAttribute("product", product);
 
         // 비밀번호를 최초만 맞추면 여기서부터는 계속 자동으로 넣어줌
         addPasswordAttribute(model);
