@@ -1,6 +1,6 @@
 package gift.model;
 
-public record ProductDTO(String name, int price, String imageUrl) {
+public record ProductRequest(String name, int price, String imageUrl) {
 
     public Product toEntity(Long id) {
         return new Product(id, name, price, imageUrl);

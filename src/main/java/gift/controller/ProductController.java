@@ -1,11 +1,12 @@
 package gift.controller;
 
 import gift.model.Product;
-import gift.model.ProductDTO;
-import java.util.ArrayList;
-import java.util.HashMap;
+import gift.model.ProductRequest;
+import gift.model.ProductDao;
+import gift.model.ProductResponse;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,46 +18,39 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ProductController {
 
-    private final Map<Long, Product> products = new HashMap<>();
-    private static long sequence = 0L;
+    @Autowired
+    private ProductDao productDao;
+
+    ProductController(ProductDao productDao) {
+        this.productDao = productDao;
+    }
 
     @PostMapping("/api/product")
-    public void registerProduct(@RequestBody ProductDTO productDTO) {
-        sequence++;
-        products.put(sequence, productDTO.toEntity(sequence));
+    public ProductResponse registerProduct(@RequestBody ProductRequest productRequest) {
+        Product product = productDao.save(productRequest);
+        return product.toDTO();
     }
 
     @GetMapping("/api/products")
-    public List<Product> getAllProducts() {
-        return new ArrayList<>(products.values());
+    public List<ProductResponse> getAllProducts() {
+        List<Product> productList = productDao.findAll();
+        return productList.stream().map(Product::toDTO).collect(Collectors.toList());
     }
 
     @GetMapping("/api/product/{id}")
-    public Product getProduct(@PathVariable("id") Long id) {
-        if (!products.containsKey(id)) {
-            throw new IllegalArgumentException("존재하지 않는 상품입니다.");
-        }
-        return products.get(id);
+    public ProductResponse getProduct(@PathVariable("id") Long id) {
+        Product product = productDao.findById(id);
+        return product.toDTO();
     }
 
     @PutMapping("/api/product/{id}")
-    public void updateProduct(@PathVariable("id") Long id, @RequestBody ProductDTO productDTO) {
-        if (!products.containsKey(id)) {
-            throw new IllegalArgumentException("존재하지 않는 상품입니다.");
-        }
-        Product product = products.get(id);
-        product.setName(productDTO.name());
-        product.setPrice(productDTO.price());
-        product.setImageUrl(productDTO.imageUrl());
-
-        products.put(id, product);
+    public ProductResponse updateProduct(@PathVariable("id") Long id, @RequestBody ProductRequest productRequest) {
+        Product product = productDao.update(id, productRequest);
+        return product.toDTO();
     }
 
     @DeleteMapping("/api/product/{id}")
     public void deleteProduct(@PathVariable("id") Long id) {
-        if (!products.containsKey(id)) {
-            throw new IllegalArgumentException("존재하지 않는 상품입니다.");
-        }
-        products.remove(id);
+        productDao.delete(id);
     }
 }

@@ -30,9 +30,13 @@ public class Product {
         return imageUrl;
     }
 
-    public void updateProduct(ProductDTO productDTO) {
-        this.name = productDTO.name();
-        this.price = productDTO.price();
-        this.imageUrl = productDTO.imageUrl();
+    public void updateProduct(ProductRequest productRequest) {
+        this.name = productRequest.name();
+        this.price = productRequest.price();
+        this.imageUrl = productRequest.imageUrl();
+    }
+
+    public ProductResponse toDTO() {
+        return new ProductResponse(this.id, this.name, this.price, this.imageUrl);
     }
 }
