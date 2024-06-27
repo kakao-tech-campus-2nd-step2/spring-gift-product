@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>상품 관리</title>
+    <link th:href="@{/style.css}" rel="stylesheet" />
+
     <script>
         function submitForm(id) {
             // 직접적으로 폼을 서밋하는 방식으로 수정
@@ -12,46 +14,50 @@
     </script>
 </head>
 <body>
-<a th:href="@{/add}"><button>상품 추가</button></a>
-<form id="all" th:action="@{/deleteSelected}" method="post">
-    <button type="submit">선택된 상품들 일괄 삭제</button>
-    <div>
-        <table>
-            <thead>
-            <tr>
-                <th>선택</th>
-                <th>Actions</th>
-                <th>ID</th>
-                <th>NAME</th>
-                <th>PRICE</th>
-                <th>IMAGE</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="product : ${products}">
-                <td>
-                    <input type="checkbox" th:value="${product.id}" name="productIds"/>
-                </td>
-                <td>
-                    <!-- 삭제 폼 -->
-                    <button type="button" th:onclick="'submitForm(\'' + ${product.id} + '\')'">삭제</button>
+<div class="container">
+    <a th:href="@{/add}"><button id="addButton">상품 추가</button></a>
+    <button form="all" id="selectDeleteButton" type="submit">선택된 상품들 일괄 삭제</button>
+    <form id="all" th:action="@{/deleteSelected}" method="post">
 
-                    <!-- <form th:action="@{/edit}" method="get" style="display:inline;">
-                        <input type="hidden" th:value="${product.id}" name="productId"/>
-                        <button type="submit">수정</button>
-                    </form> -->
-                </td>
-                <td th:text="${product.id}">id</td>
-                <td th:text="${product.name}">name</td>
-                <td th:text="${product.price}">price</td>
-                <td>
-                    <img th:src="${product.imageUrl}" width="200" height="200" alt="Product Image"/>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</form>
+        <div>
+            <table>
+                <thead>
+                <tr>
+                    <th>선택</th>
+                    <th>Actions</th>
+                    <th>ID</th>
+                    <th>NAME</th>
+                    <th>PRICE</th>
+                    <th>IMAGE</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="product : ${products}">
+                    <td>
+                        <input type="checkbox" th:value="${product.id}" name="productIds"/>
+                    </td>
+                    <td>
+                        <!-- 삭제 폼 -->
+                        <button type="button" id="deleteButton" th:onclick="'submitForm(\'' + ${product.id} + '\')'">삭제</button>
+
+                        <form th:action="@{/edit}" method="get" style="display:inline;">
+                            <input type="hidden" th:value="${product.id}" name="productId"/>
+                            <button id="editButton" type="submit">수정</button>
+                        </form>
+                    </td>
+                    <td th:text="${product.id}">id</td>
+                    <td th:text="${product.name}">name</td>
+                    <td th:text="${product.price}">price</td>
+                    <td>
+                        <img th:src="${product.imageUrl}" width="200" height="200" alt="Product Image"/>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </form>
+
+</div>
 
 <!-- 단일 상품 삭제 폼 -->
 <form id="deleteForm" th:action="@{/delete}" method="post" style="display:none;">
