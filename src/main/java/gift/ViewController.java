@@ -44,7 +44,7 @@ public class ViewController {
     public String showEditForm(@PathVariable Long id, Model model) {
         Product product = productController.findById(id);
         model.addAttribute("product", product);
-        return "add_product"; // Thymeleaf 템플릿 파일 이름
+        return "add_product";
     }
 
     @PostMapping("/edit/{id}")
