@@ -11,13 +11,37 @@
             document.getElementById('deleteFormInputId').value = id;//
             document.getElementById('deleteForm').submit();
         }
+        function checkIfAnyCheckboxChecked() {
+            var checkboxes = document.getElementsByName('productIds');
+            for (var i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i].checked) {
+                    return true; // 하나 이상의 체크박스가 체크되어 있음
+                }
+            }
+            return false; // 체크된 체크박스가 없음
+        }
+        function submitSelectDelete(){
+            if (!checkIfAnyCheckboxChecked()) {
+                // event.preventDefault(); // 체크된 체크박스가 없으면 기본 동작을 막음
+                alert('삭제할 상품을 선택해 주세요.'); // 사용자에게 알림을 줄 수도 있음
+            }else{
+                document.getElementById('all').submit();
+            }
+        }
+
+        document.getElementById('selectDeleteButton').addEventListener('click', function(event) {
+            if (!checkIfAnyCheckboxChecked()) {
+                event.preventDefault(); // 체크된 체크박스가 없으면 기본 동작을 막음
+                alert('삭제할 상품을 선택해 주세요.'); // 사용자에게 알림을 줄 수도 있음
+            }
+        });
     </script>
 </head>
 <body>
 <div class="container">
     <a th:href="@{/add}"><button id="addButton">상품 추가</button></a>
-    <button form="all" id="selectDeleteButton" type="submit">선택된 상품들 일괄 삭제</button>
-    <form id="all" th:action="@{/deleteSelected}" method="post">
+    <button form="all" id="selectDeleteButton" onclick="submitSelectDelete()" type="button">선택된 상품들 일괄 삭제</button>
+    <form id="all"  th:action="@{/deleteSelected}" method="post">
 
         <div>
             <table>
