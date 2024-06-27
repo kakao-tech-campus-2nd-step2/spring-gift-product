@@ -21,6 +21,13 @@ public class ProductController {
         return list;
     }
 
+    @GetMapping("/products/{id}") //조회
+    public Product single_getMethod(@PathVariable("id") Long id) {
+        Product data = products.get(id);
+
+        return data;
+    }
+
     @PostMapping ("/products")
     public void postMethod(@RequestBody RequestProduct requestProduct){
         Product product  = new Product(requestProduct.name(), requestProduct.price(), requestProduct.imageUrl());
