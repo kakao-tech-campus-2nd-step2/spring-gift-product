@@ -24,4 +24,9 @@ public class ProductController {
         products.put(id, product);
         return product;
     }
+
+    @DeleteMapping("/{id}")
+    public boolean deleteProduct(@PathVariable Long id) {
+        return products.remove(id) != null;
+    }
 }

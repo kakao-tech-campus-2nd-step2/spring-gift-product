@@ -3,12 +3,12 @@ package gift;
 import java.util.UUID;
 
 public class Product {
-    private long id;
+    private Long id;
     private String name;
     private double price;
     private String imageUrl;
 
-    public Product(long id, String name, double price, String imageUrl) {
+    public Product(Long id, String name, double price, String imageUrl) {
         this.id = id;
         this.name = name;
         this.price = price;
