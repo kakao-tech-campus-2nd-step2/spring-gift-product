@@ -12,3 +12,5 @@ HTTP API - ProductController (gift.web.ProductController)
 - GET
 - PUT / PATCH
 - DELETE
+
+## step2
