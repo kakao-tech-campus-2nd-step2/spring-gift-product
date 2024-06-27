@@ -1,9 +1,14 @@
 package gift.service;
 
 import gift.dto.CreateProduct;
+import gift.dto.ProductDTO;
 import gift.entity.Product;
 import gift.repository.CollectionDB;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class ProductService {
@@ -11,6 +16,17 @@ public class ProductService {
 
     public ProductService(CollectionDB collectionDB) {
         this.collectionDB = collectionDB;
+    }
+
+    public Map<Long,ProductDTO> getAllProducts() {
+        Map<Long,Product> allProducts = collectionDB.findAll();
+        Map<Long,ProductDTO> allProductsDTO= new HashMap<>();
+        for (Long key : allProducts.keySet()) {
+            Product product = allProducts.get(key);
+            ProductDTO productDTO = new ProductDTO(product.getName(),product.getPrice(),product.getUrl());
+            allProductsDTO.put(key,productDTO);
+        }
+        return allProductsDTO ;
     }
 
     public void createProduct(CreateProduct.Request request) {

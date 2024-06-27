@@ -24,4 +24,9 @@ public class CollectionDB {
     public void saveProduct(Long id, Product product){
         products.put(id,product);
     }
+
+
+    public Map<Long,Product> findAll() {
+        return products;
+    }
 }
