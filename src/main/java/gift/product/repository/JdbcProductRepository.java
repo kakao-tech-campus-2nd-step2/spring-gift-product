@@ -52,6 +52,13 @@ public class JdbcProductRepository implements ProductRepository {
     }
 
     @Override
+    public Long deleteProduct(Long id) {
+        String sql = "delete from product where id = ?";
+        jdbcTemplate.update(sql, id);
+        return id;
+    }
+
+    @Override
     public boolean isExist(Long id) {
         String sql = "select exists (select * from product where id = ?)";
         return jdbcTemplate.queryForObject(sql, new Object[]{id}, Boolean.class);
