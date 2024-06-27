@@ -1,16 +1,7 @@
-package gift.dto;
+package gift.controller.dto;
 
 public class ProductDTO {
     private Long id;
-    private String name;
-    private double price;
-    private String imageUrl;
-    public ProductDTO(Long id, String name, double price, String imageUrl) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.imageUrl = imageUrl;
-    }
 
     public Long getId() {
         return id;
@@ -19,6 +10,21 @@ public class ProductDTO {
     public void setId(Long id) {
         this.id = id;
     }
+
+    private String name;
+    private double price;
+
+    private String imageUrl;
+
+    public ProductDTO() {
+    }
+
+    public ProductDTO(Long id, String name, double price, String imageUrl) {
+        this.name = name;
+        this.price = price;
+        this.imageUrl = imageUrl;
+    }
+
 
     public void setName(String name) {
         this.name = name;
