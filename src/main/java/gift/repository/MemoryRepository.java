@@ -10,25 +10,26 @@ import org.springframework.stereotype.Repository;
 public class MemoryRepository {
 
     private final Map<Long, ProductDTO> products = new HashMap<>();
-    private long sequence = 1;
+    private long id = 1;
 
     public Collection<ProductDTO> getProducts() {
         return products.values();
     }
 
-    public ProductDTO getProduct(Long sequence) {
-        return products.get(sequence);
+    public ProductDTO getProduct(Long id) {
+        return products.get(id);
     }
 
-    public void addProduct(ProductDTO product) {
-        products.put(sequence++, product);
+    public void addProduct(ProductDTO productDTO) {
+        ProductDTO newProductDTO = new ProductDTO(id, productDTO.name(), productDTO.price(), productDTO.imageUrl());
+        products.put(id++, newProductDTO);
     }
 
-    public void updateProduct(long sequence, ProductDTO product) {
-        products.replace(sequence, product);
+    public void updateProduct(long id, ProductDTO productDTO) {
+        products.replace(id, productDTO);
     }
 
-    public void deleteProduct(long sequence) {
-        products.remove(sequence);
+    public void deleteProduct(long id) {
+        products.remove(id);
     }
 }

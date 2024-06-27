@@ -20,8 +20,8 @@ public class ProductService {
         return memoryRepository.getProducts();
     }
 
-    public ProductDTO getProduct(Long sequence) {
-        return memoryRepository.getProduct(sequence);
+    public ProductDTO getProduct(Long id) {
+        return memoryRepository.getProduct(id);
     }
 
     public boolean addProduct(ProductDTO productDTO) {
@@ -32,19 +32,19 @@ public class ProductService {
         return true;
     }
 
-    public boolean updateProduct(long sequence, ProductDTO productDTO) {
-        if (memoryRepository.getProduct(sequence) == null) {
+    public boolean updateProduct(long id, ProductDTO productDTO) {
+        if (memoryRepository.getProduct(id) == null) {
             return false;
         }
-        memoryRepository.updateProduct(sequence, productDTO);
+        memoryRepository.updateProduct(id, productDTO);
         return true;
     }
 
-    public boolean deleteProduct(long sequence) {
-        if (memoryRepository.getProduct(sequence) == null) {
+    public boolean deleteProduct(long id) {
+        if (memoryRepository.getProduct(id) == null) {
             return false;
         }
-        memoryRepository.deleteProduct(sequence);
+        memoryRepository.deleteProduct(id);
         return true;
     }
 }

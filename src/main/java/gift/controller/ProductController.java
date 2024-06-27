@@ -31,9 +31,9 @@ public class ProductController {
         return productService.getProducts();
     }
 
-    @GetMapping("/{sequence}")
-    public ProductDTO getProduct(@PathVariable("sequence") Long sequence) {
-        return productService.getProduct(sequence);
+    @GetMapping("/{id}")
+    public ProductDTO getProduct(@PathVariable("id") Long id) {
+        return productService.getProduct(id);
     }
 
     @PostMapping
@@ -44,17 +44,17 @@ public class ProductController {
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
 
-    @PutMapping("/{sequence}")
-    public ResponseEntity updateProduct(@PathVariable("sequence") long sequence, @RequestBody ProductDTO productDTO) {
-        if (productService.updateProduct(sequence, productDTO)) {
+    @PutMapping("/{id}")
+    public ResponseEntity updateProduct(@PathVariable("id") long id, @RequestBody ProductDTO productDTO) {
+        if (productService.updateProduct(id, productDTO)) {
             return new ResponseEntity(HttpStatus.OK);
         }
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
 
-    @DeleteMapping("/{sequence}")
-    public ResponseEntity deleteProduct(@PathVariable("sequence") long sequence) {
-        if (productService.deleteProduct(sequence)) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteProduct(@PathVariable("id") long id) {
+        if (productService.deleteProduct(id)) {
             return new ResponseEntity(HttpStatus.OK);
         }
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
