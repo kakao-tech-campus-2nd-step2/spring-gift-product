@@ -26,10 +26,9 @@ public class ProductDAO {
         return idTraker;
     }
 
-    public ProductRecord addNewRecord(ProductRecord product, long id) {
+    public ProductRecord addNewRecord(ProductRecord product, long id) throws DuplicateKeyException {
         if (isRecordExist(id)) {
-            //이미 해당 id가 존재하면 null반환. @TODO 예외를 던지도록 리팩토링
-            return null;
+            throw new DuplicateKeyException("A record with the given ID already exists.");
         }
 
         ProductRecord record = new ProductRecord(id, product.name(), product.price(), product.imageUrl());
