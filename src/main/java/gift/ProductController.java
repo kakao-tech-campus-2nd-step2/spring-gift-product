@@ -25,6 +25,12 @@ public class ProductController {
         }
         return ResponseEntity.ok(product);
     }
-
+    @PostMapping
+    public ResponseEntity<Product> addProduct(@RequestBody Product product) {
+        // @RequestBody는 클라이언트 요청(Post)의 본문에서 product객체를 추출하여,
+        // 메서드의 매개변수로 전달하는 어노테이션이다.
+        products.put(product.id(), product);
+        return ResponseEntity.status(201).body(product);
+    }
 
 }
