@@ -47,12 +47,24 @@ public class ProductControllerTest {
         assertEquals(product.getId(), 1L);
         assertEquals(product.getName(), "카카오 카페모카");
         assertEquals(product.getPrice(), 5200);
-        assertEquals(product.getImageUrl(), "http://imageishere.com");
+        assertEquals(product.getImageUrl(), "https://example.com/image.jpg");
+    }
+
+    @Test
+    @DisplayName("상품이 정상적으로 수정되는지 확인")
+    public void testUpdateProduct() {
+        Product updatedProduct = new Product(1L, "카카오 아메리카노", 1500, "https://example.com/image.jpg");
+        controller.updateProduct(1L, updatedProduct);
+
+        assertEquals(updatedProduct.getId(), 1L);
+        assertEquals(updatedProduct.getName(), "카카오 아메리카노");
+        assertEquals(updatedProduct.getPrice(), 1500);
+        assertEquals(updatedProduct.getImageUrl(), "https://example.com/image.jpg");
     }
 
     @Test
     @DisplayName("상품이 정상적으로 삭제되는지 확인")
-    public void deleteProduct() {
+    public void testDeleteProduct() {
         boolean isDeleted = controller.deleteProduct(1L);
 
         assertTrue(isDeleted);
