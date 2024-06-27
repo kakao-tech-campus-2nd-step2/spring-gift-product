@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>상품 리스트</title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>상품 ID</th>
+        <th>상품 이름</th>
+        <th>가격</th>
+        <th>imageURL</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="product : ${products}">
+        <td class="productId" th:text="product.id">1</td>
+        <td class="productName" th:text="product.name">테스트 상품 이름</td>
+        <td class="productPrice" th:text="product.price">12345</td>
+        <td class="productImageURL" th:text="product.imageUrl">imageURL example</td>
+    </tr>
+    <tr>
+        <td class="productId">1</td>
+        <td class="productName">테스트 상품 이름</td>
+        <td class="productPrice">12345</td>
+        <td class="productImageURL">imageURL example</td>
+    </tr>
+    <tr>
+        <td class="productId">2</td>
+        <td class="productName">테스트 상품 이름</td>
+        <td class="productPrice">12345</td>
+        <td class="productImageURL">imageURL example</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
