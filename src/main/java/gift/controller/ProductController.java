@@ -1,5 +1,6 @@
-package gift.Controller;
+package gift.controller;
 
+import gift.Dao.ProductDao;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,55 +13,37 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import gift.Model.Product;
+import gift.model.Product;
 
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
-    private final Map<Long, Product> products = new HashMap<>();
+
+    ProductDao productDao = new ProductDao();
 
     @GetMapping("")
     public List<Product> getAllProducts(){
-        return new ArrayList<>(products.values());
+        return productDao.selectAllProduct();
     }
 
     @GetMapping("/{id}")
     public Product getProduct(@PathVariable("id") Long id){
-        if(!products.containsKey(id)){
-            System.out.println("Product가 존재하지 않습니다.");
-            return null;
-        }
-        return products.get(id);
+        return productDao.selectProductById(id);
     }
 
     @PostMapping()
     public void addProduct(@RequestBody Product product){
-        if(products.containsKey(product.id())){
-            System.out.println("이미 Product가 존재합니다.");
-            return;
-        }
-        products.put(product.id(), product);
-        System.out.println("추가됨");
+        productDao.InsertProduct(product);
     }
 
     @PutMapping("/{id}")
     public void updateProduct(@RequestBody Product product, @PathVariable("id") Long id){
-        if(!products.containsKey(product.id())){
-            System.out.println("{%d}에 매칭되는 Product가 이미 존재하지 않습니다.".formatted(id));
-            return;
-        }
-        products.put(product.id(), product);
-        System.out.println("수정됨");
+        productDao.updateProductbyId(id, product);
     }
 
     @DeleteMapping("/{id}")
     public void deleteProduct(@PathVariable("id") Long id){
-        if(products.containsKey(id)){
-            System.out.println("{%d}에 매칭되는 Product가 이미 존재하지 않습니다.".formatted(id));
-            return;
-        }
-        products.remove(id);
-        System.out.println("삭제됨");
+        productDao.deleteProductById(id);
     }
 
 }
