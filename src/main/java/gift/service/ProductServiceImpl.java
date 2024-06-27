@@ -45,4 +45,8 @@ public class ProductServiceImpl implements ProductService {
     public void deleteProduct(Long id) {
         productRepository.delete(id);
     }
+
+    public List<Product> getProducts(int page, int size) {
+        return productRepository.findPaginated(page, size);
+    }
 }

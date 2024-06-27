@@ -3,11 +3,9 @@ package gift.repository;
 import gift.model.Product;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
 
 @Repository
 public class ProductRepositoryImpl implements ProductRepository {
@@ -40,5 +38,15 @@ public class ProductRepositoryImpl implements ProductRepository {
     @Override
     public void delete(Long id) {
         products.remove(id);
+    }
+
+    @Override
+    public List<Product> findPaginated(int page, int size) {
+        int start = page * size;
+        int end = Math.min((page + 1) * size, products.size());
+        return products.values().stream()
+            .sorted(Comparator.comparing(Product::getId))
+            .collect(Collectors.toList())
+            .subList(start, end);
     }
 }

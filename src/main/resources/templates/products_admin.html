@@ -17,7 +17,7 @@
     <tbody>
     <th:block th:if="${#lists.isEmpty(products)}">
         <tr>
-            <td colspan="4">데이터가 존재하지 않습니다.</td>
+            <td colspan="4">데이터가 존재하지 않습니다</td>
         </tr>
     </th:block>
     <th:block th:unless="${#lists.isEmpty(products)}">
@@ -30,5 +30,14 @@
     </th:block>
     </tbody>
 </table>
+
+<div>
+    <span th:if="${currentPage > 0}">
+        <a th:href="@{/admin/products(page=${currentPage - 1}, size=${pageSize})}">Previous</a>
+    </span>
+    <span th:if="${currentPage < totalPages - 1}">
+        <a th:href="@{/admin/products(page=${currentPage + 1}, size=${pageSize})}">Next</a>
+    </span>
+</div>
 </body>
 </html>

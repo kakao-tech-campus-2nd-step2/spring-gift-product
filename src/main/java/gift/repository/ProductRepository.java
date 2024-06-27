@@ -10,4 +10,5 @@ public interface ProductRepository {
     void save(Product product);
     void update(Product product);
     void delete(Long id);
+    List<Product> findPaginated(int page, int size);
 }
