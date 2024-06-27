@@ -31,6 +31,10 @@ public class ProductController {
         productRepository.put(key.getAndIncrement(), new Product(3L, "아이스 스타벅스 돌체 라떼 T", 5900, "https://image.istarbucks.co.kr/upload/store/skuimg/2021/04/[128695]_20210426092032110.jpg"));
     }
 
+    @GetMapping("/new")
+    public String renderingNewForm() {
+        return "new-product";
+    }
 
     @PostMapping
     public ResponseEntity<Product> create(@RequestBody Product productDTO) {
