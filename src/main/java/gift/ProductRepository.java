@@ -1,7 +1,12 @@
 package gift;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -16,4 +21,41 @@ public class ProductRepository {
     private static final String UPDATE_PRODUCT_SQL = "UPDATE product SET name = ?, price = ?, image_url = ? WHERE id = ?";
     private static final String DELETE_PRODUCT_SQL = "DELETE FROM product WHERE id = ?";
 
+    public List<Product> getAllProducts() {
+        return jdbcTemplate.query(SELECT_ALL_PRODUCTS_SQL, new ProductRowMapper());
+    }
+
+    public Optional<Product> getProductById(Long id) {
+        try {
+            return Optional.ofNullable(jdbcTemplate.queryForObject(SELECT_PRODUCT_BY_ID_SQL, new ProductRowMapper(), id));
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
+
+    public void addProduct(Product product) {
+        jdbcTemplate.update(INSERT_PRODUCT_SQL, product.getId(), product.getName(),
+            product.getPrice(), product.getImageUrl());
+    }
+
+    public void updateProduct(Product product) {
+        jdbcTemplate.update(UPDATE_PRODUCT_SQL, product.getName(), product.getPrice(),
+            product.getImageUrl(), product.getId());
+    }
+
+    public void deleteProduct(Long id) {
+        jdbcTemplate.update(DELETE_PRODUCT_SQL, id);
+    }
+
+    private static class ProductRowMapper implements RowMapper<Product> {
+        @Override
+        public Product mapRow(ResultSet rs, int rowNum) throws SQLException {
+            return new Product(
+                rs.getLong("id"),
+                rs.getString("name"),
+                rs.getInt("price"),
+                rs.getString("image_url")
+            );
+        }
+    }
 }
