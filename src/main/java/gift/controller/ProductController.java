@@ -11,6 +11,8 @@ import java.util.List;
 @RequestMapping("/api/products")
 public class ProductController {
     private final ProductService productService = new ProductService();
+    //TODO 상품 삭제 기능
+    //TODO 상품 수정 기능
 
     /**
      * 상품 등록 API
@@ -24,5 +26,10 @@ public class ProductController {
     @GetMapping("")
     public List<ProductResponseDto> getAll(){
         return productService.findAll();
+    }
+
+    @GetMapping("")
+    public ProductResponseDto getProduct(@RequestParam("id") long id){
+        return productService.findProduct(id);
     }
 }

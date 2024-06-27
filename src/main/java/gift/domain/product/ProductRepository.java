@@ -25,4 +25,8 @@ public class ProductRepository {
     public ArrayList<Product> findAll(){
         return new ArrayList<>(storage.values());
     }
+
+    public Product findById(Long id){
+        return storage.get(id);
+    }
 }

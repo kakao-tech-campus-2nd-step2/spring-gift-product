@@ -18,4 +18,8 @@ public class ProductService {
     public List<ProductResponseDto> findAll(){
         return productRepository.findAll().stream().map(ProductResponseDto::new).toList();
     }
+
+    public ProductResponseDto findProduct(Long id){
+        return new ProductResponseDto(productRepository.findById(id));
+    }
 }
