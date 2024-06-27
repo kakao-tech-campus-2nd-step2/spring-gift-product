@@ -79,18 +79,18 @@ public class ProductController {
 
 
     @PutMapping("/{productId}")
-    public ResponseEntity<Product> update(@PathVariable long productId, @RequestBody Product productDTO) {
+    public String update(@PathVariable long productId, @ModelAttribute Product productDTO) {
         Product product = productRepository.get(productId);
 
         if (product == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return "error";
         }
         product.setName(productDTO.getName());
         product.setPrice(productDTO.getPrice());
         product.setImageUrl(productDTO.getImageUrl());
         productRepository.put(productId, product);
 
-        return new ResponseEntity<>(product, HttpStatus.OK);
+        return "redirect:/products/" + product.getId();
     }
 
     @DeleteMapping("/{productId}")
