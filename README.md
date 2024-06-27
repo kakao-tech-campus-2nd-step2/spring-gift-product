@@ -48,10 +48,12 @@
 - 상품 정보 PUT 요청 핸들러
 - 상품 DELETE 요청 핸들러
 - 상품 PATCH 요청 핸들러
-### Products (모델)
+### ProductDAO (레포지토리)
 - id 생성
 - id에 해당하는 상품이 존재하는지 확인
 - 상품 목록 조회
 - 상품 추가
 - 상품 정보 수정
 - 상품 삭제
+### GlobalExceptionHandler
+- 자원이 존재하지 않는 경우 404 응답을 하는 핸들러
