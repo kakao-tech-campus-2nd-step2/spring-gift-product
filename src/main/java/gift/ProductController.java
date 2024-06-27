@@ -41,14 +41,14 @@ public class ProductController {
         return "redirect:/products";
     }
 
-    @PutMapping("/{id}")
-    public Product updateProduct(@PathVariable Long id, @RequestBody Product product) {
+    @PostMapping("/{id}")
+    public String updateProduct(@PathVariable Long id, @ModelAttribute Product product) {
         if (!products.containsKey(id)) {
             throw new IllegalArgumentException("상품이 없습니다.");
         }
         product.setId(id);
         products.put(id, product);
-        return product;
+        return "redirect:/products";
     }
 
     @DeleteMapping("/{id}")
