@@ -14,7 +14,7 @@
   <div class="row">
     <div class="col">
       <button class="btn btn-primary float-end"
-              th:onclick="|location.href='@{/api/product}'|"
+              th:onclick="|location.href='@{/admin/product}'|"
               type="button">상품 등록</button>
     </div>
   </div>
@@ -51,7 +51,7 @@
 
 <script>
   function deleteProduct(productId) {
-    fetch(`/api/product/${productId}`, {
+    fetch(`/admin/product/${productId}`, {
       method: 'DELETE'
     })
     .then(response => {

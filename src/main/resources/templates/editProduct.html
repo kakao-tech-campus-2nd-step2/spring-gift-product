@@ -44,7 +44,7 @@
       imageUrl: imageUrl
     };
 
-    fetch(`/api/product/${productId}`, {
+    fetch(`/admin/product/${productId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -53,7 +53,7 @@
     })
     .then(response => {
       alert('상품이 수정되었습니다.');
-      window.location.href = `/api/products`;
+      window.location.href = `/admin/products`;
     })
     .catch(error => {
       alert('요청 중 오류가 발생했습니다.');

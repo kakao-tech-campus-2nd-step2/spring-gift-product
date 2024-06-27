@@ -28,18 +28,18 @@ public class ProductController {
         this.productDao = productDao;
     }
 
-    @GetMapping("/api/product")
+    @GetMapping("/admin/product")
     public String registerProductForm() {
         return "addProduct";
     }
 
-    @PostMapping("/api/product")
+    @PostMapping("/admin/product")
     public String registerProduct(ProductRequest productRequest) {
         Product product = productDao.save(productRequest);
-        return "redirect:/api/products";
+        return "redirect:/admin/products";
     }
 
-    @GetMapping("/api/products")
+    @GetMapping("/admin/products")
     public String getAllProducts(Model model) {
         List<ProductResponse> productList = productDao.findAll()
             .stream().map(Product::toDTO).toList();
@@ -47,7 +47,7 @@ public class ProductController {
         return "productList";
     }
 
-    @GetMapping("/api/product/{id}")
+    @GetMapping("/admin/product/{id}")
     public ProductResponse getProduct(@PathVariable("id") Long id) {
         Product product = productDao.findById(id);
         return product.toDTO();
@@ -58,15 +58,15 @@ public class ProductController {
         return "editProduct";
     }
 
-    @PutMapping("/api/product/{id}")
+    @PutMapping("/admin/product/{id}")
     public String updateProduct(@PathVariable("id") Long id, @RequestBody ProductRequest productRequest) {
         Product product = productDao.update(id, productRequest);
-        return "redirect:/api/products";
+        return "redirect:/admin/products";
     }
 
-    @DeleteMapping("/api/product/{id}")
+    @DeleteMapping("/admin/product/{id}")
     public String deleteProduct(@PathVariable("id") Long id) {
         productDao.delete(id);
-        return "redirect:/api/products";
+        return "redirect:/admin/products";
     }
 }
