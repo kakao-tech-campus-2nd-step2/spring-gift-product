@@ -6,11 +6,12 @@
     <link rel="stylesheet" type="text/css" href="./css/style.css"/>
 </head>
 <body>
-<div class="title">
-    <h1>Manage Products</h1>
-    <button>Add New Product</button>
-</div>
 <div class="container">
+    <div class="title">
+        <h1>Manage Products</h1>
+        <button><a th:href="@{/admin/product/new}">Add New Product</a></button>
+    </div>
+
     <table class="table">
         <thead>
         <tr>
