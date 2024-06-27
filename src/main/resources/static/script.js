@@ -89,6 +89,15 @@ document.addEventListener('DOMContentLoaded', function () {
         .catch(error => console.error('상품 단건 조회 에러: ', error));
     };
 
+    // 상품 삭제 함수
+    window.deleteProduct = function (id) {
+        axios.delete(`${apiEndpoint}/${id}`)
+        .then(response => {
+            fetchProducts();
+        })
+        .catch(error => console.error('상품 삭제 에러: ', error));
+    };
+
     addProductBtn.addEventListener('click', () => openFormModal());
     closeModalBtn.addEventListener('click', closeFormModal);
     window.addEventListener('click', function (event) {
