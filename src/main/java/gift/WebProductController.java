@@ -50,4 +50,10 @@ public class WebProductController {
         return "updateProduct";
     }
 
+    @GetMapping("/deleteProduct/{id}")
+    public String deleteProduct(@PathVariable long id) {
+        productController.deleteProduct(id);
+        return "redirect:/products";
+    }
+
 }
