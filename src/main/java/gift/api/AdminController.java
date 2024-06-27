@@ -23,7 +23,7 @@ public class AdminController {
     @GetMapping
     public String getAllProducts(Model model) {
         model.addAttribute("productList", productService.getAllProducts());
-        return "product-list";
+        return "admin-product-list";
     }
 
     // 상품 추가
