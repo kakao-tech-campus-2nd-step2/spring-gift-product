@@ -237,6 +237,40 @@
         const closeModal = () => {
             document.getElementById('productModal').style.display = 'none';
         };
+
+        /**
+         * 상품 추가 또는 수정을 처리합니다.
+         */
+        document.getElementById('productForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const productId = document.getElementById('productId').value;
+            const product = {
+                name: document.getElementById('productName').value,
+                price: parseFloat(document.getElementById('productPrice').value),
+                imagePath: document.getElementById('productImagePath').value
+            };
+
+            try {
+                if (products.find(p => p.id === parseInt(productId))) {
+                    await fetch(`/api/products/${productId}`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ id: parseInt(productId), ...product })
+                    });
+                } else {
+                    product.id = products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 0; // todo: DB에서 ID를 생성하도록 수정
+                    await fetch('/api/products', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(product)
+                    });
+                }
+                closeModal();
+                fetchProducts();
+            } catch (error) {
+                console.error('Failed to save product:', error);
+            }
+        });
     </script>
 </body>
 </html>
