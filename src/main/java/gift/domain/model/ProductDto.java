@@ -1,15 +1,13 @@
 package gift.domain.model;
 
-import gift.domain.model.Product;
-
-public class ProductRequestDto {
+public class ProductDto {
 
     Long id;
     String name;
     Long price;
     String imageUrl;
 
-    public ProductRequestDto(Long id, String name, Long price, String imageUrl) {
+    public ProductDto(Long id, String name, Long price, String imageUrl) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -18,6 +16,18 @@ public class ProductRequestDto {
 
     public Long getId() {
         return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Long getPrice() {
+        return price;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
     }
 
     public Product toProduct() {

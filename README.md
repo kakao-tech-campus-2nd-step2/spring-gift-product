@@ -15,4 +15,4 @@
 ### step 2
 Thymeleaf 기반 서버 사이드 렌더링 관리자 화면 구현
 - 메인페이지 -> 현재 상품리스트 나열
-  - add, delete, update 버튼ㅎ
+  - add, delete, update 버튼

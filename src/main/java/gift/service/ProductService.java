@@ -2,7 +2,7 @@ package gift.service;
 
 import gift.domain.repository.ProductRepository;
 import gift.domain.model.Product;
-import gift.domain.model.ProductRequestDto;
+import gift.domain.model.ProductDto;
 import java.util.List;
 import java.util.NoSuchElementException;
 import org.springframework.stereotype.Service;
@@ -23,25 +23,25 @@ public class ProductService {
         return productRepository.getProductById(id);
     }
 
-    public List<Product> getAllProduct() {
+    public List<ProductDto> getAllProduct() {
         if (productRepository.isEmptyProductList()) {
             throw new NoSuchElementException("No Product in DB");
         }
         return productRepository.getAllProduct();
     }
 
-    public void addProduct(ProductRequestDto productRequestDto) {
-        if (productRepository.isExistProductId(productRequestDto.getId())) {
+    public void addProduct(ProductDto productDto) {
+        if (productRepository.isExistProductId(productDto.getId())) {
             throw new IllegalArgumentException("Already Exist Product ID");
         }
-        productRepository.addProduct(productRequestDto);
+        productRepository.addProduct(productDto);
     }
 
-    public void updateProduct(ProductRequestDto productRequestDto) {
-        if (!productRepository.isExistProductId(productRequestDto.getId())) {
+    public void updateProduct(ProductDto productDto) {
+        if (!productRepository.isExistProductId(productDto.getId())) {
             throw new NoSuchElementException("Invalid Product ID");
         }
-        productRepository.updateProduct(productRequestDto);
+        productRepository.updateProduct(productDto);
     }
 
     public void deleteProduct(Long id) {
