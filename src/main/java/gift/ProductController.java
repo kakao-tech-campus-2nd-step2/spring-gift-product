@@ -20,4 +20,12 @@ public class ProductController {
         return new ArrayList<>(products.values());
     }
 
+    public Product addProduct(Product product) {
+        long id = idGenerator.getAndIncrement();
+        product.setId(id);
+        products.put(id, product);
+        return product;
+    }
+
+
 }

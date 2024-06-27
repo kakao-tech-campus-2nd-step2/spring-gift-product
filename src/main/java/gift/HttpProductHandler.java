@@ -26,6 +26,9 @@ public class HttpProductHandler implements HttpHandler {
                 case "GET":
                     handleGetRequest(exchange);
                     break;
+                case "POST":
+                    handlePostRequest(exchange);
+                    break;
                 default:
                     exchange.sendResponseHeaders(405, -1); // Method Not Allowed
                     break;
@@ -48,5 +51,18 @@ public class HttpProductHandler implements HttpHandler {
         }
     }
 
+    private void handlePostRequest(HttpExchange exchange) throws IOException {
+        Product product = objectMapper.readValue(exchange.getRequestBody(), Product.class);
+        System.out.println("Received product: " + product.getName());
+        Product addedProduct = productController.addProduct(product);
+        String responseJson = objectMapper.writeValueAsString(addedProduct);
+
+        exchange.getResponseHeaders().set("Content-Type", "application/json");
+        exchange.sendResponseHeaders(200, responseJson.getBytes().length);
+
+        try (OutputStream os = exchange.getResponseBody()) {
+            os.write(responseJson.getBytes());
+        }
+    }
 
 }
