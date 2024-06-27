@@ -1,7 +1,10 @@
 package gift;
 
+import org.springframework.dao.DuplicateKeyException;
+
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 public class ProductDAO {
     private Map<Long, ProductRecord> records = new HashMap<Long, ProductRecord>();
@@ -41,5 +44,12 @@ public class ProductDAO {
 
     public ProductRecord[] getAllRecords() {
         return records.values().toArray(new ProductRecord[records.size()]);
+    }
+
+    public void deleteRecord(long id) throws NoSuchElementException {
+        if (!isRecordExist(id)) {
+            throw new NoSuchElementException("Record not found");
+        }
+        records.remove(id);
     }
 }
