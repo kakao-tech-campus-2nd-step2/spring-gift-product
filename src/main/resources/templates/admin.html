@@ -85,6 +85,14 @@
             fetchProducts();
         });
     }
+
+    function deleteProduct(id) {
+        fetch(`/products/${id}`, {
+            method: 'DELETE'
+        }).then(response => {
+            fetchProducts()
+        });
+    }
 </script>
 </body>
 </html>
