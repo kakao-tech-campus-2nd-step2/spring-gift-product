@@ -10,4 +10,5 @@ public interface ProductRepository {
     Optional<Product> findById(Long id);
     List<Product> findAll();
     Long delete(Long id);
+    Product update(Long id, Product product);
 }

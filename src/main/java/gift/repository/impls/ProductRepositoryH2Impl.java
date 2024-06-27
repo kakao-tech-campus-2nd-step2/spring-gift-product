@@ -1,6 +1,7 @@
 package gift.repository.impls;
 
 import gift.domain.Product;
+import gift.dto.ProductResponseDto;
 import gift.repository.ProductRepository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -59,6 +60,13 @@ public class ProductRepositoryH2Impl implements ProductRepository {
         var sql = "DELETE FROM products WHERE id = ?";
         jdbcTemplate.update(sql, id);
         return id;
+    }
+
+    @Override
+    public Product update(Long id, Product product) {
+        jdbcTemplate.update("UPDATE products SET name = ?, price = ?, imageUrl = ? WHERE id = ?",
+                product.getName(), product.getPrice(), product.getImageUrl(), id);
+        return product;
     }
 
 }
