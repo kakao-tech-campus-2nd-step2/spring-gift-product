@@ -1,4 +1,4 @@
-package gift.entity;
+package gift.model;
 
 import org.springframework.stereotype.Component;
 

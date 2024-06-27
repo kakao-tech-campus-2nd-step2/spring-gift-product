@@ -1,8 +1,8 @@
 package gift.controller;
 
 
-import gift.entity.Gift;
-import gift.entity.GiftDao;
+import gift.model.Gift;
+import gift.model.GiftDao;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

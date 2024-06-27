@@ -1,4 +1,4 @@
-package gift.entity;
+package gift.model;
 
 public class Gift {
     private long id;

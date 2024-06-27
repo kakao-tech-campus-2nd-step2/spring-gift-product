@@ -1,15 +1,11 @@
 package gift.controller;
 
 
-import gift.entity.Gift;
-import gift.entity.GiftDao;
-import org.springframework.stereotype.Controller;
+import gift.model.Gift;
+import gift.model.GiftDao;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicLong;
 
 @RestController
 @RequestMapping("/api/products")
