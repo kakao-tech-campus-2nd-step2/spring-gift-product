@@ -19,6 +19,10 @@ public class ProductService {
         return productRepository.findAll();
     }
 
+    public Product getProduct(Long productId) {
+        return productRepository.findById(productId);
+    }
+
     public Product addProduct(ProductRequest request) {
         return productRepository.save(request.toEntity());
     }

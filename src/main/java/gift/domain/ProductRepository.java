@@ -20,6 +20,10 @@ public class ProductRepository {
         return products.values().stream().toList();
     }
 
+    public Product findById(Long productId) {
+        return products.get(productId);
+    }
+
     public Product save(Product product) {
         product.setId(currentId);
         products.put(currentId, product);

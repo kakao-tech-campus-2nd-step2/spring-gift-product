@@ -31,6 +31,12 @@ public class ProductController {
             .body(productService.getProducts());
     }
 
+    @GetMapping("/{productId}")
+    public ResponseEntity<Product> productOne(@PathVariable Long productId) {
+        return ResponseEntity.ok()
+            .body(productService.getProduct(productId));
+    }
+
     @PostMapping
     public ResponseEntity<Product> productAdd(@RequestBody ProductRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED)
