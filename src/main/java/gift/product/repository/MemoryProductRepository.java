@@ -8,7 +8,7 @@ import java.util.Map;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ProductMemoryRepository {
+public class MemoryProductRepository {
     private final Map<Long, Product> products = new HashMap<>();
     private Long counter = 0L;
 
