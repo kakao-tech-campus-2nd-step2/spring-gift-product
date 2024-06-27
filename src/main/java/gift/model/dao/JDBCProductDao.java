@@ -15,37 +15,6 @@ public class JDBCProductDao implements ProductRepository {
     private static final String USER = "sa";
     private static final String PASSWORD = "";
 
-    private final String CREATE_PRODUCT_TABLE_QUERY = """
-            CREATE TABLE IF NOT EXISTS products (
-                id BIGINT PRIMARY KEY AUTO_INCREMENT,
-                name VARCHAR(255) NOT NULL,
-                price int NOT NULL,
-                image_url VARCHAR(255),
-                is_deleted BOOLEAN DEFAULT FALSE
-            );
-        """;
-
-    private final String INSERT_PRODUCT_QUERY = """
-            INSERT INTO products (name, price, image_url, is_deleted) VALUES (?, ?, ?, ?);
-        """;
-
-    private final String SELECT_ALL_PRODUCTS_QUERY = """
-            SELECT * FROM products;
-        """;
-
-    private final String SELECT_PRODUCT_BY_ID_QUERY = """
-            SELECT * FROM products WHERE id = ?;
-        """;
-
-    private final String UPDATE_PRODUCT_QUERY = """
-            UPDATE products SET name = ?, price = ?, image_url = ?, is_deleted = ? WHERE id = ?;
-        """;
-
-    private final String DELETE_PRODUCT_QUERY = """
-            DELETE FROM products WHERE id = ?;
-        """;
-
-
     public JDBCProductDao(){
         createTable();
     }
@@ -55,7 +24,7 @@ public class JDBCProductDao implements ProductRepository {
         if(entity.isNew()){
             try{
                 Connection connection = getConnection();
-                PreparedStatement state = connection.prepareStatement(INSERT_PRODUCT_QUERY);
+                PreparedStatement state = connection.prepareStatement(ProductQuery.INSERT_PRODUCT.getQuery());
                 state.setString(1, entity.getName());
                 state.setInt(2, entity.getPrice());
                 state.setString(3, entity.getImgUrl());
@@ -74,7 +43,7 @@ public class JDBCProductDao implements ProductRepository {
     public void update(Product entity){
         try{
             Connection connection = getConnection();
-            PreparedStatement state = connection.prepareStatement(UPDATE_PRODUCT_QUERY);
+            PreparedStatement state = connection.prepareStatement(ProductQuery.UPDATE_PRODUCT.getQuery());
             state.setString(1, entity.getName());
             state.setInt(2, entity.getPrice());
             state.setString(3, entity.getImgUrl());
@@ -93,7 +62,7 @@ public class JDBCProductDao implements ProductRepository {
         Product product = null;
         try{
             Connection connection = getConnection();
-            PreparedStatement state = connection.prepareStatement(SELECT_PRODUCT_BY_ID_QUERY);
+            PreparedStatement state = connection.prepareStatement(ProductQuery.SELECT_PRODUCT_BY_ID.getQuery());
             state.setLong(1, id);
             state.execute();
             if (state.getResultSet().next()){
@@ -117,9 +86,9 @@ public class JDBCProductDao implements ProductRepository {
     public void delete(Product entity) {
         try{
             Connection connection = getConnection();
-            PreparedStatement state = connection.prepareStatement(DELETE_PRODUCT_QUERY);
+            PreparedStatement state = connection.prepareStatement(ProductQuery.DELETE_PRODUCT.getQuery());
             state.setLong(1, entity.getId());
-            state.execute(DELETE_PRODUCT_QUERY);
+            state.execute();
             state.close();
             connection.close();
         } catch (SQLException e) {
@@ -133,7 +102,7 @@ public class JDBCProductDao implements ProductRepository {
         try{
             Connection connection = getConnection();
             Statement state = connection.createStatement();
-            state.execute(SELECT_ALL_PRODUCTS_QUERY);
+            state.execute(ProductQuery.SELECT_ALL_PRODUCTS.getQuery());
             while (state.getResultSet().next()){
                 products.add(new Product(
                     state.getResultSet().getLong("id"),
@@ -163,7 +132,7 @@ public class JDBCProductDao implements ProductRepository {
         try{
             Connection connection = getConnection();
             Statement state = connection.createStatement();
-            state.execute(CREATE_PRODUCT_TABLE_QUERY);
+            state.execute(ProductQuery.CREATE_PRODUCT_TABLE.getQuery());
             connection.commit();
             state.close();
             connection.close();
