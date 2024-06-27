@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -44,5 +45,19 @@ public class AdminController {
         Product product = products.get(id);
         model.addAttribute("product", product);
         return "edit_product_form";
+    }
+
+    @PutMapping("/edit/{id}")
+    public String editProduct(@PathVariable("id") long id, @ModelAttribute Product updatedProduct, Model model) {
+        if (id != updatedProduct.id() && products.containsKey(updatedProduct.id())) {
+            model.addAttribute("error", "존재하는 ID 입니다.");
+            model.addAttribute("product", products.get(id));
+            return "edit_product_form";
+        }
+        if (id != updatedProduct.id()) {
+            products.remove(id);
+        }
+        products.put(updatedProduct.id(), updatedProduct);
+        return "redirect:/admin/products";
     }
 }
