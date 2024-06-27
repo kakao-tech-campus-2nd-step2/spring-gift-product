@@ -17,6 +17,11 @@ public class AdminController {
         this.giftDao = giftDao;
     }
 
+    @GetMapping
+    public String index(){
+        return "redirect:/admin";
+    }
+
     @GetMapping("/admin")
     public String adminHome(Model model){
         Collection<Gift> giftlist = giftDao.findAll();
