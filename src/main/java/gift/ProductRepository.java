@@ -26,4 +26,8 @@ public class ProductRepository {
     public List<Product> getAllProduct() {
         return new ArrayList<>(products.values());
     }
+
+    public void addProduct(ProductRequestDto productRequestDto) {
+        products.put(productRequestDto.id, productRequestDto.toProduct());
+    }
 }

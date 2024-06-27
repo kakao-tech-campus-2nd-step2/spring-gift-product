@@ -11,4 +11,16 @@ public class Product {
         this.price = price;
         this.imageUrl = imageUrl;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public Long getPrice() {
+        return price;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
 }

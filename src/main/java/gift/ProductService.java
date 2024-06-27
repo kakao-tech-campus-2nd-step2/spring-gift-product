@@ -26,4 +26,11 @@ public class ProductService {
         }
         return productRepository.getAllProduct();
     }
+
+    public void addProduct(ProductRequestDto productRequestDto) {
+        if (productRepository.isExistProductId(productRequestDto.getId())) {
+            throw new IllegalArgumentException("Already Exist Product ID");
+        }
+        productRepository.addProduct(productRequestDto);
+    }
 }
