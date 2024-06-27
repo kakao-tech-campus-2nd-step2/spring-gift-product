@@ -1,11 +1,15 @@
 package gift.domain;
 
+
 public class Product {
     Long id;
     String name;
     int price;
     String imageUrl;
 
+    public Product() {
+
+    }
     public Product(Long id, String name, int price, String imageUrl) {
         this.id = id;
         this.name = name;
