@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class WebProductController {
@@ -28,7 +30,7 @@ public class WebProductController {
         return "newProduct";
     }
 
-    @GetMapping("/saveProducts")
+    @PostMapping("/saveProducts")
     public String saveProducts(@ModelAttribute("product") Product product) {
         if (product.getId() != 0) {
             productController.updateProduct(product.getId(), product);
@@ -36,6 +38,16 @@ public class WebProductController {
         }
         productController.addProduct(product);
         return "redirect:/products";
+    }
+
+    @GetMapping("/showUpdateProducts/{id}")
+    public String showUpdateProducts(@PathVariable(value = "id") long id, Model model) {
+        Product product = productController.getProduct(id).getBody();
+        if (product == null) {
+            return "redirect:/products";
+        }
+        model.addAttribute("product", product);
+        return "updateProduct";
     }
 
 }
