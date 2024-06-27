@@ -107,7 +107,6 @@ public class ProductController {
     private boolean handleNonExistProduct(Product product, HttpServletResponse httpServletResponse) {
         if (!products.containsKey(product.getId())) {
             httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
-            System.out.println("HIHI");
             try {
                 httpServletResponse.sendRedirect("/api/products");
             } catch (IOException e) {
