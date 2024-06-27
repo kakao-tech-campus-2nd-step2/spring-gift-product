@@ -183,7 +183,7 @@
                 <td>${product.id}</td>
                 <td>${product.name}</td>
                 <td>${product.price}</td>
-                <td><img src="${product.imagePath}" alt="${product.name}"></td>
+                <td><img src="${product.imageUrl}" alt="${product.name}"></td>
                 <td><button onclick="showEditProductModal(${product.id})">수정</button></td>
                 <td><button onclick="deleteProduct(${product.id})">삭제</button></td>
             </tr>
@@ -226,7 +226,7 @@
                 document.getElementById('productId').value = product.id;
                 document.getElementById('productName').value = product.name;
                 document.getElementById('productPrice').value = product.price;
-                document.getElementById('productImagePath').value = product.imagePath;
+                document.getElementById('productImagePath').value = product.imageUrl;
                 document.getElementById('productModal').style.display = 'block';
             }
         };
@@ -247,7 +247,7 @@
             const product = {
                 name: document.getElementById('productName').value,
                 price: parseFloat(document.getElementById('productPrice').value),
-                imagePath: document.getElementById('productImagePath').value
+                imageUrl: document.getElementById('productImagePath').value
             };
 
             try {
@@ -258,7 +258,6 @@
                         body: JSON.stringify({ id: parseInt(productId), ...product })
                     });
                 } else {
-                    product.id = products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 0; // todo: DB에서 ID를 생성하도록 수정
                     await fetch('/api/products', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
