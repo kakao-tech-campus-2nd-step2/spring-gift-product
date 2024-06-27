@@ -11,3 +11,29 @@
   <div class="mb-4">
     <button class="btn btn-success" data-toggle="modal" data-target="#productModal">Add New Product</button>
   </div>
+
+  <table class="table table-striped">
+    <thead class="thead-dark">
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Image</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="product : ${products}">
+      <td th:text="${product.id}"></td>
+      <td th:text="${product.name}"></td>
+      <td th:text="${product.price}"></td>
+      <td><img th:src="${product.imageUrl}" alt="Product Image" style="width:100px;height:auto;"/></td>
+      <td>
+        <button class="btn btn-warning" th:onclick="'editProduct(' + ${product.id} + ')'">Edit</button>
+        <form th:action="@{/products/delete/{id}(id=${product.id})}" method="post" style="display:inline;">
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
