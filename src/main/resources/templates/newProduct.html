@@ -7,7 +7,7 @@
 <body>
     <div>
         <h1>Add New Product</h1>
-        <form th:object="${product}" method="post">
+        <form th:action="@{/saveProducts}" th:object="${product}" method="post">
             <div>
                 <label th:for="name">Name</label>
                 <input type="text" id="name" th:field="*{name}" placeholder="상품명을 입력하세요">
