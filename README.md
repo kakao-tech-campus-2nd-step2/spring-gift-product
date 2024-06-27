@@ -15,7 +15,6 @@
   * 상품 추가: **/products/create**
 * READ - GET
   * 상품 전체 조회: **/products/read**
-  * id가 i인 상품 조회: **/products/i/read**
 * UPDATE - PATCH
   * id가 i인 상품 수정: **/products/i/update**
 * DELETE - DELETE
@@ -33,14 +32,14 @@
 ### View
 * manager.html
   * 매니저 화면
-* add-product.html
-  * 매니저가 product를 추가할 수 있는 화면
-
-### ManagerController 사용 방법
-* getManagerPage - POST
-  * manager.html SSR로 가져오기: **/manager/page**
-* getAddProductPage - Get
-  * add-product.html SSR로 가져오기: **/manager/addproduct**
+* edit-product.html
+  * 매니저가 product를 수정할 수 있는 화면
+* error.html
+  * 예외가 발생한 경우 보여줄 화면
+ 
+### PageController 사용 방법
+* showEditPage - POST
+  * edit-product.html SSR로 가져오기: **/page/edit**
 
 ### Json Request 구조 (getManagerPage)
-* pw: String
+* pw: String 필수
