@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
     <meta charset="UTF-8">
     <title>새 상품 등록</title>
@@ -14,7 +14,7 @@
     </div>
     <div>
         <label for="price_edit">가격:</label>
-        <input type="text" id="price_edit" name="price" th:field="*{price}" required/>
+        <input type="number" id="price_edit" name="price" th:field="*{price}" required/>
     </div>
     <div>
         <label for="imageUrl_edit">이미지주소:</label>
