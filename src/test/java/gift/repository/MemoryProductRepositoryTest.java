@@ -54,13 +54,12 @@ public class MemoryProductRepositoryTest {
     @Test
     public void edit() {
         ProductForm product1 = new ProductForm("abc", 123, "www.test.com");
-        Product savedProduct1 = repository.save(product1);
+        Product savedProduct = repository.save(product1);
 
-        boolean result = repository.edit(savedProduct1.getId(),
+        Product editedProduct = repository.edit(savedProduct.getId(),
             new ProductForm("def", 123, "www.test.com"));
-        Product product2 = repository.findById(savedProduct1.getId());
+        Product product2 = repository.findById(editedProduct.getId());
 
-        assertThat(result).isEqualTo(true);
         assertThat(product2.getName()).isEqualTo("def");
     }
 
