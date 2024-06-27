@@ -26,7 +26,7 @@ public class ProductController {
     }
 
     @GetMapping("/api/products")
-    public List<ProductResponse> getAllProducts(){
+    public List<ProductResponse> productList(){
 
         return productRepository.findAll().stream()
                 .map(ProductResponse::fromModel)
@@ -34,7 +34,7 @@ public class ProductController {
     }
 
     @GetMapping("/api/products/{id}")
-    public ProductResponse getProduct(@PathVariable("id") Long id){
+    public ProductResponse productDetails(@PathVariable("id") Long id){
         Product findedProduct = productRepository.find(id).orElseThrow(IllegalArgumentException::new);
 
         return ProductResponse.fromModel(findedProduct);
