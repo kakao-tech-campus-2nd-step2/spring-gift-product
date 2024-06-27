@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/products")
 public class ProductController {
 
-    Products products = new Products();
+    private final Products products = new Products();
 
     // 상품을 추가하는 메서드.
     @PostMapping("/create")
