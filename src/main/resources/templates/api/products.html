@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Product List</title>
+  </head>
+  <body>
+    <h1>Product List</h1>
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>ImageURL</th>
+      </tr>
+      <tr th:each="product : ${products}">
+        <td th:text="${product.id}">ID</td>
+        <td th:text="${product.name}">Name</td>
+        <td th:text="${product.price}">Price</td>
+        <td th:text="${product.imageUrl}">ImageUrl</td>
+      </tr>
+    </table>
+    <button class="add-product-btn" onclick="window.location.href='/api/add_product'">Add Product</button>
+  </body>
+</html>
