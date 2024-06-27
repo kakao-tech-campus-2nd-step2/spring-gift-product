@@ -1,7 +1,7 @@
 package gift.controller;
 
-import gift.Product;
-import gift.ProductDTO;
+import gift.model.Product;
+import gift.model.ProductDTO;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

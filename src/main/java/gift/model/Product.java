@@ -1,4 +1,4 @@
-package gift;
+package gift.model;
 
 public class Product {
 
@@ -30,19 +30,9 @@ public class Product {
         return imageUrl;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void updateProduct(ProductDTO productDTO) {
+        this.name = productDTO.name();
+        this.price = productDTO.price();
+        this.imageUrl = productDTO.imageUrl();
     }
 }
