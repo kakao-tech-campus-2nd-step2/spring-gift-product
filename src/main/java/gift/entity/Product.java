@@ -4,14 +4,24 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Product {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
+
+  @NotBlank(message = "이름을 입력해야 합니다.")
   private String name;
+
+  @NotNull(message = "가격을 입력해야 합니다.")
+  @Min(value = 1, message = "가격은 양수여야 합니다.")
   private int price;
+
+  @NotBlank(message = "이미지 URL을 입력해야 합니다.")
   private String imageUrl;
 
 
