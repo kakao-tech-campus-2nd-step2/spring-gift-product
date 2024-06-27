@@ -3,7 +3,7 @@ package gift.Menu;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import java.util.LinkedList;
+
 import java.util.List;
 import org.springframework.ui.Model;
 
@@ -37,10 +37,18 @@ public class MenuController {
         return deletedId;
     }
 
-    @PutMapping("/{id}")
-    public Menu update(
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable("id") Long id, Model model) {
+        Menu menu = menuService.findById(id);
+        model.addAttribute("menu", menu);
+        return "update_menu";
+    }
+
+    @PostMapping("/update/{id}")
+    public String update(
             @PathVariable("id") Long id,
-            @RequestBody MenuRequest request
+            @ModelAttribute MenuRequest request,
+            Model model
     ){
         Menu updatedMenu = menuService.update(
                 id,
@@ -48,7 +56,10 @@ public class MenuController {
                 request.price(),
                 request.imageUrl()
         );
-        return updatedMenu;
+
+        List<Menu> menus = menuService.findall();
+        model.addAttribute("menus", menus);
+        return "Menu";
     }
 
 
