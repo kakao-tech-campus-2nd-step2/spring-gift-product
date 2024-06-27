@@ -21,7 +21,7 @@
     <td th:text="${product.value.id()}"></td>
     <td th:text="${product.value.name()}"></td>
     <td th:text="${product.value.price()}"></td>
-    <td><img th:src="${product.value.imageUrl()}" alt="Image" width="50"/></td>
+    <td th:text="${product.value.imageUrl()}"></td>
     <td>
       <a th:href="@{/admin/products/edit/{id}(id=${product.value.id()})}">Edit</a>
       <form th:action="@{/admin/products/delete/{id}(id=${product.value.id()})}" method="post" style="display:inline;">
