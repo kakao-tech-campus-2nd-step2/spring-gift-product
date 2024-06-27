@@ -32,15 +32,15 @@
 # spring-gift-product (step2)
 ### View
 * manager.html
- * 매니저 화면
+  * 매니저 화면
 * add-product.html
- * 매니저가 product를 추가할 수 있는 화면
+  * 매니저가 product를 추가할 수 있는 화면
 
 ### ManagerController 사용 방법
 * getManagerPage - POST
- * manager.html SSR로 가져오기: **/manager/page**
+  * manager.html SSR로 가져오기: **/manager/page**
 * getAddProductPage - Get
- * add-product.html SSR로 가져오기: **/manager/addproduct**
+  * add-product.html SSR로 가져오기: **/manager/addproduct**
 
 ### Json Request 구조 (getManagerPage)
 * pw: String
