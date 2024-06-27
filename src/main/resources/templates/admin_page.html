@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Admin Page</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    <body>
+      <p>Product Manage</p>
+      <div>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th> 
+              <th>Name</th>
+              <th>Price</th>
+              <th>ImageUrl</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="product: ${products}">
+              <td th:text="${product.id()}"></td>
+              <td th:text="${product.name()}"></td>
+              <td th:text="${product.price()}"></td>
+              <td th:text="${product.imageUrl()}"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </body>
+</html>
