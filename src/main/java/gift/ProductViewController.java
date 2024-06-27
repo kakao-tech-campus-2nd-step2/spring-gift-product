@@ -85,11 +85,9 @@ public class ProductViewController {
             restTemplate.postForObject("http://localhost:8080/api/products", product, Product.class);
         } catch (HttpClientErrorException.BadRequest e) {
             model.addAttribute("error", "Product ID already exists: " + e.getMessage());
-            return "productForm";
         } catch (Exception e) {
             e.printStackTrace();
             model.addAttribute("error", "Failed to save product: " + e.getMessage());
-            return "productForm";
         }
         return "redirect:/admin";
     }
