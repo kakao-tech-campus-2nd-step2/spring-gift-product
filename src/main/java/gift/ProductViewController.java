@@ -7,49 +7,53 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/products")
 public class ProductViewController {
-    private final ProductController productController;
+    private final ProductRepository productRepository;
 
-    public ProductViewController(ProductController productController) {
-        this.productController = productController;
+    public ProductViewController(ProductRepository productRepository) {
+        this.productRepository = productRepository;
     }
 
     @GetMapping
     public String listProducts(Model model) {
-        model.addAttribute("products", productController.getAllProducts().getBody());
+        model.addAttribute("products", productRepository.findAll());
         return "product-list";
     }
 
     @GetMapping("/add")
-    public String showAddProductForm(Model model) {
-        model.addAttribute("product", new Product(null, "", 0, ""));
+    public String showAddForm(Model model) {
+        model.addAttribute("product", new Product());
         return "product-form";
     }
 
     @PostMapping("/add")
-    public String addProduct(Product product) {
-        productController.addProduct(product);
+    public String addProduct(@ModelAttribute Product product) {
+        productRepository.save(product);
         return "redirect:/products";
     }
 
     @GetMapping("/edit/{id}")
-    public String showEditProductForm(@PathVariable Long id, Model model) {
-        Product product = productController.getProductById(id).getBody();
-        if (product == null) {
-            return "redirect:/products";
-        }
+    public String showEditForm(@PathVariable("id") Long id, Model model) {
+        Product product = productRepository.findById(id);
         model.addAttribute("product", product);
         return "product-form";
     }
 
     @PostMapping("/edit/{id}")
-    public String editProduct(@PathVariable Long id, Product product) {
-        productController.updateProduct(id, product);
+    public String editProduct(@PathVariable("id") Long id, @ModelAttribute Product updatedProduct) {
+        // 기존 제품을 조회
+        Product product = productRepository.findById(id);
+        if (!product.getId().equals(updatedProduct.getId())) {
+            // ID가 변경된 경우 기존 제품을 삭제하고 새 제품을 추가
+            productRepository.deleteById(id);
+        }
+
+        productRepository.save(updatedProduct);
         return "redirect:/products";
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteProduct(@PathVariable Long id) {
-        productController.deleteProduct(id);
+    public String deleteProduct(@PathVariable("id") Long id) {
+        productRepository.deleteById(id);
         return "redirect:/products";
     }
 }

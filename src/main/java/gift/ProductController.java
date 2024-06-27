@@ -3,21 +3,25 @@ package gift;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
-    private final Map<Long, Product> products = new HashMap<>();
+    private final ProductRepository productRepository;
+
+    public ProductController(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
 
     @GetMapping
     public ResponseEntity<List<Product>> getAllProducts() {
-        return ResponseEntity.ok(new ArrayList<>(products.values()));
+        return ResponseEntity.ok(productRepository.findAll());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable Long id) {
-        Product product = products.get(id);
+        Product product = productRepository.findById(id);
         if (product == null) {
             return ResponseEntity.notFound().build();
         }
@@ -26,25 +30,32 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<Product> addProduct(@RequestBody Product product) {
-        products.put(product.id(), product);
+        productRepository.save(product);
         return ResponseEntity.status(201).body(product);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product product) {
-        if (!products.containsKey(id)) {
+        Product existingProduct = productRepository.findById(id);
+        if (existingProduct == null) {
             return ResponseEntity.notFound().build();
         }
-        products.put(id, product);
+
+        // 기존 제품 ID와 다를 때 기존 제품 삭제 후 새 제품 추가
+        if (!existingProduct.getId().equals(product.getId())) {
+            productRepository.deleteById(id);
+        }
+
+        productRepository.save(product);
         return ResponseEntity.ok(product);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
-        if (!products.containsKey(id)) {
+        if (productRepository.findById(id) == null) {
             return ResponseEntity.notFound().build();
         }
-        products.remove(id);
+        productRepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 }
