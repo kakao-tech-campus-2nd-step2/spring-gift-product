@@ -1,5 +1,7 @@
 package gift.Model;
 
+import java.util.Objects;
+
 public class ItemDTO {
 
     private String name;
@@ -45,5 +47,23 @@ public class ItemDTO {
 
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        ItemDTO itemDTO = (ItemDTO) o;
+        return Objects.equals(name, itemDTO.name) && Objects.equals(price,
+            itemDTO.price) && Objects.equals(imgUrl, itemDTO.imgUrl);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, price, imgUrl);
     }
 }
