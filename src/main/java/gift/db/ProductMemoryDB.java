@@ -27,7 +27,6 @@ public class ProductMemoryDB implements ProductDB {
         products.put(4L, defaultProduct4);
     }
 
-    // Example method to interact with the products map
     @Override
     public void addProduct(Product product) {
         products.put(product.getId(), product);

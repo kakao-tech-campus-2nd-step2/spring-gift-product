@@ -1,7 +1,5 @@
 package gift.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class Product {
     private Long id;
     private String name;

@@ -32,7 +32,6 @@ public class ProductH2DB implements ProductDB {
         addProduct(defaultProduct3);
         Product defaultProduct4 = new Product(4L, "Cup Cake", 10000, "https://cdn.pixabay.com/photo/2023/05/31/14/41/ai-generated-8031574_1280.png");
         addProduct(defaultProduct4);
-
     }
 
     private void createProductTable() {
@@ -63,13 +62,8 @@ public class ProductH2DB implements ProductDB {
 
     @Override
     public void addProduct(Product product) {
-        //insert
         String sql = "INSERT INTO product (id, name, price, imageUrl) VALUES (?, ?, ?, ?)";
-        try {
-            jdbcTemplate.update(sql, product.getId(), product.getName(), product.getPrice(), product.getImageUrl());
-        } catch (Exception e) {
-            System.out.println("중복");
-        }
+        jdbcTemplate.update(sql, product.getId(), product.getName(), product.getPrice(), product.getImageUrl());
     }
 
     @Override
