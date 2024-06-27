@@ -23,16 +23,16 @@ public class ProductService {
         return productRepository.findById(productId);
     }
 
-    public Product addProduct(ProductRequest request) {
-        return productRepository.save(request.toEntity());
+    public void addProduct(ProductRequest request) {
+        productRepository.save(request.toEntity());
     }
 
-    public Product editProduct(Long productId, ProductRequest request) {
-        return productRepository.edit(productId, request.toEntity());
+    public void editProduct(Long productId, ProductRequest request) {
+        productRepository.edit(productId, request.toEntity());
     }
 
-    public Long removeProduct(Long productId) {
-        return productRepository.deleteById(productId);
+    public void removeProduct(Long productId) {
+        productRepository.deleteById(productId);
     }
 
 }

@@ -39,21 +39,24 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<Product> productAdd(@RequestBody ProductRequest request) {
-        return ResponseEntity.status(HttpStatus.CREATED)
-            .body(productService.addProduct(request));
+        productService.addProduct(request);
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("/{productId}")
     public ResponseEntity<Product> productEdit(@PathVariable Long productId,
         @RequestBody ProductRequest request) {
-        return ResponseEntity.ok()
-            .body(productService.editProduct(productId, request));
+        productService.editProduct(productId, request);
+
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{productId}")
     public ResponseEntity<Long> productRemove(@PathVariable Long productId) {
-        return ResponseEntity.ok()
-            .body(productService.removeProduct(productId));
+        productService.removeProduct(productId);
+
+        return ResponseEntity.ok().build();
     }
 
 }

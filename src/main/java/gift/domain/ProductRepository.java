@@ -1,51 +1,58 @@
 package gift.domain;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class ProductRepository {
 
-    private final Map<Long, Product> products = new HashMap<>();
-    private Long currentId = 1L;
+    private final JdbcTemplate jdbcTemplate;
 
-    public void clear() {
-        products.clear();
-        currentId = 0L;
+    public ProductRepository(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     public List<Product> findAll() {
-        return products.values().stream().toList();
+        String sql = "SELECT * FROM product";
+
+        return jdbcTemplate.query(sql, (rs, rowNum) -> new Product(
+            rs.getLong("id"),
+            rs.getString("name"),
+            rs.getInt("price"),
+            rs.getString("image_url")
+        ));
     }
 
     public Product findById(Long productId) {
-        return products.get(productId);
+        String sql = "SELECT * FROM product WHERE id = ?";
+
+        return jdbcTemplate.queryForObject(
+            sql,
+            (rs, rowNum) -> new Product(
+                rs.getLong("id"),
+                rs.getString("name"),
+                rs.getInt("price"),
+                rs.getString("image_url")
+            ),
+            productId
+        );
     }
 
-    public Product save(Product product) {
-        product.setId(currentId);
-        products.put(currentId, product);
-        currentId++;
-
-        return product;
+    public void save(Product product) {
+        String sql = "INSERT INTO product (name, price, image_url) VALUES (?, ?, ?)";
+        jdbcTemplate.update(sql, product.getName(), product.getPrice(), product.getImageUrl());
     }
 
-    public Product edit(Long productId, Product request) {
-        Product product = products.get(productId);
-
-        product.changeName(request.getName());
-        product.changePrice(request.getPrice());
-        product.changeImageUrl(request.getImageUrl());
-
-        products.put(productId, product);
-
-        return product;
+    public void edit(Long productId, Product request) {
+        String sql = "UPDATE product SET name = ?, price = ?, image_url = ? WHERE id = ?";
+        jdbcTemplate.update(sql, request.getName(), request.getPrice(), request.getImageUrl(),
+            productId);
     }
 
-    public Long deleteById(Long productId) {
-        return products.remove(productId).getId();
+    public void deleteById(Long productId) {
+        String sql = "DELETE FROM product WHERE id = ?";
+        jdbcTemplate.update(sql, productId);
     }
 
 }
