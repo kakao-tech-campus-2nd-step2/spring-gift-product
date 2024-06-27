@@ -64,7 +64,7 @@ public class ProductController {
      */
     @GetMapping("/{id}")
     public String editProductForm(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("product", productMap.get(id));
+        model.addAttribute("product", productDao.selectOneProduct(id));
         return "editForm";
     }
 

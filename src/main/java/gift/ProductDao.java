@@ -37,4 +37,17 @@ public class ProductDao {
                         ))
                 .list();
     }
+
+    public Product selectOneProduct(Long id) {
+        String sql = "SELECT * FROM product WHERE id = :id;";
+        return jdbcClient.sql(sql)
+                .param("id", id)
+                .query((rs, rowNum) -> new Product(
+                        rs.getLong("id"),
+                        rs.getString("name"),
+                        rs.getLong("price"),
+                        rs.getString("imageUrl")
+                ))
+                .single();
+    }
 }
