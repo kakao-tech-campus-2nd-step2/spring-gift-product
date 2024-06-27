@@ -9,7 +9,6 @@ import gift.repository.CollectionDB;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Service
@@ -36,7 +35,7 @@ public class ProductService {
         collectionDB.saveProduct(request.getId(), product);
     }
 
-    public ProductDetailDTO getDeveloperDetail(Long id) {
+    public ProductDetailDTO getProductDetail(Long id) {
         return ProductDetailDTO.fromEntity(collectionDB.getProducts().get(id));
     }
 

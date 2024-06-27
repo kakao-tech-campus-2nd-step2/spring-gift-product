@@ -7,7 +7,6 @@ import gift.dto.ProductDetailDTO;
 import gift.service.ProductService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -35,7 +34,7 @@ public class ProductController {
     public ProductDetailDTO getProductDetail(
             @PathVariable Long id
     ) {
-        return productService.getDeveloperDetail(id);
+        return productService.getProductDetail(id);
     }
 
     @PutMapping("/api/products/{id}")
