@@ -1,6 +1,6 @@
-package repository;
+package gift.repository;
 
-import model.Product;
+import gift.model.Product;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;

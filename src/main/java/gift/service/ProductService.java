@@ -1,6 +1,6 @@
-package service;
+package gift.service;
 
-import model.Product;
+import gift.model.Product;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
