@@ -26,6 +26,15 @@ public class ProductController {
         products.put(id, product);
         return product;
     }
-
+    public Product updateProduct(long id, Product newProductData) {
+        Product existingProduct = products.get(id);
+        if (existingProduct == null) {
+            return null;
+        }
+        existingProduct.setName(newProductData.getName());
+        existingProduct.setPrice(newProductData.getPrice());
+        existingProduct.setImageUrl(newProductData.getImageUrl());
+        return existingProduct;
+    }
 
 }
