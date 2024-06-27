@@ -12,10 +12,9 @@ public class ProductService {
         return new ArrayList<>(products.values());
     }
 
-// 필요 없을듯?
-//    public Product getProductById(Long id) {
-//        return products.get(id);
-//    }
+    public Product getProductById(Long id) {
+        return products.get(id);
+    }
 
     public void addProduct(Product product) {
 //        if (products.containsKey(product.getId())) {//원래도 존재하는 id면 메세지 반환
