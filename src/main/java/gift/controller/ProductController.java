@@ -1,6 +1,7 @@
 package gift.controller;
 
 import gift.domain.Product;
+import gift.repository.ProductRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,11 @@ import java.util.Map;
 @Controller
 @RequestMapping("/api/products")
 public class ProductController {
+    private final ProductRepository productRepository;
+
+    public ProductController(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
 
     @GetMapping
     public String getProducts(Model model) {
