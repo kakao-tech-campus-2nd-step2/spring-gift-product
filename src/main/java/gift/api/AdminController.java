@@ -1,8 +1,8 @@
 package gift.api;
 
 import gift.application.ProductService;
+import gift.domain.Product;
 import gift.dto.ProductRequest;
-import gift.dto.ProductResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,9 +34,10 @@ public class AdminController {
     }
 
     // 상품 추가
-    @PostMapping
-    public ProductResponse addProduct(@RequestBody ProductRequest request) {
-        return productService.createProduct(request);
+    @PostMapping("/add")
+    public String addProduct(@ModelAttribute ProductRequest request) {
+        productService.createProduct(request);
+        return "admin-product-list";
     }
 
     // 상품 삭제
