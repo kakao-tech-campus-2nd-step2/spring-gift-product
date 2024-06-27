@@ -1,10 +1,8 @@
 package gift.service;
 
 import gift.domain.Product;
-
 import gift.dto.request.ProductRequestDto;
 import gift.dto.response.ProductResponseDto;
-
 import gift.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +18,6 @@ public class ProductService {
     public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
-
 
     public Long addProduct(ProductRequestDto productDto){
         Product product = Product.toEntity(productDto);

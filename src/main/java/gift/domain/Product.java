@@ -1,6 +1,5 @@
 package gift.domain;
 
-import gift.dto.ProductDto;
 import gift.dto.request.ProductRequestDto;
 
 
