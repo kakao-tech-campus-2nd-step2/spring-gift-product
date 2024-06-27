@@ -4,9 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
 
-import javax.sql.DataSource;
-import java.sql.SQLException;
 import java.sql.Types;
+import java.util.List;
 
 @Repository
 public class ProductDao {
@@ -25,5 +24,17 @@ public class ProductDao {
                 .param("price", newProduct.price(), Types.BIGINT)
                 .param("imageUrl", newProduct.imageUrl(), Types.VARCHAR)
                 .update();
+    }
+
+    public List<Product> selectProducts() {
+        String sql = "SELECT * FROM product;";
+        return jdbcClient.sql(sql)
+                .query((rs, rowNum) -> new Product(
+                        rs.getLong("id"),
+                        rs.getString("name"),
+                        rs.getLong("price"),
+                        rs.getString("imageUrl")
+                        ))
+                .list();
     }
 }
