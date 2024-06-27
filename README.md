@@ -1,5 +1,15 @@
 # spring-gift-product
-
+# To-Do
+## 관리자 페이지 구현
+- **url:** `/admin`
+- **기능:**
+    - [ ] 상품 생성
+    - [ ] 상품 조회
+    - [ ] 상품 삭제
+    - [ ] 상품 갱신
+    - [ ] 모든 상품 조회
+## ~~DB 연동~~
+## API 명세
 ### 기본 URL
 ```
 http://localhost:8080/api/products
