@@ -27,9 +27,11 @@ public class ProductDao {
     }
 
     public void save(ProductRequest request) {
-        long id = idGenerator.incrementAndGet();
-        Product product = new Product(id, request.name(), request.price(), request.imageUrl());
-        products.put(id, product);
+        var sql = "insert into product(name, price, imageUrl) values(?, ?, ?)";
+        jdbcClient.sql(sql)
+                .params(request.name(), request.price(), request.imageUrl())
+                .update();
+
     }
 
     public Product findById(long id) {
