@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
+@RequestMapping("/api/products")
 public class ProductController {
     private final Map<Long, Product> productMap = new HashMap<>();
 
@@ -16,7 +17,7 @@ public class ProductController {
      * 상품 목록을 보여주는 products.html 을 렌더링하여 반환
      * @return products.html
      */
-    @GetMapping("/api/products")
+    @GetMapping("")
     public String getProducts(Model model) {
         List<Product> products = productMap.values()
                 .stream()
@@ -29,7 +30,7 @@ public class ProductController {
      * 상품을 추가하는 페이지인 addForm.html 반환
      * @return addForm.html
      */
-    @GetMapping("/api/products/add")
+    @GetMapping("/add")
     public String addProductForm(Model model) {
         return "addForm";
     }
@@ -40,7 +41,7 @@ public class ProductController {
      * @param id 수정할 상품의 id
      * @return editForm.html
      */
-    @GetMapping("/api/products/{id}")
+    @GetMapping("/{id}")
     public String editProductForm(@PathVariable("id") Long id, Model model) {
         model.addAttribute("product", productMap.get(id));
         return "editForm";
@@ -50,7 +51,7 @@ public class ProductController {
      * 수정된 상품 정보를 받아서 데이터를 갱신
      * @return 상품 목록 페이지로 리다이렉션
      */
-    @PostMapping("/api/products/edit")
+    @PostMapping("/edit")
     public String editProduct(@RequestParam("id") Long id,
                               @RequestParam("name") String name,
                               @RequestParam("price") Long price,
@@ -66,7 +67,7 @@ public class ProductController {
      * 이미 존재하는 상품 id이면 저장하지 않음
      * @return 상품 목록 페이지로 리다이렉션
      */
-    @PostMapping("/api/products/add")
+    @PostMapping("/add")
     public String addProduct(@RequestParam("id") Long id,
                              @RequestParam("name") String name,
                              @RequestParam("price") Long price,
@@ -82,7 +83,7 @@ public class ProductController {
      * @param id 삭제할 상품의 id
      * @return 상품 목록 페이지로 리다이렉션
      */
-    @PostMapping("/api/products/{id}")
+    @PostMapping("/{id}")
     public String deleteProduct(@PathVariable(name = "id") Long id) {
         if(productMap.containsKey(id)) {
             productMap.remove(id);
