@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class JdbcAdminController {
 
     private final JdbcProducts jdbcProducts;
-
+    //생성자 주입 권장
     public JdbcAdminController(JdbcProducts jdbcProducts) {
         this.jdbcProducts=jdbcProducts;
     }
