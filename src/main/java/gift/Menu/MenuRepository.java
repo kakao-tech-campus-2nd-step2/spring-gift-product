@@ -31,4 +31,8 @@ public class MenuRepository {
         updatedMenu.update(name,price,imageUrl);
         return updatedMenu;
     }
+
+    public Menu findById(Long id) {
+        return menus.get(id);
+    }
 }
