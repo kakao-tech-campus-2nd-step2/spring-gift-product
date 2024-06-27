@@ -62,4 +62,15 @@ public class ProductDAO {
 
         return record;
     }
+
+    public ProductRecord updateRecord(long id, ProductRecord patch) throws NoSuchElementException {
+        if (!isRecordExist(id)) {
+            throw new NoSuchElementException("Record not found");
+        }
+
+        ProductRecord record = records.get(id).getUpdatedRecord(patch);
+        records.put(id, record);
+
+        return record;
+    }
 }

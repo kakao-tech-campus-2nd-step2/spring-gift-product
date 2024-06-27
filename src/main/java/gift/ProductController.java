@@ -42,6 +42,11 @@ public class ProductController {
         }
     }
 
+    @PatchMapping("/products/{id}")
+    public ProductRecord updateProductPartially(@PathVariable int id, @RequestBody ProductRecord patch) {
+        return productDAO.updateRecord(id, patch);
+    }
+
     private ResponseEntity<ProductRecord> makeCreatedResponse(ProductRecord product) {
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/products/"+ product.id())
