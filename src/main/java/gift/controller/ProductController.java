@@ -3,6 +3,8 @@ package gift.controller;
 
 import gift.domain.Product;
 import gift.domain.Products;
+import java.util.HashMap;
+import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,12 +20,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/product")
 public class ProductController {
 
-    Products products = new Products();
+    Products products = Products.getInstance();
 
     //전체 product 목록 조회
     @GetMapping
-    public Products getProduct() {
-        return products;
+    public Map<Long,Product> getProduct() {
+        return products.getProducts();
     }
 
     //product 추가
