@@ -29,4 +29,15 @@ public class ProductRepository {
             ));
         return products.isEmpty() ? Optional.empty() : Optional.of(products.get(0));
     }
+
+    public List<Product> findAll() {
+        return jdbcTemplate.query("SELECT * FROM products",
+            (resultSet, rowNum) ->
+                new Product(
+                    resultSet.getLong("id"),
+                    resultSet.getString("name"),
+                    resultSet.getInt("price"),
+                    resultSet.getString("imgUrl")
+                ));
+    }
 }
