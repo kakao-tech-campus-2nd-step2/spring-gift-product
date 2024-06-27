@@ -43,6 +43,9 @@ public class ProductController {
     @PutMapping("/{id}")
     public Object modifyProduct(@PathVariable Long id, @RequestBody Product product) {
         Product modifiedProduct = productService.modifyProduct(id, product);
+        if (modifiedProduct.getId() != id) {
+            return "id 변경 불가능";
+        }
         if (modifiedProduct == null) {
             return "Product not found"; // 오류 메시지 반환
         }
