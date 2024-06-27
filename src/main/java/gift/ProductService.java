@@ -22,4 +22,11 @@ public class ProductService {
         products.put(product.getId(), product);
         return null; // 성공 시 null 반환
     }
+
+    public String deleteProduct(Long id) {
+        if (products.remove(id) != null) {
+            return null; // 성공 시 null 반환
+        }
+        return "상품이 없습니다.";
+    }
 }

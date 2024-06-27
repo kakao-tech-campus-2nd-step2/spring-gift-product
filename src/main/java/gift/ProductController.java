@@ -32,4 +32,9 @@ public class ProductController {
         }
         return product; // 성공 시 추가된 Product 반환
     }
+
+    @DeleteMapping("/{id}")
+    public String deleteProduct(@PathVariable Long id) {
+        return productService.deleteProduct(id); // 성공 시 null 반환, 오류 시 오류 메시지 반환
+    }
 }
