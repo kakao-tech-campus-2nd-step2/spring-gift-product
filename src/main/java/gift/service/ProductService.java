@@ -39,18 +39,19 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
-    public ProductResponseDto updateProduct(Long id, int price){
-        Product product = productRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("해당 상품은 존재하지 않습니다."));
+    public void updateProduct(Long id, int price){
+        int updatedRow = productRepository.update(id, price);
 
-        product.setPrice(price);
-
-        return ProductResponseDto.from(product);
+        if(updatedRow == 0){
+            throw new NoSuchElementException("해당 상품은 존재하지 않습니다.");
+        }
     }
 
-    public Long deleteProduct(Long id){
-        Product findProduct = productRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("해당 상품은 존재하지 않습니다."));
-        return productRepository.delete(findProduct.getId());
+    public void deleteProduct(Long id){
+        int deletedRow = productRepository.delete(id);
+
+        if(deletedRow == 0){
+            throw new NoSuchElementException("해당 상품은 존재하지 않습니다.");
+        }
     }
 }
