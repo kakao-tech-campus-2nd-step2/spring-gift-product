@@ -55,7 +55,11 @@ public class ProductController {
                 productReqDto.imageUrl()
         );
 
-        productRepository.addProduct(newProduct);
+        Integer noOfRowsAffected = productRepository.addProduct(newProduct);
+
+        if (!NO_OF_ROWS_AFFECTED.equals(noOfRowsAffected)) {
+            throw new IllegalArgumentException("Failed to add product");
+        }
 
         return new ProductResDto(
                 newProduct.getId(),

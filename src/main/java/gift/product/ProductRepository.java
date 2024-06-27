@@ -35,13 +35,13 @@ public class ProductRepository {
         return jdbcClient.sql(sql).param(productId).query(Product.class).single();
     }
 
-    public void addProduct(Product product) {
+    public Integer addProduct(Product product) {
         var sql = """
                 insert into product (name, price, imageUrl)
                 values (?, ?, ?)
                 """;
 
-        jdbcClient.sql(sql)
+        return jdbcClient.sql(sql)
                 .param(product.getName())
                 .param(product.getPrice())
                 .param(product.getImageUrl())
