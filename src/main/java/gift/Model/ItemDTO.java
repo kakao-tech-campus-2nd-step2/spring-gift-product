@@ -1,4 +1,4 @@
-package Model;
+package gift.Model;
 
 public class ItemDTO {
 
