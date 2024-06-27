@@ -12,7 +12,7 @@ public class GiftDao {
 
     public Gift save(Gift giftreq){
         long id = idGenerator.incrementAndGet();
-        Gift gift = new Gift(id,giftreq.name(),giftreq.price(), giftreq.imageUrl());
+        Gift gift = new Gift(id,giftreq.getName(),giftreq.getPrice(), giftreq.getImageUrl());
         gifts.put(id,gift);
         return gift;
     }
@@ -32,7 +32,7 @@ public class GiftDao {
         if(!gifts.containsKey(id)){
             throw new IllegalArgumentException("상품이 없습니다.");
         }
-        Gift gift = new Gift(id,giftreq.name(),giftreq.price(), giftreq.imageUrl());
+        Gift gift = new Gift(id,giftreq.getName(),giftreq.getPrice(), giftreq.getImageUrl());
         gifts.replace(id,gift);
         return gift;
     }
