@@ -1,26 +1,19 @@
 package gift;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
+import java.util.Optional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
-    private final Map<Long, Product> products;
+    private final ProductRepository productRepository;
 
-    // 생성자를 사용하여 products 초기화
-    public ProductController() {
-        products = new HashMap<>();
+    // 생성자를 사용하여 ProductRepository 초기화
+    public ProductController(ProductRepository productRepository) {
+        this.productRepository = productRepository;
     }
 
     /**
@@ -28,23 +21,21 @@ public class ProductController {
      * @return 모든 상품 목록
      */
     @GetMapping
-    public ResponseEntity<Map<Long, Product>> getProducts() {
+    public ResponseEntity<List<Product>> getProducts() {
+        List<Product> products = productRepository.getAllProducts();
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
     /**
      * id로 특정 상품 조회
      * @param id 조회할 상품의 id
-     * @return 조회된 상품 객체
+     * @return 조회된 상품 객체와 200 OK, 해당 id가 없으면 404 NOT FOUND
      */
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable Long id) {
-        Product product = products.get(id);
-        if (product != null) {
-            return new ResponseEntity<>(product, HttpStatus.OK); // 200 OK
-        }
-        return ResponseEntity.notFound().build();
-
+        Optional<Product> product = productRepository.getProductById(id);
+        return product.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+            .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     /**
@@ -54,10 +45,10 @@ public class ProductController {
      */
     @PostMapping
     public ResponseEntity<Product> addProduct(@RequestBody Product product) {
-        if (products.containsKey(product.getId())) {
+        if (productRepository.getProductById(product.getId()).isPresent()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST); // 400 Bad Request
         }
-        products.put(product.getId(), product);
+        productRepository.addProduct(product);
         return new ResponseEntity<>(product, HttpStatus.CREATED); // 201 Created
     }
 
@@ -68,10 +59,10 @@ public class ProductController {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
-        Product product = products.remove(id);
-        if (product == null) {
+        if (!productRepository.getProductById(id).isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        productRepository.deleteProduct(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
@@ -83,10 +74,10 @@ public class ProductController {
      */
     @PutMapping("/{id}")
     public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product updatedProduct) {
-        if (!products.containsKey(id)) {
+        if (!productRepository.getProductById(id).isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND); // 404 Not Found
         }
-        products.put(id, updatedProduct);
+        productRepository.updateProduct(updatedProduct);
         return new ResponseEntity<>(updatedProduct, HttpStatus.OK); // 200 OK
     }
 }
