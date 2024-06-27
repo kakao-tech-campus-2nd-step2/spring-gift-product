@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -115,7 +115,12 @@
                             <td>${product.name}</td>
                             <td>${product.price}</td>
                             <td><img src="${product.imageUrl}" alt="image"></td>
-                            <td><button class="editBtn">수정</button></td>
+                            <td>
+                            <form onsubmit="
+                            event.preventDefault();
+                            window.location.href = '/products/edit/${product.id}'
+                            "><button class="editBtn">수정</button></form>
+                            </td>
                             <td>
                             <form onsubmit="
                             event.preventDefault();
