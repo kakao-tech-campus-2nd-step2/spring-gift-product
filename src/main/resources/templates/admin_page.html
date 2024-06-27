@@ -25,7 +25,14 @@
               <td th:text="${product.name()}"></td>a
               <td th:text="${product.price()}"></td>
               <td th:text="${product.imageUrl()}"></td>
-              <td> <a th:href="@{'/admin/edit/' + ${product.id}}">Edit</a></td>
+              <td> 
+                <form th:action="@{'/admin/edit/' + ${product.id}}" method="get">
+                  <button type="submit">Edit</button>
+                </form>
+                <form th:action="@{'/admin/delete/' + ${product.id}}" method="post">
+                  <button type="submit">Delete</button>
+                </form>
+              </td>
             </tr>
           </tbody>
         </table>
