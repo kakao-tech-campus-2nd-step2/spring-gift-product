@@ -1,11 +1,19 @@
 package gift;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import com.sun.net.httpserver.HttpServer;
 
-@SpringBootApplication
+import java.io.IOException;
+import java.net.InetSocketAddress;
+
 public class Application {
-    public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+    public static void main(String[] args) throws IOException {
+        ProductController productController = new ProductController();
+
+        HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
+        server.createContext("/api/products", new HttpProductHandler(productController));
+        server.start();
+
+        System.out.println("Server is listening on port 8000");
     }
 }
+
