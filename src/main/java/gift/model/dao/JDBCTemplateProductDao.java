@@ -28,14 +28,12 @@ public class JDBCTemplateProductDao implements ProductRepository {
 
     @Override
     public Product find(Long id) {
-        return jdbcTemplate.queryForObject(ProductQuery.SELECT_PRODUCT_BY_ID.getQuery(), new Object[]{id}, ((rs, rowNum) -> {
-            return new Product(
-                    rs.getLong("id"),
-                    rs.getString("name"),
-                    rs.getInt("price"),
-                    rs.getString("image_url"),
-                    rs.getBoolean("is_deleted"));
-        }));
+        return jdbcTemplate.queryForObject(ProductQuery.SELECT_PRODUCT_BY_ID.getQuery(), new Object[]{id}, ((rs, rowNum) -> new Product(
+                rs.getLong("id"),
+                rs.getString("name"),
+                rs.getInt("price"),
+                rs.getString("image_url"),
+                rs.getBoolean("is_deleted"))));
     }
 
     @Override
@@ -45,14 +43,12 @@ public class JDBCTemplateProductDao implements ProductRepository {
 
     @Override
     public List<Product> findAll() {
-        return jdbcTemplate.query(ProductQuery.SELECT_ALL_PRODUCTS.getQuery(), (rs, rowNum) -> {
-            return new Product(
-                    rs.getLong("id"),
-                    rs.getString("name"),
-                    rs.getInt("price"),
-                    rs.getString("image_url"),
-                    rs.getBoolean("is_deleted"));
-        });
+        return jdbcTemplate.query(ProductQuery.SELECT_ALL_PRODUCTS.getQuery(), (rs, rowNum) -> new Product(
+                rs.getLong("id"),
+                rs.getString("name"),
+                rs.getInt("price"),
+                rs.getString("image_url"),
+                rs.getBoolean("is_deleted")));
     }
 
     private void createTable() {
