@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -49,12 +50,12 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<Product> create(@RequestBody Product productDTO) {
+    public String create(@ModelAttribute Product productDTO) {
         Product product = new Product(key.getAndIncrement(), productDTO.getName(),
-                                        productDTO.getPrice(), productDTO.getImageUrl());
+            productDTO.getPrice(), productDTO.getImageUrl());
         productRepository.put(product.getId(), product);
 
-        return new ResponseEntity<>(product, HttpStatus.CREATED);
+        return "redirect:/products/" + product.getId();
     }
 
     @GetMapping
