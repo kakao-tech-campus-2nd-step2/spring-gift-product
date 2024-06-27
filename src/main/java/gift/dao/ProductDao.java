@@ -1,11 +1,13 @@
-package gift.Dao;
+package gift.dao;
 
 import gift.model.Product;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ProductDao {
     private final Map<Long, Product> products;
 
@@ -31,7 +33,7 @@ public class ProductDao {
         products.put(product.id(), product);
     }
 
-    public void updateProductbyId(Long id, Product product){
+    public void updateProductById(Long id, Product product){
         if(!products.containsKey(product.id())){
             throw new IllegalArgumentException("id와 일치하는 Product가 존재하지 않습니다.");
         }

@@ -1,10 +1,8 @@
 package gift.controller;
 
-import gift.Dao.ProductDao;
-import java.util.ArrayList;
-import java.util.HashMap;
+import gift.dao.ProductDao;
 import java.util.List;
-import java.util.Map;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,8 +17,12 @@ import gift.model.Product;
 @RequestMapping("/api/products")
 public class ProductController {
 
-    ProductDao productDao = new ProductDao();
+    private ProductDao productDao;
 
+    @Autowired
+    public void setProductDao(ProductDao productDao){
+        this.productDao = productDao;
+    }
     @GetMapping("")
     public List<Product> getAllProducts(){
         return productDao.selectAllProduct();
@@ -38,7 +40,7 @@ public class ProductController {
 
     @PutMapping("/{id}")
     public void updateProduct(@RequestBody Product product, @PathVariable("id") Long id){
-        productDao.updateProductbyId(id, product);
+        productDao.updateProductById(id, product);
     }
 
     @DeleteMapping("/{id}")
