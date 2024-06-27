@@ -1,5 +1,7 @@
 package gift.controller;
 
+import gift.dao.ProductDao;
+import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.ui.Model;
 import gift.vo.Product;
 import org.springframework.http.HttpStatus;
@@ -17,6 +19,11 @@ public class ProductController {
 
     private final Map<Long, Product> products = new HashMap<>();
     private Long sequenceId = 1L;
+    private final ProductDao dao;
+
+    public ProductController(JdbcClient jdbcClient) {
+        dao = new ProductDao(jdbcClient);
+    }
 
     @GetMapping("/")
     public String index(Model model) {
@@ -31,7 +38,7 @@ public class ProductController {
      */
     @GetMapping()
     public List<Product> getAllProducts() {
-        return new ArrayList<>(products.values());
+        return dao.getProducts();
     }
 
     /**
