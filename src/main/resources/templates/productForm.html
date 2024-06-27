@@ -7,7 +7,9 @@
 </head>
 <body>
 <div class="container mt-5">
+  <h1 th:text="${product.id == 0} ? 'Add Product' : 'Edit Product'"></h1>
   <form th:action="@{/admin/form}" th:object="${product}" method="post">
+    <input type="hidden" th:if="${product.id != 0}" name="_method" value="put"/>
     <div class="form-group">
       <label for="id">ID</label>
       <input type="number" class="form-control" id="id" th:field="*{id}" th:attr="readonly=${product.id != 0}" required>
