@@ -1,11 +1,12 @@
 package gift.repository;
 
 import gift.entity.Product;
+import org.springframework.stereotype.Repository;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+@Repository
 public class CollectionDB {
     private Map<Long, Product> products =new HashMap<>(); //여기에 final 붙이는게 맞나요?
 
@@ -20,7 +21,7 @@ public class CollectionDB {
     public void setProducts(Map<Long,Product> products){
         this.products = products;
     }
-    public void addProducts(Long id, Product product){
+    public void saveProduct(Long id, Product product){
         products.put(id,product);
     }
 }
