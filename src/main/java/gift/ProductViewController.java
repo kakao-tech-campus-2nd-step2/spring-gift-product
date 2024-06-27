@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -90,6 +91,12 @@ public class ProductViewController {
             model.addAttribute("error", "Failed to save product: " + e.getMessage());
             return "productForm";
         }
+        return "redirect:/admin";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteProduct(@PathVariable Long id) {
+        restTemplate.delete("http://localhost:8080/api/products/" + id);
         return "redirect:/admin";
     }
 }
