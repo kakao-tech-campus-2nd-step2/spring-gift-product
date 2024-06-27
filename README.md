@@ -1,10 +1,12 @@
 # spring-gift-product
 
 ## 구현해야 할 기능
-- [ ] 상품 전체 조회
-- [ ] 상품 추가
+- [x] 상품 전체 조회
+- [x] 상품 추가
+  - [x] 상품 마다 고유한 ID 부여
 - [ ] 상품 수정
 - [ ] 상품 삭제
+- [ ] 테스트 코드
 
 
 ## API 문서
@@ -32,6 +34,13 @@ Content-Type: application/json
 - Request
 ```http
 POST /api/products HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "아이스 카페 아메리카노 T",
+  "price": 4500,
+  "imageUrl": "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg"
+}
 ```
 - Response
 ```http
