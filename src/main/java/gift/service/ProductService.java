@@ -46,4 +46,11 @@ public class ProductService {
         product.setUrl(request.getImageUrl());
         return ProductDetailDTO.fromEntity(product);
     }
+
+    public ProductDetailDTO deleteProduct(Long id) {
+        Product product = collectionDB.getProducts().get(id);
+        ProductDetailDTO productDetailDTO= new ProductDetailDTO(product.getName(), product.getPrice(), product.getUrl());
+        collectionDB.getProducts().remove(id);
+        return  productDetailDTO;
+    }
 }

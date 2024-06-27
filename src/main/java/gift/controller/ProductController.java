@@ -45,5 +45,12 @@ public class ProductController {
         return productService.editProductDetail(id,request);
     }
 
+    @DeleteMapping("/api/products/{id}")
+    public ProductDetailDTO deleteProductDetail(
+            @PathVariable Long id
+    ) {
+        return productService.deleteProduct(id);
+    }
+
 
 }
