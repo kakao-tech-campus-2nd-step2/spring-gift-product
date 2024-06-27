@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>상품 관리</title>
+</head>
+<body>
+    <h1>상품 관리</h1>
+    <div>
+        <h2>상품 목록</h2>
+        <button onclick="showAddProductModal()">상품 추가</button>
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>이름</th>
+                <th>가격</th>
+                <th>이미지</th>
+                <th>수정</th>
+                <th>삭제</th>
+            </tr>
+            </thead>
+            <tbody id="productTableBody">
+            </tbody>
+        </table>
+    </div>
+
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <h2 id="modalTitle">상품 추가/수정</h2>
+            <form id="productForm">
+                <input type="hidden" id="productId">
+                <label for="productName">이름:</label>
+                <input type="text" id="productName" required><br><br>
+                <label for="productPrice">가격:</label>
+                <input type="number" id="productPrice" required><br><br>
+                <label for="productImagePath">이미지 경로:</label>
+                <input type="text" id="productImagePath" required><br><br>
+                <button type="submit">저장</button>
+                <button type="button" onclick="closeModal()">취소</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
