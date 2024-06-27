@@ -27,6 +27,19 @@
 </table>
 
 <br>
+<!--상품 추가-->
+<button class="add-button" type="button" onclick="toggleAddProductForm()">상품 추가</button>
+
+<form id="add-product-form" style="display: none;">
+    <h2>상품 추가</h2>
+    <label for="name">상품명:</label>
+    <input type="text" id="name" name="name">
+    <label for="price">가격:</label>
+    <input type="text" id="price" name="price">
+    <label for="imageUrl">이미지 URL:</label>
+    <input type="text" id="imageUrl" name="imageUrl">
+    <button class="add-button" type="button" onclick="addProduct()">추가</button>
+</form>
 
 <script>
     function fetchProducts() {
@@ -43,6 +56,34 @@
                 `);
             });
         });
+    }
+
+    // 상품 추가
+    function addProduct() {
+        var name = $("#name").val();
+        var price = $("#price").val();
+        var imageUrl = $("#imageUrl").val();
+        $.ajax({
+            url: "/api/products",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({name: name, price: price, imageUrl: imageUrl}),
+            success: function() {
+                fetchProducts();
+                resetAddProductForm();
+                $("#add-product-form").hide();   // 성공 시 숨기기
+            }
+        });
+    }
+
+    function toggleAddProductForm() {
+        $("#add-product-form").toggle();
+    }
+
+    function resetAddProductForm() {
+        $("#name").val("");
+        $("#price").val("");
+        $("#imageUrl").val("");
     }
 
     $(document).ready(function() {
