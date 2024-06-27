@@ -30,4 +30,9 @@ public class MenuService {
     public Menu update(Long id, String name, int price, String imageUrl) {
         return menuRepository.update(id,name,price,imageUrl);
     }
+
+    public Menu findById(Long id) {
+        Menu menu = menuRepository.findById(id);
+        return menu;
+    }
 }
