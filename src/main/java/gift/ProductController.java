@@ -1,5 +1,7 @@
 package gift;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,11 +12,16 @@ import java.util.*;
 @Controller
 public class ProductController {
     private final Map<Long, Product> products = new HashMap<>();
+    
     // 새로운 상품 등록
     @PostMapping
-    public Product setProduct(@RequestBody Product product) {
-        products.put(product.id(), product);
-        return product;
+    public ResponseEntity<String> setProduct(@RequestBody Product product) {
+        if (!products.containsKey(product.id())) {
+            products.put(product.id(), product);
+            return ResponseEntity.ok("Add");
+        } else {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("already");
+        }
     }
     // 등록된 상품 업데이트
     @PutMapping("/{id}")
@@ -25,9 +32,10 @@ public class ProductController {
         }
         return "Update failed";
     }
-    // 등록된 전체 상품 리스트 조회
+    // 등록된 상품 수정 페이지 표시
     @GetMapping("/edit/{id}")
-    public String moveToEditProduct(Model model) {
+    public String moveToEditProduct(@PathVariable Long id, Model model) {
+        model.addAttribute("product", products.get(id));
         return "editProduct";
     }
     // 등록된 전체 상품 리스트 조회

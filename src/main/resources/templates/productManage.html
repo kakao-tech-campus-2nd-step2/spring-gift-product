@@ -42,7 +42,7 @@
         const productElement = this.closest('.product');
         const productId = productElement.getAttribute('data-id');
 
-        if (confirm('Want to delete this product?')) {
+        if (confirm('Delete this product?')) {
             fetch(`/api/products/${productId}`, {
                 method: 'DELETE'
             })
