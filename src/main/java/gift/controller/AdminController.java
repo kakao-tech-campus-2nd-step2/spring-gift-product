@@ -5,7 +5,6 @@ import gift.model.ProductRequest;
 import gift.model.ProductDao;
 import gift.model.ProductResponse;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,15 +15,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 @Controller
-public class ProductController {
+public class AdminController {
 
     @Autowired
     private ProductDao productDao;
 
-    ProductController(ProductDao productDao) {
+    AdminController(ProductDao productDao) {
         this.productDao = productDao;
     }
 
