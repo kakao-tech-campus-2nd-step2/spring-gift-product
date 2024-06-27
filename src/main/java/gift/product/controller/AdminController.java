@@ -2,7 +2,6 @@ package gift.product.controller;
 
 import gift.product.model.Product;
 import gift.product.repository.ProductRepository;
-import jakarta.annotation.PostConstruct;
 import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -5,10 +5,7 @@ import gift.product.model.Product;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -19,7 +16,6 @@ import org.springframework.stereotype.Repository;
 public class ProductRepository {
 
     private final JdbcTemplate jdbcTemplate;
-    private final Map<Long, Product> products = new HashMap<>();
 
     public ProductRepository() {
         jdbcTemplate = new Config().jdbcTemplate();
@@ -77,7 +73,8 @@ public class ProductRepository {
     public void update(Product product) {
         var sql = "UPDATE Product SET name = ?, price = ?, imageUrl = ? WHERE id = ?";
 
-        jdbcTemplate.update(sql, product.getName(), product.getPrice(), product.getImageUrl(), product.getId());
+        jdbcTemplate.update(sql, product.getName(), product.getPrice(), product.getImageUrl(),
+            product.getId());
     }
 
     public void delete(Long id) {
