@@ -17,8 +17,10 @@ public class ProductController {
     }
 
     @PostMapping("/products")
-    public ProductRecord addProduct(@RequestBody ProductRecord product) {
-        return productDAO.addNewRecord(product);
+    public ResponseEntity<ProductRecord> addProduct(@RequestBody ProductRecord product) {
+        ProductRecord result = productDAO.addNewRecord(product);
+
+        return makeCreatedResponse(result);
     }
 
     @DeleteMapping("/products/{id}")
@@ -28,20 +30,24 @@ public class ProductController {
 
     @PutMapping("/products/{id}")
     public ResponseEntity<ProductRecord> updateProduct(@PathVariable int id, @RequestBody ProductRecord product) {
-        ProductRecord response;
+        ProductRecord result;
         try {
-            response = productDAO.replaceRecord(id, product);
+            result = productDAO.replaceRecord(id, product);
 
-            return ResponseEntity.ok(response);
+            return ResponseEntity.ok(result);
         } catch (NoSuchElementException e) {
-            response =  productDAO.addNewRecord(product, id);
+            result =  productDAO.addNewRecord(product, id);
 
-            URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                    .path("/products/"+ id)
-                    .build()
-                    .toUri();
-
-            return ResponseEntity.created(location).body(response);
+            return makeCreatedResponse(result);
         }
+    }
+
+    private ResponseEntity<ProductRecord> makeCreatedResponse(ProductRecord product) {
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/products/"+ product.id())
+                .build()
+                .toUri();
+
+        return ResponseEntity.created(location).body(product);
     }
 }
