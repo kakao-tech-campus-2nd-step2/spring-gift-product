@@ -41,4 +41,13 @@ public class ProductController {
         sequence++;
         return product;
     }
+
+    @PutMapping("/{sequence}")
+    public Product updateProduct(@PathVariable("sequence") long sequence, @RequestBody Product product) {
+        if(!products.containsKey(sequence)) {
+            throw new IllegalArgumentException("존재하지 않는 상품입니다.");
+        }
+        products.replace(sequence, product);
+        return product;
+    }
 }
