@@ -15,6 +15,8 @@
   - 터미널 curl기능으로 테스트 가능
   - 예시) curl.exe -X DELETE http://localhost:8080/api/products/1
 
+---
+
 ## Step2 관리자 화면 구성
 - Step1의 문제점 
   - 클라이언트가 URL로 접근 하였을 때, json형식의 상품 정보만 나온다.
