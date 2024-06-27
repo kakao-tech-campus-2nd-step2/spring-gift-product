@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <title>상품 목록</title>
 </head>
 <body>
   <h1>상품 목록</h1>
-  <form action="/admin/products/add" method="get" style="display:inline;">
+  <form th:action="@{/admin/products/add}" method="get" style="display:inline;">
     <button type="submit">상품 추가</button>
   </form>
   <table>
@@ -20,19 +20,21 @@
     </tr>
     </thead>
     <tbody>
-      <td>id</td>
-      <td>name</td>
-      <td>price</td>
-      <td><a href="imageurl">imageurl</a></td>
+    <tr th:each="product : ${products}">
+      <td th:text="${product.id}">id</td>
+      <td th:text="${product.name}">name</td>
+      <td th:text="${product.price}">price</td>
+      <td><a th:href="${product.imageUrl}" th:text="${product.imageUrl}">imageurl</a></td>
       <td>
-        <form action="/admin/products/edit/id" method="get" style="display:inline;">
+        <form th:action="@{/admin/products/edit/{id}(id=${product.id})}" method="get" style="display:inline;">
           <button type="submit">수정</button>
         </form>
-        <form action="/admin/products/delete/id" method="post" style="display:inline;">
+        <form th:action="@{/admin/products/delete/{id}(id=${product.id})}" method="post" style="display:inline;">
           <input type="hidden" name="_method" value="delete"/>
           <button type="submit">삭제</button>
         </form>
       </td>
+    </tr>
     </tbody>
   </table>
 </body>
