@@ -38,16 +38,21 @@ public class ProductViewController {
         return "redirect:/step2/products";
     }
 
-    @GetMapping("/step2/products/{id}/edit")
-    public String editForm(@PathVariable Long id, Model model) {
+    @GetMapping("/step2/products/edit")
+    public String editForm(@RequestParam Long id, Model model) {
         model.addAttribute("product", products.get(id));
         return "editForm";
     }
 
-    @PostMapping("/step2/products/{id}/edit")
-    public String editProduct(@PathVariable Long id, @RequestParam String name,
+    @PostMapping("/step2/products/edit")
+    public String editProduct(@RequestParam Long id, @RequestParam String name,
         @RequestParam int price, @RequestParam String imageUrl) {
-        products.put(id, new Product(id, name, price, imageUrl));
+        Product revisedProduct = products.get(id);
+        revisedProduct.setName(name);
+        revisedProduct.setPrice(price);
+        revisedProduct.setImageUrl(imageUrl);
+
+        products.put(id, revisedProduct);
         return "redirect:/step2/products";
     }
 
