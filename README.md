@@ -1,11 +1,13 @@
 # spring-gift-product
 
-상품을 조회, 추가, 수정, 삭제할 수 있는 간단한 HTTP API 구현
-## model
+## step1 - 상품 API
+- 상품을 조회, 추가, 수정, 삭제할 수 있는 간단한 HTTP API 구현
+
+### model
 	- 필드 선언, 생성자 초기화
 	- 상품의 id, name, price, imageUrl에 대한 setter/getter 생성
 
-## controller
+### controller
 	- CRUD 기능에 대한 API 엔드포인트
 		- POST api/products : 새로운 상품 생성
 		- GET api/products/{id} : 특정 상품 조회
@@ -24,7 +26,7 @@
 		  }
              '''
 
-## Service
+### Service
 	- CRUD 작업에 대한 예외 처리
 		- C(Create) : 기존에 없는 상품인지 확인
 		- R(Read) : 가지고 있는 목록 중 존재하는 상품인지 확인
@@ -35,3 +37,9 @@
 
 ### HTTP 상태 코드
 - 적절한 HTTP 상태 코드를 사용한다.
+
+---
+## step2 - 관리자 화면
+- 상품을 조회, 추가, 수정, 삭제할 수 있는 관리자 화면 구현
+- 기존의 JSON 형식으로 반환하던 상품 정보를 관리자 화면을 통해 관리할 수 있도록 개선
+- Thymeleaf를 사용해 서버 사이드 렌더링을 구현 
