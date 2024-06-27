@@ -24,7 +24,8 @@
           <th class="text-center">상품명</th>
           <th class="text-center">가격</th>
           <th class="text-center">상품 이미지</th>
-          <th></th>
+          <th class="text-center"></th>
+          <th class="text-center"></th>
         </tr>
         </thead>
         <tbody>
@@ -42,12 +43,18 @@
               <span class="w" th:text="${product.imageUrl}">상품 이미지 tmp</span>
             </td>
             <td class="text-center">
+              <button class="btn btn-primary"
+                      onclick="location.href='updateForm.html'"
+                      th:onclick="|location.href='@{/admin/products/update/{productId}(productId=${product.id})}'|"
+                      type="button">수정</button>
+            </td>
+            <td class="text-center">
               <form th:action method="post">
                 <input type="hidden" id="id" name="id" th:value="${product.id}">
                 <input type="hidden" id="name" name="name" th:value="${product.name}">
                 <input type="hidden" id="price" name="price" th:value="${product.price}">
                 <input type="hidden" id="imageUrl" name="imageUrl" th:value="${product.imageUrl}">
-                <button type="submit">삭제</button>
+                <button class="btn btn-danger" type="submit">삭제</button>
               </form>
             </td>
           </tr>
