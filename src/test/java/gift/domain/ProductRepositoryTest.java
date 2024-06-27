@@ -31,6 +31,20 @@ class ProductRepositoryTest {
         assertThat(products.size()).isEqualTo(0);
     }
 
+    @DisplayName("상품 하나를 ID로 조회한다.")
+    @Test
+    void findById() throws Exception {
+        //given
+        Product savedProduct = productRepository.save(new Product());
+        Long productId = savedProduct.getId();
+
+        //when
+        Product foundProduct = productRepository.findById(productId);
+
+        //then
+        assertThat(savedProduct).isEqualTo(foundProduct);
+    }
+
     @DisplayName("상품 하나를 추가한다.")
     @Test
     void save() throws Exception {

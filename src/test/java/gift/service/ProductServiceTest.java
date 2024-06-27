@@ -36,6 +36,22 @@ class ProductServiceTest {
         then(productRepository).should().findAll();
     }
 
+    @DisplayName("아이디를 받아 해당하는 상품 정보를 조회해 반환한다.")
+    @Test
+    void getProduct() throws Exception {
+        //given
+        Long productId = 1L;
+        Product product = new Product();
+
+        given(productRepository.findById(productId)).willReturn(product);
+
+        //when
+        productService.getProduct(productId);
+
+        //then
+        then(productRepository).should().findById(productId);
+    }
+
     @DisplayName("상품 하나를 추가한다.")
     @Test
     void addProduct() throws Exception {

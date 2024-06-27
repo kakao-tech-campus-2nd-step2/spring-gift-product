@@ -50,6 +50,25 @@ class ProductControllerTest {
         then(productService).should().getProducts();
     }
 
+    @DisplayName("[GET] 하나의 상품 정보를 조회한다.")
+    @Test
+    void productOne() throws Exception {
+        //given
+        Long productId = 1L;
+        Product product = new Product();
+
+        given(productService.getProduct(productId)).willReturn(product);
+
+        //when
+        ResultActions result = mvc.perform(get("/api/products/{productId}", productId));
+
+        //then
+        result
+            .andExpect(status().isOk());
+
+        then(productService).should().getProduct(productId);
+    }
+
     @DisplayName("[POST] 상품 하나를 추가한다.")
     @Test
     void productAdd() throws Exception {
