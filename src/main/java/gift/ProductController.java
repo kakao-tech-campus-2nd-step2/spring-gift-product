@@ -45,7 +45,7 @@ public class ProductController {
      */
     @PostMapping
     public ResponseEntity<Product> addProduct(@RequestBody Product product) {
-        if (productRepository.getProductById(product.getId()).isPresent()) {
+        if (isProductExists(product.getId())) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST); // 400 Bad Request
         }
         productRepository.addProduct(product);
@@ -59,7 +59,7 @@ public class ProductController {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
-        if (!productRepository.getProductById(id).isPresent()) {
+        if (!isProductExists(id)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         productRepository.deleteProduct(id);
@@ -74,10 +74,14 @@ public class ProductController {
      */
     @PutMapping("/{id}")
     public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product updatedProduct) {
-        if (!productRepository.getProductById(id).isPresent()) {
+        if (!isProductExists(id)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND); // 404 Not Found
         }
         productRepository.updateProduct(updatedProduct);
         return new ResponseEntity<>(updatedProduct, HttpStatus.OK); // 200 OK
+    }
+
+    private boolean isProductExists(Long id) {
+        return productRepository.getProductById(id).isPresent();
     }
 }
