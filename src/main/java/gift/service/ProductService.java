@@ -1,5 +1,8 @@
-package gift;
+package gift.service;
 
+import gift.domain.repository.ProductRepository;
+import gift.domain.model.Product;
+import gift.domain.model.ProductRequestDto;
 import java.util.List;
 import java.util.NoSuchElementException;
 import org.springframework.stereotype.Service;

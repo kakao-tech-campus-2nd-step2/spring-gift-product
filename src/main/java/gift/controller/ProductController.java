@@ -1,5 +1,8 @@
-package gift;
+package gift.controller;
 
+import gift.service.ProductService;
+import gift.domain.model.Product;
+import gift.domain.model.ProductRequestDto;
 import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

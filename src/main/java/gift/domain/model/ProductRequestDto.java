@@ -1,4 +1,6 @@
-package gift;
+package gift.domain.model;
+
+import gift.domain.model.Product;
 
 public class ProductRequestDto {
 

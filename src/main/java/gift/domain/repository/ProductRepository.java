@@ -1,5 +1,7 @@
-package gift;
+package gift.domain.repository;
 
+import gift.domain.model.Product;
+import gift.domain.model.ProductRequestDto;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +30,7 @@ public class ProductRepository {
     }
 
     public void addProduct(ProductRequestDto productRequestDto) {
-        products.put(productRequestDto.id, productRequestDto.toProduct());
+        products.put(productRequestDto.getId(), productRequestDto.toProduct());
     }
 
     public void updateProduct(ProductRequestDto productRequestDto) {
