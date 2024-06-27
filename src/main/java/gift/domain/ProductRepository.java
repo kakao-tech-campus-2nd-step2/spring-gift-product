@@ -13,6 +13,12 @@ public class ProductRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    public void clear() {
+        String sql = "DELETE FROM product";
+
+        jdbcTemplate.update(sql);
+    }
+
     public List<Product> findAll() {
         String sql = "SELECT * FROM product";
 

@@ -2,6 +2,7 @@ package gift.controller;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
+import static org.mockito.BDDMockito.willDoNothing;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -74,9 +75,8 @@ class ProductControllerTest {
     void productAdd() throws Exception {
         //given
         ProductRequest request = new ProductRequest();
-        Product product = new Product();
 
-        given(productService.addProduct(request)).willReturn(product);
+        willDoNothing().given(productService).addProduct(request);
 
         //when
         ResultActions result = mvc.perform(post("/api/products")
@@ -96,9 +96,8 @@ class ProductControllerTest {
         //given
         Long productId = 1L;
         ProductRequest request = new ProductRequest();
-        Product product = new Product();
 
-        given(productService.editProduct(productId, request)).willReturn(product);
+        willDoNothing().given(productService).editProduct(productId, request);
 
         //when
         ResultActions result = mvc.perform(put("/api/products/{productId}", productId)
@@ -118,7 +117,7 @@ class ProductControllerTest {
         //given
         Long productId = 1L;
 
-        given(productService.removeProduct(productId)).willReturn(productId);
+        willDoNothing().given(productService).removeProduct(productId);
 
         //when
         ResultActions result = mvc.perform(delete("/api/products/{productId}", productId));
