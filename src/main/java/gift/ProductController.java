@@ -1,12 +1,10 @@
 package gift;
 
-
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
-import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/api/products")
 public class ProductController {
     private final ProductService productService;
@@ -20,7 +18,6 @@ public class ProductController {
         model.addAttribute("products", productService.getAllProducts());
         return "index";//index.html로 매핑(메인 화면)
     }
-
 
     @GetMapping("/add")
     public String addProductForm(Model model) {

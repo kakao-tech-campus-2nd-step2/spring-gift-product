@@ -27,8 +27,8 @@
       <td th:text="${product.price}">Product Price</td>
       <td th:text="${product.imageUrl}">Product Image URL</td>
       <td>
-        <a class="btn btn-warning" th:href="@{/products/edit/{id}(id=${product.id})}">Edit</a>
-        <a class="btn btn-danger" th:href="@{/products/delete/{id}(id=${product.id})}">Delete</a>
+        <a class="btn btn-warning" th:href="@{/api/products/edit/{id}(id=${product.id})}">Edit</a>
+        <a class="btn btn-danger" th:href="@{/api/products/delete/{id}(id=${product.id})}">Delete</a>
       </td>
     </tr>
     </tbody>
