@@ -16,7 +16,7 @@ public class ProductRepository {
         products.put(nextId++,product);
     }
 
-    public List<Product> getAllProducts() {
+    public List<Product> findAll() {
         return new ArrayList<>(products.values());
     }
 

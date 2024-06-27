@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/products")
+@RequestMapping("/products")
 public class ProductController {
 
     private ProductRepository productRepository;
@@ -38,7 +38,7 @@ public class ProductController {
 
     @GetMapping
     public ResponseEntity<List<Product>> getAllProducts(){
-        List<Product> products = productRepository.getAllProducts();
+        List<Product> products = productRepository.findAll();
         return new ResponseEntity<>(products,HttpStatus.OK);
     }
 
