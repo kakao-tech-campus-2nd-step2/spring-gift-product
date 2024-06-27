@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,15 +33,17 @@ public class ProductController {
     }
 
     @PostMapping("/api/product")
-    public ProductResponse registerProduct(@RequestBody ProductRequest productRequest) {
+    public String registerProduct(ProductRequest productRequest) {
         Product product = productDao.save(productRequest);
-        return product.toDTO();
+        return "redirect:/api/products";
     }
 
     @GetMapping("/api/products")
-    public List<ProductResponse> getAllProducts() {
-        List<Product> productList = productDao.findAll();
-        return productList.stream().map(Product::toDTO).collect(Collectors.toList());
+    public String getAllProducts(Model model) {
+        List<ProductResponse> productList = productDao.findAll()
+            .stream().map(Product::toDTO).toList();
+        model.addAttribute("products", productList);
+        return "productList";
     }
 
     @GetMapping("/api/product/{id}")
@@ -56,7 +59,8 @@ public class ProductController {
     }
 
     @DeleteMapping("/api/product/{id}")
-    public void deleteProduct(@PathVariable("id") Long id) {
+    public String deleteProduct(@PathVariable("id") Long id) {
         productDao.delete(id);
+        return "redirect:/api/products";
     }
 }
