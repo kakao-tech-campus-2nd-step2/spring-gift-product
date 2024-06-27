@@ -20,7 +20,6 @@
   <br>
   <button type="button" onclick="submitForm()">Submit</button>
 </form>
-
 <script>
   function submitForm() {
     const product = {
@@ -29,6 +28,7 @@
       price: document.getElementById('product-price').value,
       imageUrl: document.getElementById('image-url').value
     };
+
     fetch('/api/products', {
       method: 'POST',
       headers: {
@@ -39,6 +39,5 @@
     window.location.href = '/api/products';
   }
 </script>
-
 </body>
 </html>

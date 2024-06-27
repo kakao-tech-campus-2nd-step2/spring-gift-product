@@ -1,24 +1,72 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <title>Product List</title>
-  </head>
-  <body>
-    <h1>Product List</h1>
-    <table>
-      <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Price</th>
-        <th>ImageURL</th>
-      </tr>
-      <tr th:each="product : ${products}">
-        <td th:text="${product.id}">ID</td>
-        <td th:text="${product.name}">Name</td>
-        <td th:text="${product.price}">Price</td>
-        <td th:text="${product.imageUrl}">ImageUrl</td>
-      </tr>
-    </table>
-    <button class="add-product-btn" onclick="window.location.href='/api/add_product'">Add Product</button>
-  </body>
+<head>
+  <title>Product Management</title>
+  <script>
+    function deleteSelectedProducts() {
+      var selectedIds = [];
+      var checkboxes = document.getElementsByName('selectedProducts');
+      checkboxes.forEach(function(checkbox) {
+        if (checkbox.checked) {
+          selectedIds.push(checkbox.value);
+        }
+      });
+
+      if (selectedIds.length === 0) {
+        alert('Please select at least one product to delete.');
+        return;
+      }
+
+      // AJAX 요청으로 선택된 제품 ID들을 서버로 전송
+      fetch('/api/products/delete', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(selectedIds)
+      })
+      .then(response => {
+        if (response.ok) {
+          // 삭제 성공 시 처리 (예: 페이지 리로드)
+          window.location.reload();
+        } else {
+          alert('Failed to delete products');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('Failed to delete products');
+      });
+    }
+  </script>
+</head>
+<body>
+<h1>Product Management</h1>
+<button class="add-product-btn" onclick="window.location.href='/api/add_product'">Add Product</button>
+<button class="delete-product-btn" onclick="deleteSelectedProducts()">Delete Selected Products</button>
+
+<table>
+  <thead>
+  <tr>
+    <th>Select</th>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Price</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <!-- Thymeleaf 반복문을 이용하여 제품 목록을 출력 -->
+  <tr th:each="product : ${products}">
+    <td><input type="checkbox" th:value="${product.id}" name="selectedProducts"></td>
+    <td th:text="${product.id}">ID</td>
+    <td th:text="${product.name}">Name</td>
+    <td th:text="${product.price}">Price</td>
+    <td>
+      <a th:href="@{/api/products/{id}(id=${product.id})}">Edit</a>
+    </td>
+  </tr>
+  </tbody>
+</table>
+</body>
 </html>
