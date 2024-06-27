@@ -1,6 +1,7 @@
 package gift.controller;
 
 import gift.dto.CreateProduct;
+import gift.dto.EditProduct;
 import gift.dto.ProductDTO;
 import gift.dto.ProductDetailDTO;
 import gift.service.ProductService;
@@ -35,6 +36,14 @@ public class ProductController {
             @PathVariable Long id
     ) {
         return productService.getDeveloperDetail(id);
+    }
+
+    @PutMapping("/api/products/{id}")
+    public ProductDetailDTO putProductDetail(
+            @PathVariable Long id,
+            @RequestBody EditProduct.Request request
+    ) {
+        return productService.editProductDetail(id,request);
     }
 
 
