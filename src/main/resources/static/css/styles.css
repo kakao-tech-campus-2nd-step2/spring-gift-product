@@ -56,6 +56,17 @@ img {
     margin: auto;
 }
 
+.action-cell {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.action-link {
+    flex: 1;
+    text-align: center;
+}
+
 .product-form {
     max-width: 400px;
     margin: 0 auto;

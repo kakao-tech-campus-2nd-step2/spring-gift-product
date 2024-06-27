@@ -58,17 +58,12 @@ public class ProductController {
         return "redirect:/api/products";
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable("id") Long id) {
-        // 요청받은 id를 가진 상품이 존재하지 않는 경우
-        if(!products.containsKey(id)) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
+    @GetMapping("/{id}")
+    public String deleteProduct(@PathVariable("id") Long id) {
         // 요청받은 id를 가진 상품을 삭제
         products.remove(id);
 
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return "redirect:/api/products";
     }
 
 }
