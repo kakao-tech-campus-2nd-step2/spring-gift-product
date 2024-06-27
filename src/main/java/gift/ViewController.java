@@ -19,44 +19,43 @@ public class ViewController {
     public String getAllProducts(Model model) {
         Map<Long, Product> products = productController.getAllProducts();
         model.addAttribute("products", products);
-        return "productList"; // Thymeleaf 템플릿 파일 이름
+        return "products";
     }
 
     @GetMapping("/{id}")
-    public String findById(@PathVariable Long id, Model model) {
+    public void findById(@PathVariable Long id, Model model) {
         Product product = productController.findById(id);
         model.addAttribute("product", product);
-        return "productDetail"; // Thymeleaf 템플릿 파일 이름
     }
 
     @GetMapping("/new")
     public String showCreateForm(Model model) {
         model.addAttribute("product", new Product(0, "", 0, ""));
-        return "createProduct"; // Thymeleaf 템플릿 파일 이름
+        return "add_product";
     }
 
     @PostMapping("")
     public String createProduct(@ModelAttribute Product product) {
         productController.createProduct(product);
-        return "redirect:/products";
+        return "redirect:/admin/products";
     }
 
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
         Product product = productController.findById(id);
         model.addAttribute("product", product);
-        return "editProduct"; // Thymeleaf 템플릿 파일 이름
+        return "add_product"; // Thymeleaf 템플릿 파일 이름
     }
 
-    @PostMapping("/{id}")
+    @PostMapping("/edit/{id}")
     public String updateProduct(@PathVariable Long id, @ModelAttribute Product product) {
         productController.updateProduct(id, product);
-        return "redirect:/products";
+        return "redirect:/admin/products";
     }
 
     @PostMapping("/delete/{id}")
     public String deleteProduct(@PathVariable Long id) {
         productController.deleteProduct(id);
-        return "redirect:/products";
+        return "redirect:/admin/products";
     }
 }
