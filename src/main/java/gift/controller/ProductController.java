@@ -3,6 +3,7 @@ package gift.controller;
 import gift.service.ProductService;
 import gift.domain.model.ProductDto;
 import java.util.List;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,13 +51,14 @@ public class ProductController {
     }
 
     @PostMapping("/add")
-    public String addProduct(@RequestBody ProductDto productDto, Model model) {
+    public ResponseEntity<String> addProduct(@RequestBody ProductDto productDto, Model model) {
         try {
             productService.addProduct(productDto);
+            return ResponseEntity.ok(populateModelWithProducts(model));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return populateModelWithProducts(model);
+        return null;
     }
 
     @PostMapping("/update")
