@@ -36,4 +36,13 @@ public class ProductController {
 
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<String> putProduct(@RequestBody Product product, @PathVariable Long id) {
+        if (!products.containsKey(id)) {
+            return new ResponseEntity<>("해당 ID의 상품이 존재하지 않습니다.", HttpStatus.NOT_FOUND);
+        }
+        product = new Product(id, product.name(), product.price(), product.imageUrl());
+        products.put(id, product);
+        return new ResponseEntity<>("상품 정보가 정상적으로 변경되었습니다.", HttpStatus.OK);
+    }
 }
