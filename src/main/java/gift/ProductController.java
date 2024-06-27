@@ -30,7 +30,7 @@ public class ProductController {
     @PostMapping
     public ResponseEntity<Product> addProduct(@RequestBody Product product) {
         long id = counter++;
-        product.setId((int)id);
+        product.setId(id);
         products.put(id, product);
         return ResponseEntity.ok(product);
     }
@@ -40,7 +40,7 @@ public class ProductController {
         if (!products.containsKey(id)) {
             return ResponseEntity.notFound().build();
         }
-        updatedProduct.setId((int) id);
+        updatedProduct.setId(id);
         products.put(id, updatedProduct);
         return ResponseEntity.ok(updatedProduct);
     }

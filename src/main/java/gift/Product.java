@@ -1,25 +1,25 @@
 package gift;
 
 public class Product {
-    private int id;
+    private long id;
     private String name;
     private int price;
     private String imgUrl;
 
     public Product(){}
 
-    public Product(int id, String name, int price, String imgUrl) {
+    public Product(long id, String name, int price, String imgUrl) {
         this.id=id;
         this.name=name;
         this.price=price;
         this.imgUrl=imgUrl;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
