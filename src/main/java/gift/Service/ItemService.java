@@ -25,5 +25,10 @@ public class ItemService {
         }
         return null;
     }
+    //Item 목록 반환 메서드
+    public HashMap<Long, Item> getList(){
+        return itemRepository;
+    }
+
 
 }
