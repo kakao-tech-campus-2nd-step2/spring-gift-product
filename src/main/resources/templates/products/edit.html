@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>상품 정보 수정</title>
+</head>
+<body>
+<h1>상품 정보 수정</h1>
+<form th:action="@{/products/update/{id}(id=${productDto.id})}" th:object="${productDto}" method="post">
+    <label>Name: <input type="text" th:field="*{name}"/></label><br/>
+    <label>Price: <input type="text" th:field="*{price}"/></label><br/>
+    <label>Image URL: <input type="text" th:field="*{imageUrl}"/></label><br/>
+    <button type="submit">수정</button>
+</form>
+<a th:href="@{/products}">상품 목록으로 돌아가기</a>
+</body>
+</html>
