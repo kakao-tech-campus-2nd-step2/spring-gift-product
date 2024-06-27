@@ -24,8 +24,8 @@
         <td th:text="${product.price}"></td>
         <td><img th:src="${product.imageUrl()}" alt="img"></td>
         <td>
-          <a th:href="@{/admin/edit/{id}(id=${product}.id)}"></a>
-          <a th:href="@{/admin/delete/{id}(id=${product}.id)}"></a>
+          <a th:href="@{/admin/edit/{id}(id=${product}.id)}">Edit</a>
+          <a th:href="@{/admin/delete/{id}(id=${product}.id)}">Delete</a>
         </td>
       </tr>
     </tbody>
