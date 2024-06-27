@@ -38,4 +38,8 @@ public class ProductDAO {
     public ProductRecord addNewRecord(ProductRecord product) {
         return addNewRecord(product, getNewId());
     }
+
+    public ProductRecord[] getAllRecords() {
+        return records.values().toArray(new ProductRecord[records.size()]);
+    }
 }
