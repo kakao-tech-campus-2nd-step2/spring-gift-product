@@ -19,13 +19,17 @@ import gift.Model.Product;
 public class ProductController {
     private final Map<Long, Product> products = new HashMap<>();
 
-    @GetMapping("/")
+    @GetMapping("")
     public List<Product> getAllProducts(){
         return new ArrayList<>(products.values());
     }
 
     @GetMapping("/{id}")
-    public Product getProduct(@PathVariable Long id){
+    public Product getProduct(@PathVariable("id") Long id){
+        if(!products.containsKey(id)){
+            System.out.println("Product가 존재하지 않습니다.");
+            return null;
+        }
         return products.get(id);
     }
 
@@ -40,7 +44,7 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public void updateProduct(@RequestBody Product product, @PathVariable Long id){
+    public void updateProduct(@RequestBody Product product, @PathVariable("id") Long id){
         if(!products.containsKey(product.id())){
             System.out.println("{%d}에 매칭되는 Product가 이미 존재하지 않습니다.".formatted(id));
             return;
@@ -50,7 +54,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteProduct(@PathVariable Long id){
+    public void deleteProduct(@PathVariable("id") Long id){
         if(products.containsKey(id)){
             System.out.println("{%d}에 매칭되는 Product가 이미 존재하지 않습니다.".formatted(id));
             return;
