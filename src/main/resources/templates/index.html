@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>관리자 화면</title>
+  <link rel="stylesheet" th:href="@{/css/modal.css}"/>
+</head>
+<body>
+<h1>Product List</h1>
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Price</th>
+    <th>ImageUrl</th>
+  </tr>
+  <tr th:each="product : ${products}">
+    <td th:text="${product.id}"></td>
+    <td th:text="${product.name}"></td>
+    <td th:text="${product.price}"></td>
+    <td><img th:src="${product.imageUrl}" alt="Product Image"></td>
+  </tr>
+</table>
+
+<!-- Add Product Button -->
+<button onclick="openModal()">Add Product</button>
+
+<!-- 모달 창 -->
+<div id="myModal" class="modal">
+  <!-- 모달 창 내용 -->
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h2>Add Product Form</h2>
+    <!-- 여기에 폼 내용 추가 -->
+    <form id="addProductForm">
+      <label for="id">Id:</label>
+      <input type="text" id="id" name="id" required><br><br>
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required><br><br>
+      <label for="price">Price:</label>
+      <input type="text" id="price" name="price" required><br><br>
+      <label for="imageUrl">Image URL:</label>
+      <input type="text" id="imageUrl" name="imageUrl" required><br><br>
+      <button type="button" onclick="submitForm()">Add</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  function openModal() {
+    var modal = document.getElementById("myModal");
+    modal.style.display = "block";
+  }
+
+  function closeModal() {
+    var modal = document.getElementById("myModal");
+    modal.style.display = "none";
+  }
+
+  window.onclick = function(event) {
+    var modal = document.getElementById("myModal");
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+
+  function submitForm() {
+    var form = document.getElementById('addProductForm');
+    var formData = new FormData(form);
+    var jsonObject = {};
+    formData.forEach((value, key) => {
+      jsonObject[key] = value;
+    });
+
+    fetch('/api/products/add', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(jsonObject)
+    })
+    .then(response => {
+      if (response.ok) {
+        closeModal();
+        window.location.reload();
+      } else {
+        console.error('Error:', response.statusText);
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+  }
+</script>
+
+</body>
+</html>

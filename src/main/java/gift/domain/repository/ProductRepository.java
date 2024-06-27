@@ -1,11 +1,12 @@
 package gift.domain.repository;
 
 import gift.domain.model.Product;
-import gift.domain.model.ProductRequestDto;
+import gift.domain.model.ProductDto;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -25,16 +26,23 @@ public class ProductRepository {
         return products.isEmpty();
     }
 
-    public List<Product> getAllProduct() {
-        return new ArrayList<>(products.values());
+    public List<ProductDto> getAllProduct() {
+        return products.entrySet().stream()
+            .map(entry -> new ProductDto(
+                entry.getKey(),
+                entry.getValue().getName(),
+                entry.getValue().getPrice(),
+                entry.getValue().getImageUrl()
+            ))
+            .collect(Collectors.toList());
     }
 
-    public void addProduct(ProductRequestDto productRequestDto) {
-        products.put(productRequestDto.getId(), productRequestDto.toProduct());
+    public void addProduct(ProductDto productDto) {
+        products.put(productDto.getId(), productDto.toProduct());
     }
 
-    public void updateProduct(ProductRequestDto productRequestDto) {
-        products.replace(productRequestDto.getId(), productRequestDto.toProduct());
+    public void updateProduct(ProductDto productDto) {
+        products.replace(productDto.getId(), productDto.toProduct());
     }
 
     public void deleteProduct(Long id) {

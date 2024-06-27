@@ -1,17 +1,18 @@
 package gift.controller;
 
 import gift.service.ProductService;
-import gift.domain.model.Product;
-import gift.domain.model.ProductRequestDto;
+import gift.domain.model.ProductDto;
 import java.util.List;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 @RequestMapping("/api/products")
 public class ProductController {
 
@@ -21,50 +22,62 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping()
-    public Product getProduct(@RequestParam Long id) {
-        try {
-            return productService.getProduct(id);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        return null;
+    private String populateModelWithProducts(Model model) {
+        List<ProductDto> products = productService.getAllProduct();
+        model.addAttribute("products", products);
+        return "product";
     }
 
-    @GetMapping("/all")
-    public List<Product> getAllProduct() {
+    @GetMapping()
+    public String getProduct(@RequestParam Long id, Model model) {
         try {
-            return productService.getAllProduct();
+            productService.getProduct(id);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return null;
+        return populateModelWithProducts(model);
+    }
+
+
+    @GetMapping("/all")
+    public String getAllProduct(Model model) {
+        try {
+            List<ProductDto> products = productService.getAllProduct();
+            model.addAttribute("products", products);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return "index";
     }
 
     @PostMapping("/add")
-    public void addProduct(@RequestBody ProductRequestDto productRequestDto) {
+    public ResponseEntity<String> addProduct(@RequestBody ProductDto productDto, Model model) {
         try {
-            productService.addProduct(productRequestDto);
+            productService.addProduct(productDto);
+            return ResponseEntity.ok(populateModelWithProducts(model));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        return null;
     }
 
     @PostMapping("/update")
-    public void updateProduct(@RequestBody ProductRequestDto productRequestDto) {
+    public String updateProduct(@RequestBody ProductDto productDto, Model model) {
         try {
-            productService.updateProduct(productRequestDto);
+            productService.updateProduct(productDto);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        return populateModelWithProducts(model);
     }
 
     @PostMapping("/delete")
-    public void deleteProduct(@RequestParam Long id) {
+    public String deleteProduct(@RequestParam Long id, Model model) {
         try {
             productService.deleteProduct(id);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        return populateModelWithProducts(model);
     }
 }
