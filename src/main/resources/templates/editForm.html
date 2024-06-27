@@ -15,10 +15,10 @@
 
         <hr class="mt-5 pt-3">
 
-        <form action="/api/products/modify" method="post">
+        <form action="/api/products/edit" method="post">
             <div class="py-3">
                 <label for="id">상품 ID</label>
-                <input type="text" id="id" name="id" class="form-control" th:value="${product.id}">
+                <input type="text" id="id" name="id" class="form-control" th:value="${product.id}" readonly>
             </div>
             <div class="py-3">
                 <label for="name">상품명</label>
