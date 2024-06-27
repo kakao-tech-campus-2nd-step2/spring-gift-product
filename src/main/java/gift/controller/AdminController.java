@@ -30,8 +30,8 @@ public class AdminController {
 
     @GetMapping("/products/{id}")
     public String showEditProductForm(@PathVariable("id") Long id, Model model) {
-        Product product = productRepository.find(id);
-        if (product == null || product.isDeleted()) {
+        Product product = productRepository.find(id).orElseThrow(IllegalArgumentException::new);
+        if (product.isDeleted()) {
             throw new IllegalArgumentException();
         }
         model.addAttribute("product", product);
@@ -48,8 +48,8 @@ public class AdminController {
     @PatchMapping("/products/{id}")
     public String productModify(@PathVariable("id") Long id, @RequestBody ProductRequest modifyProduct){
 
-        Product findedProduct = productRepository.find(id);
-        if(findedProduct == null || findedProduct.isDeleted()){
+        Product findedProduct = productRepository.find(id).orElseThrow(IllegalArgumentException::new);
+        if(findedProduct.isDeleted()){
             throw new IllegalArgumentException();
         }
         productRepository.save(modifyProduct.toModel(id));
@@ -58,11 +58,10 @@ public class AdminController {
 
     @DeleteMapping("/products/{id}")
     public String productDelete(@PathVariable("id") Long id){
-        Product findedProduct = productRepository.find(id);
-        if(findedProduct == null){
+        Product findedProduct = productRepository.find(id).orElseThrow(IllegalArgumentException::new);
+        if(findedProduct.isDeleted()){
             throw new IllegalArgumentException();
         }
-
         findedProduct.delete();
         productRepository.save(findedProduct);
         return "admin/list";

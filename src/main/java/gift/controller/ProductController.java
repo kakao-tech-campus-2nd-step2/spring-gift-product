@@ -36,8 +36,8 @@ public class ProductController {
 
     @GetMapping("/api/products/{id}")
     public ProductResponse getProduct(@PathVariable("id") Long id){
-        Product findedProduct = productRepository.find(id);
-        if(findedProduct == null || findedProduct.isDeleted()){
+        Product findedProduct = productRepository.find(id).orElseThrow(IllegalArgumentException::new);
+        if(findedProduct.isDeleted()){
             throw new IllegalArgumentException();
         }
 
@@ -51,8 +51,8 @@ public class ProductController {
 
     @PatchMapping("/api/products/{id}")
     public void productModify(@PathVariable("id") Long id, @RequestBody ProductRequest modifyProduct){
-        Product findedProduct = productRepository.find(id);
-        if(findedProduct == null || findedProduct.isDeleted()){
+        Product findedProduct = productRepository.find(id).orElseThrow(IllegalArgumentException::new);
+        if(findedProduct.isDeleted()){
             throw new IllegalArgumentException();
         }
         productRepository.save(modifyProduct.toModel(id));
@@ -60,8 +60,8 @@ public class ProductController {
 
     @DeleteMapping("/api/products/{id}")
     public void productDelete(@PathVariable("id") Long id){
-        Product findedProduct;
-        if((findedProduct = productRepository.find(id)) == null){
+        Product findedProduct = productRepository.find(id).orElseThrow(IllegalArgumentException::new);
+        if(findedProduct.isDeleted()){
             throw new IllegalArgumentException();
         }
 

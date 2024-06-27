@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class JDBCProductDao implements ProductRepository {
     private static final String URL = "jdbc:h2:mem:test";
@@ -58,7 +59,7 @@ public class JDBCProductDao implements ProductRepository {
     }
 
     @Override
-    public Product find(Long id) {
+    public Optional<Product> find(Long id) {
         Product product = null;
         try{
             Connection connection = getConnection();
@@ -79,7 +80,7 @@ public class JDBCProductDao implements ProductRepository {
         } catch (SQLException e) {
             throw new IllegalArgumentException(e.getMessage());
         }
-        return product;
+        return Optional.ofNullable(product);
     }
 
     @Override

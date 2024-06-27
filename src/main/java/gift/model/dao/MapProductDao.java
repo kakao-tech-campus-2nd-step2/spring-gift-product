@@ -4,6 +4,7 @@ import gift.model.Product;
 import gift.model.repository.ProductRepository;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.TreeMap;
 import java.util.UUID;
 
@@ -34,8 +35,8 @@ public class MapProductDao implements ProductRepository {
     }
 
     @Override
-    public Product find(final Long id) {
-        return products.getOrDefault(id, null);
+    public Optional<Product> find(final Long id) {
+        return Optional.ofNullable(products.get(id));
     }
 
     @Override

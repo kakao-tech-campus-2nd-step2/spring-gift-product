@@ -5,6 +5,7 @@ import gift.model.repository.ProductRepository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 public class JDBCTemplateProductDao implements ProductRepository {
@@ -32,10 +33,11 @@ public class JDBCTemplateProductDao implements ProductRepository {
     }
 
     @Override
-    public Product find(Long id) {
-        return jdbcTemplate.queryForObject(ProductQuery.SELECT_PRODUCT_BY_ID.getQuery(), new Object[]{id},
-                ((rs, rowNum) -> ProductMapper(
-                        rs)));
+    public Optional<Product> find(Long id) {
+        return Optional.ofNullable(
+                jdbcTemplate.queryForObject(ProductQuery.SELECT_PRODUCT_BY_ID.getQuery(), new Object[]{id},
+                        ((rs, rowNum) -> ProductMapper(
+                                rs))));
     }
 
     @Override

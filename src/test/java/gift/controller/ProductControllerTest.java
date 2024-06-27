@@ -9,6 +9,7 @@ import gift.model.Product;
 import gift.model.repository.ProductRepository;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +64,7 @@ class ProductControllerTest {
         Product product = new Product(8146027L, "아이스 카페 아메리카노 T", 4500,
                 "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg");
         //when
-        when(productRepository.find(8146027L)).thenReturn(product);
+        when(productRepository.find(8146027L)).thenReturn(Optional.of(product));
 
         //then
         mockMvc.perform(get("/api/products/8146027"))
