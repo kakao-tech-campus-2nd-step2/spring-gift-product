@@ -25,11 +25,11 @@ public class GiftController {
         Gift gift = giftDao.save(giftreq);
         return gift;
     }
+
     @GetMapping("/{id}")
     public Gift getGift(@PathVariable Long id){
         return giftDao.findById(id);
     }
-
     @GetMapping
     public Collection<Gift> getAllGift(){
         return giftDao.findAll();
@@ -40,6 +40,7 @@ public class GiftController {
         Gift gift = giftDao.updateById(id,giftreq);
         return gift;
     }
+
     @DeleteMapping("/{id}")
     public void deleteGift(@PathVariable Long id){
         giftDao.deleteById(id);
