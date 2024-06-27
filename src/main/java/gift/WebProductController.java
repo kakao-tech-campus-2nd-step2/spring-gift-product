@@ -4,6 +4,7 @@ import java.util.Collection;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 @Controller
 public class WebProductController {
@@ -25,6 +26,16 @@ public class WebProductController {
         Product product = new Product();
         model.addAttribute("product", product);
         return "newProduct";
+    }
+
+    @GetMapping("/saveProducts")
+    public String saveProducts(@ModelAttribute("product") Product product) {
+        if (product.getId() != 0) {
+            productController.updateProduct(product.getId(), product);
+            return "redirect:/products";
+        }
+        productController.addProduct(product);
+        return "redirect:/products";
     }
 
 }
