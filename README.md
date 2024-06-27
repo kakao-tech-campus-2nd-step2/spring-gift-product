@@ -33,11 +33,13 @@
 - 기본적으로는 [HTML 폼](https://developer.mozilla.org/ko/docs/Learn/Forms) 전송 등을 이용한 페이지 이동을 기반으로 하지만, 자바스크립트를 이용한 비동기 작업에 관심이 있다면 이미 만든 상품 API를 이용하여 [AJAX](https://developer.mozilla.org/ko/docs/Glossary/AJAX) 등의 방식을 적용할 수 있다.
 - 상품 이미지의 경우, 파일을 업로드하지 않고 URL을 직접 입력한다.
 ## [ 기능 목록 ]
-### 상품 관리 화면(product-list.html)
-- 상품 목록 출력
-- 상품 추가
-  - 버튼을 누르면 상품을 입력할 수 있도록 새로운 열(row) 생성
-  - 
+### 상품 관리 화면(product.html)
+> 관리자 화면
+- 상품 추가 기능
+- 상품 조회 기능`
+- 상품 전체 목록 출력 기능
+- 상품 수정 기능
+- 상품 삭제 기능
 ## 제약 조건
 - [자바 코드 컨벤션](https://google.github.io/styleguide/javaguide.html)을 지키면서 프로그래밍 한다
   >예외조건: 들여쓰기는 4 space (default: 2 space)로 설정
