@@ -38,13 +38,6 @@ body {
     outline: none;
 }
 
-.btn-danger {
-    background-color: #f05664;
-    color: white;
-    border: none;
-    outline: none;
-}
-
 table {
     width: 100%;
     border-collapse: collapse;
