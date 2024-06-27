@@ -36,10 +36,10 @@ public class ProductController {
     }
 
     @PutMapping("/product/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable("id") long id,
+    public ResponseEntity<Void> updateProduct(@PathVariable("id") long id,
                                               @RequestBody ProductRequest request) {
-        Product product = productDao.updateById(id, request);
-        return ResponseEntity.ok().body(product);
+        productDao.updateById(id, request);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/product/{id}")
