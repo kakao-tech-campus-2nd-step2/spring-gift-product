@@ -35,10 +35,10 @@ public class ProductController {
     }
 
     @PostMapping
-    public Product addProduct(@RequestBody Product product) {
+    public String addProduct(@ModelAttribute Product product) {
         product.setId(nextId++);
         products.put(product.getId(), product);
-        return product;
+        return "redirect:/products";
     }
 
     @PutMapping("/{id}")
