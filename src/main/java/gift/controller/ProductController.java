@@ -1,5 +1,6 @@
-package gift;
+package gift.controller;
 
+import gift.domain.Product;
 import java.util.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
