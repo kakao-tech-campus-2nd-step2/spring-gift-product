@@ -40,4 +40,8 @@ public class ProductRepository {
                     resultSet.getString("imgUrl")
                 ));
     }
+
+    public void deleteById(long id) {
+        jdbcTemplate.update("DELETE FROM product WHERE id = ?", id);
+    }
 }
