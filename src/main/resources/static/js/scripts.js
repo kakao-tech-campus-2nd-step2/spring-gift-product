@@ -45,3 +45,39 @@ function loadProducts() {
             });
         });
 }
+
+function editProduct(id, button) {
+    const row = button.closest('tr');
+    const spans = row.querySelectorAll('span');
+    const inputs = row.querySelectorAll('input');
+    spans.forEach(span => span.style.display = 'none');
+    inputs.forEach(input => input.style.display = 'inline');
+    button.style.display = 'none';
+    row.querySelector('button[onclick^="saveProduct"]').style.display = 'inline';
+}
+
+function saveProduct(id, button) {
+    const row = button.closest('tr');
+    const inputs = row.querySelectorAll('input');
+    const product = {
+        id: id,
+        name: inputs[0].value,
+        price: inputs[1].value,
+        imageUrl: inputs[2].value
+    };
+
+    fetch('/api/products', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(product)
+    }).then(response => {
+        if (response.status === 201) {
+            alert('성공적으로 수정되었습니다');
+            loadProducts();
+        } else {
+            alert('수정되지 않았습니다.');
+        }
+    });
+}
