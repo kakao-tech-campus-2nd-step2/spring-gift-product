@@ -58,12 +58,13 @@ public class ProductController {
      * @return ResponseEntity로 Response 받음
      */
     @PostMapping("")
-    public ResponseEntity<Product> addProduct(@RequestBody Product product) {
-        synchronized (this) {
-            product.setId(sequenceId++);
+    public ResponseEntity<Void> addProduct(@RequestBody Product product) {
+        Boolean result = dao.addProduct(product);
+        if (result) {
+            return ResponseEntity.noContent().build();
         }
-        products.put(product.getId(), product);
-        return ResponseEntity.ok(product);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+
     }
 
     /**

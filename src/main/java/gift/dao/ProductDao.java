@@ -30,4 +30,15 @@ public class ProductDao {
                 .query(new ProductMapper()).single();
     }
 
+    public Boolean addProduct(Product product) {
+        String sql = "INSERT INTO PRODUCT (name, price, image_url) "
+                + "VALUES (:name, :price, :image_url)";
+        int resultRowNum = this.jdbcClient.sql(sql)
+                .param("name", product.getName())
+                .param("price", product.getPrice())
+                .param("image_url", product.getImageUrl())
+                .update();
+        return resultRowNum == 1;
+    }
+
 }
