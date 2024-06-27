@@ -11,7 +11,7 @@ public class Product {
     String name;
     int price;
     String imageUrl;
-    List<String> options;
+    String option;
 
     public int getId() {
         return id;
@@ -29,15 +29,15 @@ public class Product {
         return imageUrl;
     }
 
-    public List<String> getOptions() {
-        return options;
+    public String getOption() {
+        return option;
     }
 
-    public Product(int id, String name, int price, String imageUrl,String options) {
+    public Product(int id, String name, int price, String imageUrl,String option) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.imageUrl = imageUrl;
-        this.options = Arrays.stream(options.split(",")).toList();
+        this.option = option;
     }
 }
