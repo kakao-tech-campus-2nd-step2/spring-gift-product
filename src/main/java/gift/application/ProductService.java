@@ -42,6 +42,10 @@ public class ProductService {
         return new ProductResponse(productRepository.save(product));
     }
 
+    public void createProduct(Product product) {
+        productRepository.save(product);
+    }
+
     public Long deleteProductById(Long id) {
         productRepository.deleteById(id);
         return id;

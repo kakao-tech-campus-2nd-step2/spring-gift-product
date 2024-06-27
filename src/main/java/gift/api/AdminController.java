@@ -28,16 +28,15 @@ public class AdminController {
 
     // 상품 추가 폼 표시
     @GetMapping("/add")
-    public String showAddProductForm(Model model) {
-        model.addAttribute("product", new Product());
+    public String showAddProductForm() {
         return "product-add-form";
     }
 
     // 상품 추가
     @PostMapping("/add")
-    public String addProduct(@ModelAttribute ProductRequest request) {
-        productService.createProduct(request);
-        return "admin-product-list";
+    public String addProduct(@ModelAttribute Product product) {
+        productService.createProduct(product);
+        return "redirect:/admin";
     }
 
     // 상품 삭제
