@@ -33,7 +33,11 @@ public class ProductDao {
     }
 
     public Product findById(long id) {
-        return products.get(id);
+        var sql = "select * from product where id = ?";
+        return jdbcClient.sql(sql)
+                .params(id)
+                .query(Product.class)
+                .single();
     }
 
 
