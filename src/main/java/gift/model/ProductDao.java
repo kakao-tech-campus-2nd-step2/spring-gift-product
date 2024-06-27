@@ -45,6 +45,9 @@ public class ProductDao {
     }
 
     public void deleteById(long id) {
-        products.remove(id);
+        var sql = "delete from product where id = ?";
+        jdbcClient.sql(sql)
+                .params(id)
+                .update();
     }
 }
