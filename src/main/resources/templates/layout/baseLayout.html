@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:fragment="head">
+  <title>KAKAO GIFT</title>
+</head>
+<body>
+  <div>
+    <header th:replace="~{fragment/header::header}"></header>
+
+    <th:block layout:fragment="content"></th:block>
+  </div>
+</body>
+</html>
