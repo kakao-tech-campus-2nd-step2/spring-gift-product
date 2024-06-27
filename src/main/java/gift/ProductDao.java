@@ -50,4 +50,18 @@ public class ProductDao {
                 ))
                 .single();
     }
+
+    public Integer updateProduct(Product editedProduct) {
+        String sql = """
+                    UPDATE product
+                    SET id = :id, name = :name, price = :price, imageUrl = :imageUrl
+                    WHERE id = :id;
+                    """;
+        return jdbcClient.sql(sql)
+                .param("id", editedProduct.id(), Types.BIGINT)
+                .param("name", editedProduct.name(), Types.VARCHAR)
+                .param("price", editedProduct.price(), Types.BIGINT)
+                .param("imageUrl", editedProduct.imageUrl(), Types.VARCHAR)
+                .update();
+    }
 }

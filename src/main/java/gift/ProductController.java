@@ -77,8 +77,9 @@ public class ProductController {
                               @RequestParam("name") String name,
                               @RequestParam("price") Long price,
                               @RequestParam("imageUrl") String imageUrl) {
-        if(productMap.containsKey(id)) {
-            productMap.put(id, new Product(id, name, price, imageUrl));
+        try {
+            productDao.updateProduct(new Product(id, name, price, imageUrl));
+        } catch(DataAccessException e) {
         }
         return "redirect:/api/products";
     }
