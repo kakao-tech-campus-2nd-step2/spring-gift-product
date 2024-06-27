@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin Page</title>
+</head>
+<body>
+<h1>
+    Admin
+</h1>
+<form th:action="@{/postform}" method="Get" style="display: inline;">
+    <button type="submit">add</button>
+</form>
+<table>
+    <thead>
+    <tr>
+        <td>id</td>
+        <td>name</td>
+        <td>price</td>
+        <td>imageUrl</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="product : ${productList}">
+        <td th:text="${product.id}"></td>
+        <td th:text="${product.name}"></td>
+        <td th:text="${product.price}"></td>
+        <td th:text="${product.imageUrl}"></td>
+        <td>
+            <form th:action="@{/api/editform/{id}(id=${product.id})}" method="Post" style="display: inline;">
+                <button type="submit">Edit</button>
+            </form>
+            <form th:action="@{/api/deleteProduct/{id}(id=${product.id})}" method="Get" style="display: inline;">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Post Form</title>
+</head>
+<body>
+<h1>Post</h1>
+<form action="/api/postProduct" method="post">
+    name: <input type="text" id="name" name="name" required><br>
+    price: <input type="number" id="price" name="price" required><br>
+    imageUrl: <input type="text" id="imageUrl" name="imageUrl" required><br>
+    <button type="submit">Add Product</button>
+</form>
+<form th:action="@{/api/getAllProducts}" method="get" style="display: inline;">
+    <button type="submit">Back To List</button>
+</form>
+</body>
+</html>
