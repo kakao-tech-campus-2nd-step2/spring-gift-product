@@ -2,81 +2,55 @@ package gift;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
-@RestController
+@Controller
 @RequestMapping("/api/products")
 public class ProductController {
     private final Map<Long, Product> products = new HashMap<>();
+    private long productIdSequence = 1L;
     //조회
     @GetMapping()
-    public Map<Long, Product> getAllProduct(){
-        return products;
+    public String getAllProduct(Model model){
+        model.addAttribute("products",products.values());
+        return "products";
     }
-    @GetMapping("/{id}")
-    public Product getProduct(@PathVariable("id") Long id){
-        if(!products.containsKey(id)){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Product Not Found");
-        }
-        return products.get(id);
-    }
-
     //추가
-    @PostMapping()
-    public String postProduct(@RequestParam("id") Long id,
-        @RequestParam("name") String name,
-        @RequestParam("price") int price,
-        @RequestParam("imageUrl") String imageUrl){
-        if(products.containsKey(id)){
-            return "존재하는 id 입니다.";
-        }
-        var product=new Product(id,name,price,imageUrl);
-        products.put(id,product);
-        return "추가되었습니다.";
+    @GetMapping("/add")
+    public String ShowPostProduct(Model model){
+        return "add";
     }
     //수정
-    @PutMapping("/{id}")
-    public Product putProduct(@PathVariable("id") Long id,@RequestBody Map<String, Object> putData) {
-        if(!products.containsKey(id)){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found");
-        }
-        String name=products.get(id).getName();
-        int price=products.get(id).getPrice();
-        String imageUrl=products.get(id).getImageUrl();
-        if(putData.containsKey("name")) {
-            name = putData.get("name").toString();
-        }
-        if (putData.containsKey("price")) {
-            try {
-                price = Integer.parseInt(putData.get("price").toString());
-            } catch (NumberFormatException e) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid price format");
-            }
-        }
-        if(putData.containsKey("imageUrl")){
-            imageUrl=putData.get("imageUrl").toString();
-        }
-        var product=new Product(id,name,price,imageUrl);
-        products.put(id,product);
-        return product;
+    @GetMapping("/update/{id}")
+    public String showPutProduct(@PathVariable("id") Long id,Model model) {
+        Product product = products.get(id);
+        model.addAttribute("product",product);
+        return "update";
     }
     //삭제
-    @DeleteMapping("/{id}")
+    @GetMapping("/delete/{id}")
     public String deleteProduct(@PathVariable("id") Long id){
-        if(!products.containsKey(id)){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found");
-        }
         products.remove(id);
-        return "삭제되었습니다.";
+        return "redirect:/api/products";
+    }
+    @PostMapping()
+    public String postProduct(Product product,Model model){
+        long id = productIdSequence++;
+        Product tmpProduct= new Product(id,product.getName(),product.getPrice(),product.getImageUrl());
+        products.put(id,tmpProduct);
+        model.addAttribute("product",tmpProduct);
+        return "redirect:/api/products";
+    }
+    @PostMapping("/update/{id}")
+    public String putProduct(@PathVariable("id") Long id,  @ModelAttribute Product product){
+        Product tmpProduct= new Product(id,product.getName(),product.getPrice(),product.getImageUrl());
+        products.put(id,tmpProduct);
+        return "redirect:/api/products";
     }
 }
