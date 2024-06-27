@@ -24,4 +24,10 @@ public class ProductRepository {
         String sql = "SELECT * FROM product WHERE id = ?";
         return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Product.class), id);
     }
+
+    public void save(Product product) {
+        String sql = "INSERT INTO product (name, price, image_url) VALUES (?, ?, ?)";
+        jdbcTemplate.update(sql, product.getName(), product.getPrice(), product.getImageUrl());
+    }
+
 }
