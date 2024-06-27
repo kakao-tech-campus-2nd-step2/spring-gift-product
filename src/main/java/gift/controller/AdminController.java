@@ -13,12 +13,14 @@ public class AdminController {
 
     Products products = Products.getInstance();
 
+    //기본화면
     @GetMapping
     public String admin() {
         return "admin";
 
     }
 
+    //상품 관리 화면
     @GetMapping("/product-management")
     public String productManage(Model model) {
         model.addAttribute("products",products.getProducts());
@@ -27,6 +29,8 @@ public class AdminController {
 
     }
 
+
+    //상품 추가 화면
     @GetMapping("/product-add")
     public String productAdd(Model model) {
         model.addAttribute("product", new Product());
