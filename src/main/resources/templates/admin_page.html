@@ -25,6 +25,7 @@
               <td th:text="${product.name()}"></td>a
               <td th:text="${product.price()}"></td>
               <td th:text="${product.imageUrl()}"></td>
+              <td> <a th:href="@{'/admin/edit/' + ${product.id}}">Edit</a></td>
             </tr>
           </tbody>
         </table>

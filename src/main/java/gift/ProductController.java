@@ -48,15 +48,21 @@ public class ProductController {
         return "redirect:/admin";
     }
 
-    // @PutMapping("/products/{id}")
-    // public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product product) {
-    //     if (!products.containsKey(id)) {
-    //         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    //     }
-    //     Product updatedProduct = new Product(id, product.name(), product.price(), product.imageUrl());
-    //     products.put(id, updatedProduct);
-    //     return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
-    // }
+    @GetMapping("/edit/{id}")
+    public String showEditForm(@PathVariable Long id, Model model) {
+        Product product = products.get(id);
+        if (product != null) {
+            model.addAttribute("product", product);
+            return "edit_product_form";
+        }
+        return "redirect:/admin";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String updateProduct(@PathVariable Long id, @ModelAttribute Product updatedProduct) {
+        products.put(id, updatedProduct);  
+        return "redirect:/admin";
+    }
 
     // @DeleteMapping("/products/{id}")
     // public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
