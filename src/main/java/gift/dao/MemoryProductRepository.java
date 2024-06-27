@@ -15,8 +15,8 @@ public class MemoryProductRepository implements ProductRepository {
     private final Map<Long, Product> products = new HashMap<>();
 
     @Override
-    public void save(Product product) {
-        products.put(product.getId(), product);
+    public Product save(Product product) {
+        return products.put(product.getId(), product);
     }
 
     @Override
