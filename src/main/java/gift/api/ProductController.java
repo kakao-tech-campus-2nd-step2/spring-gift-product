@@ -21,14 +21,12 @@ public class ProductController {
 
     // 상품 전체 조회
     @GetMapping
-    @ResponseBody
     public List<ProductResponse> getAllProducts() {
         return productService.getAllProducts();
     }
 
     // 상품 상세 조회
     @GetMapping("/{id}")
-    @ResponseBody
     public ProductResponse getProduct(@PathVariable Long id) {
         return productService.getProductById(id);
     }
