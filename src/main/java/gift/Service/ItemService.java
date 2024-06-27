@@ -30,5 +30,13 @@ public class ItemService {
         return itemRepository;
     }
 
+    public void updateItem(ItemDTO itemDTO,Long id){
+        Item item = new Item(
+            id,itemDTO.getName(),itemDTO.getPrice(),itemDTO.getImgUrl());
+        itemRepository.replace(id,item);
+    }
+    public void deleteItem(Long id){
+        itemRepository.remove(id);
+    }
 
 }
