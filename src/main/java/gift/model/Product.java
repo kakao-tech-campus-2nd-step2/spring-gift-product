@@ -3,7 +3,7 @@ package gift.model;
 public class Product {
     private long id;
     private String name;
-    private int price;
+    private Integer price;
     private String imageUrl;
 
     public Product(long id, String name, int price, String imageUrl) {
@@ -11,6 +11,9 @@ public class Product {
         this.name = name;
         this.price = price;
         this.imageUrl = imageUrl;
+    }
+
+    public Product() {
     }
 
     public String getImageUrl() {
@@ -21,11 +24,11 @@ public class Product {
         this.imageUrl = imageUrl;
     }
 
-    public int getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 
