@@ -40,4 +40,11 @@ public class ProductController {
         model.addAttribute("productDto", productService.findById(id));
         return "products/edit";
     }
+
+    @PostMapping("/update/{id}")
+    public String updateProduct(@PathVariable Long id, @ModelAttribute ProductRequestDto productDto){
+        productService.updateById(id, productDto);
+        return "redirect:/products";
+    }
+
 }
