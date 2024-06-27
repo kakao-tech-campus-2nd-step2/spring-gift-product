@@ -24,7 +24,7 @@ public class GiftService {
         return byId;
     }
     public List<Product> getAllProduct(){
-        List<Product> ALL = productRepository.findALL();
+        List<Product> ALL = productRepository.findAll();
         if (ALL == null){
             throw new ProductNotFoundException("Product NOT FOUND");
         }
