@@ -25,4 +25,15 @@ public class ProductController {
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
+    @PostMapping
+    public ResponseEntity<String> postProduct(@RequestBody Product product) {
+        if (products.containsKey(product.id())) {
+            return new ResponseEntity<>("해당 ID의 상품이 이미 존재합니다.",HttpStatus.CONFLICT);
+        }
+        product = new Product(currentId++, product.name(), product.price(), product.imageUrl());
+        products.put(product.id(), product);
+        return new ResponseEntity<>("상품이 정상적으로 추가되었습니다.", HttpStatus.CREATED);
+
+    }
+
 }
