@@ -49,11 +49,6 @@ public class ProductController {
         return "product";  // Ensure this matches the name of your Thymeleaf template
     }
 
-    @GetMapping("/")
-    public String defaultPage(Model model) {
-        return listupProduct(model);
-    }
-
     @GetMapping("/search")
     public String searchProduct(@RequestParam("keyword") String keyword, Model model) {
         model.addAttribute("productList", productService.getAllProducts());
