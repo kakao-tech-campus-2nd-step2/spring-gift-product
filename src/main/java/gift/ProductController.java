@@ -51,12 +51,13 @@ public class ProductController {
         return "redirect:/products";
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteProduct(@PathVariable Long id) {
+    @PostMapping("/delete/{id}")
+    public String deleteProduct(@PathVariable Long id) {
         if (!products.containsKey(id)) {
             throw new IllegalArgumentException("상품이 없습니다.");
         }
         products.remove(id);
+        return "redirect:/products";
     }
 
     @GetMapping("/{id}")
