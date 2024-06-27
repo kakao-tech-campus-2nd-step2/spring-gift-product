@@ -5,12 +5,14 @@ public class Product {
     private String name;
     private Integer price;
     private String imgUrl;
+    private Boolean isDeleted;
 
     public Product(Long id, String name, Integer price, String imgUrl) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.imgUrl = imgUrl;
+        this.isDeleted = Boolean.FALSE;
     }
 
     public Long getId() {
@@ -33,5 +35,9 @@ public class Product {
         if(this.id == null){
             this.id = id;
         }
+    }
+
+    public void delete(){
+        this.isDeleted = Boolean.TRUE;
     }
 }
