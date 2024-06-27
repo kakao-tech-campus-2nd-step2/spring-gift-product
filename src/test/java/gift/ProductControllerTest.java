@@ -50,4 +50,11 @@ public class ProductControllerTest {
         assertEquals(product.getImageUrl(), "http://imageishere.com");
     }
 
+    @Test
+    @DisplayName("상품이 정상적으로 삭제되는지 확인")
+    public void deleteProduct() {
+        boolean isDeleted = controller.deleteProduct(1L);
+
+        assertTrue(isDeleted);
+    }
 }
