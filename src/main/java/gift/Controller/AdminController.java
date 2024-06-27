@@ -51,7 +51,7 @@ public class AdminController {
     @PostMapping("/update/{id}")
     public String updateProduct(@PathVariable("id") Long id, Model model, @ModelAttribute Product product){
         if(products.updateProduct(product)){
-            return "redirect:/productss";
+            return "redirect:/products";
         }
         model.addAttribute("error","존재하지 않는 상품 id");
         return "update-product";

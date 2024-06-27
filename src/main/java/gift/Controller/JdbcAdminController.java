@@ -56,7 +56,7 @@ public class JdbcAdminController {
     @PostMapping("/update/{id}")
     public String updateProduct(@PathVariable("id") Long id, Model model, @ModelAttribute Product product){
         if(jdbcProducts.updateProduct(product)){
-            return "redirect:/products";
+            return "redirect:/jdbc/products";
         }
         model.addAttribute("error","존재하지 않는 상품 id");
         return "jdbc-update-product";
@@ -65,7 +65,7 @@ public class JdbcAdminController {
     @GetMapping("/delete/{id}")
     public String deleteProduct(@PathVariable("id") Long id, Model model) {
         jdbcProducts.deleteProduct(id);
-        return "redirect:/products";
+        return "redirect:/jdbc/products";
     }
 
 }
