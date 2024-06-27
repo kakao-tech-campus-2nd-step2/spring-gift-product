@@ -31,6 +31,8 @@
 3. ItemDTO 구현
 4. Controller와 Service unit Test 추가
 
+관리자 페이지 진입 요청 -> localhost:8080/product/list
+
 ## 구현 목록
 ### Controller
 - getList : 상품 목록 페이지 요청 처리 (GET-"/product/list")
