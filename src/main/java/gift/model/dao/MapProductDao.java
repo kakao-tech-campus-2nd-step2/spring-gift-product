@@ -27,12 +27,12 @@ public class MapProductDao implements ProductRepository {
     }
 
     @Override
-    public Product find(Long id) {
+    public Product find(final Long id) {
         return products.getOrDefault(id, null);
     }
 
     @Override
-    public void delete(Product entity) {
+    public void delete(final Product entity) {
         products.remove(entity.getId());
     }
 
