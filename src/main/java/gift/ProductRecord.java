@@ -1,4 +1,4 @@
 package gift;
 
-public record ProductRecord(String id, String name, int price, String imageUrl) {
+public record ProductRecord(long id, String name, int price, String imageUrl) {
 }
