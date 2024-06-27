@@ -25,7 +25,7 @@ public class ProductController {
     //상품 전체 조회 페이지
     @GetMapping
     public String showProductList(Model model) {
-        List<Product> products = productService.selectAllProduct();
+        List<Product> products = productService.getAllProducts();
         model.addAttribute("products", products);
         return "products_list";
     }
@@ -47,7 +47,7 @@ public class ProductController {
     @GetMapping("/{id}")
     public String showOneProduct(@PathVariable("id") Long id, Model model) {
         List<Product> products = new ArrayList<>();
-        products.add(productService.selectProductById(id));
+        products.add(productService.getProductById(id));
         model.addAttribute("products", products);
         return "products_list";
     }
@@ -62,7 +62,7 @@ public class ProductController {
     //상품 수정 폼 페이지
     @GetMapping("/{id}/update")
     public String updateProductForm(@PathVariable("id") Long id, Model model) {
-        Product product = productService.selectProductById(id);
+        Product product = productService.getProductById(id);
         model.addAttribute("product", product);
         return "update_form";
     }
