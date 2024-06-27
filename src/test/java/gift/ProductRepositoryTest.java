@@ -1,10 +1,10 @@
 package gift;
 
 
-import model.Product;
+import gift.model.Product;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import repository.ProductRepository;
+import gift.repository.ProductRepository;
 
 import java.util.List;
 import java.util.Optional;
