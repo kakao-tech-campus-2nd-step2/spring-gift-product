@@ -5,7 +5,11 @@ import java.util.Map;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 @Controller
@@ -34,8 +38,58 @@ public class ProductViewController {
     }
 
     @GetMapping("/form")
-    public String showProductForm(Model model) {
-        model.addAttribute("product", new Product(0L, "", 0, ""));
+    public String showProductForm(@RequestParam(required = false) Long id, Model model) {
+        if (id == null) {
+            model.addAttribute("product", new Product(0L, "", 0, ""));
+            return "productForm"; // 폼 템플릿 파일
+        }
+
+        try {
+            Product product = restTemplate.getForObject("http://localhost:8080/api/products/" + id, Product.class);
+            model.addAttribute("product", product);
+        } catch (HttpClientErrorException e) {
+            model.addAttribute("error", "Product not found: " + e.getMessage());
+            return "redirect:/admin";
+        }
+
         return "productForm"; // 폼 템플릿 파일
+    }
+
+    @PostMapping("/form")
+    public String saveProduct(@ModelAttribute Product product,
+        @RequestParam(required = false, name = "_method") String method, Model model) {
+        if (isUpdateMethod(method)) {
+            return updateProduct(product, model);
+        }
+        return createProduct(product, model);
+    }
+
+    private boolean isUpdateMethod(String method) {
+        return "put".equalsIgnoreCase(method);
+    }
+
+    private String updateProduct(Product product, Model model) {
+        try {
+            restTemplate.put("http://localhost:8080/api/products/" + product.getId(), product);
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("error", "Failed to save product: " + e.getMessage());
+            return "productForm";
+        }
+        return "redirect:/admin";
+    }
+
+    private String createProduct(Product product, Model model) {
+        try {
+            restTemplate.postForObject("http://localhost:8080/api/products", product, Product.class);
+        } catch (HttpClientErrorException.BadRequest e) {
+            model.addAttribute("error", "Product ID already exists: " + e.getMessage());
+            return "productForm";
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("error", "Failed to save product: " + e.getMessage());
+            return "productForm";
+        }
+        return "redirect:/admin";
     }
 }
