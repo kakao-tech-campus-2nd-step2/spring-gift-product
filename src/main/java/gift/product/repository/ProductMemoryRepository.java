@@ -1,5 +1,6 @@
-package gift.product;
+package gift.product.repository;
 
+import gift.product.Product;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.Map;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ProductRepository {
+public class ProductMemoryRepository {
     private final Map<Long, Product> products = new HashMap<>();
     private Long counter = 0L;
 

@@ -1,31 +1,33 @@
-package gift.product;
+package gift.product.service;
 
+import gift.product.Product;
+import gift.product.repository.ProductMemoryRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ProductService {
-    private final ProductRepository productRepository;
+    private final ProductMemoryRepository productMemoryRepository;
 
     @Autowired
-    public ProductService(ProductRepository productRepository) {
-        this.productRepository = productRepository;
+    public ProductService(ProductMemoryRepository productMemoryRepository) {
+        this.productMemoryRepository = productMemoryRepository;
     }
 
     public List<Product> findAllProducts() {
-        return productRepository.findAllProducts();
+        return productMemoryRepository.findAllProducts();
     }
 
     public Product createProduct(Product product) {
-        return productRepository.createProduct(product);
+        return productMemoryRepository.createProduct(product);
     }
 
     public Product updateProduct(Long id, Product product) {
         if(!isExist(id)) {
             return createProduct(product);
         }
-        return productRepository.updateProduct(id, product);
+        return productMemoryRepository.updateProduct(id, product);
     }
 
     public Long deleteProduct(Long id) {
@@ -33,14 +35,14 @@ public class ProductService {
             // 예외처리 학습후 반환값 수정 예정
             return -1L;
         }
-        return productRepository.deleteProduct(id);
+        return productMemoryRepository.deleteProduct(id);
     }
 
     public Product getProductById(Long id) {
-        return productRepository.findProductById(id);
+        return productMemoryRepository.findProductById(id);
     }
 
     private boolean isExist(Long id) {
-        return productRepository.isExist(id);
+        return productMemoryRepository.isExist(id);
     }
 }
