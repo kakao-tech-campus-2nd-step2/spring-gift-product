@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>상품 관리</title>
+<!--    <script> type="text/javascript" th:src="@{/js/admin.js}"</script>-->
 </head>
 <body>
     <h1>상품 관리</h1>
@@ -41,5 +42,45 @@
             </form>
         </div>
     </div>
+    <script>
+        let products = [];
+
+        // 페이지 로드 시 상품 목록을 가져옴
+        document.addEventListener("DOMContentLoaded", () => {
+            fetchProducts();
+        });
+
+        /**
+         * 모든 상품을 가져와서 테이블에 렌더링합니다.
+         */
+        const fetchProducts = async () => {
+            try {
+                const response = await fetch("/api/products/all");
+                const data = await response.json();
+                products = data;
+                renderProducts(products);
+            } catch (error) {
+                console.error('Failed to fetch products:', error);
+            }
+        };
+
+        /**
+         * 상품 목록을 테이블에 렌더링합니다.
+         * @param {Array} products - 상품 목록
+         */
+        const renderProducts = (products) => {
+            const tbody = document.getElementById("productTableBody");
+            tbody.innerHTML = products.map(product => `
+            <tr>
+                <td>${product.id}</td>
+                <td>${product.name}</td>
+                <td>${product.price}</td>
+                <td><img src="${product.imagePath}" alt="${product.name}"></td>
+                <td><button onclick="showEditProductModal(${product.id})">수정</button></td>
+                <td><button onclick="deleteProduct(${product.id})">삭제</button></td>
+            </tr>
+        `).join("");
+        };
+    </script>
 </body>
 </html>
