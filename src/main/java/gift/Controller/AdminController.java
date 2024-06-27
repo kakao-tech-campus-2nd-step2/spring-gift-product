@@ -26,15 +26,15 @@ public class AdminController {
 
     @GetMapping("/add")
     public String showAddProductForm(Model model) {
-        model.addAttribute("product",new Product(0,"",0,""));
+        model.addAttribute("product", new Product(0, "", 0, ""));
         return "add_product_form";
     }
 
     @PostMapping("/add")
     public String addProduct(@ModelAttribute Product product, Model model) {
-        if(products.containsKey(product.id())){
-            model.addAttribute("error","존재하는 ID 입니다.");
-            model.addAttribute("product",product);
+        if (products.containsKey(product.id())) {
+            model.addAttribute("error", "존재하는 ID 입니다.");
+            model.addAttribute("product", product);
             return "add_product_form";
         }
         products.put(product.id(), product);
@@ -49,7 +49,8 @@ public class AdminController {
     }
 
     @PutMapping("/edit/{id}")
-    public String editProduct(@PathVariable("id") long id, @ModelAttribute Product updatedProduct, Model model) {
+    public String editProduct(@PathVariable("id") long id, @ModelAttribute Product updatedProduct,
+        Model model) {
         if (id != updatedProduct.id() && products.containsKey(updatedProduct.id())) {
             model.addAttribute("error", "존재하는 ID 입니다.");
             model.addAttribute("product", products.get(id));
