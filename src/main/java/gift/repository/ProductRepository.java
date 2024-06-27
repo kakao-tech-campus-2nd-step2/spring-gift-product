@@ -29,7 +29,9 @@ public class ProductRepository {
     }
 
     public void deleteById(Long id) {
+        Id--;
         products.remove(id);
+
     }
 }
 
