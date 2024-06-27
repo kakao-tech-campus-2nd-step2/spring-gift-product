@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>상품 수정</title>
+</head>
+<body>
+  <h1>상품 수정</h1>
+  <form action="/admin/products/edit/id" method="post">
+    <input type="hidden" name="_method" value="put"/>
+    <div>
+      <p style="color:red;">중복된 id입니다.</p>
+    </div>
+    <div>
+      <label for="id">ID:</label>
+      <input type="text" id="id"/>
+    </div>
+    <div>
+      <label for="name">상품 이름:</label>
+      <input type="text" id="name"/>
+    </div>
+    <div>
+      <label for="price">가격:</label>
+      <input type="text" id="price"/>
+    </div>
+    <div>
+      <label for="imageUrl">Image URL:</label>
+      <input type="text" id="imageUrl"/>
+    </div>
+    <div>
+      <button type="submit">Submit</button>
+    </div>
+  </form>
+</body>
+</html>
