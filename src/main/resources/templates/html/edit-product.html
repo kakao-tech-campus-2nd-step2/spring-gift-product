@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="https://www.thymeleaf.org">
+  <head>
+    <meta http-equiv="Content-Type" , content="text/html; charset=UTF-8" />
+    <link th:href="@{/css/manager.css}" rel="stylesheet" />
+    <title>Edit Page</title>
+  </head>
+  <header>
+    <span class="title y-middle x-start">Manager Page</span>
+    <div id="buttons" class="x-end y-middle">
+      <!-- 원래는 post여야 합니다 -->
+      <form action="/products/read" method="get">
+        <input
+          type="text"
+          name="password"
+          class="invisible"
+          th:value="${password}"
+        />
+        <button type="submit" class="normal-buttons">뒤로 가기</button>
+      </form>
+    </div>
+  </header>
+  <body>
+    <table id="products" class="x-middle">
+      <caption class="title">
+        제품 정보 변경하기
+      </caption>
+      <colgroup>
+        <col />
+        <col />
+        <col />
+        <col />
+        <col />
+      </colgroup>
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Image</th>
+          <th>Control</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <form action="/products/create" method="post">
+            <input
+              type="text"
+              name="password"
+              class="invisible"
+              th:value="${password}"
+            />
+            <td><span th:text="${product.id}">Id</span></td>
+            <td><span th:text="${product.name}">Name</span></td>
+            <td><span th:text="${product.price}">Price</span></td>
+            <td><span th:text="${product.image}">Image</span></td>
+            <td><span>이전 정보</span></td>
+          </form>
+        </tr>
+        <tr>
+          <form
+            th:action="@{/products/{id}/update(id=${product.id})}"
+            method="post"
+          >
+            <input
+              type="text"
+              name="password"
+              class="invisible"
+              th:value="${password}"
+            />
+            <td><input type="number" name="id" /></td>
+            <td><input type="text" name="name" /></td>
+            <td><input type="number" name="price" /></td>
+            <td><input type="text" name="image" /></td>
+            <td>
+              <button type="submit" class="normal-buttons">정보 변경</button>
+            </td>
+          </form>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
