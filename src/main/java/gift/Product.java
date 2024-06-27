@@ -1,6 +1,7 @@
 package gift;
 
 public class Product {
+
     String name;
     Long price;
     String imageUrl;

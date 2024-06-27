@@ -1,5 +1,6 @@
 package gift;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,10 +18,20 @@ public class ProductController {
     }
 
     @GetMapping()
-    public Product getProduct(@RequestParam Long id) throws Exception {
-        try{
+    public Product getProduct(@RequestParam Long id) {
+        try {
             return productService.getProduct(id);
-        } catch (Exception e){
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
+    @GetMapping("/all")
+    public List<Product> getAllProduct() {
+        try {
+            return productService.getAllProduct();
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         return null;

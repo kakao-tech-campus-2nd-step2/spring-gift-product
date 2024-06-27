@@ -1,5 +1,6 @@
 package gift;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +14,16 @@ public class ProductService {
     }
 
     public Product getProduct(Long id) {
-        if(!productRepository.isExistProductId(id)){
-            throw new NoSuchElementException("존재하지 않는 상품입니다.");
+        if (!productRepository.isExistProductId(id)) {
+            throw new NoSuchElementException("Invalid Product ID");
         }
         return productRepository.getProductById(id);
+    }
+
+    public List<Product> getAllProduct() {
+        if (productRepository.isEmptyProductList()) {
+            throw new NoSuchElementException("No Product in DB");
+        }
+        return productRepository.getAllProduct();
     }
 }
