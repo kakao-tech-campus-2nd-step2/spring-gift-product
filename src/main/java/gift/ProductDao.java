@@ -28,4 +28,10 @@ public class ProductDao {
             .param(List.of(product.name(), product.price(), product.imageUrl(), id))
             .update();
     }
+
+    public void delete(long id) {
+        jdbcClient.sql("delete from product where id = :id")
+            .param("id", id)
+            .update();
+    }
 }

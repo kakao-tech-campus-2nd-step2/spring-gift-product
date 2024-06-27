@@ -38,4 +38,10 @@ public class ProductController {
         productDao.update(id, product);
         return ResponseEntity.ok().build();
     }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> delete(@PathVariable("id") long id) {
+        productDao.delete(id);
+        return ResponseEntity.ok().build();
+    }
 }
