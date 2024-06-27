@@ -6,12 +6,12 @@
 - [x] Products 클래스 생성
   - [x] Bean등록
   - [x] DI
-- [ ] CRUD
+- [x] CRUD
   - [x] GetMapping
     - [x] Test
-  - [ ] PostMapping
+  - [x] PostMapping
     - [ ] Test
-  - [ ] PatchMapping
+  - [x] PatchMapping
     - [ ] Test
-  - [ ] DeleteMapping
-    - [ ] Test
+  - [x] DeleteMapping
+    - [x] Test
