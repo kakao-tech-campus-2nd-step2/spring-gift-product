@@ -36,7 +36,7 @@ public class JdbcAdminController {
     @PostMapping("/add")
     public String addProduct(Model model,@ModelAttribute Product product){
         if(jdbcProducts.addProduct(product)){
-            return "redirect:/products";
+            return "redirect:/jdbc/products";
         }
         model.addAttribute("error","이미존재하는 상품 id");
         return "jdbc-products-form";
