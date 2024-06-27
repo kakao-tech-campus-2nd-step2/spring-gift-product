@@ -28,7 +28,8 @@ public class AdminController {
 
     // 상품 추가 폼 표시
     @GetMapping("/add")
-    public String showAddProductForm() {
+    public String showAddProductForm(Model model) {
+        model.addAttribute("product", new Product());
         return "admin-product-form";
     }
 
