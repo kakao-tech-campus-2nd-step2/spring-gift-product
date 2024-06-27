@@ -1,10 +1,8 @@
 package gift.controller;
 
 import gift.controller.req.ProductRequest;
-import gift.controller.res.ProductResponse;
 import gift.model.Product;
-import gift.model.ProductRepository;
-import java.nio.file.Path;
+import gift.model.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -1,11 +1,12 @@
 package gift.model;
 
+import gift.model.repository.ProductRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 import java.util.UUID;
 
-public class Products implements ProductRepository{
+public class Products implements ProductRepository {
     private final TreeMap<Long, Product> products;
 
     public Products() {
