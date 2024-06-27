@@ -1,6 +1,7 @@
 package gift;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,5 +39,10 @@ public class PdController {
     @DeleteMapping("/{id}")
     public void deleteProduct(@PathVariable Long id) {
         products.remove(id);
+    }
+
+    @PostMapping("/delete")
+    public void deleteSelectedProducts(@RequestBody List<Long> productIds) {
+        productIds.forEach(products::remove);
     }
 }
