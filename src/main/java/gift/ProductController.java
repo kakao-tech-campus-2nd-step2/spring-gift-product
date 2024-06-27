@@ -26,6 +26,23 @@ public class ProductController {
         return "addForm";
     }
 
+    @GetMapping("/api/products/{id}")
+    public String editProductForm(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("product", productMap.get(id));
+        return "editForm";
+    }
+
+    @PostMapping("/api/products/edit")
+    public String editProduct(@RequestParam("id") Long id,
+                              @RequestParam("name") String name,
+                              @RequestParam("price") Long price,
+                              @RequestParam("imageUrl") String imageUrl) {
+        if(productMap.containsKey(id)) {
+            productMap.put(id, new Product(id, name, price, imageUrl));
+        }
+        return "redirect:/api/products";
+    }
+
     @PostMapping("/api/products/add")
     public String addProduct(@RequestParam("id") Long id,
                              @RequestParam("name") String name,
@@ -43,14 +60,5 @@ public class ProductController {
             productMap.remove(id);
         }
         return "redirect:/api/products";
-    }
-
-    @PutMapping("/api/products/{id}")
-    public String updateProduct(@RequestBody Product updatedProduct, @PathVariable(name = "id") Long id) {
-        if(productMap.containsKey(id)) {
-            productMap.put(id, updatedProduct);
-            return "상품 정보 수정이 완료되었습니다.";
-        }
-        return "해당 상품이 존재하지 않습니다.";
     }
 }
