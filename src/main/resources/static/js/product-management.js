@@ -60,7 +60,7 @@ $(document).ready(function() {
             price: price,
             imageUrl: imageUrl
         };
-        console.log("ID: " + id);
+
         $.ajax({
             url: '/api/products/' + id,
             type: 'PUT',

@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
     <title>Management Products</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
@@ -12,57 +13,51 @@
     </style>
 </head>
 <body>
-<h1>Management Products</h1>
-<div>
-    <button id="addProductBtn">Add New Product</button>
+<h1>Management Products_부산대 BE_박민재</h1>
+<div class="container">
+    <button id="addProductBtn" class="add-btn">Add New Product</button>
 </div>
-<table>
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Price</th>
-        <th>ImageUrl</th>
-        <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <th:block th:if="${#lists.isEmpty(products)}">
+<div class="table-container">
+    <table>
+        <thead>
         <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>ImageUrl</th>
+            <th class="actions-column">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${#lists.isEmpty(products)}">
             <td colspan="5">데이터가 존재하지 않습니다</td>
         </tr>
-    </th:block>
-    <th:block th:unless="${#lists.isEmpty(products)}">
         <tr th:each="product : ${products}" th:attr="data-id=${product.id}">
             <td th:text="${product.id}">0</td>
             <td>
                 <span class="display-text" th:text="${product.name}">Sample Name</span>
-                <label>
-                    <input class="edit-input" type="text" th:value="${product.name}" />
-                </label>
+                <input class="edit-input" type="text" th:value="${product.name}" />
             </td>
             <td>
                 <span class="display-text" th:text="${product.price}">0.0</span>
-                <label>
-                    <input class="edit-input" type="text" th:value="${product.price}" />
-                </label>
+                <input class="edit-input" type="text" th:value="${product.price}" />
             </td>
             <td>
                 <span class="display-text" th:text="${product.imageUrl}">Sample Url</span>
-                <label>
-                    <input class="edit-input" type="text" th:value="${product.imageUrl}" />
-                </label>
+                <input class="edit-input" type="text" th:value="${product.imageUrl}" />
             </td>
-            <td>
-                <button class="edit-btn">Edit</button>
-                <button class="save-btn" style="display: none;">Save</button>
-                <button class="delete-btn">Delete</button>
+            <td class="actions-column">
+                <div class="button-group">
+                    <button class="edit-btn">Edit</button>
+                    <button class="save-btn" style="display: none;">Save</button>
+                    <button class="delete-btn">Delete</button>
+                </div>
             </td>
         </tr>
-    </th:block>
-    </tbody>
-</table>
-<div>
+        </tbody>
+    </table>
+</div>
+<div class="pagination">
     <span th:if="${currentPage > 0}">
         <a th:href="@{/admin/products(page=${currentPage - 1}, size=${pageSize})}">Previous</a>
     </span>
@@ -74,15 +69,21 @@
 <!-- Add Product Modal -->
 <div id="addProductModal" title="Add New Product" style="display: none;">
     <form id="addProductForm">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" />
-        <label for="price">Price:</label>
-        <input type="text" id="price" name="price" />
-        <label for="imageUrl">ImageUrl:</label>
-        <input type="text" id="imageUrl" name="imageUrl" />
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" />
+        </div>
+        <div class="form-group">
+            <label for="price">Price:</label>
+            <input type="text" id="price" name="price" />
+        </div>
+        <div class="form-group">
+            <label for="imageUrl">ImageUrl:</label>
+            <input type="text" id="imageUrl" name="imageUrl" />
+        </div>
     </form>
 </div>
 
-<script src="/product-management.js"></script>
+<script src="/js/product-management.js"></script>
 </body>
 </html>
