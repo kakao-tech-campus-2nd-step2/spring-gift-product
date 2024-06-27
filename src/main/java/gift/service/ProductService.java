@@ -2,6 +2,7 @@ package gift.service;
 
 import gift.dto.CreateProduct;
 import gift.dto.ProductDTO;
+import gift.dto.ProductDetailDTO;
 import gift.entity.Product;
 import gift.repository.CollectionDB;
 import org.springframework.stereotype.Service;
@@ -34,4 +35,7 @@ public class ProductService {
         collectionDB.saveProduct(request.getId(), product);
     }
 
+    public ProductDetailDTO getDeveloperDetail(Long id) {
+        return ProductDetailDTO.fromEntity(collectionDB.getProducts().get(id));
+    }
 }

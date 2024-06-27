@@ -2,11 +2,11 @@ package gift.dto;
 
 import gift.entity.Product;
 
-public class ProductDTO {
+public class ProductDetailDTO {
     private String name,url;
     private int price;
 
-    public ProductDTO(String name, int price, String url) {
+    public ProductDetailDTO(String name, int price, String url) {
         this.name=name;
         this.price=price;
         this.url=url;
@@ -24,8 +24,8 @@ public class ProductDTO {
         return url;
     }
 
-    public static ProductDTO fromEntity(Product product) {
-        return new ProductDTO(product.getName(), product.getPrice(), product.getUrl());
+    public static ProductDetailDTO fromEntity(Product product) {
+        return new ProductDetailDTO(product.getName(), product.getPrice(), product.getUrl());
     }
 
     public void setName(String name) {
