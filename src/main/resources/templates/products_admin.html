@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <title>Management Products</title>
+</head>
+<body>
+<h1>Management Products</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>ImageUrl</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="product : ${products}">
+        <td th:text="${product.id}">0</td>
+        <td th:text="${product.name}">Sample Name</td>
+        <td th:text="${product.price}">0.0</td>
+        <td th:text="${product.imageUrl}">Sample Url</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
