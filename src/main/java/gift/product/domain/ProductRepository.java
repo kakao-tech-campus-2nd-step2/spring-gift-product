@@ -22,9 +22,11 @@ public class ProductRepository {
     }
 
     public void addProduct(ProductCreateCommand product) {
+        Long nextId = products.isEmpty() ? 1L : products.getLast().getId() + 1L;
+
         products.add(
             new Product(
-            products.size() + 1L,
+                nextId,
                 product.name(),
                 product.price(),
                 product.imageUrl()
