@@ -38,7 +38,8 @@ public class AdminController {
 
     // 상품 수정 폼 표시
     @GetMapping("/edit/{id}")
-    public String updateProduct(@PathVariable("id") Long id) {
+    public String updateProduct(Model model, @PathVariable("id") Long id) {
+        model.addAttribute("product", productController.getProduct(id));
         return "product-edit-form";
     }
 }
