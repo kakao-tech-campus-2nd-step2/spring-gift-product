@@ -20,10 +20,10 @@ public class Item {
         this.imgUrl = imgUrl;
     }
 
-    Long id;
-    String name;
-    Long price;
-    String imgUrl;
+    private Long id;
+    private String name;
+    private Long price;
+    private String imgUrl;
     public Item(){}
 
     public Item(Long id, String name, Long price, String imgUrl) {
