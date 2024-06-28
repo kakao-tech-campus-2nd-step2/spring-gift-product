@@ -38,6 +38,12 @@ public class ProductRepository {
         return jdbctemplate.query(sql, new BeanPropertyRowMapper<>(Product.class));
     }
 
+    public Product selectProductById(Long id) {
+        var sql = "SELECT * FROM products WHERE id = ?";
+        return jdbctemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Product.class), id);
+
+    }
+
     public void updateProduct(Long id, Product product) {
         var sql = "UPDATE products SET name = ?, price = ?, imageUrl = ? WHERE id = ?";
         jdbctemplate.update(sql, product.getName(), product.getPrice(), product.getImageUrl(), id);
