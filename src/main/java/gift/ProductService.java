@@ -41,15 +41,8 @@ public class ProductService {
     }
 
     public void deleteProduct(Long id) {
-//        TODO
-//        삭제 DB 로직으로 변경
-//        쿼리를 통해 검증/삭제 한번에 처리 가능
-//        if(!products.containsKey(id)) {
-//            throw new IllegalArgumentException(
-//                "[ERROR] ID가 " + id + "인 상품을 찾을 수 없어 삭제할 수 없습니다."
-//            );
-//        }
-//        products.remove(id);
+        String sql = "DELETE FROM products WHERE id = ?";
+        jdbcTemplate.update(sql, id);
     }
 
     private RowMapper<Product> productRowMapper() {
