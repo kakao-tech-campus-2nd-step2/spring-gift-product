@@ -34,13 +34,13 @@ public class ProductDao {
 
     public void addProduct(Connection connection, ProductVo productVo) throws Exception {
         var sql = "insert into product_list (id, name, price, imageUrl) values (?, ?, ?, ?)";
-        var statement = connection.prepareStatement(sql);
-        statement.setLong(1, productVo.getId());
-        statement.setString(2, productVo.getName());
-        statement.setInt(3, productVo.getPrice());
-        statement.setString(4, productVo.getImageUrl());
-        statement.execute();
-        statement.close();
+        jdbcTemplate.update(
+            sql,
+            productVo.getId(),
+            productVo.getName(),
+            productVo.getPrice(),
+            productVo.getImageUrl()
+        );
     }
 
     public ProductVo selectProduct(Connection connection, long id) throws Exception {
