@@ -30,17 +30,20 @@ public class ProductController {
 
     @PostMapping("/add")
     public ResponseEntity<Product> addProduct(@RequestPart MultipartFile imageFile,
-                                              @RequestParam Long id,
+                                              //@RequestParam Long id,
                                               @RequestParam String name,
                                               @RequestParam Long price,
                                               @RequestParam String description) {
         try {
-            String imagePath = ImageStorageUtil.saveImage(imageFile, id);
+            //String imagePath = ImageStorageUtil.saveImage(imageFile, id);
+            String imagePath = ImageStorageUtil.saveImage(imageFile, null);
 
             String base64EncodedImagePath = ImageStorageUtil.encodeImagePathToBase64(imagePath);
 
             String imageUrl = base64EncodedImagePath;
-            Product product = new Product(id, name, price, description, imageUrl);
+
+            //Product product = new Product(id, name, price, description, imageUrl);
+            Product product = new Product(null, name, price, description, imageUrl);
 
             productService.addProduct(product);
 
@@ -60,7 +63,7 @@ public class ProductController {
             Product product = productService.getProductById(id);
 
             if (product.getImageUrl() != null && !product.getImageUrl().isEmpty()) {
-                ImageStorageUtil.deleteImage(product.getImageUrl());
+                ImageStorageUtil.deleteImage(ImageStorageUtil.decodeBase64ImagePath(product.getImageUrl()));
             }
 
             String imagePath = ImageStorageUtil.saveImage(imageFile, id);
@@ -106,4 +109,5 @@ public class ProductController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 }

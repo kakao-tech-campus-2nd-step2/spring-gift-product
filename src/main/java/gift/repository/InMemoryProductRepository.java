@@ -4,7 +4,7 @@ import gift.domain.Product;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
-
+/*
 @Repository
 public class InMemoryProductRepository implements ProductRepository {
     private final Map<Long, Product> products = new HashMap<>();
@@ -38,3 +38,6 @@ public class InMemoryProductRepository implements ProductRepository {
         products.remove(id);
     }
 }
+
+
+ */
