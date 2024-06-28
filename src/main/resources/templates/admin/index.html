@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>상품 관리자 페이지</title>
+</head>
+<body>
+  <ul>
+    <li th:each="product : ${products}" th:text="|id : ${product.id} name : ${product.name} price : ${product.price} img : ${product.imageUrl}|"></li>
+  </ul>
+</body>
+</html>
