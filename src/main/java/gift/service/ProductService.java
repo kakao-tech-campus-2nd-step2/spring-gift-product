@@ -38,7 +38,7 @@ public class ProductService {
     }
 
     public void createProduct(Product.CreateProduct create) {
-        long index = productDB.getLastIndex();
+        long index = productDB.getLastId();
         productDB.setProduct(index, productMapper.createProduct(index, create));
     }
 

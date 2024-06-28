@@ -19,7 +19,7 @@ public class ProductDB {
         return products.get(id);
     }
 
-    public int getLastIndex() {
+    public int getLastId() {
         return products.size();
     }
 
