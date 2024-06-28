@@ -82,4 +82,27 @@ public class ProductController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+    @PutMapping("/products/{id}")
+    public ResponseEntity<String> updateProduct(@PathVariable Long id, @RequestBody Product updateProduct) {
+        String sql = "UPDATE products SET name = ?, price = ?, imageUrl = ? WHERE id = ?";
+        try {
+            int rowsUpdated = jdbcTemplate.update(
+                    sql,
+                    updateProduct.name(),
+                    updateProduct.price(),
+                    updateProduct.imageUrl(),
+                    id
+            );
+            if (rowsUpdated > 0) {
+                return ResponseEntity.ok("Product updated successfully");
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update product: " + e.getMessage());
+        }
+    }
+
+
 }
