@@ -24,9 +24,6 @@ public class ProductService {
     }
 
     public List<ProductDto> getAllProduct() {
-        if (productRepository.isEmptyProductList()) {
-            throw new NoSuchElementException("No Product in DB");
-        }
         return productRepository.getAllProduct();
     }
 
