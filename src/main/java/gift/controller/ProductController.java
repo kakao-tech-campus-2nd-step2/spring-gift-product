@@ -32,21 +32,33 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public Product getProduct(@PathVariable Long id) {
-        Product product = repository.findById(id);
-        return repository.findById(id);
+    public ResponseEntity<Product> getProduct(@PathVariable Long id) {
+        Product result = repository.findById(id);
+        if (result != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(result);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
 
 
     
     @PostMapping(path = "", consumes = "application/json")
-    public Product postProduct(@RequestBody ProductForm form) {
-        return repository.save(form);
+    public ResponseEntity<Product> postProduct(@RequestBody ProductForm form) {
+        Product result = repository.save(form);
+        if (result != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(result);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
 
+
     @PutMapping(path = "/{id}", consumes = "application/json")
-    public Product putProduct(@RequestBody ProductForm form, @PathVariable Long id) {
-        return repository.edit(id, form);
+    public ResponseEntity<Product> putProduct(@RequestBody ProductForm form, @PathVariable Long id) {
+        Product result = repository.save(form);
+        if (result != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(result);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
 
 
@@ -58,7 +70,7 @@ public class ProductController {
         if (result) {
               return ResponseEntity.status(HttpStatus.OK).body("Successfully deleted");
         }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad request");
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Bad request");
     }
 
 }
