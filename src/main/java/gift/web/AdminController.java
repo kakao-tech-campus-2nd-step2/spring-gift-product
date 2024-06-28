@@ -1,6 +1,6 @@
-package gift.web.dto;
+package gift.web;
 
-import gift.web.ProductService;
+import gift.web.dto.Product;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
