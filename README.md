@@ -82,3 +82,20 @@
     - /admin/products/delete/{id}
     - 특정 id의 제품을 삭제
     - 성공적으로 삭제되면 상품 목록 조회 페이지로 이동
+***
+## <3단계 데이터베이스 적용>
+***
+### 구현할 기능 목록
+- 데이터베이스 설정
+  - application.properties 파일에 데이터베이스 설정 추가
+- 데이터베이스 초기화
+  - sql 스크립트를 활용해서 초기화
+- ProductRepository 생성
+  - 모든 상품 조회
+  - 주어진 id에 해당하는 상품 조회
+  - 상품 저장
+  - 상품 삭제
+  - 상품 업데이트
+- AdminController 수정
+  - 메모리에 저장하고 있던 모든 코드 제거
+  - ProductRepository를 사용하도록 코드 수정
