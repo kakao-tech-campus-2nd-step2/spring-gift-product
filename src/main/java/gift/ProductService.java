@@ -19,4 +19,15 @@ public class ProductService {
     public Product createProduct(Product product) {
         return productRepository.createProduct(product);
     }
+
+    public Product updateProduct(Long id, Product product) {
+        if(!isExist(id)) {
+            return createProduct(product);
+        }
+        return productRepository.updateProduct(id, product);
+    }
+
+    private boolean isExist(Long id) {
+        return productRepository.isExist(id);
+    }
 }
