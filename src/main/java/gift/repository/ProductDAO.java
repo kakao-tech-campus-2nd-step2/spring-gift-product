@@ -17,6 +17,13 @@ public class ProductDAO {
         return records.values().toArray(new ProductRecord[records.size()]);
     }
 
+    public ProductRecord getRecord(long id) {
+        if (!records.containsKey(id)) {
+            throw new NoSuchElementException();
+        }
+        return records.get(id);
+    }
+
     public ProductRecord addNewRecord(ProductRecord product) {
         return addNewRecord(product, getNewId());
     }

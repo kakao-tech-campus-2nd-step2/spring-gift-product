@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class AdminController {
@@ -18,5 +19,13 @@ public class AdminController {
 
         model.addAttribute("products", products);
         return "admin";
+    }
+
+    @GetMapping("/products/{id}/edit")
+    public String editProduct(@PathVariable int id, Model model) {
+        ProductRecord product = productDAO.getRecord(id);
+        model.addAttribute("product", product);
+
+        return "product_edit";
     }
 }
