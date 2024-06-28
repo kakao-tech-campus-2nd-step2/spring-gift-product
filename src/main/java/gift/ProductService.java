@@ -36,21 +36,8 @@ public class ProductService {
     }
 
     public void updateProduct(Long id, Product product) {
-//        TODO
-//        update DB 로직으로 수정
-//        if(!id.equals(product.id())) {
-//            throw new IllegalArgumentException(
-//                "[ERROR] 요청한 상품의 ID와 상품 정보의 ID가 동일하지 않습니다."
-//            );
-//        }
-//
-//        if(!products.containsKey(id)) {
-//            throw new IllegalArgumentException(
-//                "[ERROR] ID가 " + product.id() + "인 상품을 찾을 수 없어 수정할 수 없습니다."
-//            );
-//        }
-//
-//        products.put(product.id(), product);
+        String sql = "UPDATE products SET name = ?, price = ?, imageUrl = ? WHERE id = ?";
+        jdbcTemplate.update(sql, product.name(), product.price(), product.imageUrl(), id);
     }
 
     public void deleteProduct(Long id) {
