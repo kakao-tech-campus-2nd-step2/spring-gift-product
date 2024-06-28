@@ -61,4 +61,8 @@ public class ProductDao {
         return null;
     }
 
+    public void deleteProduct(long id) {
+        var sql = "delete from product_list where id = ?";
+        jdbcTemplate.update(sql, id);
+    }
 }
