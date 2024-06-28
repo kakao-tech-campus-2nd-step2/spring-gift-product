@@ -46,13 +46,11 @@ public class ProductService {
     }
 
     private RowMapper<Product> productRowMapper() {
-        return (rs, rowNum) -> {
-            return new Product(
+        return (rs, rowNum) -> new Product(
                 rs.getLong("id"),
                 rs.getString("name"),
                 rs.getInt("price"),
                 rs.getString("imageUrl")
             );
-        };
     }
 }
