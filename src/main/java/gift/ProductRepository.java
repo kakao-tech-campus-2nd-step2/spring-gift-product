@@ -21,8 +21,7 @@ public class ProductRepository {
 
     public Optional<Product> findById(long id) {
         List<Product> products = jdbcTemplate.query("SELECT * FROM product WHERE id = ?",
-            new Object[]{id}, (resultSet, rowNum) ->
-            new Product(
+            new Object[]{id}, (resultSet, rowNum) -> new Product(
                 resultSet.getLong("id"),
                 resultSet.getString("name"),
                 resultSet.getInt("price"),
@@ -36,8 +35,7 @@ public class ProductRepository {
 
     public List<Product> findAll() {
         return jdbcTemplate.query("SELECT * FROM product",
-            (resultSet, rowNum) ->
-                new Product(
+            (resultSet, rowNum) -> new Product(
                     resultSet.getLong("id"),
                     resultSet.getString("name"),
                     resultSet.getInt("price"),
