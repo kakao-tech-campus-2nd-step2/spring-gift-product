@@ -53,15 +53,10 @@ public class ProductController {
         return "redirect:/api/products";
     }
 
-    @DeleteMapping("/products/{id}")
-    public ResponseEntity<String> deleteMethod(@PathVariable("id") Long id) {
-        boolean isExist = products.containsKey(id);
-        if (isExist) {
-            products.remove(id);
-            return ResponseEntity.status(HttpStatus.OK).body("Delete Complete.");
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product not Exist");
-
+    @GetMapping("/products/delete/{id}")
+    public String deleteProduct(@PathVariable("id") Long id) {
+        products.remove(id);
+        return "redirect:/api/products";
     }
 
 }
