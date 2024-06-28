@@ -2,6 +2,8 @@ package gift;
 
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,8 +42,11 @@ public class AdminController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public String deleteProduct(@PathVariable Long id) {
+    public ResponseEntity<String> deleteProduct(@PathVariable Long id) {
         boolean check = productOperation.deleteProduct(id);
-        return "redirect:/admin/product/list";
+        if (check) {
+            return ResponseEntity.ok("Product deleted successfully");
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product not found");
     }
 }
