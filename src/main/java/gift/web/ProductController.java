@@ -42,9 +42,8 @@ public class ProductController {
     // PUT 구현
     @PutMapping("/{id}")
     public ResponseEntity<?> updateProduct(@PathVariable Long id, @RequestBody Product product) {
-        boolean exists = products.containsKey(id);
-        products.put(id, product);
-
+        boolean exists = productService.getProductById(id) != null;
+        productService.updateProduct(id, product);
         if(exists) {
             return ResponseEntity.ok(product);
         }
