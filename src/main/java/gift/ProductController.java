@@ -1,5 +1,6 @@
 package gift;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -15,6 +16,7 @@ public class ProductController {
     @GetMapping("/api/products")
     public java.util.Collection <Product> getAllProduct() {
         // 해시맵에 포함된 모든 객체를 반환
+
         return products.values();
     }
 
@@ -25,29 +27,29 @@ public class ProductController {
     }
 
     @PostMapping("/api/products")
-    public String addProduct(@RequestBody Product product) {
+    public HttpStatus addProduct(@RequestBody Product product) {
         //json 입력을 받아 product 객체 만들고 해시맵에 저장
         products.put(product.id(), product);
-        return "Product added successfully";
+        return HttpStatus.CREATED;
 
     }
 
     @DeleteMapping("/api/products/{id}")
-    public String removeProduct(@PathVariable long id) {
+    public HttpStatus removeProduct(@PathVariable long id) {
         // 입력된 id에 해당하는 해시맵 내 객체 삭제
         try {
             products.remove(id);
-            return "Product removed";
+            return HttpStatus.NO_CONTENT;
         }
         catch (NoSuchElementException e) {
-            return "Product not found";
+            return HttpStatus.NOT_FOUND;
         }
     }
 
     @PutMapping("/api/products/{id}")
-    public String updateProduct(@PathVariable long id, @RequestBody Product product) {
+    public HttpStatus updateProduct(@PathVariable long id, @RequestBody Product product) {
         // 입력된 id에 해당하는 해시맵 내 객체 수정
         products.put(id, product);
-        return "Product updated successfully";
+        return HttpStatus.OK;
     }
 }
