@@ -1,5 +1,6 @@
-package gift;
+package gift.model;
 
+import gift.dto.Product;
 import gift.exception.ProductNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class ProductRepository {
-    private final Map<Long,Product> products = new HashMap<>();
+    private final Map<Long, Product> products = new HashMap<>();
     private Long nextId = 1L;
 
     public Product addProduct(Product product) {
