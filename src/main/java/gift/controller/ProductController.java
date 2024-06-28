@@ -7,6 +7,7 @@ import gift.model.Product;
 import gift.model.repository.ProductRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -22,43 +23,54 @@ public class ProductController {
     private final ProductRepository productRepository;
 
     @Autowired
-    public ProductController(ProductRepository productRepository){
+    public ProductController(ProductRepository productRepository) {
         this.productRepository = productRepository;
 
     }
 
     @GetMapping("")
-    public List<ProductResponse> productList(){
+    public ResponseEntity<List<ProductResponse>> productList() {
+        List<Product> foundProduct = productRepository.findAll();
 
-        return productRepository.findAll().stream()
-                .map(ProductResponse::fromModel)
-                .toList();
+        return ResponseEntity.ok()
+                .body(foundProduct.stream().map(ProductResponse::fromModel).toList());
     }
 
     @GetMapping("/{id}")
-    public ProductResponse productDetails(@PathVariable("id") Long id){
-        Product findedProduct = productRepository.find(id).orElseThrow(IllegalArgumentException::new);
+    public ResponseEntity<ProductResponse> productDetails(@PathVariable("id") Long id) {
+        Product foundProduct = productRepository.find(id).orElseThrow(IllegalArgumentException::new);
 
-        return ProductResponse.fromModel(findedProduct);
+        return ResponseEntity.ok()
+                .body(ProductResponse.fromModel(foundProduct));
     }
 
     @PostMapping("")
-    public void productSave(@RequestBody ProductRequest newProduct){
+    public ResponseEntity<String> productSave(@RequestBody ProductRequest newProduct) {
         productRepository.save(newProduct.toModel());
+
+        return ResponseEntity.created(null)
+                .body("Product created");
     }
 
     @PatchMapping("/{id}")
-    public void productModify(@PathVariable("id") Long id, @RequestBody ProductRequest modifyProduct){
+    public ResponseEntity<String> productModify(@PathVariable("id") Long id,
+                                                @RequestBody ProductRequest modifyProduct) {
         Product findedProduct = productRepository.find(id).orElseThrow(IllegalArgumentException::new);
 
         productRepository.save(modifyProduct.toModel(id));
+
+        return ResponseEntity.ok()
+                .body("Product modified");
     }
 
     @DeleteMapping("/{id}")
-    public void productDelete(@PathVariable("id") Long id){
+    public ResponseEntity<String> productDelete(@PathVariable("id") Long id) {
         Product findedProduct = productRepository.find(id).orElseThrow(IllegalArgumentException::new);
 
         findedProduct.delete();
         productRepository.save(findedProduct);
+
+        return ResponseEntity.ok()
+                .body("Product deleted");
     }
 }
