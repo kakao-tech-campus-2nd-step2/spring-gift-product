@@ -39,11 +39,10 @@ public class ProductService {
     }
 
     public ProductResponse createProduct(ProductRequest request) {
-        Optional<Product> product = productRepository.findById(request.id());
-        if (product.isPresent()) {
-            throw new IllegalArgumentException("해당 상품은 이미 존재하고 있습니다");
-        }
-        return new ProductResponse(productRepository.save(new Product(request)));
+        Product product = productRepository.findById(request.id()).orElseThrow(
+                () -> new IllegalArgumentException("해당 상품은 이미 존재하고 있습니다")
+        );
+        return new ProductResponse(productRepository.save(product));
     }
 
     public Long deleteProductById(Long id) {
