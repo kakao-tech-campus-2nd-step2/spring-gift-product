@@ -1,5 +1,6 @@
 package gift.repository;
 
+import gift.controller.ProductDto;
 import gift.domain.Product;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,76 +11,116 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ProductMemoryRepositoryTest {
+
     private ProductMemoryRepository repository;
 
     @BeforeEach
-    void setup() {
+    void setUp() {
         repository = new ProductMemoryRepository();
     }
 
     @Test
-    void save(){
-        Product product = new Product();
-        product.setName("Test Product");
+    void saveProduct() {
+        Product product = new Product("Test Product", 100, "test-url");
 
         Product savedProduct = repository.save(product);
 
-        assertNotNull(savedProduct.getId());
-        assertEquals("Test Product", savedProduct.getName());
-
+        assertEquals(product.getName(), savedProduct.getName());
+        assertEquals(product.getPrice(), savedProduct.getPrice());
+        assertEquals(product.getImageUrl(), savedProduct.getImageUrl());
+        assertTrue(savedProduct.getId() > 0);
     }
 
     @Test
-    void findById(){
-        Product product = new Product();
-        product.setName("Test Product");
-
+    void findById_id있을때() {
+        Product product = new Product("Test Product", 100, "test-url");
         Product savedProduct = repository.save(product);
-        Optional<Product> foundProduct = repository.findById(savedProduct.getId());
+        Long productId = savedProduct.getId();
+
+        Optional<Product> foundProduct = repository.findById(productId);
 
         assertTrue(foundProduct.isPresent());
-        assertEquals(savedProduct.getId(), foundProduct.get().getId());
+        assertEquals(savedProduct, foundProduct.get());
     }
 
     @Test
-    void findByName(){
-        Product product = new Product();
-        product.setName("Test Product");
+    void findById_id없을때() {
+        Optional<Product> foundProduct = repository.findById(999L);
 
+        assertFalse(foundProduct.isPresent());
+    }
+
+    @Test
+    void findByName_name있을때() {
+        Product product = new Product("Test Product", 100, "test-url");
         repository.save(product);
-        Optional<Product> foundProduct = repository.findByName("Test Product");
+        String productName = product.getName();
+
+        Optional<Product> foundProduct = repository.findByName(productName);
 
         assertTrue(foundProduct.isPresent());
-        assertEquals("Test Product", foundProduct.get().getName());
+        assertEquals(productName, foundProduct.get().getName());
+    }
+
+    @Test
+    void findByName_name없을때() {
+        Optional<Product> foundProduct = repository.findByName("Non Existing Product");
+
+        assertFalse(foundProduct.isPresent());
     }
 
     @Test
     void findAll() {
-        Product product1 = new Product();
-        product1.setName("Product 1");
-
-        Product product2 = new Product();
-        product2.setName("Product 2");
-
+        Product product1 = new Product("Product 1", 100, "url-1");
+        Product product2 = new Product("Product 2", 200, "url-2");
         repository.save(product1);
         repository.save(product2);
 
-        List<Product> products = repository.findAll();
+        List<Product> allProducts = repository.findAll();
 
-        assertEquals(2, products.size());
+        assertEquals(2, allProducts.size());
     }
 
     @Test
-    void deleteById() {
-        Product product = new Product();
-        product.setName("Test Product");
-
+    void updateById_id있을때() {
+        Product product = new Product("Initial Product", 100, "initial-url");
         Product savedProduct = repository.save(product);
-        Optional<Product> deletedProduct = repository.deleteById(savedProduct.getId());
+        Long productId = savedProduct.getId();
+        ProductDto updatedProductDto = new ProductDto("Updated Product", 200, "updated-url");
 
-        assertTrue(deletedProduct.isPresent());
-        assertEquals(savedProduct.getId(), deletedProduct.get().getId());
-        assertFalse(repository.findById(savedProduct.getId()).isPresent());
+        Optional<Product> updatedProductOptional = repository.updateById(productId, updatedProductDto);
+
+        assertTrue(updatedProductOptional.isPresent());
+        Product updatedProduct = updatedProductOptional.get();
+        assertEquals(updatedProductDto.getName(), updatedProduct.getName());
+        assertEquals(updatedProductDto.getPrice(), updatedProduct.getPrice());
+        assertEquals(updatedProductDto.getImageUrl(), updatedProduct.getImageUrl());
     }
 
+    @Test
+    void updateById_id없을때() {
+        Optional<Product> updatedProductOptional = repository.updateById(999L, new ProductDto("Updated Product", 200, "updated-url"));
+
+        assertFalse(updatedProductOptional.isPresent());
+    }
+
+    @Test
+    void deleteById_id있을때() {
+        Product product = new Product("To Be Deleted", 100, "delete-me-url");
+        Product savedProduct = repository.save(product);
+        Long productId = savedProduct.getId();
+
+        Optional<Product> deletedProductOptional = repository.deleteById(productId);
+
+        assertTrue(deletedProductOptional.isPresent());
+        assertEquals(product, deletedProductOptional.get());
+        assertFalse(repository.findById(productId).isPresent());
+    }
+
+    @Test
+    void deleteById_id없을때() {
+        Optional<Product> deletedProductOptional = repository.deleteById(999L);
+
+        assertFalse(deletedProductOptional.isPresent());
+    }
 }

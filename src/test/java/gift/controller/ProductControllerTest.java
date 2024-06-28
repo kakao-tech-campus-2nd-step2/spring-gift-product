@@ -1,149 +1,129 @@
 package gift.controller;
 
+import gift.controller.ProductController;
+import gift.controller.ProductDto;
 import gift.domain.Product;
 import gift.service.ProductService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.http.MediaType;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.Arrays;
 import java.util.Optional;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
-class ProductControllerTest {
+@WebMvcTest(ProductController.class)
+@AutoConfigureMockMvc
+public class ProductControllerTest {
 
-    @Mock
-    private ProductService productService;
-
-    @InjectMocks
-    private ProductController productController;
-
+    @Autowired
     private MockMvc mockMvc;
+
+    @MockBean
+    private ProductService productService;
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
-        mockMvc = MockMvcBuilders.standaloneSetup(productController).build();
+        MockitoAnnotations.initMocks(this);
     }
 
     @Test
     void getProducts() throws Exception {
-        Product product1 = new Product();
-        product1.setId(1L);
-        product1.setName("Product 1");
+        Product product1 = new Product(1L, "Product 1", 100L, "url-1");
+        Product product2 = new Product(2L, "Product 2", 200L, "url-2");
 
-        Product product2 = new Product();
-        product2.setId(2L);
-        product2.setName("Product 2");
+        when(productService.findProducts())
+                .thenReturn(Arrays.asList(product1, product2));
 
-        when(productService.findProducts()).thenReturn(Arrays.asList(product1, product2));
-
-        mockMvc.perform(get("/api/products"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].name").value("Product 1"))
-                .andExpect(jsonPath("$[1].name").value("Product 2"));
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/products"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.model().attributeExists("products"))
+                .andExpect(MockMvcResultMatchers.view().name("product-list"));
     }
 
     @Test
     void getProduct() throws Exception {
-        Product product = new Product();
-        product.setId(1L);
-        product.setName("Test Product");
+        Long productId = 1L;
+        Product product = new Product(productId, "Test Product", 150L, "test-url");
 
-        when(productService.findOne(1L)).thenReturn(Optional.of(product));
+        when(productService.findOne(productId))
+                .thenReturn(Optional.of(product));
 
-        mockMvc.perform(get("/api/products/1"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value("Test Product"));
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/products/{id}", productId))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.model().attributeExists("products"))
+                .andExpect(MockMvcResultMatchers.view().name("product-list"));
     }
 
     @Test
-    void getProduct_notFound() throws Exception {
-        when(productService.findOne(1L)).thenReturn(Optional.empty());
-
-        mockMvc.perform(get("/api/products/1"))
-                .andExpect(status().isNotFound());
+    void newProductForm() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/products/new"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.model().attributeExists("product"))
+                .andExpect(MockMvcResultMatchers.view().name("product-add-form"));
     }
 
     @Test
     void addProduct() throws Exception {
-        ProductDto productDto = new ProductDto();
-        productDto.setName("New Product");
-        productDto.setPrice(100);
-        productDto.setImageUrl("http://example.com/image.jpg");
+        ProductDto productDto = new ProductDto("New Product", 100L, "new-product-url");
 
-        Product product = Product.dtoToEntity(productDto);
-        product.setId(1L);
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/products")
+                        .param("name", productDto.getName())
+                        .param("price", String.valueOf(productDto.getPrice()))
+                        .param("imageUrl", productDto.getImageUrl()))
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+                .andExpect(MockMvcResultMatchers.view().name("redirect:/api/products"));
 
-        when(productService.register(any(ProductDto.class))).thenReturn(product);
+        verify(productService, times(1)).register(any(ProductDto.class));
+    }
 
-        mockMvc.perform(post("/api/products")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"name\":\"New Product\",\"price\":100,\"imageUrl\":\"http://example.com/image.jpg\"}"))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id").value(1L))
-                .andExpect(jsonPath("$.name").value("New Product"));
+    @Test
+    void editProductForm() throws Exception {
+        Long productId = 1L;
+        Product product = new Product(productId, "Editable Product", 200L, "edit-url");
+
+        when(productService.findOne(productId))
+                .thenReturn(Optional.of(product));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/products/edit/{id}", productId))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.model().attributeExists("product"))
+                .andExpect(MockMvcResultMatchers.view().name("product-edit-form"));
     }
 
     @Test
     void updateProduct() throws Exception {
-        ProductDto productDto = new ProductDto();
-        productDto.setName("Updated Product");
-        productDto.setPrice(200);
-        productDto.setImageUrl("http://example.com/updated-image.jpg");
+        Long productId = 1L;
+        ProductDto updatedProductDto = new ProductDto("Updated Product", 300L, "updated-url");
 
-        Product product = new Product();
-        product.setId(1L);
-        product.setName("Old Product");
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/products/edit/{id}", productId)
+                        .param("name", updatedProductDto.getName())
+                        .param("price", String.valueOf(updatedProductDto.getPrice()))
+                        .param("imageUrl", updatedProductDto.getImageUrl()))
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+                .andExpect(MockMvcResultMatchers.view().name("redirect:/api/products"));
 
-        when(productService.update(eq(1L), any(ProductDto.class))).thenReturn(Optional.of(product));
-
-        mockMvc.perform(put("/api/products/1")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"name\":\"Updated Product\",\"price\":200,\"imageUrl\":\"http://example.com/updated-image.jpg\"}"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value("Updated Product"))
-                .andExpect(jsonPath("$.price").value(200))
-                .andExpect(jsonPath("$.imageUrl").value("http://example.com/updated-image.jpg"));
-    }
-
-    @Test
-    void updateProduct_notFound() throws Exception {
-        when(productService.update(eq(1L), any(ProductDto.class))).thenReturn(Optional.empty());
-
-        mockMvc.perform(put("/api/products/1")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"name\":\"Updated Product\",\"price\":200,\"imageUrl\":\"http://example.com/updated-image.jpg\"}"))
-                .andExpect(status().isNotFound());
+        verify(productService, times(1)).update(eq(productId), any(ProductDto.class));
     }
 
     @Test
     void deleteProduct() throws Exception {
-        Product product = new Product();
-        product.setId(1L);
-        product.setName("Test Product");
+        Long productId = 1L;
 
-        when(productService.delete(1L)).thenReturn(Optional.of(product));
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/products/delete/{id}", productId))
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+                .andExpect(MockMvcResultMatchers.view().name("redirect:/api/products"));
 
-        mockMvc.perform(delete("/api/products/1"))
-                .andExpect(status().isNoContent());
-    }
-
-    @Test
-    void deleteProduct_notFound() throws Exception {
-        when(productService.delete(1L)).thenReturn(Optional.empty());
-
-        mockMvc.perform(delete("/api/products/1"))
-                .andExpect(status().isNotFound());
+        verify(productService, times(1)).delete(productId);
     }
 }
