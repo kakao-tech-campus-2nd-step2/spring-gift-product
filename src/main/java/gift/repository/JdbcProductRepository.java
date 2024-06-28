@@ -42,7 +42,12 @@ public class JdbcProductRepository implements ProductRepository {
 
     @Override
     public Optional<Product> findById(Long id) {
-        return Optional.empty();
+        try {
+            Product product = jdbcTemplate.queryForObject(SELECT_BY_ID, productRowMapper, id);
+            return Optional.ofNullable(product);
+        } catch (Exception e) {
+            return Optional.empty();
+        }
     }
 
     @Override
