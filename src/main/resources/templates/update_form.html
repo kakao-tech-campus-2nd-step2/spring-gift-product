@@ -8,6 +8,7 @@
     <div class="container">
       <form th:action="@{/products/{uid}(uid = ${product.id})}" th:method="post">
         <div class="form-group">
+          <h1><a href="/products">돌아 가기</a> </h1>
           <p><label for="name">이름</label>
             <input type="text" id="name" name="name" th:value="${product.name}" placeholder="이름을 입력하세요">
           </p>

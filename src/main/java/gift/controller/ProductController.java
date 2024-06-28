@@ -1,5 +1,6 @@
 package gift.controller;
 
+import gift.error.NotFoundException;
 import gift.model.Product;
 import gift.service.ProductService;
 import java.util.ArrayList;
@@ -69,6 +70,10 @@ public class ProductController {
     //상품 삭제 기능
     @GetMapping("/{id}/delete")
     public String deleteProduct(@PathVariable("id") Long id, Model model) {
+        Product product = productService.getProductById(id);
+        if(product == null) {
+            throw new NotFoundException("해당 상품이 존재하지 않습니다.");
+        }
         productService.deleteProduct(id);
         return "redirect:/products";
     }
@@ -77,6 +82,9 @@ public class ProductController {
     @GetMapping("/{id}/update")
     public String updateProductForm(@PathVariable("id") Long id, Model model) {
         Product product = productService.getProductById(id);
+        if(product == null) {
+            throw new NotFoundException("해당 상품이 존재하지 않습니다.");
+        }
         model.addAttribute("product", product);
         return "update_form";
     }

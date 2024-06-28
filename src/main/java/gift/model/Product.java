@@ -1,5 +1,7 @@
 package gift.model;
 
+import java.util.Objects;
+
 public class Product {
 
     private Long id;
@@ -46,6 +48,12 @@ public class Product {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public boolean isEqual(Product product) {
+        return Objects.equals(name,product.getName()) &&
+               Objects.equals(price,product.getPrice()) &&
+               Objects.equals(imageUrl,product.getImageUrl());
     }
 }
 
