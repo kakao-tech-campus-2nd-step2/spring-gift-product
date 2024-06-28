@@ -6,5 +6,5 @@
 - [ ] 메모리에 저장하던 상품 정보를 데이터베이스에 저장
   - [x] ProductDao 클래스 생성
   - [x] ProductService 클래스 생성
-  - [ ] ProductController 클래스 수정
+  - [x] ProductController 클래스 수정
   - [ ] 테스트 코드 작성
