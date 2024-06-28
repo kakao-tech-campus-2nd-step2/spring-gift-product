@@ -2,6 +2,7 @@ package gift.product;
 
 import java.util.List;
 import org.springframework.jdbc.core.simple.JdbcClient;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -35,20 +36,23 @@ public class ProductRepository {
         return jdbcClient.sql(sql).param(productId).query(Product.class).single();
     }
 
-    public Integer addProduct(Product product) {
+    public Long addProduct(ProductReqDto productReqDto) {
         var sql = """
                 insert into product (name, price, imageUrl)
                 values (?, ?, ?)
                 """;
+        GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
 
-        return jdbcClient.sql(sql)
-                .param(product.getName())
-                .param(product.getPrice())
-                .param(product.getImageUrl())
-                .update();
+        jdbcClient.sql(sql)
+                .param(productReqDto.name())
+                .param(productReqDto.price())
+                .param(productReqDto.imageUrl())
+                .update(keyHolder);
+
+        return keyHolder.getKey().longValue();
     }
 
-    public Integer updateProduct(Long productId, Product product) {
+    public Integer updateProduct(Long productId, ProductReqDto productReqDto) {
         var sql = """
                 update product
                 set name = ?, price = ?, imageUrl = ?
@@ -56,9 +60,9 @@ public class ProductRepository {
                 """;
 
         return jdbcClient.sql(sql)
-                .param(product.getName())
-                .param(product.getPrice())
-                .param(product.getImageUrl())
+                .param(productReqDto.name())
+                .param(productReqDto.price())
+                .param(productReqDto.imageUrl())
                 .param(productId)
                 .update();
     }

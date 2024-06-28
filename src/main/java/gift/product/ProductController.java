@@ -49,17 +49,10 @@ public class ProductController {
 
     @PostMapping("/products")
     public ProductResDto addProduct(@RequestBody ProductReqDto productReqDto) {
-        Product newProduct = new Product(
-                productReqDto.name(),
-                productReqDto.price(),
-                productReqDto.imageUrl()
-        );
+        Long productId = productRepository.addProduct(productReqDto);
 
-        Integer noOfRowsAffected = productRepository.addProduct(newProduct);
-
-        if (!NO_OF_ROWS_AFFECTED.equals(noOfRowsAffected)) {
-            throw new IllegalArgumentException("Failed to add product");
-        }
+        // 저장된 상품 가져오기
+        Product newProduct = productRepository.findProductById(productId);
 
         return new ProductResDto(
                 newProduct.getId(),
@@ -71,11 +64,7 @@ public class ProductController {
 
     @PutMapping("/products/{productId}")
     public Boolean updateProduct(@PathVariable Long productId, @RequestBody ProductReqDto productReqDto) {
-        Integer noOfRowsAffected = productRepository.updateProduct(productId, new Product(
-                productReqDto.name(),
-                productReqDto.price(),
-                productReqDto.imageUrl()
-        ));
+        Integer noOfRowsAffected = productRepository.updateProduct(productId, productReqDto);
 
         return NO_OF_ROWS_AFFECTED.equals(noOfRowsAffected); // 수정된 행의 개수 반환 - 1이면 성공, 0이면 실패
     }
