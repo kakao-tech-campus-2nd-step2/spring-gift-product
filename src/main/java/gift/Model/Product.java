@@ -1,4 +1,4 @@
-package gift;
+package gift.Model;
 
 public class Product {
     private static Long idCount = 0L;

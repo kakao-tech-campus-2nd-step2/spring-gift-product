@@ -1,5 +1,7 @@
-package gift;
+package gift.Controller;
 
+import gift.Model.Product;
+import gift.Model.RequestProduct;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,16 +32,16 @@ public class ProductController {
         return data;
     }
 
-    @PostMapping ("/products")
-    public void postMethod(@RequestBody RequestProduct requestProduct){
-        Product product  = new Product(requestProduct.name(), requestProduct.price(), requestProduct.imageUrl());
+    @PostMapping("/products")
+    public void postMethod(@RequestBody RequestProduct requestProduct) {
+        Product product = new Product(requestProduct.name(), requestProduct.price(), requestProduct.imageUrl());
         products.put(product.getId(), product);
     }
 
     @PutMapping("/products/{id}")
     public ResponseEntity<String> putMethod(@RequestBody RequestProduct requestProduct, @PathVariable("id") Long id) {
         boolean isExist = products.containsKey(id);
-        if(isExist){
+        if (isExist) {
             Product product = new Product(requestProduct.name(), requestProduct.price(), requestProduct.imageUrl());
             Product original = products.get(id);
 
@@ -49,7 +51,7 @@ public class ProductController {
 
             return ResponseEntity.status(HttpStatus.OK).body("Update Complete.");
         }
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product not found");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product not found");
 
     }
 

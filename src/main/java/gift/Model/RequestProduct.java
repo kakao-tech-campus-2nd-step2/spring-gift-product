@@ -1,6 +1,6 @@
-package gift;
+package gift.Model;
 
-record RequestProduct (
+public record RequestProduct (
     String name,
     int price,
     String imageUrl
