@@ -33,4 +33,26 @@ public class ProductRepository {
     };
 
 
+    public List<Product> findAll() {
+        return jdbcTemplate.query("SELECT * FROM products", productRowMapper);
+    }
+
+    public Product findById(Long id) {
+        return jdbcTemplate.queryForObject("SELECT * FROM products WHERE id = ?", productRowMapper, id);
+    }
+
+    public void save(Product product) {
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("name", product.getName());
+        parameters.put("price", product.getPrice());
+        parameters.put("imageUrl", product.getImageUrl());
+        Number newId = jdbcInsert.executeAndReturnKey(parameters);
+        product.setId(newId.longValue());
+    }
+
+
+
+
+
+
 }

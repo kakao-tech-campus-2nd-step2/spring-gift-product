@@ -5,31 +5,33 @@ import java.util.*;
 
 @Service
 public class ProductService {
-    private final Map<Long, Product> products = new HashMap<>();
-    private long currentId = 1;
+
+    private final ProductRepository productRepository;
+
+    public ProductService(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
 
     public List<Product> getAllProducts() {
-        return new ArrayList<>(products.values());
+        return productRepository.findAll();
     }
 
     public Product getProductById(Long id) {
-        return products.get(id);
+        return productRepository.findById(id);
     }
 
     public void addProduct(Product product) {
-        product.setId(currentId++);
-        products.put(product.getId(), product);
-
+        productRepository.save(product);
     }
 
-    public void deleteProduct(Long id) {
-        products.remove(id);
-    }
-
-    public void modifyProduct(Long id, Product product) {
-        product.setId(id);
-        products.put(id, product);
-    }
+//    public void deleteProduct(Long id) {
+//        products.remove(id);
+//    }
+//
+//    public void modifyProduct(Long id, Product product) {
+//        product.setId(id);
+//        products.put(id, product);
+//    }
 
 
 }
