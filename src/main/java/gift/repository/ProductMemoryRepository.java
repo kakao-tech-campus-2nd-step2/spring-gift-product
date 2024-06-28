@@ -1,13 +1,12 @@
 package gift.repository;
 
-import com.sun.source.tree.MemberReferenceTree;
 import gift.domain.Product;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
 @Repository
-public class ProductMemeberRepository implements ProductRepository {
+public class ProductMemoryRepository implements ProductRepository {
     private static final Map<Long, Product> products = new HashMap<>();
     private static long sequence = 0L;
     //final 추가해서 Map에 다른 객체 할당되는거 방지

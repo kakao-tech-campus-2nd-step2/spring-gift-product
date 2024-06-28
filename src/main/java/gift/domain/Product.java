@@ -9,6 +9,8 @@ public class Product {
     private long price;
     private String imageUrl;
 
+    public Product(){}
+
     public Product(String name, long price, String imageUrl) {
         this.name = name;
         this.price = price;

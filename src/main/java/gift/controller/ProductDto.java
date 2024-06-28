@@ -13,6 +13,9 @@ public class ProductDto {
         this.imageUrl = imageUrl;
     }
 
+    public ProductDto() {
+    }
+
     public String getName(){
         return name;
     }
