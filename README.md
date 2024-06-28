@@ -115,3 +115,42 @@
 - **제품 수정**: 기존 제품의 정보를 수정할 수 있습니다.
 - **제품 삭제**: 제품을 삭제할 수 있습니다.
 - **페이지네이션**: 제품 목록을 페이지 단위로 나누어 조회할 수 있습니다.
+
+## DB 연결 설정
+
+이 프로젝트는 H2 메모리 데이터베이스를 사용하여 데이터 저장을 처리합니다. 애플리케이션이 시작될 때마다 데이터베이스가 초기화되며, 애플리케이션이 종료되면 데이터는 사라집니다.
+
+### application.properties 파일
+
+src/main/resources/application.properties 파일에서 데이터베이스 설정을 추가합니다. `spring.sql.init.mode=always`을 통해 Application을 실행할 때마다 초기화를 진행합니다.
+
+```
+spring.application.name=spring-gift
+spring.h2.console.enabled=true
+spring.datasource.url=jdbc:h2:mem:step3
+spring.datasource.username=sa
+spring.sql.init.mode=always
+spring.sql.init.schema-locations=classpath:schema.sql
+spring.sql.init.data-locations=classpath:data.sql
+```
+### schema.sql 파일
+
+src/main/resources/schema.sql 파일에 데이터베이스 테이블을 생성하는 SQL 스크립트를 추가합니다.
+
+```
+CREATE TABLE IF NOT EXISTS product (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    price INTEGER NOT NULL,
+    imageUrl VARCHAR(255)
+);
+```
+
+### data.sql 파일
+
+src/main/resources/data.sql 파일에 초기 데이터를 삽입하는 SQL 스크립트를 추가합니다.
+
+```
+INSERT INTO product (name, price, imageUrl) VALUES ('Product1', 100, 'http://example.com/product1.jpg');
+INSERT INTO product (name, price, imageUrl) VALUES ('Product2', 200, 'http://example.com/product2.jpg');
+```
