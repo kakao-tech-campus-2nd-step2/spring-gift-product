@@ -23,9 +23,12 @@ public class ProductService {
     public void saveProduct(Product product) {
         productRepository.save(product);
     }
-
-
-
-
+    public void updateProduct(Product product) {
+        productRepository.update(product);
+    }
+    public void deleteProduct(Long id) {
+        productRepository.deleteById(id);
+    }
+    
 
 }
