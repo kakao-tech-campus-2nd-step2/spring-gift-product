@@ -42,3 +42,25 @@
 - **상품 수정 페이지**
     - URL: `/admin/products/edit/{id}`
     - 설명: 기존 상품을 수정할 수 있는 폼 제공
+
+## step3
+
+### 기능
+- H2 데이터베이스 적용
+- 데이터베이스 초기화 스크립트 작성
+- 상품 정보 데이터베이스에 저장
+
+### 할일
+1. 의존성 추가
+    - H2 데이터베이스
+    - Spring JDBC
+2. 데이터베이스 설정
+    - application.properties 파일 설정
+3. 데이터베이스 초기화 스크립트 작성
+    - schema.sql
+    - data.sql
+4. ProductRepository 클래스 작성
+    - JDBC를 사용하여 데이터베이스와 상호작용
+5. ProductController 클래스 수정
+    - 메모리 저장 로직 제거
+    - 데이터베이스와 상호작용하도록 변경
