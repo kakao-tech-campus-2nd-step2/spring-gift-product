@@ -33,15 +33,9 @@ public class ProductDao {
         jdbcTemplate.execute(sql);
     }
 
-    public void addProduct(Connection connection, ProductVo productVo) throws Exception {
+    public void addProduct(ProductVo productVo) {
         var sql = "insert into product_list (id, name, price, imageUrl) values (?, ?, ?, ?)";
-        jdbcTemplate.update(
-            sql,
-            productVo.getId(),
-            productVo.getName(),
-            productVo.getPrice(),
-            productVo.getImageUrl()
-        );
+        jdbcTemplate.update(sql, productVo.getId(), productVo.getName(), productVo.getPrice(), productVo.getImageUrl());
     }
 
     public List<ProductVo> searchProducts(String keyword) {

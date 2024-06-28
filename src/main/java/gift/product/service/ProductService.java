@@ -1,37 +1,40 @@
 package gift.product.service;
 
+import gift.product.dao.ProductDao;
 import gift.product.model.ProductVo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
 
-    private final Map<Long, ProductVo> products = new HashMap<>();
+    private final ProductDao productDao;
+
+    @Autowired
+    public ProductService(ProductDao productDao) {
+        this.productDao = productDao;
+        productDao.createProductTable();
+    }
 
     public void addProduct(ProductVo productVo) {
-        products.put(productVo.getId(), productVo);
+        productDao.addProduct(productVo);
     }
 
     public void modifyProduct(ProductVo productVo) {
-        products.put(productVo.getId(), productVo);
+        productDao.modifyProduct(productVo);
     }
 
     public void deleteProduct(Long id) {
-        products.remove(id);
+        productDao.deleteProduct(id);
     }
 
     public Collection<ProductVo> getAllProducts() {
-        return products.values();
+        return productDao.listupProducts();
     }
 
     public Collection<ProductVo> searchProducts(String keyword) {
-        return products.values().stream()
-            .filter(product -> product.getName().toLowerCase().contains(keyword.toLowerCase()))
-            .collect(Collectors.toList());
+        return productDao.searchProducts(keyword);
     }
 }
