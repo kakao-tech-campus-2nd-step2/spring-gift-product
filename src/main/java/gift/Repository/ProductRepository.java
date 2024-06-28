@@ -49,9 +49,9 @@ public class ProductRepository {
         jdbcTemplate.update(sql, id);
     }
 
-    public void updateProduct(Product product, long oldId) {
-        deleteProduct(oldId);
-        saveProduct(product);
+    public void updateProduct(Product product, long id) {
+        String sql = "UPDATE products SET id = ?, name = ?, price = ?, imageUrl = ? WHERE id = ?";
+        jdbcTemplate.update(sql, product.id(), product.name(), product.price(), product.imageUrl(), id);
     }
 
 }
