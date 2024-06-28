@@ -2,7 +2,8 @@ package gift.service;
 
 import gift.domain.Product;
 import gift.repository.ProductRepository;
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

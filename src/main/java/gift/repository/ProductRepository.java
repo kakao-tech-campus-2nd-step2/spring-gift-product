@@ -1,9 +1,10 @@
 package gift.repository;
+
 import gift.domain.Product;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import java.util.List;
 
 @Repository
 public class ProductRepository {
@@ -28,7 +29,7 @@ public class ProductRepository {
         return p;
     }
 
-    public List<Product> selectAllProducts() { // 반환 타입을 List<Product>로 변경
+    public List<Product> selectAllProducts() {
         String sql = "select * from products";
         return jdbcTemplate.query(sql, (resultSet, rowNum) -> new Product(
                 resultSet.getLong("id"),
@@ -40,13 +41,13 @@ public class ProductRepository {
     }
 
     public void insertProduct(Product product) {
-        String sql = "insert into products (id, name, price, imageUrl) values (?, ?, ?, ?)"; // id 필드 추가
+        String sql = "insert into products (id, name, price, imageUrl) values (?, ?, ?, ?)";
         jdbcTemplate.update(sql, product.id(), product.name(), product.price(), product.imageUrl());
     }
 
     public void updateProduct(Product product) {
         String sql = "update products set name = ?, price = ?, imageUrl = ? where id = ?";
-        jdbcTemplate.update(sql, product.name(), product.price(), product.imageUrl(), product.id()); // 파라미터 순서 조정
+        jdbcTemplate.update(sql, product.name(), product.price(), product.imageUrl(), product.id());
     }
 
     public void deleteProductById(Long id) {
