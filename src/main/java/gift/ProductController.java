@@ -44,4 +44,9 @@ public class ProductController {
         return "edit-product";
     }
 
+    @GetMapping("/delete/{id}")
+    public String deleteProduct(@PathVariable Long id) {
+        productService.deleteProduct(id);
+        return "redirect:/admin/products";
+    }
 }

@@ -54,4 +54,8 @@ public class ProductService {
         jdbcTemplate.update(sql, product.getName(), product.getPrice(), product.getImageUrl(), id);
     }
 
+    public void deleteProduct(long id) {
+        String sql = "DELETE FROM products WHERE id = ?";
+        jdbcTemplate.update(sql, id);
+    }
 }
