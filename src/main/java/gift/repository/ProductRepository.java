@@ -27,10 +27,8 @@ public class ProductRepository {
     }
 
     public void saveProduct(SaveProductDTO saveProductDTO) {
-        if(!isExistProduct(saveProductDTO.getId())){
-            var sql = "insert into product(id,name,price,imageUrl) values (?,?,?,?)";
-            jdbcTemplate.update(sql, saveProductDTO.getId(),saveProductDTO.getName(),saveProductDTO.getPrice(),saveProductDTO.getImageUrl());
-        }
+        var sql = "insert into product(id,name,price,imageUrl) values (?,?,?,?)";
+        jdbcTemplate.update(sql, saveProductDTO.getId(),saveProductDTO.getName(),saveProductDTO.getPrice(),saveProductDTO.getImageUrl());
     }
 
     public void saveOption(SaveOptionDTO saveOptionDTO) {
@@ -60,9 +58,9 @@ public class ProductRepository {
         return products;
     }
 
-    private boolean isExistProduct(int id){
+    public boolean isExistProduct(SaveProductDTO  saveProductDTO){
         var sql = "select * from product where id=?";
-        List<SaveProductDTO> product = jdbcTemplate.query(sql,new Object[]{id}, (rs, rowNum) -> new SaveProductDTO(
+        List<SaveProductDTO> product = jdbcTemplate.query(sql,new Object[]{saveProductDTO.getId()}, (rs, rowNum) -> new SaveProductDTO(
                 rs.getInt("id"),
                 rs.getString("name"),
                 rs.getInt("price"),
@@ -71,9 +69,9 @@ public class ProductRepository {
         return !product.isEmpty();
     }
 
-    private boolean isExistOption(int id,String option){
+    public boolean isExistOption(SaveOptionDTO saveOptionDTO){
         var sql = "select * from option where id=? and option=?";
-        List<SaveOptionDTO> opt = jdbcTemplate.query(sql,new Object[]{id,option}, (rs, rowNum) -> new SaveOptionDTO(
+        List<SaveOptionDTO> opt = jdbcTemplate.query(sql,new Object[]{saveOptionDTO.getId(),saveOptionDTO.getOption()}, (rs, rowNum) -> new SaveOptionDTO(
                 rs.getInt("id"),
                 rs.getString("option")
         ));
