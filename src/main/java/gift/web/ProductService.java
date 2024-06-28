@@ -33,5 +33,7 @@ public class ProductService {
         return product;
     }
 
-
+    public boolean deleteProduct(Long id) {
+        return products.remove(id) != null;
+    }
 }
