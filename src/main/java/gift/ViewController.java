@@ -18,6 +18,12 @@ public class ViewController {
         List<Product> products = productService.getAllProducts();
 
         model.addAttribute("products", products);
-        return "product_list.html";
+        return "product_list";
+    }
+
+    @RequestMapping(value = "/products/new")
+    public String newProduct(Model model) {
+        model.addAttribute("product", new Product(null, "", null, ""));
+        return "product_add_form";
     }
 }
