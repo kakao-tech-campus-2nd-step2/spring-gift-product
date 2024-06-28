@@ -4,8 +4,8 @@ import static gift.utility.SecurityUtility.addPasswordAttribute;
 import static gift.utility.SecurityUtility.verifyPassword;
 
 import gift.model.Product;
-import gift.model.Products;
-import java.util.Collection;
+import gift.repository.ProductDao;
+import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +20,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class ProductController {
 
     // 비밀번호가 요구되므로 모든 Mapping을 POST로 사용했습니다.
-    private final Products products = new Products();
+    private final ProductDao productDao;
+
+    public ProductController(ProductDao productDao) {
+        this.productDao = productDao;
+    }
 
     // 제품을 추가하고 view를 반환하는 핸들러
     @PostMapping("/create")
@@ -34,7 +38,7 @@ public class ProductController {
         // 객체 준비
         Product product = new Product(id, name, price, image);
         // 제품을 추가
-        products.put(product);
+        productDao.insertProduct(product);
 
         // html로 넘길 attributes를 넣기
         addAttributesForManagerPage(model);
@@ -70,7 +74,7 @@ public class ProductController {
         Product product = new Product(id, name, price, image);
 
         // 제품 수정
-        products.updateProduct(targetId, product);
+        productDao.updateProduct(targetId, product);
 
         // html로 넘길 attributes를 넣기
         addAttributesForManagerPage(model);
@@ -86,7 +90,7 @@ public class ProductController {
         verifyPassword(password);
 
         // 하나의 제품 제거
-        products.deleteProduct(id);
+        productDao.deleteProduct(id);
 
         // html로 넘길 attributes를 넣기
         addAttributesForManagerPage(model);
@@ -101,7 +105,7 @@ public class ProductController {
         verifyPassword(password);
 
         // 모든 제품 제거
-        products.deleteAllProducts();
+        productDao.deleteAllProduct();
 
         // html로 넘길 attributes를 넣기 (사실 없어도 됨)
         addAttributesForManagerPage(model);
@@ -112,17 +116,10 @@ public class ProductController {
     // manager.html에서 보여줄 attributes를 넣는 함수
     private void addAttributesForManagerPage(Model model) {
         // 제품 목록 넣어줌
-        Collection<Product> productsList = products.getProducts();
+        List<Product> productsList = productDao.selectProduct();
         model.addAttribute("products", productsList);
 
         // 비밀번호를 최초만 맞추면 여기서부터는 계속 자동으로 넣어줌
         addPasswordAttribute(model);
     }
-
-    // addProduct page에서 html로 넘길 attributes를 넣는 함수
-    private void addAttributesForAddProductPage(Model model) {
-        addPasswordAttribute(model);
-    }
-
-
 }
