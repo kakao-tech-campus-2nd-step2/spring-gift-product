@@ -37,7 +37,12 @@ public class ProductDAO {
 
         String sql = "select * from products where id = ?";
 
-        return jdbcTemplate.queryForObject(sql, ProductRecord.class, id);
+        return jdbcTemplate.queryForObject(sql, (rs, rowNum) -> new ProductRecord(
+                rs.getLong("id"),
+                rs.getString("name"),
+                rs.getInt("price"),
+                rs.getString("imageUrl")
+        ), id);
     }
 
     public ProductRecord addNewRecord(ProductRecord product) {
@@ -64,8 +69,8 @@ public class ProductDAO {
 
         ProductRecord record = product.withId(id);
 
-        String sql = "insert into products values (?, ?, ?, ?)";
-        jdbcTemplate.update(sql, record.id(), record.name(), record.price(), record.imageUrl());
+        String sql = "UPDATE products SET name = ?, price = ?, imageUrl = ? WHERE id = ?";
+        jdbcTemplate.update(sql, record.name(), record.price(), record.imageUrl(), record.id());
 
         return record;
     }
@@ -75,8 +80,10 @@ public class ProductDAO {
             throw new NoSuchElementException("Record not found");
         }
 
-        ProductRecord record = records.get(id).getUpdatedRecord(patch);
-        records.put(id, record);
+        ProductRecord record = getRecord(id).getUpdatedRecord(patch);
+
+        String sql = "UPDATE products SET name = ?, price = ?, imageUrl = ? WHERE id = ?";
+        jdbcTemplate.update(sql, record.name(), record.price(), record.imageUrl(), record.id());
 
         return record;
     }
