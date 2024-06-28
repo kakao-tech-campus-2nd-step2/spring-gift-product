@@ -61,7 +61,11 @@ public class ProductDao {
     }
 
     public Product update(Long id, ProductRequest productRequest) {
-        return null;
+        var sql = "update product set name = ?, price = ?, imageUrl = ? where id = ?";
+        jdbcTemplate.update(sql, productRequest.name(), productRequest.price(), productRequest.imageUrl(), id);
+
+        Product product = findById(id);
+        return product;
     }
 
     public void delete(Long id) {
