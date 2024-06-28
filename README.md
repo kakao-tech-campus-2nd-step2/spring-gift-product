@@ -6,7 +6,7 @@
 ### 모든 제품 조회
 
 #### 요청
-- **URL:** `/pinkbeen/products`
+- **URL:** `/yeti/products`
 - **Method:** `GET`
 - **설명:** 모든 제품 목록을 조회합니다.
 
@@ -16,14 +16,16 @@
 
 ### 제품 추가
 #### 요청
+- **URL:** `/yeti/products`
 - **Method:** `POST`
 - **설명** 
   - 제품 데이터를 추가합니다.
-  - 사용자가 작성한 모달 창의 데이터를 ProductDTO의 형태로 받아 products MAP에 저장합니다.
+  - 사용자가 작성한 모달 창의 데이터를 ProductDTO의 형태로 받아 데이터베이스에 저장합니다.
 
 
 ### 제품 수정
 #### 요청
+- **URL:** `/yeti/products/{id}`
 - **Method:** `POST`
 - **설명** 
 - 제품 데이터를 수정합니다.
@@ -33,8 +35,8 @@
 
 ### 제품 삭제
 #### 요청
+- **URL:** `/yeti/products/{id}`
 - **Method:** `DELETE`
 - **설명** 
 - 제품 데이터를 삭제합니다.
 - 사용자가 요청한 데이터의 ID를 받아 해당 product를 삭제합니다.
-
