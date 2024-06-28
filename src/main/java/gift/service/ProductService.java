@@ -2,46 +2,43 @@ package gift.service;
 
 
 import gift.domain.Product;
-import gift.repository.ProductRepository;
+import gift.repository.ProductH2Repository;
+import gift.repository.ProductMemoryRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
 public class ProductService {
-    private final ProductRepository productRepository;
+//    private final ProductMemoryRepository productMemoryRepository;
+    private final ProductH2Repository productH2Repository;
 
-    public ProductService(ProductRepository productRepository) {
-        this.productRepository = productRepository;
+//    public ProductService(ProductMemoryRepository productMemoryRepository) {
+//        this.productMemoryRepository = productMemoryRepository;
+//    }
+    public ProductService(ProductH2Repository productH2Repository) {
+        this.productH2Repository = productH2Repository;
     }
 
-    public Optional<Product> getProductById(Long id) {
-        return productRepository.findById(id);
+    public Product getProductById(Long id) {
+        return productH2Repository.findById(id).orElse(null);
     }
 
     public Iterable<Product> getAllProducts() {
-        return productRepository.findAll();
+        return productH2Repository.findAll();
     }
 
     public Product createProduct(Product product) {
-        return productRepository.save(product);
+        Product product1 = productH2Repository.save(product);
+        return product1;
     }
 
-    public Product updateProduct(Long id, Product productDetails) {
-        return productRepository.findById(id)
-            .map(product -> {
-                product.setName(productDetails.getName());
-                product.setPrice(productDetails.getPrice());
-                product.setImageUrl(productDetails.getImageUrl());
-                return productRepository.save(product);
-            })
-            .orElseGet(() -> {
-                productDetails.setId(id);
-                return productRepository.save(productDetails);
-            });
+    public void updateProduct(Long id, Product updatedProduct) {
+        productH2Repository.update(id, updatedProduct);
     }
 
     public void deleteProduct(Long id) {
-        productRepository.deleteById(id);
+        productH2Repository.deleteById(id);
+//        productH2Repository.orderId();
     }
 }
