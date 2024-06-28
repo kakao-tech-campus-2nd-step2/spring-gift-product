@@ -67,7 +67,7 @@ public class ProductController {
 
     @GetMapping("/{productId}")
     public String readById(@PathVariable long productId, Model model) {
-        Product product = productRepository.get(productId);
+        Product product = productDao.findById(productId);
 
         if (product == null) {
             return "error";

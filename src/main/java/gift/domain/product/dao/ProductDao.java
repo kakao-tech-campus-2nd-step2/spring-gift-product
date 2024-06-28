@@ -35,4 +35,12 @@ public class ProductDao {
 
         return jdbcClient.sql(sql).query(ProductDto.class).stream().map(ProductDto::toProduct).toList();
     }
+
+    public Product findById(long id) {
+        String sql = "SELECT * FROM product WHERE id = ?";
+
+        return jdbcClient.sql(sql)
+            .param(id)
+            .query(ProductDto.class).single().toProduct();
+    }
 }
