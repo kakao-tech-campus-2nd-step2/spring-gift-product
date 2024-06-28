@@ -16,5 +16,12 @@ public class AdminController {
         return "main";
     }
 
+    //GET
+    @GetMapping("/admin/get")
+    public String adminGetPage(Model model){
+        Collection<Product> products = productController.getProducts();
+        model.addAttribute("products", products);
+        return "get";
+    }
 
 }
