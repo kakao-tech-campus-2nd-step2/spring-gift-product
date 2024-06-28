@@ -56,12 +56,14 @@ public class ProductDao implements ProductRepository {
 
     @Override
     public void deleteById(Long id) {
-
+        String sql = "DELETE FROM product WHERE id = ?";
+        jdbcTemplate.update(sql, id);
     }
 
     @Override
     public void deleteAll() {
-
+        String sql = "TRUNCATE TABLE product";
+        jdbcTemplate.update(sql);
     }
 
     public int update() {
