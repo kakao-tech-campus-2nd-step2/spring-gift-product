@@ -34,9 +34,8 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createProduct(@RequestBody Product product) { //RequestBody와 RequestParam의 차이점 알아보기
-        products.put(product.id(), product);
-        return new ResponseEntity<>(product, HttpStatus.CREATED);
+    public ResponseEntity<?> createProduct(@RequestBody Product product) {
+        return new ResponseEntity<>(productService.createProduct(product), HttpStatus.CREATED);
     }
 
     // PUT은 업데이트시 존재하지 않는다면, 생성을 하게 되는데, POST와의 차이점?이 뭔 지 알아보기
