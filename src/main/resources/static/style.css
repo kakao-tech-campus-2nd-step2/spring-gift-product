@@ -18,15 +18,6 @@ h1 {
   padding-left: 40px;
   font-size: 40px;
 }
-.add-btn {
-  margin-left: auto;
-  padding-right: 40px;
-}
-.actions {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 .add-btn, .update-btn, .delete-btn, .btn-submit {
   border: none;
   width: 120px;
@@ -36,25 +27,28 @@ h1 {
   align-items: center;
   justify-content: center;
 }
+.add-btn {
+  margin-left: auto;
+  background: #5BB85C;
+  margin-right: 100px;
+}
+.update-btn {
+  background: #445D7D;
+  margin-right: 30px;
+}
+.delete-btn {
+  background: #D9534F;
+}
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 a {
   font-size: 20px;
   text-decoration: none;
   text-align: center;
   color: white;
-
-}
-.add-btn {
-  background: #5BB85C;
-  margin-right: 10px;
-
-}
-.update-btn {
-  background: #445D7D;
-  margin-right: 10px;
-}
-.delete-btn {
-  background: #D9534F;
-  margin-bottom: 10px;
 }
 table {
   width: calc(100% - 40px);
@@ -86,9 +80,15 @@ form {
 }
 .btn-submit {
   background: #445D7D;
+  color: #ffffff;
   margin-left: 10px;
 }
-label {
-  font-size: 15px;
-  padding: 0 10px;
+p {
+  font-size: 20px;
+  font-weight: bold;
+  padding: 0 20px;
+}
+input::placeholder {
+  color: grey;
+  font-style: italic;
 }
