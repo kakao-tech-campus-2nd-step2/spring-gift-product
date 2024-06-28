@@ -5,8 +5,7 @@
   <title>상품 추가</title>
 </head>
 <body>
-  <form th:action="@{/api/products}" th:object="${product}" method="post">
-    <input type="hidden" id="create" name="_method" value="create" />
+  <form th:action="@{/products/new}" th:object="${product}" method="post">
     <div>
       <label>ID: </label>
       <input type="text" th:field="*{id}" />

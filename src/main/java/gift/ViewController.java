@@ -2,11 +2,15 @@ package gift;
 
 import java.util.List;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.ui.Model;
 
 @Controller
+@RequestMapping("/products")
 public class ViewController {
     private final ProductService productService;
 
@@ -14,7 +18,7 @@ public class ViewController {
         this.productService = productService;
     }
 
-    @RequestMapping(value = "/products")
+    @GetMapping
     public String products(Model model) {
         List<Product> products = productService.getAllProducts();
 
@@ -22,13 +26,18 @@ public class ViewController {
         return "product_list";
     }
 
-    @RequestMapping(value = "/products/new")
+    @GetMapping("/new")
     public String newProduct(Model model) {
         model.addAttribute("product", new Product(null, "", null, ""));
         return "product_add_form";
     }
 
-    @RequestMapping(value = "/products/edit/{id}")
+    @PostMapping("/new")
+    public String addProduct(@ModelAttribute Product product) {
+        productService.addProduct(product);
+        return "redirect:/products";
+    }
+
     public String editProduct(Model model, @PathVariable Long id) {
         Product product = productService.getProductById(id);
         model.addAttribute("product", product);
