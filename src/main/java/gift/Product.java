@@ -16,7 +16,6 @@ public class Product {
     }
 
     // Getter and Setter methods
-
     public long getId() {
         return id;
     }

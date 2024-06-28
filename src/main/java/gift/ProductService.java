@@ -1,36 +1,53 @@
 package gift;
 
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Service
 public class ProductService {
-    private final Map<Long, Product> products = new HashMap<>();
-    private long nextId = 1;
+    private final JdbcTemplate jdbcTemplate;
+    private final SimpleJdbcInsert simpleJdbcInsert;
+
+    public ProductService(JdbcTemplate jdbcTemplate, DataSource dataSource) {
+        this.jdbcTemplate = jdbcTemplate;
+        this.simpleJdbcInsert = new SimpleJdbcInsert(dataSource)
+                .withTableName("products")
+                .usingGeneratedKeyColumns("id");
+    }
 
     public List<Product> getAllProducts() {
-        return new ArrayList<>(products.values());
+        String sql = "SELECT * FROM products";
+        return jdbcTemplate.query(sql, (rs, rowNum) -> new Product(
+                rs.getLong("id"),
+                rs.getString("name"),
+                rs.getInt("price"),
+                rs.getString("image_url")
+        ));
     }
 
     public Product getProductById(long id) {
-        return products.get(id);
+        String sql = "SELECT * FROM products WHERE id = ?";
+        return jdbcTemplate.queryForObject(sql, new Object[]{id}, (rs, rowNum) -> new Product(
+                rs.getLong("id"),
+                rs.getString("name"),
+                rs.getInt("price"),
+                rs.getString("image_url")
+        ));
     }
 
     public void addProduct(Product product) {
-        long id = nextId++;
-        product.setId(id);
-        products.put(id, product);
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("name", product.getName());
+        parameters.put("price", product.getPrice());
+        parameters.put("image_url", product.getImageUrl());
+        Number newId = simpleJdbcInsert.executeAndReturnKey(parameters);
+        product.setId(newId.longValue());
     }
 
-    public void updateProduct(long id, Product product) {
-        products.put(id, product);
-    }
-
-    public void deleteProduct(long id) {
-        products.remove(id);
-    }
 }
