@@ -67,15 +67,6 @@ public class ProductController {
         return "redirect:/api/getAllProducts";
     }
 
-
-    @PostMapping("/editform/{id}")
-    public String editform(@PathVariable Long id, Model model){
-        Product product = ProductDao.selectProduct(id);
-        model.addAttribute("product", product);
-        return "editform";
-    }
-
-
     //상품 업데이트
     @PostMapping("/updateProduct/{id}")
     public String updateProductController(@PathVariable Long id, @ModelAttribute Product newProduct){

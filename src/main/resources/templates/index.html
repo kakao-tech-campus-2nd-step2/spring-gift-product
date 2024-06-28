@@ -26,7 +26,7 @@
         <td th:text="${product.price}"></td>
         <td th:text="${product.imageUrl}"></td>
         <td>
-            <form th:action="@{/api/editform/{id}(id=${product.id})}" method="Post" style="display: inline;">
+            <form th:action="@{/editform/{id}(id=${product.id})}" method="Post" style="display: inline;">
                 <button type="submit">Edit</button>
             </form>
             <form th:action="@{/api/deleteProduct/{id}(id=${product.id})}" method="Get" style="display: inline;">
