@@ -44,11 +44,14 @@ public class JdbcTemplateRepository implements ItemRepository{
 
     @Override
     public void update(Long id, ItemDTO itemDTO) {
-
+        jdbcTemplate.update(
+            "update item set name = ?, price = ?, imgurl = ? where id = ?",
+            itemDTO.getName(),itemDTO.getPrice(),itemDTO.getImgUrl(),id
+        );
     }
 
     @Override
     public void delete(Long id) {
-
+        jdbcTemplate.update("delete from item where id = ?",id);
     }
 }
