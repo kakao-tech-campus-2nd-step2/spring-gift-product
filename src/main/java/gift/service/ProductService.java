@@ -1,6 +1,6 @@
 package gift.service;
 
-import gift.domain.repository.ProductRepository;
+import gift.domain.repository.ProductJdbcRepository;
 import gift.domain.model.Product;
 import gift.domain.model.ProductDto;
 import java.util.List;
@@ -10,31 +10,31 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProductService {
 
-    private final ProductRepository productRepository;
+    private final ProductJdbcRepository productJdbcRepository;
 
-    public ProductService(ProductRepository productRepository) {
-        this.productRepository = productRepository;
+    public ProductService(ProductJdbcRepository productJdbcRepository) {
+        this.productJdbcRepository = productJdbcRepository;
     }
 
     public Product getProduct(Long id) {
-        if (!productRepository.isExistProductId(id)) {
+        if (!productJdbcRepository.isExistProductId(id)) {
             throw new NoSuchElementException("Invalid Product ID");
         }
-        return productRepository.getProductById(id);
+        return productJdbcRepository.getProductById(id);
     }
 
     public List<ProductDto> getAllProduct() {
-        return productRepository.getAllProduct();
+        return productJdbcRepository.getAllProduct();
     }
 
     public void addProduct(ProductDto productDto) {
-        if (productRepository.isExistProductId(productDto.getId())) {
+        if (productJdbcRepository.isExistProductId(productDto.getId())) {
             throw new IllegalArgumentException("Already Exist Product ID");
         }
         if (productDto.getId() == null || !isValidLong(productDto.getId())){
             throw new IllegalArgumentException("Invalid Product ID");
         }
-        productRepository.addProduct(productDto);
+        productJdbcRepository.addProduct(productDto);
     }
 
     private boolean isValidLong(Object value) {
@@ -47,16 +47,16 @@ public class ProductService {
     }
 
     public void updateProduct(ProductDto productDto) {
-        if (!productRepository.isExistProductId(productDto.getId())) {
+        if (!productJdbcRepository.isExistProductId(productDto.getId())) {
             throw new NoSuchElementException("Invalid Product ID");
         }
-        productRepository.updateProduct(productDto);
+        productJdbcRepository.updateProduct(productDto);
     }
 
     public void deleteProduct(Long id) {
-        if (!productRepository.isExistProductId(id)) {
+        if (!productJdbcRepository.isExistProductId(id)) {
             throw new NoSuchElementException("Invalid Product ID");
         }
-        productRepository.deleteProduct(id);
+        productJdbcRepository.deleteProduct(id);
     }
 }
