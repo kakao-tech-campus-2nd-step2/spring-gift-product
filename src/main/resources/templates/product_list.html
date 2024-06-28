@@ -23,8 +23,8 @@
         <td class="productPrice" th:text="${product.price}">12345</td>
         <td class="productImageURL" th:text="${product.imageUrl}">imageURL example</td>
         <td>
-            <button type="button" th:href="@{/products/edit/{id}(id=product.id)}">Edit</button>
-            <!-- 삭제 버튼 추가 예정 -->
+            <a th:href="@{/products/edit/{id}(id=${product.id})}"><button type="button">Edit</button></a>
+            <button type="button" th:onclick="'deleteProduct(' + ${product.id} + ')'">Delete</button>
         </td>
     </tr>
     <tr>
@@ -43,11 +43,35 @@
         <td class="productPrice">12345</td>
         <td class="productImageURL">imageURL example</td>
         <td>
-            <button type="button" th:href="@{/products/edit/{id}(id=product.id)}">Edit</button>
-            <!-- 삭제 버튼 추가 예정 -->
+            <button type="button">Edit</button>
+            <button type="button">Delete</button>
+
         </td>
     </tr>
     </tbody>
 </table>
+
+<script>
+    function deleteProduct(id) {
+        if(confirm('이 상품을 삭제하시겠습니까?')) {
+            let form = document.createElement("form");
+            form.method = 'POST';
+            form.action = '/api/products/' + id
+
+            let methodInput = document.createElement("input");
+            methodInput.type = 'hidden';
+            methodInput.id = 'delete'
+            methodInput.name = '_method';
+            methodInput.value = 'delete';
+            form.appendChild(methodInput);
+
+            document.body.appendChild(form);
+            form.submit();
+            setTimeout(function() {
+                window.location.href = '/products';
+            }, 1000);
+        }
+    }
+</script>
 </body>
 </html>

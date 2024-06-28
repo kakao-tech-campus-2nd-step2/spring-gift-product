@@ -38,6 +38,7 @@ public class ViewController {
         return "redirect:/products";
     }
 
+    @RequestMapping(value = "edit/{id}")
     public String editProduct(Model model, @PathVariable Long id) {
         Product product = productService.getProductById(id);
         model.addAttribute("product", product);
