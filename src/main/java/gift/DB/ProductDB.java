@@ -1,15 +1,15 @@
 package gift.DB;
 
 import gift.DTO.ProductDTO;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class ProductDB {
 
-    private static final Map<Long, ProductDTO> products = new HashMap<>();
+    private static final Map<Long, ProductDTO> products = new ConcurrentHashMap<>();
 
     public List<ProductDTO> getList() {
         return products.values().stream().toList();
