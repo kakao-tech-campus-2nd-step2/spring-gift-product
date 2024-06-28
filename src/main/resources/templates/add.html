@@ -10,12 +10,12 @@
 <h2>새로운 상품 추가</h2>
 <div th:fragment="addProductForm">
     <form id="addProductForm" th:action="@{/products}" method="post">
-        <label for="name">name:</label>
+        <label for="name">상품명:</label>
         <input type="text" id="name" name="name" required>
-        <label for="price">price:</label>
+        <label for="price">가격:</label>
         <input type="number" id="price" name="price" required>
-        <label for="imageUrl">image URL:</label>
-        <input type="text" id="imageUrl" name="imageUrl" required>
+        <label for="category">카테고리:</label>
+        <input type="text" id="category" name="category" required>
         <button type="submit">상품 추가</button>
     </form>
 </div>
