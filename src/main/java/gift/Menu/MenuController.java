@@ -45,7 +45,7 @@ public class MenuController {
             @ModelAttribute MenuRequest request,
             Model model
     ){
-        Menu updatedMenu = menuService.update(
+        menuService.update(
                 id,
                 request.name(),
                 request.price(),

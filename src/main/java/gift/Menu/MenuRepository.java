@@ -28,7 +28,8 @@ public class MenuRepository{
         return menu;
     }
     public Long delete(Long id){
-        menus.remove(id);
+        var sql = "delete from menus where id = ?";
+        jdbcTemplate.update(sql, id);
         return id;
     }
     public List<Menu> findAll(){
@@ -47,12 +48,23 @@ public class MenuRepository{
     }
 
     public Menu update(Long id, String name, int price, String imageUrl) {
-        Menu updatedMenu = menus.get(id);
-        updatedMenu.update(name,price,imageUrl);
+        String sql = "UPDATE menus SET name = ?, price = ?,imageUrl = ? WHERE id = ?";
+        jdbcTemplate.update(sql, name,price,imageUrl,id);
+        Menu updatedMenu = new Menu(id,name,price,imageUrl);
         return updatedMenu;
     }
 
     public Menu findById(Long id) {
-        return menus.get(id);
+        String sql = "select id, name, price,imageUrl from menus where id = ?";
+        return jdbcTemplate.queryForObject(
+                sql,
+                (resultSet, rowNum) -> new Menu(
+                        resultSet.getLong("id"),
+                        resultSet.getString("name"),
+                        resultSet.getInt("price"),
+                        resultSet.getString("imageUrl")
+                ),
+                id
+        );
     }
 }
