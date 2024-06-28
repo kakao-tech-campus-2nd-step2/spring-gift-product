@@ -17,7 +17,7 @@ public class ProductDao {
             create table products (
               id bigint,
               productName varchar(255),
-              price money,
+              price int,
               imageUrl varchar(255),
               amount int,
               primary key (id)
@@ -34,7 +34,7 @@ public class ProductDao {
         jdbcTemplate.update(sql, id);
     }
     public void updateProduct(Product product){
-        var sql = "update products set productName = ? , price = ?, imageUrl = ? amount = ? where id = ? ";
+        var sql = "update products set productName = ? , price = ?, imageUrl = ?, amount = ? where id = ? ";
         jdbcTemplate.update(sql, product.name(), product.price(),product.imageUrl(), product.amount(), product.id());
     }
     public void purchaseProduct(long id, int amount){
