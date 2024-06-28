@@ -1,7 +1,6 @@
 package gift.controller;
 
 
-import gift.common.exception.ProductException;
 import gift.common.exception.ProductNotFoundException;
 import gift.controller.req.ProductRequest;
 import gift.controller.res.ProductResponse;
