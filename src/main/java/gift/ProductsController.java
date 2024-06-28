@@ -1,10 +1,6 @@
 package gift;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,26 +17,22 @@ import org.springframework.web.servlet.ModelAndView;
 @RestController
 @RequestMapping("/api/products")
 public class ProductsController {
-
-    private final Map<Long, Product> products = new ConcurrentHashMap<>();
-    private final AtomicLong sequence = new AtomicLong();
+    private final ProductRepository productRepository = new MemoryProductRepository();
 
     @PostMapping
     public Product addNewProduct(@RequestBody Product product) {
-        Long id = sequence.getAndIncrement();
-        product.setId(id);
-        products.put(id, product);
-        return product;
+        return productRepository.insert(product);
     }
 
     @GetMapping
-    public Product[] getAllProducts() {
-        return products.values().toArray(new Product[0]);
+    public List<Product> getAllProducts() {
+        return productRepository.findAll();
     }
 
     @GetMapping("/{id}")
     public Product getOneProduct(@PathVariable Long id) {
-        Product product = products.get(id);
+        Product product = productRepository.findById(id);
+
         if (product == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
@@ -49,33 +41,31 @@ public class ProductsController {
 
     @PutMapping("/{id}")
     public Product updateProduct(@PathVariable Long id, @RequestBody Product product) {
-        if (!products.containsKey(id)) {
+        if (productRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        product.setId(id);
-        products.put(id, product);
-        return product;
+        return productRepository.update(product);
     }
 
     @DeleteMapping("/{id}")
     public void deleteProduct(@PathVariable Long id) {
-        if (!products.containsKey(id)) {
+        if (productRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        products.remove(id);
+        productRepository.deleteById(id);
     }
 
     @GetMapping("/admin")
     public ModelAndView showAdminPage(@RequestParam(defaultValue = "1") int page) {
+        List<Product> products = productRepository.findAll();
         int lastPage = (products.size()-1) / 5 + 1;
-        if (page > lastPage) {
+        if (page < 1 || page > lastPage) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("admin/index");
-        List<Product> productList = new ArrayList<>(products.values());
         modelAndView.addObject("products",
-            productList.subList(Math.max(0, page * 5 - 5), Math.min(page * 5, products.size())));
+            products.subList(Math.max(0, page * 5 - 5), Math.min(page * 5, products.size())));
         modelAndView.addObject("productsCnt", products.size());
         modelAndView.addObject("page", page);
         modelAndView.addObject("startPage", Math.max(1, page-2));
