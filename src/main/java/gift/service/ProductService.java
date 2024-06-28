@@ -28,6 +28,10 @@ public class ProductService {
         return productRepository.findById(id);
     }
 
+    public List<Product> searchProduct(String name) {
+        return productRepository.findByCond(name);
+    }
+
     //상품 추가 기능
     public void addProduct(Product product) {
         productRepository.save(product);

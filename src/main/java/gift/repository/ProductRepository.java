@@ -30,6 +30,12 @@ public class ProductRepository {
         return jdbcTemplate.queryForObject("SELECT * FROM products WHERE id = ?", productRowMapper, id);
     }
 
+    public List<Product> findByCond(String name) {
+        String sql = "SELECT * FROM products WHERE name LIKE ?";
+        String likePattern = "%" + name + "%";
+        return jdbcTemplate.query(sql,  productRowMapper, likePattern);
+    }
+
     public int save(Product product) {
         return jdbcTemplate.update(
             "INSERT INTO products (name, price, imageUrl) VALUES (?, ?, ?)",

@@ -52,6 +52,20 @@ public class ProductController {
         return "products_list";
     }
 
+    //상품 검색 폼
+    @GetMapping("/search")
+    public String searchProductForm() {
+        return "search_form";
+    }
+
+    //상품 검색 기능
+    @PostMapping("/search")
+    public String searchProduct(Product formProduct, Model model) {
+        List<Product> products = productService.searchProduct(formProduct.getName());
+        model.addAttribute("products", products);
+        return "products_list";
+    }
+
     //상품 삭제 기능
     @GetMapping("/{id}/delete")
     public String deleteProduct(@PathVariable("id") Long id, Model model) {
