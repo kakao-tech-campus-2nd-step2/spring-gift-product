@@ -35,5 +35,21 @@ public class ProductController {
         return "redirect:/admin/products"; // 상품 목록 페이지로 리다이렉트
     }
 
+    @GetMapping("/edit/{id}")
+    public String showEditProductForm(@PathVariable Long id, Model model) {
+        Product product = productService.getProductById(id);
+        if (product == null) {
+            // 처리할 예외 상황
+            return "redirect:/admin/products";
+        }
+        model.addAttribute("product", product);
+        return "edit-product"; // edit-product.html 템플릿을 응답으로 사용
+    }
+
+    @PostMapping("/edit/{id}")
+    public String editProduct(@PathVariable Long id, @ModelAttribute Product product) {
+        productService.updateProduct(id, product);
+        return "redirect:/admin/products"; // 상품 목록 페이지로 리다이렉트
+    }
 
 }

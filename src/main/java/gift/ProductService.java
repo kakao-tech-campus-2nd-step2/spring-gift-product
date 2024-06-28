@@ -26,5 +26,8 @@ public class ProductService {
         products.put(id, product);
     }
 
+    public void updateProduct(long id, Product product) {
+        products.put(id, product);
+    }
 
 }
