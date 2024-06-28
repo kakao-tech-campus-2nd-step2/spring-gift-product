@@ -22,17 +22,17 @@ public class ProductController {
     public String getAllProducts(Model model) {
         List<Product> products = productService.getAllProducts();
         model.addAttribute("products", products);
-        return "products"; // Thymeleaf 템플릿 파일 이름 (products.html)
+        return "products";
     }
 
     @GetMapping("/add")
     public String showAddProductForm(Model model) {
         model.addAttribute("product", new Product.Builder().build());
-        return "addProduct"; // Thymeleaf 템플릿 파일 이름 (addProduct.html)
+        return "addProduct";
     }
 
     @PostMapping
-    public String addProduct(@RequestParam String name, @RequestParam int price, @RequestParam String imageUrl) {
+    public String addProduct(@RequestParam String name, @RequestParam int price, @RequestParam String imageUrl, Model model) {
         try {
             Product product = new Product.Builder()
                     .name(name)
@@ -43,7 +43,8 @@ public class ProductController {
             return "redirect:/products";
         } catch (Exception e) {
             e.printStackTrace();
-            return "error"; // 에러 발생 시 표시할 페이지 (error.html)
+            model.addAttribute("errorMessage", e.getMessage());
+            return "error";
         }
     }
 
@@ -51,11 +52,11 @@ public class ProductController {
     public String showEditProductForm(@PathVariable Long id, Model model) {
         Product product = productService.getProductById(id);
         model.addAttribute("product", product);
-        return "editProduct"; // Thymeleaf 템플릿 파일 이름 (editProduct.html)
+        return "editProduct";
     }
 
     @PostMapping("/edit/{id}")
-    public String updateProduct(@PathVariable Long id, @RequestParam String name, @RequestParam int price, @RequestParam String imageUrl) {
+    public String updateProduct(@PathVariable Long id, @RequestParam String name, @RequestParam int price, @RequestParam String imageUrl, Model model) {
         try {
             Product updatedProduct = new Product.Builder()
                     .id(id)
@@ -67,18 +68,20 @@ public class ProductController {
             return "redirect:/products";
         } catch (Exception e) {
             e.printStackTrace();
-            return "error"; // 에러 발생 시 표시할 페이지 (error.html)
+            model.addAttribute("errorMessage", e.getMessage());
+            return "error";
         }
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteProduct(@PathVariable Long id) {
+    public String deleteProduct(@PathVariable Long id, Model model) {
         try {
             productService.deleteProduct(id);
             return "redirect:/products";
         } catch (Exception e) {
             e.printStackTrace();
-            return "error"; // 에러 발생 시 표시할 페이지 (error.html)
+            model.addAttribute("errorMessage", e.getMessage());
+            return "error";
         }
     }
 }
