@@ -31,7 +31,8 @@ public class ProductService {
     }
 
     public void addProduct(Product product) {
-//        products.put(product.id(), product);
+        String sql = "INSERT INTO products (id, name, price, imageUrl) VALUES (?, ?, ?, ?)";
+        jdbcTemplate.update(sql, product.id(), product.name(), product.price(), product.imageUrl());
     }
 
     public void updateProduct(Long id, Product product) {
