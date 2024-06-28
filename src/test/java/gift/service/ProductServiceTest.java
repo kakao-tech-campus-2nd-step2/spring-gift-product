@@ -3,67 +3,69 @@ package gift.service;
 import gift.model.Product;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.jdbc.core.JdbcTemplate;
 
+import javax.sql.DataSource;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@JdbcTest
+@ComponentScan(basePackages = "gift.service")
 class ProductServiceTest {
 
+    @Autowired
     private ProductService productService;
 
     @BeforeEach
     void setUp() {
-        productService = new ProductService();
+        // 데이터 초기화 코드가 필요할 경우 추가
     }
 
     @Test
     void getAllProducts() {
         List<Product> products = productService.getAllProducts();
-        assertEquals(1, products.size());
-        assertEquals("아이스 카페 아메리카노 T", products.get(0).getName());
+        assertEquals(2, products.size());
     }
 
     @Test
     void addProduct() {
         Product newProduct = new Product.Builder()
-                .id(2L)
-                .name("새 상품")
-                .price(1000)
+                .name("New Product")
+                .price(3000)
                 .imageUrl("https://example.com/newproduct.jpg")
                 .build();
         productService.addProduct(newProduct);
 
         List<Product> products = productService.getAllProducts();
-        assertEquals(2, products.size());
-        assertTrue(products.stream().anyMatch(product -> "새 상품".equals(product.getName())));
+        assertEquals(3, products.size());
+        assertTrue(products.stream().anyMatch(product -> "New Product".equals(product.getName())));
     }
 
     @Test
     void updateProduct() {
         Product updatedProduct = new Product.Builder()
-                .id(8146027L)
-                .name("업데이트된 상품")
-                .price(5000)
+                .id(1L)
+                .name("Updated Product")
+                .price(1500)
                 .imageUrl("https://example.com/updatedproduct.jpg")
                 .build();
-        productService.updateProduct(8146027L, updatedProduct);
+        productService.updateProduct(1L, updatedProduct);
 
-        Product product = productService.getAllProducts().stream()
-                .filter(p -> p.getId().equals(8146027L))
-                .findFirst()
-                .orElse(null);
-
-        assertNotNull(product);
-        assertEquals("업데이트된 상품", product.getName());
-        assertEquals(5000, product.getPrice());
+        Product product = productService.getProductById(1L);
+        assertEquals("Updated Product", product.getName());
+        assertEquals(1500, product.getPrice());
     }
 
     @Test
     void deleteProduct() {
-        productService.deleteProduct(8146027L);
+        productService.deleteProduct(1L);
 
         List<Product> products = productService.getAllProducts();
-        assertTrue(products.isEmpty());
+        assertEquals(1, products.size());
+        assertFalse(products.stream().anyMatch(product -> product.getId().equals(1L)));
     }
 }
