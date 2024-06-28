@@ -67,5 +67,19 @@ public class ProductController {
         return ResponseEntity.ok().build();
     }
 
+    @DeleteMapping("/products/{id}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
+        String sql = "DELETE FROM products WHERE id = ?";
+        try {
+            int rowsDeleted = jdbcTemplate.update(sql, id);
 
+            if (rowsDeleted > 0) {
+                return ResponseEntity.noContent().build();
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 }
