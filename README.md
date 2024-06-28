@@ -1,12 +1,13 @@
 # spring-gift-product
 
+## step 3
 
-## step 2
+- H2 데이터베이스 연결
+  - data.sql : 스키마 정의하는 파일 --> 테이블 만들기
+  - schema.sql : 데이터베이스에 삽입할 초기 데이터 정의하는 파일
+  - application.properties 수정 --> 애플리케이션 시작 시점에 schema.sql과 data.sql 파일 실행
 
-- 관리자 화면
-  - 기본 화면
-    - 상품 추가, 상품 조회가 기본 화면에 포함
-    - 상품 조회 내역에서 수정, 삭제 버튼
-  - 수정 버튼 클릭시 이동할 수정 폼 화면
-  - 관리자 컨트롤러
-    - ProductService 추가
+- HashMap에서 Dao로 변경
+  - ProductDao 파일 생성
+    - jdbcTemplate 사용하여 crud 구현
+  - ProductService 파일 수정
