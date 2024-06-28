@@ -9,7 +9,13 @@
   <h1 class="my-4">Manage <strong>Products</strong></h1>
 
   <div class="mb-4">
-    <button class="btn btn-success" data-toggle="modal" data-target="#productModal">Add New Product</button>
+    <button class="btn btn-success" data-toggle="modal" data-target="#productModal">상품 추가</button>
+    <input type="text" id="productId" placeholder="Enter Product ID" class="form-control d-inline-block w-auto ml-2">
+    <button class="btn btn-info" onclick="searchProductById()">상품 조회</button>
+  </div>
+
+  <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+    <p th:text="${errorMessage}"></p>
   </div>
 
   <table class="table table-striped">
