@@ -1,6 +1,5 @@
 package gift;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +15,10 @@ public class ProductDao {
         this.jdbcClient = jdbcClient;
     }
 
+    /**
+     * 새 상품을 DB에 저장
+     * @return 반영된 row의 개수
+     */
     public Integer insertNewProduct(Product newProduct) {
         String sql = """
                     INSERT INTO product (id, name, price, imageUrl)
@@ -29,6 +32,10 @@ public class ProductDao {
                 .update();
     }
 
+    /**
+     * 상품 전체를 반환
+     * @return 상품 객체가 담긴 List
+     */
     public List<Product> selectProducts() {
         String sql = "SELECT * FROM product;";
         return jdbcClient.sql(sql)
@@ -41,6 +48,10 @@ public class ProductDao {
                 .list();
     }
 
+    /**
+     * 전달받은 id에 해당하는 상품을 반환
+     * @return 상품 객체
+     */
     public Product selectOneProduct(Long id) {
         String sql = "SELECT * FROM product WHERE id = :id;";
         return jdbcClient.sql(sql)
@@ -54,6 +65,10 @@ public class ProductDao {
                 .single();
     }
 
+    /**
+     * 전달 받은 상품으로 기존 상품을 수정
+     * @return 반영된 row의 개수
+     */
     public Integer updateProduct(Product editedProduct) {
         String sql = """
                     UPDATE product
@@ -68,6 +83,10 @@ public class ProductDao {
                 .update();
     }
 
+    /**
+     * id에 해당하는 상품 삭제
+     * @return 반영된 row의 개수
+     */
     public Integer deleteProduct(Long id) {
         String sql = "DELETE FROM product WHERE id = :id";
         return jdbcClient.sql(sql)
