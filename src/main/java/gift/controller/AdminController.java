@@ -36,7 +36,6 @@ public class AdminController {
     //상품 추가 화면
     @GetMapping("/product-add")
     public String productAdd() {
-
         return "product-add";
 
     }
