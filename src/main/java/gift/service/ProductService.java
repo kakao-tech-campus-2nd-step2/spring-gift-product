@@ -43,14 +43,17 @@ public class ProductService {
         return productRepository.findById(productId);
     }
 
-    public Optional<Product> update(Long productId, ProductDto productDto){
+    public Product update(Long productId, ProductDto productDto){
         Optional<Product> product = productRepository.findById(productId);
-        product.ifPresent(p->{
-            p.setName(productDto.getName());
-            p.setPrice(productDto.getPrice());
-            p.setImageUrl(productDto.getImageUrl());
-        });
-        return product;
+        if (product.isPresent()){
+            Product product2 = product.get();
+            product2.setName(productDto.getName());
+            product2.setPrice(productDto.getPrice());
+            product2.setImageUrl(productDto.getImageUrl());
+            return product2;
+        };
+        throw new NoSuchElementException("존재하지 않는 상품입니다.");
+
     }
 
     public Optional<Product> delete(Long productId){

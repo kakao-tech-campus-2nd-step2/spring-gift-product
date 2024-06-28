@@ -3,13 +3,13 @@ package gift.controller;
 import gift.domain.Product;
 import gift.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
-@RestController
+@Controller
 //@RequestMapping("/api/products")
 public class ProductController {
 
@@ -22,32 +22,48 @@ public class ProductController {
     }
 
     @GetMapping("/api/products")
-    public List<Product> getProducts(){
-        return productService.findProducts();
+    public String getProducts(Model model){
+        model.addAttribute("products", productService.findProducts());
+        return "product-list";
     }
 
     @GetMapping("/api/products/{id}")
-    public ResponseEntity<Product> getProduct(@PathVariable Long id){
-        Optional<Product> product = productService.findOne(id);
-        return product.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    public String getProduct(@PathVariable Long id, Model model){
+        model.addAttribute("products", productService.findOne(id));
+        return "product-list";
+    }
+
+    @GetMapping("/api/products/new")
+    public String newProductForm(Model model){
+        model.addAttribute("product", new ProductDto());
+        return "product-add-form";
     }
 
     @PostMapping("/api/products")
-    public ResponseEntity<Product> addProduct(@RequestBody ProductDto productDto) {
-        Product product = productService.register(productDto);
-        return new ResponseEntity<>(product, HttpStatus.CREATED);
+    public String addProduct(@ModelAttribute ProductDto productDto) {
+        productService.register(productDto);
+        return "redirect:/api/products";
     }
 
-    @PutMapping("/api/products/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody ProductDto productDto) {
-        Optional<Product> product = productService.update(id, productDto);
-        return product.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    @GetMapping("/api/products/edit/{id}")
+    public String editProductForm(@PathVariable long id, Model model){
+        Optional<Product> product = productService.findOne(id);
+        if (product.isPresent()){
+            model.addAttribute("product", product.get());
+            return "product-edit-form";
+        };
+        return "redirect:/api/products";
+    }
+    @PostMapping("/api/products/edit/{id}")
+    public String updateProduct(@PathVariable Long id, @ModelAttribute ProductDto productDto) {
+        productService.update(id, productDto);
+        return "redirect:/api/products";
     }
 
-    @DeleteMapping("/api/products/{id}")
-    public ResponseEntity<Object> deleteProduct(@PathVariable Long id){
-        Optional<Product> product = productService.delete(id);
-        return product.map(value ->  new ResponseEntity<>(HttpStatus.NO_CONTENT)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    @GetMapping("/api/products/delete/{id}")
+    public String deleteProduct(@PathVariable Long id){
+        productService.delete(id);
+        return "redirect:/api/products";
 
     }
 
