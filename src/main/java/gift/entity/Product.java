@@ -1,9 +1,6 @@
-package gift;
+package gift.entity;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-
-import java.util.Arrays;
-import java.util.List;
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Product {
