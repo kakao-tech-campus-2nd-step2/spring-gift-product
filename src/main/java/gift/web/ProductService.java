@@ -10,5 +10,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProductService {
     private final Map<Long, Product> products = new HashMap<>();
+    private final AtomicLong incrementCounter = new AtomicLong(1); // ID를 관리할 변수
+
+    public List<Product> getProducts() {
+        return List.copyOf(products.values());
+    }
+
 
 }
