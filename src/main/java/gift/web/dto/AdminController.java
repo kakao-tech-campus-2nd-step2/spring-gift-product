@@ -35,10 +35,11 @@ public class AdminController {
 
     @GetMapping("/create")
     public String createProductForm(Model model) {
+        model.addAttribute("product", new Product(1L, "name", 0L, "image.url"));
         return "create";
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public String createProduct(@ModelAttribute Product product) {
         productService.createProduct(product);
         return "redirect:/admin/products";
