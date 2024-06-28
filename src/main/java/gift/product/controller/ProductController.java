@@ -4,6 +4,7 @@ import gift.product.dto.ProductDTO;
 import gift.product.model.Product;
 import gift.product.service.ProductService;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,11 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/products")
 public class ProductController {
 
-    ProductService productService;
-
-    public ProductController() {
-        this.productService = new ProductService();
-    }
+    @Autowired
+    private ProductService productService;
 
     @PostMapping("/insert")
     public ResponseEntity<Product> insertProduct(@RequestBody ProductDTO productDTO) {

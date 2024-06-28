@@ -1,11 +1,11 @@
 package gift.product.repository;
 
-import gift.product.config.Config;
 import gift.product.model.Product;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -15,11 +15,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class ProductRepository {
 
-    private final JdbcTemplate jdbcTemplate;
-
-    public ProductRepository() {
-        jdbcTemplate = new Config().jdbcTemplate();
-    }
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     public void save(Product product) {
         KeyHolder keyHolder = new GeneratedKeyHolder();

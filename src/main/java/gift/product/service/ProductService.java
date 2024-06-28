@@ -4,14 +4,14 @@ import gift.product.dto.ProductDTO;
 import gift.product.model.Product;
 import gift.product.repository.ProductRepository;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ProductService {
 
+    @Autowired
     private ProductRepository productRepository;
-
-    public ProductService() {
-        this.productRepository = new ProductRepository();
-    }
 
     public Product insertProduct(ProductDTO productDTO) {
         Product product = new Product(productDTO.name(), productDTO.price(), productDTO.imageUrl());
