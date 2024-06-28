@@ -30,6 +30,11 @@
             <td th:text="${product.id}"></td>
             <td th:text="${product.name}"></td>
             <td th:text="${product.price}"></td>
+            <td>
+                <a th:href="@{'/admin/products/edit/' + ${product.id}}">
+                    <button class="btn primary-btn">Edit</button>
+                </a>
+            </td>
         </tr>
     </table>
 </body>

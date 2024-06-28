@@ -35,4 +35,10 @@ public class AdminController {
     public String addProduct() {
         return "new-product";
     }
+
+    @GetMapping("/edit/{id}")
+    public String updateProduct(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("product", productService.getProduct(id));
+        return "edit-product";
+    }
 }
