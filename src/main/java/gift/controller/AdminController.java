@@ -1,6 +1,6 @@
 package gift.controller;
 
-import gift.repository.MemoryProductRepository;
+import gift.repository.ProductRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/api/products/admin")
 public class AdminController {
 
-    private final MemoryProductRepository repository;
+     private final ProductRepository repository;
 
-    public AdminController(MemoryProductRepository repository) {
+    public AdminController(ProductRepository repository) {
         this.repository = repository;
     }
 
