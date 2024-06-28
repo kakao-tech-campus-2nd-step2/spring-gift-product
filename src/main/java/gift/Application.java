@@ -17,6 +17,6 @@ public class Application implements CommandLineRunner {
 
     @Override
     public void run(String... strings) throws Exception {
-        jdbcTemplate.execute("DROP TABLE product IF EXISTS");
+//        jdbcTemplate.execute("DROP TABLE product IF EXISTS");
     }
 }
