@@ -25,7 +25,8 @@ public class ProductViewController {
     @GetMapping
     public String showProductManagementPage(Model model) {
         try {
-            List<Product> products = restTemplate.getForObject("http://localhost:8080/api/products", List.class);
+            List<Product> products = restTemplate.getForObject("http://localhost:8080/api/products",
+                List.class);
             if (products == null) {
                 model.addAttribute("products", List.of());
                 return "productManagement"; // 템플릿 파일 이름
@@ -45,7 +46,8 @@ public class ProductViewController {
         }
 
         try {
-            Product product = restTemplate.getForObject("http://localhost:8080/api/products/" + id, Product.class);
+            Product product = restTemplate.getForObject("http://localhost:8080/api/products/" + id,
+                Product.class);
             model.addAttribute("product", product);
         } catch (HttpClientErrorException e) {
             model.addAttribute("error", "Product not found: " + e.getMessage());
@@ -81,7 +83,8 @@ public class ProductViewController {
 
     private String createProduct(Product product, Model model) {
         try {
-            restTemplate.postForObject("http://localhost:8080/api/products", product, Product.class);
+            restTemplate.postForObject("http://localhost:8080/api/products", product,
+                Product.class);
         } catch (HttpClientErrorException.BadRequest e) {
             model.addAttribute("error", "Product ID already exists: " + e.getMessage());
         } catch (Exception e) {

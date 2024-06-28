@@ -27,7 +27,8 @@ public class ProductRepository {
 
     public Optional<Product> getProductById(Long id) {
         try {
-            return Optional.ofNullable(jdbcTemplate.queryForObject(SELECT_PRODUCT_BY_ID_SQL, new ProductRowMapper(), id));
+            return Optional.ofNullable(
+                jdbcTemplate.queryForObject(SELECT_PRODUCT_BY_ID_SQL, new ProductRowMapper(), id));
         } catch (Exception e) {
             return Optional.empty();
         }
@@ -48,6 +49,7 @@ public class ProductRepository {
     }
 
     private static class ProductRowMapper implements RowMapper<Product> {
+
         @Override
         public Product mapRow(ResultSet rs, int rowNum) throws SQLException {
             return new Product(
