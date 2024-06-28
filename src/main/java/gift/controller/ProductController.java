@@ -34,4 +34,10 @@ public class ProductController {
         return productService.getProductById(id);
     }
 
+    // 제품 추가
+    @PostMapping
+    public Product addProduct(@RequestBody Product product) {
+        return productService.addProduct(product);
+    }
+
 }

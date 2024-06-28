@@ -25,4 +25,12 @@ public class ProductService {
         }
         return product;
     }
+
+    // 제품 추가
+    public Product addProduct(Product product) {
+        product.setId(currentId++);
+        products.put(product.getId(), product);
+        return product;
+    }
+
 }
