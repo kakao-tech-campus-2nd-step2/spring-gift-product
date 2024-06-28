@@ -1,58 +1,57 @@
 package gift.controller;
 
 import gift.domain.Product;
-import java.util.*;
-import org.springframework.http.HttpStatus;
+import gift.service.ProductService;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
-    private final Map<Long, Product> products = new HashMap<>();
-    private long currentId = 1;
+    private final ProductService productService;
+
+    @Autowired
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
 
     @GetMapping
     public List<Product> getAllProducts() {
-        return new ArrayList<>(products.values());
+        return productService.findAll();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProduct(@PathVariable Long id) {
-        Product product = products.get(id);
-        if (product == null) {
+        if(!productService.exists(id)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(product, HttpStatus.OK);
+        return new ResponseEntity<>(productService.find(id).get(), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<String> postProduct(@RequestBody Product product) {
-        if (products.containsKey(product.id())) {
-            return new ResponseEntity<>("해당 ID의 상품이 이미 존재합니다.",HttpStatus.CONFLICT);
+    public ResponseEntity<Product> postProduct(@RequestBody Product product) {
+        if(productService.exists(product.id())) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
-        product = new Product(currentId++, product.name(), product.price(), product.imageUrl());
-        products.put(product.id(), product);
-        return new ResponseEntity<>("상품이 정상적으로 추가되었습니다.", HttpStatus.CREATED);
-
+        return new ResponseEntity<>(productService.save(product).get(), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> putProduct(@RequestBody Product product, @PathVariable Long id) {
-        if (!products.containsKey(id)) {
-            return new ResponseEntity<>("해당 ID의 상품이 존재하지 않습니다.", HttpStatus.NOT_FOUND);
+    public ResponseEntity<Product> putProduct(@PathVariable Long id, @RequestBody Product product) {
+        if(!productService.exists(id)) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        product = new Product(id, product.name(), product.price(), product.imageUrl());
-        products.put(id, product);
-        return new ResponseEntity<>("상품 정보가 정상적으로 변경되었습니다.", HttpStatus.OK);
+        return new ResponseEntity<>(productService.update(id, product).get(), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteProduct(@PathVariable Long id) {
-        if (!products.containsKey(id)) {
-            return new ResponseEntity<>("해당 ID의 상품이 존재하지 않습니다.", HttpStatus.NOT_FOUND);
+    public ResponseEntity<Product> deleteProduct(@PathVariable Long id) {
+        if(!productService.exists(id)) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        products.remove(id);
-        return new ResponseEntity<>("상품이 정상적으로 삭제되었습니다", HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(productService.delete(id).get(), HttpStatus.OK);
     }
 }
