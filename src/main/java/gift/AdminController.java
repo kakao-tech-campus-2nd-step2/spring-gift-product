@@ -9,7 +9,11 @@ import java.util.*;
 @Controller
 public class AdminController {
 
-    ProductController productController = new ProductController();
+    private final ProductController productController;
+
+    public AdminController(ProductController productController) {
+        this.productController = productController;
+    }
 
     @GetMapping("/admin")
     public String mainRendering(){
