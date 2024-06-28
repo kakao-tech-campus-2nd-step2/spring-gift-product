@@ -70,4 +70,14 @@ public class ProductDao {
             productVo.getId()
         );
     }
+
+    public List<ProductVo> listupProducts() {
+        var sql = "select id, name, price, imageUrl from product_list";
+        return jdbcTemplate.query(sql, (resultSet, rowNum) -> new ProductVo(
+            resultSet.getLong("id"),
+            resultSet.getString("name"),
+            resultSet.getInt("price"),
+            resultSet.getString("imageUrl")
+        ));
+    }
 }
