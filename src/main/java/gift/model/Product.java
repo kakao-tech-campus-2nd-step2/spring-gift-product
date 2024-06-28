@@ -1,4 +1,6 @@
-package gift.dto;
+package gift.model;
+
+import jakarta.annotation.Generated;
 
 public class Product {
 
