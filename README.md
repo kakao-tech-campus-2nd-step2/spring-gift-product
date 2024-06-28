@@ -1,4 +1,51 @@
 # spring-gift-product
+## 🚀3단계
+
+#### 커밋 1: JdbcProductRepository 클래스 및 데이터베이스와 상호작용 기능 추가
+- 변경 사항:
+JdbcProductRepository 클래스 추가
+Spring의 JdbcTemplate을 사용하여 데이터베이스와 상호작용하는 기능 추가
+
+- 기능 목록:
+<br/>모든 상품 조회 (findAll 메서드)
+<br/>특정 ID로 상품 조회 (findById 메서드)
+<br/>상품 추가 (save 메서드)
+<br/>상품 수정 (update 메서드)
+<br/>상품 삭제 (delete 메서드)
+<br/>
+
+#### 커밋 2: JdbcProductRepository findAll 메서드 구현
+
+- 변경 사항:
+<br/>findAll 메서드 구현
+<br/>데이터베이스에서 모든 상품을 조회하는 기능 추가
+<br/>
+#### 커밋 3: JdbcProductRepository findById 메서드 구현
+
+- 변경 사항:
+<br/>findById 메서드 구현
+<br/>주어진 ID에 해당하는 상품을 데이터베이스에서 조회하는 기능 추가
+<br/>
+#### 커밋 4: JdbcProductRepository save 메서드 구현
+
+- 변경 사항:
+<br/>save 메서드 구현
+<br/>새로운 상품을 데이터베이스에 저장하는 기능 추가
+<br/>
+#### 커밋 5: JdbcProductRepository update 메서드 구현
+
+- 변경 사항:
+<br/>update 메서드 구현
+<br/>데이터베이스에 저장된 특정 상품의 정보를 수정하는 기능 추가
+<br/>
+#### 커밋 6: JdbcProductRepository delete 메서드 구현
+
+- 변경 사항:
+<br/>delete 메서드 구현
+<br/>주어진 ID에 해당하는 상품을 데이터베이스에서 삭제하는 기능 추가
+<br/>
+<br/>
+
 ## 🚀2단계
 ## 기능 목록
 ## AdminProductController
@@ -8,9 +55,10 @@
 - 4. 상품 삭제
 - 5. 이미지 업로드 기능
 - 6. product.html 관리자 페이지 제작
+<br/>
+<br/>
 
-
-## 1단계
+## 🚀1단계
 ## 프로젝트 개요
 - 이 프로젝트는 간단한 상품 관리 HTTP API를 구축하는 것이 목표입니다. 
 - 주요 기능으로는 상품 조회, 추가, 수정, 삭제가 있으며, 이미지를 로컬 스토리지에 저장합니다. 
@@ -65,7 +113,10 @@ lombok 사용 금지
 
 2-1. 이미지 저장 및 경로 관리
    - 이미지 저장 및 경로 관리 이미지는 /Users/hansol/Desktop/temp/kakao_step2_1/spring-gift-product/src/main/java/gift/imageStorage
-   - 경로 암호화 처리 base64 인코딩 디코딩 해서 저장 후 서버내에서 디코딩해서 경로 파악 이미지 전달
+<br/>
+(경로 암호화 처리 base64 인코딩 디코딩 해서 저장 후 서버내에서 디코딩해서 경로 파악 후 이미지 전달)
+
+<br/>
 
 3. 상품 조회 기능 구현
    - 모든 상품을 조회할 수 있는 API를 구현한다. (GET /api/products/getAll)
@@ -86,8 +137,10 @@ lombok 사용 금지
 9. 테스트 코드 작성
    - 각 API 엔드포인트에 대한 테스트 케이스를 작성하여 기능을 검증한다.
 
-
-
+<br/>
+<br/>
+<br/>
+<br/>
 
 ---
 과제 1 카카오 선물하기 필수 체크 항목
