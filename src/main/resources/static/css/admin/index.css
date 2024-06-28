@@ -1,0 +1,34 @@
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0 2.5%;
+}
+
+header, footer {
+  height: 10%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.table_wrapper {
+  height: 80%;
+}
+
+table {
+  width: 100%;
+  text-align: center;
+}
+
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+img {
+  width: 100px;
+  height: 100px;
+}

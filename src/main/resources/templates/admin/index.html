@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <link th:href="@{/css/admin/index.css}" rel="stylesheet"/>
+  <title>상품 관리자 화면</title>
+</head>
+<body>
+<header>
+  <h2>Manage Products</h2>
+  <div>
+    <a href="#">Delete</a> <a href="#">Add New Product</a>
+  </div>
+</header>
+<div class="table_wrapper">
+  <table>
+    <thead>
+    <tr>
+      <th><input type="checkbox" name="all" id="all"></th>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Image</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="product : ${products}">
+      <td><input type="checkbox" name="${product.id}" id="${product.id}"></td>
+      <td th:text="${product.id}"></td>
+      <td th:text="${product.name}"></td>
+      <td th:text="${product.price}"></td>
+      <td><img th:src="@{${product.imageUrl}}" alt="상품이미지"></td>
+      <td><a href="#">수정</a> <a href="#">삭제</a></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<footer>
+  <div th:text="'Showing ' + ${products.size()} + ' out of ' + ${productsCnt} + ' entries'"></div>
+  <div>
+    <a th:if="${page>1}" th:href="@{/api/products/admin(page=${page - 1})}">Previous</a>
+    <span th:if="${page<=1}">Previous</span>
+    <th:block th:each="num : ${#numbers.sequence(startPage, lastPage)}">
+      <a th:if="${page != num}" th:href="@{/api/products/admin(page=${num})}" th:text="${num}"></a>
+      <strong th:if="${page == num}" th:text="${num}"></strong>
+    </th:block>
+    <a th:if="${page<lastPage}" th:href="@{/api/products/admin(page=${page + 1})}">Next</a>
+    <span th:if="${page>=lastPage}">Next</span>
+  </div>
+</footer>
+</body>
+</html>
