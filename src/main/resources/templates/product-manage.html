@@ -111,7 +111,7 @@
 
 <script>
   function deleteHandler(id) {
-    fetch(`/product/delete/${id}`, {
+    fetch(`/product/${id}`, {
       method: 'DELETE'
     })
     .then(response => {
@@ -140,7 +140,7 @@
       imageUrl:imageUrl
     };
 
-    fetch(`/product/update/${productId}`, {
+    fetch(`/product/${productId}`, {
       method: 'PATCH',
       headers:{
         'Content-Type':'application/json'

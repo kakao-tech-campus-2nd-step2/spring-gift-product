@@ -3,7 +3,6 @@ package gift.controller;
 
 import gift.Service.ProductService;
 import gift.domain.Product;
-import gift.domain.Products;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,7 +53,7 @@ public class ProductController {
     }
 
     //product 수정
-    @PatchMapping("/update/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<String> editProduct(@PathVariable("id") Long id,
         @RequestBody Product product) {
         try {
@@ -68,7 +67,7 @@ public class ProductController {
     }
 
     //product 삭제
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteProduct(@PathVariable("id") Long id) {
         try {
             productService.deleteProduct(id);
