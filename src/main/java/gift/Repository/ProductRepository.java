@@ -37,4 +37,10 @@ public class ProductRepository {
         );
         return products.isEmpty() ? null : products.get(0);
     }
+
+    public Product save(Product product) {
+        String sql = "INSERT INTO products (id, name, price, imageUrl) VALUES (?, ?, ?, ?)";
+        jdbcTemplate.update(sql, product.id(), product.name(), product.price(), product.imageUrl());
+        return product;
+    }
 }
