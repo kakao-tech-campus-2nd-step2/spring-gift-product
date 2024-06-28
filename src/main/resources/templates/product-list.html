@@ -87,14 +87,38 @@
 <script>
   function editProduct(id) {
     fetch(`/products/${id}`)
-    .then(response => response.json())
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('존재하지 않는 상품 입니다.');
+      }
+      return response.json();
+    })
     .then(product => {
       document.getElementById('name').value = product.name;
       document.getElementById('price').value = product.price;
       document.getElementById('imageUrl').value = product.imageUrl;
       document.getElementById('productForm').action = `/products/${id}`;
       $('#productModal').modal('show');
+    })
+    .catch(error => {
+      alert(error.message);
     });
+  }
+
+  function searchProductById() {
+    const productId = document.getElementById('productId').value;
+    if (productId) {
+      fetch(`/products/${productId}`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('존재하지 않는 상품 입니다.');
+        }
+        window.location.href = `/products/view/${productId}`;
+      })
+      .catch(error => {
+        alert(error.message);
+      });
+    }
   }
 </script>
 </body>
