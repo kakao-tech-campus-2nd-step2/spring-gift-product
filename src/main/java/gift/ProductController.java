@@ -1,42 +1,60 @@
 package gift;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicLong;
 
+@Controller
+@RequestMapping("/admin/products")
 public class ProductController {
-    private final Map<Long, Product> products = new HashMap<>();
-    private final AtomicLong idGenerator = new AtomicLong(1);
 
-    public ProductController() {
-        Product product1 = new Product(idGenerator.getAndIncrement(), "아이스 카페 아메리카노 T", 4500,
-                "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg");
-        products.put(product1.getId(), product1);
+    private final ProductService productService;
+
+    public ProductController(ProductService productService) {
+        this.productService = productService;
     }
 
-    public List<Product> getProducts() {
-        return new ArrayList<>(products.values());
+    @GetMapping
+    public String listProducts(Model model) {
+        List<Product> products = productService.getAllProducts();
+        model.addAttribute("products", products);
+        return "products"; // products.html 템플릿을 응답으로 사용
     }
 
-    public Product addProduct(Product product) {
-        long id = idGenerator.getAndIncrement();
-        product.setId(id);
-        products.put(id, product);
-        return product;
+    @GetMapping("/add")
+    public String showAddProductForm(Model model) {
+        model.addAttribute("product", new Product());
+        return "add-product"; // add-product.html 템플릿을 응답으로 사용
     }
-    public Product updateProduct(long id, Product newProductData) {
-        Product existingProduct = products.get(id);
-        if (existingProduct == null) {
-            return null;
+
+    @PostMapping("/add")
+    public String addProduct(@ModelAttribute Product product) {
+        productService.addProduct(product);
+        return "redirect:/admin/products"; // 상품 목록 페이지로 리다이렉트
+    }
+
+    @GetMapping("/edit/{id}")
+    public String showEditProductForm(@PathVariable Long id, Model model) {
+        Product product = productService.getProductById(id);
+        if (product == null) {
+            // 처리할 예외 상황
+            return "redirect:/admin/products";
         }
-        existingProduct.setName(newProductData.getName());
-        existingProduct.setPrice(newProductData.getPrice());
-        existingProduct.setImageUrl(newProductData.getImageUrl());
-        return existingProduct;
+        model.addAttribute("product", product);
+        return "edit-product"; // edit-product.html 템플릿을 응답으로 사용
     }
-    public Product deleteProduct(long id) {
-        return products.remove(id);
+
+    @PostMapping("/edit/{id}")
+    public String editProduct(@PathVariable Long id, @ModelAttribute Product product) {
+        productService.updateProduct(id, product);
+        return "redirect:/admin/products"; // 상품 목록 페이지로 리다이렉트
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteProduct(@PathVariable Long id) {
+        productService.deleteProduct(id);
+        return "redirect:/admin/products"; // 상품 목록 페이지로 리다이렉트
     }
 }
