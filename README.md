@@ -2,7 +2,7 @@
 
 ## 프로젝트 목적
 ***
-상품 CRUD(Create,Read,Update,Delete) 기능을 수행할 수 있는 관리자 페이지의 구현
+상품 CRUD(Create,Read,Update,Delete) 기능을 수행할 수 있는 관리자 페이지에 JDBCTemplate를 이용한 h2 데이터베이스 적용 
 
 
 ## 프로젝트 기능 목록
@@ -35,3 +35,8 @@
 상품 정보를 삭제하는 기능 (DELETE)
 
 상품 삭제 버튼
+
+### 데이터베이스
+h2 database 이용
+
+JDBCTemplate를 이용하여 데이터베이스 CRUD 제어
