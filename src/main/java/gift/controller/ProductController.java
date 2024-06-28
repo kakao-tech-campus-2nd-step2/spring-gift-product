@@ -1,6 +1,6 @@
 package gift.controller;
 
-import gift.dao.ProductDao;
+import gift.model.ProductDao;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;

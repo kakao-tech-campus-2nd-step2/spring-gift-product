@@ -21,6 +21,8 @@ public class Application implements CommandLineRunner {
         dropProductTable();
         createProductTable();
     }
+
+
     private void dropProductTable(){
         var sql="DROP TABLE products IF EXISTS";
         jdbcTemplate.execute(sql);
