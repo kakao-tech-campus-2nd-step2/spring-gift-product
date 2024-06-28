@@ -1,10 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+  <title>Product Form</title>
+<!--  <link rel="stylesheet" type="text/css" href="/static/style.css">-->
 </head>
 <body>
-$END$
+<h1 th:text="${product.id == null ? 'Add New Product' : 'Edit Product'}">Product Form</h1>
+
+<!-- Add Product Form -->
+<form th:action="@{/products/add}" th:object="${product}" method="post" th:if="${product.id == null}">
+  <div>
+    <label>Name:</label>
+    <input type="text" th:field="*{name}" required />
+  </div>
+  <div>
+    <label>Price:</label>
+    <input type="number" th:field="*{price}" required />
+  </div>
+  <div>
+    <label>Image URL:</label>
+    <input type="text" th:field="*{imageUrl}" required />
+  </div>
+  <div>
+    <button type="submit">Save</button>
+  </div>
+</form>
+
+<!-- Edit Product Form -->
+<form th:action="@{'/products/edit/' + ${product.id}}" th:object="${product}" method="post" th:unless="${product.id == null}">
+  <div>
+    <label>Name:</label>
+    <input type="text" th:field="*{name}" required />
+  </div>
+  <div>
+    <label>Price:</label>
+    <input type="number" th:field="*{price}" required />
+  </div>
+  <div>
+    <label>Image URL:</label>
+    <input type="text" th:field="*{imageUrl}" required />
+  </div>
+  <div>
+    <button type="submit">Save</button>
+  </div>
+</form>
+
+<a href="/products">Back to Product List</a>
 </body>
 </html>

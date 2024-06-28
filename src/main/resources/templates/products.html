@@ -1,10 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+  <title>상품 관리 페이지</title>
+  <link rel="stylesheet" type="text/css" href="/style.css">
 </head>
 <body>
-$END$
+<h1>Managing Products</h1>
+<h2>Product List</h2>
+<a href="/products/add">Add New Product</a>
+<table>
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Price</th>
+    <th>Image URL</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="product : ${products}">
+    <td th:text="${product.id}">1</td>
+    <td th:text="${product.name}">Product Name</td>
+    <td th:text="${product.price}">1000</td>
+    <td><img th:src="${product.imageUrl}" alt="Product Image" width="100"></td>
+    <td>
+      <a th:href="@{/products/edit/{id}(id=${product.id})}">Edit</a>
+      <a th:href="@{/products/delete/{id}(id=${product.id})}" onclick="return confirm('정말로 삭제하시겠습니까?');">Delete</a>
+    </td>
+  </tr>
+  </tbody>
+</table>
 </body>
 </html>
