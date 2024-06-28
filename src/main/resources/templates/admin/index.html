@@ -30,6 +30,30 @@
     </form>
   </div>
 </div>
+<div class="update_product modal">
+  <div class="modal_popup">
+    <h3>상품 정보 수정</h3>
+    <form action="/api/products" method="post" id="update_product_form">
+      <input type="hidden" id="id" name="id">
+      <div>
+        <label for="new_name">상품명</label>
+        <input type="text" id="new_name" name="name">
+      </div>
+      <div>
+        <label for="new_price">가격</label>
+        <input type="text" id="new_price" name="price">
+      </div>
+      <div>
+        <label for="new_imageUrl">이미지 URL</label>
+        <input type="text" id="new_imageUrl" name="imageUrl">
+      </div>
+      <div class="modal_btn_container">
+        <button type="submit" class="modal_btn" th:onclick="">제출</button>
+        <button type="reset" class="modal_btn close_btn">닫기</button>
+      </div>
+    </form>
+  </div>
+</div>
 <header>
   <h2>Manage Products</h2>
   <div>
@@ -56,7 +80,7 @@
       <td th:text="${product.name}"></td>
       <td th:text="${product.price}"></td>
       <td><img th:src="@{${product.imageUrl}}" alt="상품이미지"></td>
-      <td><a href="#">수정</a> <a href="#">삭제</a></td>
+      <td><button class="update_product_button">수정</button> <button>삭제</button></td>
     </tr>
     </tbody>
   </table>

@@ -73,3 +73,7 @@ img {
 .new_product.on {
   display: block;
 }
+
+.update_product.on {
+  display: block;
+}
