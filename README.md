@@ -9,7 +9,6 @@
 /src/main/resources/templates 
 - product-list.html
 - product-add.html
-- product-edit.html
 /src/main/java/gift
 - AdminController.java
 ### 구현할 기능 구현 목록
@@ -20,10 +19,8 @@
 - edit 버튼으로 제품의 필드 값을 입력해서 수정할 수 있다.
 - delete 버튼으로 조회 가능한 상품을 삭제할 수 있다.
 2. product-add.html
-- 필드 값을 입력하여 새로운 상품을 추가할 수 있다.
-3. product-edit.html
-- 추가 버튼으로 넘어가게 되는 페이지이다.
-- 상품을 수정하거나 추가할 수 있다.
+- 필드 값을 입력하여 새로운 상품을 추가하거나 수정할 수 있다.
+
 ## Step 1
 ### 요구사항
 상품을 조회, 추가, 수정, 삭제할 수 있는 간단한 HTTP API를 구현한다.
