@@ -1,7 +1,5 @@
 package gift.api;
 
-import gift.application.ProductService;
-import gift.domain.Product;
 import gift.dto.ProductRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,17 +10,17 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/admin")
 public class AdminController {
 
-    private final ProductService productService;
+    private final ProductController productController;
 
     @Autowired
-    public AdminController(ProductService productService) {
-        this.productService = productService;
+    public AdminController(ProductController productController) {
+        this.productController = productController;
     }
 
     // 상품 조회
     @GetMapping
     public String getAllProducts(Model model) {
-        model.addAttribute("productList", productService.getAllProducts());
+        model.addAttribute("productList", productController.getAllProducts());
         return "admin-product-list";
     }
 
@@ -32,22 +30,15 @@ public class AdminController {
         return "product-add-form";
     }
 
-    // 상품 추가
-    @PostMapping("/add")
-    public String addProduct(@ModelAttribute Product product) {
-        productService.createProduct(product);
-        return "redirect:/admin";
-    }
-
     // 상품 삭제
     @DeleteMapping("/{id}")
     public Long deleteProduct(@PathVariable("id") Long id) {
-        return productService.deleteProductById(id);
+        return productController.deleteProduct(id);
     }
 
     // 상품 수정
     @PatchMapping("/{id}")
     public Long updateProduct(@PathVariable("id") Long id, @RequestBody ProductRequest request) {
-        return productService.updateProduct(id, request);
+        return productController.updateProduct(id, request);
     }
 }
