@@ -57,5 +57,4 @@ public class ProductController {
         productService.deleteProduct(id);
         return "redirect:/admin/products"; // 상품 목록 페이지로 리다이렉트
     }
-
 }
