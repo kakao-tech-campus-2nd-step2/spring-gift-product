@@ -23,5 +23,17 @@ public class ProductController {
         return "products"; // products.html 템플릿을 응답으로 사용
     }
 
+    @GetMapping("/add")
+    public String showAddProductForm(Model model) {
+        model.addAttribute("product", new Product());
+        return "add-product"; // add-product.html 템플릿을 응답으로 사용
+    }
+
+    @PostMapping("/add")
+    public String addProduct(@ModelAttribute Product product) {
+        productService.addProduct(product);
+        return "redirect:/admin/products"; // 상품 목록 페이지로 리다이렉트
+    }
+
 
 }

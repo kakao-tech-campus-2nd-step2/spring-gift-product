@@ -20,5 +20,11 @@ public class ProductService {
         return products.get(id);
     }
 
+    public void addProduct(Product product) {
+        long id = nextId++;
+        product.setId(id);
+        products.put(id, product);
+    }
+
 
 }
