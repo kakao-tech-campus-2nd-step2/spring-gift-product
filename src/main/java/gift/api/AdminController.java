@@ -30,7 +30,7 @@ public class AdminController {
     }
 
     // 상품 삭제
-    @DeleteMapping("/{id}")
+    @GetMapping("/delete/{id}")
     public String deleteProduct(@PathVariable("id") Long id) {
         productController.deleteProduct(id);
         return "redirect:/admin";
