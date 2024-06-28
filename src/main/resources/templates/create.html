@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>상품 추가</h1>
-<form th:action="@{/admin/products/add}" th:object="${product}" method="post">
+<form action="/admin/products/add" th:object="${product}" method="post">
   Name: <input type="text" th:field="*{name}"><br>
   Price: <input type="number" th:field="*{price}"><br>
   Image URL: <input type="text" th:field="*{imageUrl}"><br>
