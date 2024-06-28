@@ -63,7 +63,9 @@ public class ProductDAO {
         }
 
         ProductRecord record = product.withId(id);
-        records.put(id, record);
+
+        String sql = "insert into products values (?, ?, ?, ?)";
+        jdbcTemplate.update(sql, record.id(), record.name(), record.price(), record.imageUrl());
 
         return record;
     }
