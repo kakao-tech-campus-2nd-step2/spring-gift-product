@@ -4,6 +4,7 @@ import gift.controller.ProductDto;
 import gift.domain.Product;
 import gift.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -44,13 +45,9 @@ public class ProductService {
     }
 
     public Product update(Long productId, ProductDto productDto){
-        Optional<Product> product = productRepository.findById(productId);
+        Optional<Product> product = productRepository.updateById(productId, productDto);
         if (product.isPresent()){
-            Product product2 = product.get();
-            product2.setName(productDto.getName());
-            product2.setPrice(productDto.getPrice());
-            product2.setImageUrl(productDto.getImageUrl());
-            return product2;
+            return product.get();
         };
         throw new NoSuchElementException("존재하지 않는 상품입니다.");
 

@@ -1,5 +1,6 @@
 package gift.repository;
 
+import gift.controller.ProductDto;
 import gift.domain.Product;
 
 import java.util.List;
@@ -10,5 +11,6 @@ public interface ProductRepository {
     Optional<Product> findById(Long id);
     Optional<Product> findByName(String name);
     List<Product> findAll();
+    Optional<Product> updateById(Long id, ProductDto productDto);
     Optional<Product> deleteById(Long id);
 }
