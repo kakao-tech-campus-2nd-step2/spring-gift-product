@@ -1,7 +1,6 @@
 package gift.repository.impls;
 
 import gift.domain.Product;
-import gift.dto.ProductResponseDto;
 import gift.repository.ProductRepository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -18,13 +17,13 @@ public class ProductRepositoryH2Impl implements ProductRepository {
     }
 
     @Override
-    public Product save(Product product) {
+    public Long save(Product product) {
         jdbcTemplate.update("INSERT INTO products(name, price, imageUrl) VALUES (?,?,?)",
                 product.getName(), product.getPrice(), product.getImageUrl());
         Long id = jdbcTemplate.queryForObject("SELECT MAX(id) FROM products", Long.class);
-        product.setId(id);
-        return product;
+        return id;
     }
+
     @Override
     public Optional<Product> findById(Long id) {
         var sql = "SELECT * FROM products WHERE id = ?";

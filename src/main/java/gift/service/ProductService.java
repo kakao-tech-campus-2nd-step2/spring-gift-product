@@ -20,8 +20,9 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public ProductResponseDto save(ProductRequestDto product){
-        return productRepository.save(product.toEntity()).toDto();
+    public ProductResponseDto save(ProductRequestDto productDto){
+        Long id = productRepository.save(productDto.toEntity());
+        return new ProductResponseDto(id,productDto.getName(),productDto.getPrice(),productDto.getImageUrl());
     }
 
 
@@ -47,6 +48,8 @@ public class ProductService {
     public ProductResponseDto updateById(Long id, ProductRequestDto productDto){
         Product product = productRepository.findById(id)
                 .orElseThrow(()-> new ProductNotFoundException("ID가 " + id + "인 상품이 존재하지 않습니다."));
-        return productRepository.update(id, productDto.toEntity()).toDto();
+        ProductResponseDto productResponseDto = productRepository.update(id, productDto.toEntity()).toDto();
+        productResponseDto.setId(id);
+        return productResponseDto;
     }
 }
