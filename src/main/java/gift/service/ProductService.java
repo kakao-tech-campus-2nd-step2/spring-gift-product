@@ -18,7 +18,7 @@ public class ProductService {
     return productDao.findAll();
   }
 
-  public Product getProductById(int id) {
+  public Product getProductById(long id) {
     return productDao.findById(id);
   }
 
@@ -31,7 +31,7 @@ public class ProductService {
     return product;
   }
 
-  public void deleteProduct(int id) {
+  public void deleteProduct(long id) {
     productDao.deleteById(id);
   }
 

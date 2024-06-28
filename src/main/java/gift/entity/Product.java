@@ -8,8 +8,10 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-
+@Entity
 public class Product {
+
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
@@ -24,12 +26,17 @@ public class Product {
   @NotBlank(message = "이미지 URL을 입력해야 합니다.")
   private String imageUrl;
 
+
   public Product(long id, String name, int price, String imageUrl) {
     this.id = id;
     this.name = name;
     this.price = price;
     this.imageUrl = imageUrl;
   }
+  public Product() {
+
+  }
+
 
   public Long getId() {
     return id;

@@ -16,7 +16,7 @@ public class ProductDao {
   }
 
   private RowMapper<Product> rowMapper = (rs, rowNum) -> new Product(
-      rs.getInt("id"),
+      rs.getLong("id"),
       rs.getString("name"),
       rs.getInt("price"),
       rs.getString("imageUrl")
@@ -26,7 +26,7 @@ public class ProductDao {
     return jdbcTemplate.query("SELECT * FROM product", rowMapper);
   }
 
-  public Product findById(int id) {
+  public Product findById(long id) {
     return jdbcTemplate.queryForObject("SELECT * FROM product WHERE id = ?", new Object[]{id}, rowMapper);
   }
 
@@ -40,7 +40,7 @@ public class ProductDao {
         product.getName(), product.getPrice(), product.getImageUrl(), product.getId());
   }
 
-  public int deleteById(int id) {
+  public int deleteById(long   id) {
     return jdbcTemplate.update("DELETE FROM product WHERE id = ?", id);
   }
 
