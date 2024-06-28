@@ -37,9 +37,12 @@ public class ProductController {
     }
 
     @PostMapping
-    public String addProduct(@ModelAttribute Product product) {
-        product.setId(nextId++);
-        products.put(product.getId(), product);
+    public String addProduct(@ModelAttribute Product product, RedirectAttributes redirectAttributes) {
+        try {
+            productRepository.save(product);
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Error adding product: " + e.getMessage());
+        }
         return "redirect:/products";
     }
 
