@@ -46,9 +46,4 @@ Admin Page를 위한 적절한 endpoint 설정 및 thymeleaf SSR 수행
 ### 기능 요구 사항
 
 자바 컬렉션 프레임워크(JDBC)를 사용하여 메모리에 저장하던 상품 정보를 데이터베이스에 저장한다.
-
-## 클래스 설명
-
-### ProductRepository
-
-내부 database와 연결할 수 있는 객체. JdbcTemplate 사용.
+ProductController에 JDBC를 추가하여 구현.
