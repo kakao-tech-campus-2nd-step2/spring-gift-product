@@ -3,4 +3,4 @@ CREATE TABLE products (
     name VARCHAR(255),
     price BIGINT,
     imageUrl VARCHAR(255)
-)
+);
