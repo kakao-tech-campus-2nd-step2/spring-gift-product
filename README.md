@@ -1,12 +1,9 @@
 # spring-gift-product
 
-<br>
-
 ### 상품 관리 프로젝트
 
-<br>
 <hr>
-
+<br>
 ### 구현 기능 목록
 
 <br>
