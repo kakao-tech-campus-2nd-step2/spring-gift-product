@@ -49,5 +49,9 @@ public class ProductService {
         Number newId = simpleJdbcInsert.executeAndReturnKey(parameters);
         product.setId(newId.longValue());
     }
+    public void updateProduct(long id, Product product) {
+        String sql = "UPDATE products SET name = ?, price = ?, image_url = ? WHERE id = ?";
+        jdbcTemplate.update(sql, product.getName(), product.getPrice(), product.getImageUrl(), id);
+    }
 
 }

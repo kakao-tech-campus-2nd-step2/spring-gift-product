@@ -34,4 +34,14 @@ public class ProductController {
         return "redirect:/admin/products";
     }
 
+    @GetMapping("/edit/{id}")
+    public String showEditProductForm(@PathVariable Long id, Model model) {
+        Product product = productService.getProductById(id);
+        if (product == null) {
+            return "redirect:/admin/products";
+        }
+        model.addAttribute("product", product);
+        return "edit-product";
+    }
+
 }
