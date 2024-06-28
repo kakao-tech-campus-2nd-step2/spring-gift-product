@@ -47,6 +47,12 @@ Thymeleaf를 사용하여 서버 사이드 렌더링을 구현한다.
 기본적으로는 HTML 폼 전송 등을 이용한 페이지 이동을 기반으로 하지만, 자바스크립트를 이용한 비동기 작업에 관심이 있다면 이미 만든 상품 API를 이용하여 AJAX 등의 방식을 적용할 수 있다.
 상품 이미지의 경우, 파일을 업로드하지 않고 URL을 직접 입력한다.
 
+GET /admin/products : 모든 제품 목록 조회
+GET /admin/products/create : 제품 생성 폼
+POST /admin/products/create : 새로운 제품 생성
+GET /admin/products/edit/{id} : 제품 수정 폼
+POST /admin/products/edit/{id} : 제품 정보 수정
+GET /admin/products/delete/{id} : 제품 삭제
 # 3단계 - 데이터베이스 적용
 기능 요구 사항
 
@@ -59,3 +65,6 @@ Thymeleaf를 사용하여 서버 사이드 렌더링을 구현한다.
 스키마 스크립트는 schema.sql, 데이터 스크립트는 data.sql에 저장한다.
 
 spring.sql.init.mode를 always로 설정하여 항상 SQL 데이터베이스를 초기화한다.
+
+Schema.sql,data.sql을 이용해 DB 초기화 진행 
+SQl 쿼리는 JdbcTemplate을 도입하여 실행
