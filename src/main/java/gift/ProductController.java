@@ -58,4 +58,15 @@ public class ProductController {
         productDao.deleteProduct(id);
         return "productManage";
     }
+    // 등록된 상품 구매
+    @PutMapping("/{id}/purchase")
+    public ResponseEntity<String> purchaseProduct(@PathVariable Long id, @RequestParam int amount) {
+        Product product = productDao.selectProduct(id);
+        if (product.amount() >= amount) {
+            productDao.purchaseProduct(id, amount);
+            return ResponseEntity.ok("Purchase successful");
+        } else {
+            return ResponseEntity.badRequest().body("Not enough stock");
+        }
+    }
 }
