@@ -60,4 +60,8 @@ public class ProductDao {
         );
     }
 
+    public void delete(Long id) {
+        String sql = "DELETE from products where id=?";
+        jdbcTemplate.update(sql, id);
+    }
 }

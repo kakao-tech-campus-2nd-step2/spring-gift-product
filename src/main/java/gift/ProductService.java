@@ -53,4 +53,13 @@ public class ProductService {
         }
         return null;
     }
+
+    public Product deleteProduct(Long id) {
+        Product product = productDao.select(id);
+        if (product != null) {
+            productDao.delete(id);
+            return product;
+        }
+        return null;
+    }
 }
