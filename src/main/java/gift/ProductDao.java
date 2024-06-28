@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.util.List;
 
 
 @Repository
@@ -30,6 +31,12 @@ public class ProductDao {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    public List<Product> selectAll() {
+        String sql = "SELECT id, name, price, imageUrl from products";
+        List<Product> products = jdbcTemplate.query(sql, productRowMapper());
+        return products;
     }
 
     private RowMapper<Product> productRowMapper() {

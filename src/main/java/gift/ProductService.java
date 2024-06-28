@@ -29,4 +29,12 @@ public class ProductService {
         }
         return null;
     }
+    
+    public List<Product> getAllProducts() {
+        return productDao.selectAll();
+    }
+
+    public Product getProduct(Long id) {
+        return productDao.select(id);
+    }
 }
