@@ -9,16 +9,6 @@ public class Product {
     private int price;
     private String imageUrl;
 
-    public Product() {
-    }
-
-    public Product(Product product) {
-        this.id = product.getId();
-        this.name = product.getName();
-        this.price = product.getPrice();
-        this.imageUrl = product.getImageUrl();
-    }
-
     public Product(ProductRequest request) {
         this.id = request.id();
         this.name = request.name();
@@ -40,22 +30,6 @@ public class Product {
 
     public String getImageUrl() {
         return imageUrl;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
     }
 
     public void update(ProductRequest request) {
