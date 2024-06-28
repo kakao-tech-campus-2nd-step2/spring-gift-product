@@ -19,6 +19,15 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
+    public Product getProductById(Long id) {
+        //존재하지 않는 상품 참조 시도시 예외 발생
+        if (productRepository.findById(id).isEmpty()) {
+            throw new ProductNotFoundException();
+        }
+
+        return productRepository.findById(id).get();
+    }
+
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
