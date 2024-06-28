@@ -1,6 +1,8 @@
 package gift;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import gift.controller.ProductController;
+import gift.dto.Product;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
