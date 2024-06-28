@@ -32,3 +32,14 @@ public class ProductRepository {
         });
     }
 
+    public Product findById(Long id) {
+        return jdbcTemplate.queryForObject("SELECT * FROM products WHERE id = ?", new Object[]{id}, (rs, rowNum) -> {
+            Product product = new Product();
+            product.setId(rs.getLong("id"));
+            product.setName(rs.getString("name"));
+            product.setPrice(rs.getInt("price"));
+            product.setImageUrl(rs.getString("image_url"));
+            return product;
+        });
+    }
+
