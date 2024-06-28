@@ -1,6 +1,7 @@
 package gift.repository;
 
-import gift.Product;
+import gift.model.Product;
+import gift.model.ProductForm;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,7 +15,12 @@ public class MemoryProductRepository implements ProductRepository {
 
     @Override
     public Product save(Product product) {
+          Product product = new Product();
         product.setId(++id);
+        product.setName(form.getName());
+        product.setPrice(form.getPrice());
+        product.setImageUrl(form.getImageUrl());
+
         db.put(product.getId(), product);
         return product;
     }
@@ -26,13 +32,15 @@ public class MemoryProductRepository implements ProductRepository {
     }
 
     @Override
-    public boolean edit(Long id, Product product) {
+   public Product edit(Long id, ProductForm form) {
         Product result = findById(id);
         if (result == null) {
-            return false;
+           return null;
         }
-        result.setProduct(product);
-        return true;
+        result.setName(form.getName());
+        result.setPrice(form.getPrice());
+        result.setImageUrl(form.getImageUrl());
+        return result;
     }
 
     @Override
