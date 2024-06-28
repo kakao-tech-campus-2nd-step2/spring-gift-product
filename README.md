@@ -68,8 +68,7 @@
 
 ### H2로의 데이터베이스 전환
 
-- [ ] gradle 의존성 추가하기
-- [ ] application.properties 수정하기
+- [x] application.properties 수정하기
 - [ ] ProductRepository를 메모리 대신 데이터베이스와 소통하도록 리팩터링하기
 
 ---
