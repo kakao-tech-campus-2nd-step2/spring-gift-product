@@ -34,7 +34,7 @@ public class ProductController {
     }
 
     @PostMapping("/new")
-    public String addProduct(@ModelAttribute Product product, Model model) {
+    public String addProduct(@ModelAttribute Product product) {
         productDao.insertProduct(product);
         return "redirect:/admin";
     }
