@@ -4,3 +4,9 @@ spring:
     prefix: classpath:/templates/
     suffix: .html
     caceh: false
+    
+  h2:
+    console:
+      enabled: true
+  datasource:
+    url: jdbc:h2:mem:test
