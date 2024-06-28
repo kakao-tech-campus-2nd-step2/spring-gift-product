@@ -1,40 +1,64 @@
 package gift.repository;
 
 import gift.model.Product;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicLong;
 
 @Repository
 public class ProductRepository {
-    private List<Product> products = new ArrayList<>();
-    private AtomicLong counter = new AtomicLong(1);
 
-    public List<Product> findAll() {
-        return products;
+    private final JdbcTemplate jdbcTemplate;
+    private final SimpleJdbcInsert insertProduct;
+
+    @Autowired
+    public ProductRepository(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+        this.insertProduct = new SimpleJdbcInsert(jdbcTemplate)
+            .withTableName("product")
+            .usingGeneratedKeyColumns("id");
     }
 
-    public void save(Product product) {
-        product.setId(counter.getAndIncrement());
-        products.add(product);
+    private final RowMapper<Product> productRowMapper = (rs, rowNum) -> {
+        Product product = new Product();
+        product.setId(rs.getLong("id"));
+        product.setName(rs.getString("name"));
+        product.setPrice(rs.getInt("price"));
+        product.setImageUrl(rs.getString("imageUrl"));
+        return product;
+    };
+
+    public List<Product> findAll() {
+        return jdbcTemplate.query("SELECT * FROM product", productRowMapper);
     }
 
     public Optional<Product> findById(long id) {
-        return products.stream().filter(product -> product.getId() == id).findFirst();
+        List<Product> products = jdbcTemplate.query("SELECT * FROM product WHERE id = ?", new Object[]{id}, productRowMapper);
+        return products.isEmpty() ? Optional.empty() : Optional.of(products.get(0));
+    }
+
+    public void save(Product product) {
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("name", product.getName());
+        parameters.put("price", product.getPrice());
+        parameters.put("imageUrl", product.getImageUrl());
+        Number newId = insertProduct.executeAndReturnKey(parameters);
+        product.setId(newId.longValue());
     }
 
     public void update(Product product) {
-        findById(product.getId()).ifPresent(existingProduct -> {
-            existingProduct.setName(product.getName());
-            existingProduct.setPrice(product.getPrice());
-            existingProduct.setImageUrl(product.getImageUrl());
-        });
+        jdbcTemplate.update("UPDATE product SET name = ?, price = ?, imageUrl = ? WHERE id = ?",
+            product.getName(), product.getPrice(), product.getImageUrl(), product.getId());
     }
 
     public void deleteById(long id) {
-        products.removeIf(product -> product.getId() == id);
+        jdbcTemplate.update("DELETE FROM product WHERE id = ?", id);
     }
 }
