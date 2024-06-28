@@ -1,7 +1,7 @@
 # spring-gift-product
 ## 🚀2단계
 ## 기능 목록
-
+## AdminProductController
 - 1. 상품 목록 조회
 - 2. 상품 추가
 - 3. 상품 수정
