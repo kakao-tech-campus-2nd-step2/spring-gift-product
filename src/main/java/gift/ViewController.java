@@ -1,6 +1,6 @@
 package gift;
 
-import java.util.Map;
+import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,15 +17,16 @@ public class ViewController {
 
     @GetMapping("")
     public String getAllProducts(Model model) {
-        Map<Long, Product> products = productController.getAllProducts();
+        List<Product> products = productController.getAllProducts();
         model.addAttribute("products", products);
         return "products";
     }
 
     @GetMapping("/{id}")
-    public void findById(@PathVariable Long id, Model model) {
+    public String findById(@PathVariable Long id, Model model) {
         Product product = productController.findById(id);
         model.addAttribute("product", product);
+        return "product_detail"; // 적절한 Thymeleaf 템플릿이 있는지 확인
     }
 
     @GetMapping("/new")
