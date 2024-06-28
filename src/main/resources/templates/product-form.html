@@ -2,49 +2,52 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>Product Form</title>
-<!--  <link rel="stylesheet" type="text/css" href="/static/style.css">-->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="/static/style.css">
 </head>
 <body>
-<h1 th:text="${product.id == null ? 'Add New Product' : 'Edit Product'}">Product Form</h1>
+<header>
+  Product Management System
+</header>
+<div class="container form-container">
+  <h1 th:text="${product.id == null ? 'Add New Product' : 'Edit Product'}">Product Form</h1>
+  <form th:action="@{/products/add}" th:object="${product}" method="post" th:if="${product.id == null}">
+    <div class="form-group">
+      <label>Name:</label>
+      <input type="text" th:field="*{name}" class="form-control" required />
+    </div>
+    <div class="form-group">
+      <label>Price:</label>
+      <input type="number" th:field="*{price}" class="form-control" required />
+    </div>
+    <div class="form-group">
+      <label>Image URL:</label>
+      <input type="text" th:field="*{imageUrl}" class="form-control" required />
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+  </form>
 
-<!-- Add Product Form -->
-<form th:action="@{/products/add}" th:object="${product}" method="post" th:if="${product.id == null}">
-  <div>
-    <label>Name:</label>
-    <input type="text" th:field="*{name}" required />
-  </div>
-  <div>
-    <label>Price:</label>
-    <input type="number" th:field="*{price}" required />
-  </div>
-  <div>
-    <label>Image URL:</label>
-    <input type="text" th:field="*{imageUrl}" required />
-  </div>
-  <div>
-    <button type="submit">Save</button>
-  </div>
-</form>
+  <form th:action="@{'/products/edit/' + ${product.id}}" th:object="${product}" method="post" th:unless="${product.id == null}">
+    <div class="form-group">
+      <label>Name:</label>
+      <input type="text" th:field="*{name}" class="form-control" required />
+    </div>
+    <div class="form-group">
+      <label>Price:</label>
+      <input type="number" th:field="*{price}" class="form-control" required />
+    </div>
+    <div class="form-group">
+      <label>Image URL:</label>
+      <input type="text" th:field="*{imageUrl}" class="form-control" required />
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+  </form>
 
-<!-- Edit Product Form -->
-<form th:action="@{'/products/edit/' + ${product.id}}" th:object="${product}" method="post" th:unless="${product.id == null}">
-  <div>
-    <label>Name:</label>
-    <input type="text" th:field="*{name}" required />
-  </div>
-  <div>
-    <label>Price:</label>
-    <input type="number" th:field="*{price}" required />
-  </div>
-  <div>
-    <label>Image URL:</label>
-    <input type="text" th:field="*{imageUrl}" required />
-  </div>
-  <div>
-    <button type="submit">Save</button>
-  </div>
-</form>
-
-<a href="/products">Back to Product List</a>
+  <a href="/products" class="btn btn-secondary mt-3">Back to Product List</a>
+</div>
 </body>
 </html>
