@@ -30,4 +30,7 @@ public class ProductService {
         products.put(id, product);
     }
 
+    public void deleteProduct(long id) {
+        products.remove(id);
+    }
 }
