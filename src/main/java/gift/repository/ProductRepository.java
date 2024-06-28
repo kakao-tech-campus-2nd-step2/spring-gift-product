@@ -17,6 +17,14 @@ public class ProductRepository {
         return Optional.ofNullable(products.get(id));
     }
 
+    public Optional<Product> findByContents(String name, Long price, String imageUrl) {
+        return products.values().stream()
+            .filter(product -> product.name().equals(name) &&
+                product.price().equals(price) &&
+                product.imageUrl().equals(imageUrl))
+            .findFirst();
+    }
+
     public Product save(Product product) {
         products.put(product.id(), product);
         return product;
