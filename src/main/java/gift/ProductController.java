@@ -23,6 +23,10 @@ public class ProductController {
         product1.setPrice(4500);
         product1.setImageUrl("https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg");
         products.put(product1.getId(), product1);
+    private final ProductRepository productRepository;
+
+    public ProductController(ProductRepository productRepository) {
+        this.productRepository = productRepository;
     }
 
     @GetMapping
