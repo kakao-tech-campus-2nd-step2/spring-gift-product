@@ -1,7 +1,9 @@
 package gift.repository;
 
 import gift.model.ProductRecord;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
@@ -10,18 +12,32 @@ import java.util.NoSuchElementException;
 
 @Repository
 public class ProductDAO {
-    private Map<Long, ProductRecord> records = new HashMap<Long, ProductRecord>();
+    @Autowired
+    JdbcTemplate jdbcTemplate;
+    Map<Long, ProductRecord> records = new HashMap<>();
+
     private long idTraker = 1;
 
     public ProductRecord[] getAllRecords() {
-        return records.values().toArray(new ProductRecord[records.size()]);
+        String sql = "select * from products";
+
+        return jdbcTemplate.query(sql, (record,rowNum) -> new ProductRecord(
+                record.getLong("id"),
+                record.getString("name"),
+                record.getInt("price"),
+                record.getString("imageUrl")
+                )
+            ).toArray(new ProductRecord[0]);
     }
 
     public ProductRecord getRecord(long id) {
-        if (!records.containsKey(id)) {
+        if (!isRecordExist(id)) {
             throw new NoSuchElementException();
         }
-        return records.get(id);
+
+        String sql = "select * from products where id = ?";
+
+        return jdbcTemplate.queryForObject(sql, ProductRecord.class, id);
     }
 
     public ProductRecord addNewRecord(ProductRecord product) {
@@ -70,7 +86,10 @@ public class ProductDAO {
 
 
     public boolean isRecordExist(long id) {
-        if (records.containsKey(id)) {
+        String sql = "select count(*) from products where id = ?";
+        int count = jdbcTemplate.queryForObject(sql, Integer.class, id);
+
+        if (count > 0) {
             return true;
         }
 
