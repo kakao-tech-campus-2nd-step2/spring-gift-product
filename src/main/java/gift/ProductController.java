@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -31,7 +32,7 @@ public class ProductController {
         }
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("{id}")
     public ResponseEntity<Product> getProductById(@PathVariable Long id) {
         try {
             Product product = productService.getProductById(id);
@@ -43,13 +44,13 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<Product> addProduct(@RequestBody Product product) {
+    public ResponseEntity<Product> addProduct(@ModelAttribute Product product) {
         productService.addProduct(product);
         return new ResponseEntity<>(product, HttpStatus.CREATED);
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product product) {
+    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @ModelAttribute Product product) {
         try {
             productService.updateProduct(id, product);
             return new ResponseEntity<>(product, HttpStatus.OK);
@@ -58,7 +59,7 @@ public class ProductController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<Product> deleteProduct(@PathVariable Long id) {
         try {
             productService.deleteProduct(id);
