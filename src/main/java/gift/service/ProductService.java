@@ -64,31 +64,32 @@ public class ProductService {
     }
 
     private void checkInvalidInput(Product product) {
-        if(product.getName() == null || product.getName().isBlank())  {
+        if (product.getName() == null || product.getName().isBlank()) {
             throw new InvalidInputException("상품 이름을 입력하세요!");
         }
-        if(product.getPrice() == null)  {
+        if (product.getPrice() == null) {
             throw new InvalidInputException("상품 가격을 입력하세요");
         }
-        if(product.getPrice() <= 0) {
+        if (product.getPrice() <= 0) {
             throw new InvalidInputException("상품 가격은 0 이하가 될 수 없습니다. 다시 입력하세요");
         }
-        if(product.getImageUrl() == null || product.getImageUrl().isBlank())  {
+        if (product.getImageUrl() == null || product.getImageUrl().isBlank()) {
             throw new InvalidInputException("상품 이미지URL을 입력하세요!");
         }
-        if(!validImageUrl(product.getImageUrl())) {
-            throw new InvalidInputException("상품 이미지URL은 웹주소 형식으로 입력하세요. \n 예시) https://......image.(jpg,gif,png)");
+        if (!validImageUrl(product.getImageUrl())) {
+            throw new InvalidInputException(
+                "상품 이미지URL은 웹주소 형식으로 입력하세요. \n 예시) https://......image.(jpg,gif,png)");
         }
     }
 
     private void checkNotFound(Product product) {
-        if(product == null) {
+        if (product == null) {
             throw new NotFoundException("해당 상품이 존재하지 않습니다.");
         }
     }
 
     private void checkDBOperation(int result) {
-        if(result <= 0) {
+        if (result <= 0) {
             throw new DBOperationException("DB 연산 실패!!");
         }
     }
@@ -100,4 +101,5 @@ public class ProductService {
         Matcher matcher = pattern.matcher(imageUrl);
         return matcher.matches();
     }
+
 }

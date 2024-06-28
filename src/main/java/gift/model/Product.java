@@ -9,7 +9,7 @@ public class Product {
     private Long price;
     private String imageUrl;
 
-    public Product (String name, Long price, String imageUrl) {
+    public Product(String name, Long price, String imageUrl) {
         this.name = name;
         this.price = price;
         this.imageUrl = imageUrl;
@@ -55,9 +55,9 @@ public class Product {
     }
 
     public boolean isEqual(Product product) {
-        return Objects.equals(name,product.getName()) &&
-               Objects.equals(price,product.getPrice()) &&
-               Objects.equals(imageUrl,product.getImageUrl());
+        return Objects.equals(name, product.getName()) &&
+            Objects.equals(price, product.getPrice()) &&
+            Objects.equals(imageUrl, product.getImageUrl());
     }
 }
 

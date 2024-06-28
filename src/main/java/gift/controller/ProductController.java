@@ -71,7 +71,7 @@ public class ProductController {
     @GetMapping("/delete/{id}")
     public String deleteProduct(@PathVariable("id") Long id, Model model) {
         Product product = productService.getProductById(id);
-        if(product == null) {
+        if (product == null) {
             throw new NotFoundException("해당 상품이 존재하지 않습니다.");
         }
         productService.deleteProduct(id);
@@ -82,7 +82,7 @@ public class ProductController {
     @GetMapping("/update/{id}")
     public String updateProductForm(@PathVariable("id") Long id, Model model) {
         Product product = productService.getProductById(id);
-        if(product == null) {
+        if (product == null) {
             throw new NotFoundException("해당 상품이 존재하지 않습니다.");
         }
         model.addAttribute("product", product);

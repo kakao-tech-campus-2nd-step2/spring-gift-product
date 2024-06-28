@@ -73,10 +73,12 @@ public class ProductServiceTest {
         productService.addProduct(product);
         assertThrows(AlreadyExistsException.class, () -> productService.addProduct(product));
 
-        assertThrows(InvalidInputException.class, () -> productService.addProduct(invalidNameProduct));
-        assertThrows(InvalidInputException.class, () -> productService.addProduct(invalidPriceProduct));
-        assertThrows(InvalidInputException.class, () -> productService.addProduct(invalidImageUrlProduct));
-
+        assertThrows(InvalidInputException.class,
+            () -> productService.addProduct(invalidNameProduct));
+        assertThrows(InvalidInputException.class,
+            () -> productService.addProduct(invalidPriceProduct));
+        assertThrows(InvalidInputException.class,
+            () -> productService.addProduct(invalidImageUrlProduct));
     }
 
     @Test
@@ -108,7 +110,6 @@ public class ProductServiceTest {
         assertEquals("밀크쉐이크", tempList.get(2).getName());
         assertEquals(3000L, tempList.get(2).getPrice());
         assertEquals("https://image3.jpg", tempList.get(2).getImageUrl());
-
     }
 
     @Test
@@ -182,11 +183,14 @@ public class ProductServiceTest {
 
         //when & then
         productService.addProduct(product);
-        assertThrows(AlreadyExistsException.class, () -> productService.updateProduct(1L,product));
+        assertThrows(AlreadyExistsException.class, () -> productService.updateProduct(1L, product));
 
-        assertThrows(InvalidInputException.class, () -> productService.updateProduct(1L,invalidNameProduct));
-        assertThrows(InvalidInputException.class, () -> productService.updateProduct(1L,invalidPriceProduct));
-        assertThrows(InvalidInputException.class, () -> productService.updateProduct(1L,invalidImageUrlProduct));
-
+        assertThrows(InvalidInputException.class,
+            () -> productService.updateProduct(1L, invalidNameProduct));
+        assertThrows(InvalidInputException.class,
+            () -> productService.updateProduct(1L, invalidPriceProduct));
+        assertThrows(InvalidInputException.class,
+            () -> productService.updateProduct(1L, invalidImageUrlProduct));
     }
+
 }

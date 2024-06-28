@@ -33,7 +33,7 @@ public class ProductRepository {
     public List<Product> findByCond(String name) {
         String sql = "SELECT * FROM products WHERE name LIKE ?";
         String likePattern = "%" + name + "%";
-        return jdbcTemplate.query(sql,  productRowMapper, likePattern);
+        return jdbcTemplate.query(sql, productRowMapper, likePattern);
     }
 
     public int save(Product product) {
@@ -53,6 +53,5 @@ public class ProductRepository {
     public int delete(Long id) {
         return jdbcTemplate.update("DELETE FROM products WHERE id = ?", id);
     }
-
 
 }
