@@ -37,10 +37,10 @@ public class ProductDao {
         return jdbcClient.sql(sql).query(ProductDto.class).stream().map(ProductDto::toProduct).toList();
     }
 
-    public Optional<Product> findById(long id) {
+    public Optional<Product> findById(long productId) {
         String sql = "SELECT * FROM product WHERE id = ?";
 
-        Optional<ProductDto> productDto = jdbcClient.sql(sql).param(id).query(ProductDto.class)
+        Optional<ProductDto> productDto = jdbcClient.sql(sql).param(productId).query(ProductDto.class)
             .optional();
 
         if (productDto.isEmpty()) {
@@ -61,5 +61,11 @@ public class ProductDao {
         }
 
         return Optional.of(product);
+    }
+
+    public Integer delete(long productId) {
+        String sql = "DELETE FROM product WHERE id = ?";
+
+        return jdbcClient.sql(sql).param(productId).update();
     }
 }

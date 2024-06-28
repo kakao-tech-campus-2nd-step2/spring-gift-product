@@ -89,14 +89,13 @@ public class ProductController {
     }
 
     @DeleteMapping("/{productId}")
-    public ResponseEntity<Product> delete(@PathVariable long productId) {
-        Product product = productRepository.get(productId);
+    public ResponseEntity<Void> delete(@PathVariable long productId) {
+        int nOfRowsAffected = productDao.delete(productId);
 
-        if (product == null) {
+        if (nOfRowsAffected != 1) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        productRepository.remove(productId);
 
-        return new ResponseEntity<>(product, HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
