@@ -19,7 +19,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ProductAlreadyExistsException.class)
     public String handleProductAlreadyExistsException(ProductAlreadyExistsException e, Model model) {
-        model.addAttribute("errorMessage", "Product already exists with the same name, price, and imageUrl.");
+        model.addAttribute("errorMessage", "이름, 가격, 이미지 URL이 같은 상품이 이미 존재합니다. 중복이 아닌 상품을 입력해주세요.");
         return "productDuplicate";
     }
 }
