@@ -1,7 +1,9 @@
 package gift.Controller;
 
 import gift.Model.Product;
+import gift.Repository.ProductRepository;
 import java.util.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,11 +18,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/admin/products")
 public class AdminController {
 
-    private final Map<Long, Product> products = new HashMap<>();
+    @Autowired
+    private ProductRepository productRepository;
 
     @GetMapping
     public String listProducts(Model model) {
-        model.addAttribute("products", new ArrayList<>(products.values()));
+        model.addAttribute("products", productRepository.checkProductsAll());
         return "product_list";
     }
 
@@ -32,40 +35,36 @@ public class AdminController {
 
     @PostMapping("/add")
     public String addProduct(@ModelAttribute Product product, Model model) {
-        if (products.containsKey(product.id())) {
+        if (productRepository.checkProductsById(product.id()) != null) {
             model.addAttribute("error", "존재하는 ID 입니다.");
             model.addAttribute("product", product);
             return "add_product_form";
         }
-        products.put(product.id(), product);
+        productRepository.saveProduct(product);
         return "redirect:/admin/products";
     }
 
     @GetMapping("/edit/{id}")
     public String showEditProductForm(@PathVariable("id") long id, Model model) {
-        Product product = products.get(id);
+        Product product = productRepository.checkProductsById(id);
         model.addAttribute("product", product);
         return "edit_product_form";
     }
 
     @PutMapping("/edit/{id}")
-    public String editProduct(@PathVariable("id") long id, @ModelAttribute Product updatedProduct,
-        Model model) {
-        if (id != updatedProduct.id() && products.containsKey(updatedProduct.id())) {
+    public String editProduct(@PathVariable("id") long id, @ModelAttribute Product updatedProduct, Model model) {
+        if (id != updatedProduct.id() && productRepository.checkProductsById(updatedProduct.id()) != null) {
             model.addAttribute("error", "존재하는 ID 입니다.");
-            model.addAttribute("product", products.get(id));
+            model.addAttribute("product", productRepository.checkProductsById(id));
             return "edit_product_form";
         }
-        if (id != updatedProduct.id()) {
-            products.remove(id);
-        }
-        products.put(updatedProduct.id(), updatedProduct);
+        productRepository.updateProduct(updatedProduct, id);
         return "redirect:/admin/products";
     }
 
     @DeleteMapping("/delete/{id}")
     public String deleteProduct(@PathVariable("id") long id) {
-        products.remove(id);
+        productRepository.deleteProduct(id);
         return "redirect:/admin/products";
     }
 }
