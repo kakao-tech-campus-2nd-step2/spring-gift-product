@@ -1,8 +1,8 @@
-package gift.Controller;
+package gift.controller;
 
 import gift.Model.Item;
 import gift.Model.ItemDTO;
-import gift.Service.ItemService;
+import gift.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,7 +35,7 @@ public class ItemController {
 
     @PostMapping("/create")
     public String createItem(Model model,@ModelAttribute("item") ItemDTO itemDTO){
-        if(itemDTO.getImgUrl().length() > 255){
+        if(itemDTO.imgUrl().length() > 255){
             model.addAttribute("item",itemDTO);
             model.addAttribute("e","Url은 255를 넘을수 없습니다");
             return "create";
@@ -55,7 +55,7 @@ public class ItemController {
 
     @PutMapping("/update/{id}")
     public String updateItem(Model model,@PathVariable Long id,@ModelAttribute ItemDTO itemDTO){
-        if(itemDTO.getImgUrl().length() > 255){
+        if(itemDTO.imgUrl().length() > 255){
             model.addAttribute("item",itemDTO);
             model.addAttribute("e","Url은 255를 넘을수 없습니다");
             return "update";

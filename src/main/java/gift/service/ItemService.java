@@ -1,9 +1,8 @@
-package gift.Service;
+package gift.service;
 
 import gift.Model.Item;
 import gift.Model.ItemDTO;
-import gift.Repository.ItemRepository;
-import java.util.HashMap;
+import gift.repository.ItemRepository;
 import java.util.List;
 import org.springframework.stereotype.Service;
 

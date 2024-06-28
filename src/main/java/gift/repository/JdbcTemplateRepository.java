@@ -1,4 +1,4 @@
-package gift.Repository;
+package gift.repository;
 
 import gift.Model.Item;
 import gift.Model.ItemDTO;
@@ -19,7 +19,7 @@ public class JdbcTemplateRepository implements ItemRepository{
     @Override
     public void insert(ItemDTO itemDTO) {
         var sql = "insert into item (name,price,imgUrl) values (?,?,?)";
-        jdbcTemplate.update(sql,itemDTO.getName(),itemDTO.getPrice(),itemDTO.getImgUrl());
+        jdbcTemplate.update(sql,itemDTO.name(),itemDTO.price(),itemDTO.imgUrl());
     }
 
     @Override
@@ -46,7 +46,7 @@ public class JdbcTemplateRepository implements ItemRepository{
     public void update(Long id, ItemDTO itemDTO) {
         jdbcTemplate.update(
             "update item set name = ?, price = ?, imgurl = ? where id = ?",
-            itemDTO.getName(),itemDTO.getPrice(),itemDTO.getImgUrl(),id
+            itemDTO.name(),itemDTO.price(),itemDTO.imgUrl(),id
         );
     }
 

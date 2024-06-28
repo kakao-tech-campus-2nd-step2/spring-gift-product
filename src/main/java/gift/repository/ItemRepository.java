@@ -1,4 +1,4 @@
-package gift.Repository;
+package gift.repository;
 
 import gift.Model.Item;
 import gift.Model.ItemDTO;
