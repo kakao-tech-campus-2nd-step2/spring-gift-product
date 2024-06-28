@@ -57,7 +57,7 @@ public class JdbcProductRepository implements ProductRepository {
 
     @Override
     public void update(Product product) {
-
+        jdbcTemplate.update(UPDATE_PRODUCT, product.getName(), product.getPrice(), product.getDescription(), product.getImageUrl(), product.getId());
     }
 
     @Override
