@@ -27,12 +27,24 @@ public class ProductController {
     public ResponseEntity<List<Product>> getAllProducts() {
         return ResponseEntity.ok(new ArrayList<>(products.values()));
     }
-    
+
     // 상품 추가
     @PostMapping
     public ResponseEntity<Product> addProduct(@RequestBody Product product) {
         product.setId(nextId++);
         products.put(product.getId(), product);
         return ResponseEntity.ok(product);
+    }
+
+    // 상품 수정
+    @PutMapping("/{id}")
+    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product product) {
+        if (products.containsKey(id)) {
+            product.setId(id);
+            products.put(id, product);
+            return ResponseEntity.ok(product);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
