@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import gift.model.Product;
+import gift.repository.ProductRepository;
 import gift.service.ProductService;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,10 +14,11 @@ import org.junit.jupiter.api.Test;
 public class ProductServiceTest {
 
     private ProductService productService;
+    private ProductRepository productRepository;
 
     @BeforeEach
     public void setUp() {
-        productService = new ProductService();
+        productService = new ProductService(productRepository);
     }
 
     @Test

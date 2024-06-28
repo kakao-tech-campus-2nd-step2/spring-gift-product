@@ -2,7 +2,6 @@ package gift.repository;
 
 import gift.model.Product;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -10,8 +9,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class ProductRepository {
 
-    @Autowired
-    JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
+
+    public ProductRepository(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     private final RowMapper<Product> productRowMapper = (rs, rowNum) -> new Product(
         rs.getLong("id"),

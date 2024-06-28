@@ -12,8 +12,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProductService {
 
-    @Autowired
-    ProductRepository productRepository;
+    private final ProductRepository productRepository;
+
+    public ProductService(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
 
     //전체 상품 조회 기능
     public List<Product> getAllProducts() {
