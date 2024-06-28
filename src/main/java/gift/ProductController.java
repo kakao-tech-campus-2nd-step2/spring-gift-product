@@ -58,11 +58,12 @@ public class ProductController {
     }
 
     @PostMapping("/delete/{id}")
-    public String deleteProduct(@PathVariable Long id) {
-        if (!products.containsKey(id)) {
-            throw new IllegalArgumentException("상품이 없습니다.");
+    public String deleteProduct(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        try {
+            productRepository.deleteById(id);
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Error deleting product: " + e.getMessage());
         }
-        products.remove(id);
         return "redirect:/products";
     }
 
