@@ -30,4 +30,9 @@ public class AdminController {
         }
         return "products";
     }
+
+    @GetMapping("/create")
+    public String createProduct(Model model) {
+        return "create";
+    }
 }
