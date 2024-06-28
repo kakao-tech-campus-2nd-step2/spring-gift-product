@@ -10,8 +10,11 @@ import java.util.List;
 @Repository
 public class ProductDao {
 
-    @Autowired
-    private JdbcClient jdbcClient;
+    private final JdbcClient jdbcClient;
+
+    public ProductDao(JdbcClient jdbcClient) {
+        this.jdbcClient = jdbcClient;
+    }
 
     public Integer insertNewProduct(Product newProduct) {
         String sql = """
