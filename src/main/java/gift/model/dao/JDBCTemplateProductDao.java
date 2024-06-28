@@ -22,9 +22,9 @@ public class JDBCTemplateProductDao implements ProductRepository {
         if (entity.isNew()) {
             jdbcTemplate.update(ProductQuery.INSERT_PRODUCT.getQuery(), entity.getName(), entity.getPrice(),
                     entity.getImgUrl(), entity.isDeleted());
-        } else {
-            update(entity);
+            return;
         }
+        update(entity);
     }
 
     @Override
