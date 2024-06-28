@@ -29,12 +29,28 @@ public class ProductService {
         }
         return null;
     }
-    
+
     public List<Product> getAllProducts() {
         return productDao.selectAll();
     }
 
     public Product getProduct(Long id) {
         return productDao.select(id);
+    }
+
+    public Product putProduct(ProductRequestDto requestDto) {
+        Product getProduct = productDao.select(requestDto.getId());
+
+        if (getProduct != null) {
+            Product updateProduct = new Product(
+                    requestDto.getId(),
+                    requestDto.getName(),
+                    requestDto.getPrice(),
+                    requestDto.getImageUrl()
+            );
+            productDao.update(requestDto.getId(), updateProduct);
+            return updateProduct;
+        }
+        return null;
     }
 }
