@@ -3,47 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width">
-    <title>admin</title>
-     <link rel="stylesheet" th:href="@{/style.css}">
+    <title>Admin</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
 </head>
-
 <body>
 <div class="container">
     <div class="header">
         <div class="header-txt">
-            <h1>Manage Products</h1>
+            <a th:href="@{/admin/products}">
+                <h1>Manage Products</h1>
+            </a>
         </div>
         <div class="add-btn">
-            <a href="/admin/products/add">Add</a>
+            <a href="/admin/products/add">ADD</a>
         </div>
     </div>
     <table>
         <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Image URL</th>
-                <th>Actions</th>
-            </tr>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Image URL</th>
+            <th>Actions</th>
+        </tr>
         </thead>
         <tbody>
-            <tr th:each="product : ${products}">
-                <td th:text="${product.id}"></td>
-                <td th:text="${product.name}"></td>
-                <td th:text="${product.price}"></td>
-                <td th:text="${product.imageUrl}"></td>
-                <td>
-                    <div class="actions">
+        <tr th:each="product : ${products}">
+            <td th:text="${product.id}"></td>
+            <td th:text="${product.name}"></td>
+            <td th:text="${product.price}"></td>
+            <td th:text="${product.imageUrl}"></td>
+            <td>
+                <div class="actions">
                     <div class="update-btn">
-                        <a th:href="@{/admin/products/edit/{id}(id=${product.id})}">수정</a>
+                        <a th:href="@{/admin/products/edit/{id}(id=${product.id})}">UPDATE</a>
                     </div>
                     <div class="delete-btn">
-                        <a th:href="@{/admin/products/delete/{id}(id=${product.id})}">삭제</a>
+                        <a th:href="@{/admin/products/delete/{id}(id=${product.id})}">DELETE</a>
                     </div>
-                    </div>
-                </td>
-            </tr>
+                </div>
+            </td>
+        </tr>
         </tbody>
     </table>
 </div>
