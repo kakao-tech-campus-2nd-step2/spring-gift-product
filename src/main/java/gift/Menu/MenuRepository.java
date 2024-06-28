@@ -47,11 +47,9 @@ public class MenuRepository{
         return menus;
     }
 
-    public Menu update(Long id, String name, int price, String imageUrl) {
+    public void update(Long id, String name, int price, String imageUrl) {
         String sql = "UPDATE menus SET name = ?, price = ?,imageUrl = ? WHERE id = ?";
         jdbcTemplate.update(sql, name,price,imageUrl,id);
-        Menu updatedMenu = new Menu(id,name,price,imageUrl);
-        return updatedMenu;
     }
 
     public Menu findById(Long id) {

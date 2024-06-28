@@ -28,8 +28,8 @@ public class MenuService {
         return id;
     }
 
-    public Menu update(Long id, String name, int price, String imageUrl) {
-        return menuRepository.update(id,name,price,imageUrl);
+    public void update(Long id, String name, int price, String imageUrl) {
+        menuRepository.update(id,name,price,imageUrl);
     }
 
     public Menu findById(Long id) {
