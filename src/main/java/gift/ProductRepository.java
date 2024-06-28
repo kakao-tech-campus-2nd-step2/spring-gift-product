@@ -43,3 +43,13 @@ public class ProductRepository {
         });
     }
 
+    public Product save(Product product) {
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("name", product.getName());
+        parameters.put("price", product.getPrice());
+        parameters.put("image_url", product.getImageUrl());
+        Number newId = simpleJdbcInsert.executeAndReturnKey(parameters);
+        product.setId(newId.longValue());
+        return product;
+    }
+
