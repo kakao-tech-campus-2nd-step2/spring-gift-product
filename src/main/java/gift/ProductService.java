@@ -11,6 +11,12 @@ public class ProductService {
     public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
+    //모든 제품 검색 후 list<product>로 반환
+    public List<Product> getAllProducts() {
+        return productRepository.findAll();
+    }
+    
 
-   
+
+
 }
