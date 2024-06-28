@@ -39,7 +39,19 @@ public class ProductRepository {
         return jdbcTemplate.queryForObject("SELECT * FROM product WHERE id = ?", new Object[]{id}, new ProductRowMapper());
     }
 
-    
+    public void save(Product product) {
+        jdbcTemplate.update("INSERT INTO product (name, price, description) VALUES (?, ?, ?)",
+            product.getName(), product.getPrice(), product.getDescription());
+    }
+
+    public void update(Product product) {
+        jdbcTemplate.update("UPDATE product SET name = ?, price = ?, description = ? WHERE id = ?",
+            product.getName(), product.getPrice(), product.getDescription(), product.getId());
+    }
+
+    public void deleteById(Long id) {
+        jdbcTemplate.update("DELETE FROM product WHERE id = ?", id);
+    }
 
 
 
