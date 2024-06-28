@@ -32,9 +32,18 @@ public class MenuRepository{
         return id;
     }
     public List<Menu> findAll(){
-        return menus.values()
-                .stream()
-                .toList();
+        String sql = "select id, name, price,imageUrl from menus";
+        List<Menu> menus = jdbcTemplate.query(
+                sql, (resultSet, rowNum) -> {
+                    Menu menu = new Menu(
+                            resultSet.getLong("id"),
+                            resultSet.getString("name"),
+                            resultSet.getInt("price"),
+                            resultSet.getString("imageUrl")
+                    );
+                    return menu;
+                });
+        return menus;
     }
 
     public Menu update(Long id, String name, int price, String imageUrl) {
