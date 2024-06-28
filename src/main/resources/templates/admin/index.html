@@ -57,7 +57,7 @@
 <header>
   <h2>Manage Products</h2>
   <div>
-    <button class="delete_product_modal_bnt">선택한 상품 삭제</button>
+    <button class="delete_selected_products_bnt">선택한 상품 삭제</button>
     <button class="new_product_modal_btn">상품 추가</button>
   </div>
 </header>
@@ -65,7 +65,7 @@
   <table>
     <thead>
     <tr>
-      <th><input type="checkbox" name="all" id="all"></th>
+      <th><input type="checkbox" class="master_checkbox"></th>
       <th>Id</th>
       <th>Name</th>
       <th>Price</th>
@@ -75,12 +75,15 @@
     </thead>
     <tbody>
     <tr th:each="product : ${products}">
-      <td><input type="checkbox" name="${product.id}" id="${product.id}"></td>
+      <td><input type="checkbox" class="product_checkbox" th:id="${product.id}" ></td>
       <td th:text="${product.id}"></td>
       <td th:text="${product.name}"></td>
       <td th:text="${product.price}"></td>
       <td><img th:src="@{${product.imageUrl}}" alt="상품이미지"></td>
-      <td><button class="update_product_button">수정</button> <button>삭제</button></td>
+      <td>
+        <button class="update_product_button">수정</button>
+        <button class="delete_product_button">삭제</button>
+      </td>
     </tr>
     </tbody>
   </table>
