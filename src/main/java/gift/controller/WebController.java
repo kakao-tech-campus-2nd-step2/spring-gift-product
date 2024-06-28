@@ -4,12 +4,13 @@ import gift.ProductService;
 import gift.domain.product.Product;
 import gift.dto.ProductRequestDto;
 import gift.dto.ProductResponseDto;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 public class WebController {
     private final ProductService productService = new ProductService();
 
