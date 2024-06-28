@@ -1,30 +1,26 @@
 package gift;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RequestMapping("/api")
 @RestController
 public class ProductController {
-    private final Map<Long, Product> products = new HashMap<>();
+    private ProductService productService;
+
+    @Autowired
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
 
     @PostMapping("/products")
     public ResponseEntity makeProduct(@RequestBody ProductRequestDto requestDto) {
-        Product product = new Product(
-                requestDto.getId(),
-                requestDto.getName(),
-                requestDto.getPrice(),
-                requestDto.getImageUrl()
-        );
-
-        if (products.get(requestDto.getId()) == null) {
-            products.put(requestDto.getId(), product);
+        Product product = productService.makeProduct(requestDto);
+        if (product != null) {
             return new ResponseEntity(HttpStatus.CREATED);
         }
         return new ResponseEntity(HttpStatus.CONFLICT);
@@ -32,55 +28,36 @@ public class ProductController {
 
     @GetMapping("/products")
     public ResponseEntity<List<Product>> getAllProducts() {
-        List<Product> productsList = new ArrayList<>();
-
-        products.forEach((key, value) -> {
-            productsList.add(value);
-        });
-
+        List<Product> productsList = productService.getAllProducts();
         return new ResponseEntity(productsList, HttpStatus.OK);
     }
 
     @GetMapping("/products/{id}")
     public ResponseEntity<Product> getProduct(@PathVariable("id") Long id) {
-        Product product = products.get(id);
+        Product product = productService.getProduct(id);
 
         if (product != null) {
             return new ResponseEntity<>(product, HttpStatus.OK);
         }
-
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PutMapping("/products")
     public ResponseEntity putProduct(@RequestBody ProductRequestDto requestDto) {
-        Product originProduct = products.get(requestDto.getId());
-        if (originProduct == null) {
+        Product product = productService.putProduct(requestDto);
+        if (product == null) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
-        products.remove(requestDto.getId());
-        Product updateProduct = new Product(
-                requestDto.getId(),
-                requestDto.getName(),
-                requestDto.getPrice(),
-                requestDto.getImageUrl()
-        );
-        products.put(requestDto.getId(), updateProduct);
-
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
     @DeleteMapping("/products/{id}")
     public ResponseEntity deleteProduct(@PathVariable("id") Long id) {
-        Product product = products.get(id);
-
+        Product product = productService.deleteProduct(id);
         if (product == null) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
-
-        products.remove(id);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
-
     }
 
 }
