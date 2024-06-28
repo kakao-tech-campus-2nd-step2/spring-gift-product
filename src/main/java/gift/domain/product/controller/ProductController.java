@@ -1,6 +1,8 @@
-package gift.domain.product;
+package gift.domain.product.controller;
 
-import jakarta.annotation.PostConstruct;
+import gift.domain.product.dao.ProductDao;
+import gift.domain.product.dto.ProductDto;
+import gift.domain.product.entity.Product;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -21,14 +23,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/products")
 public class ProductController {
+
+    private final ProductDao productDao;
     private final Map<Long, Product> productRepository = new ConcurrentHashMap<>();
     private final AtomicLong key = new AtomicLong(1);
 
-    @PostConstruct
-    public void init() {
-        productRepository.put(key.getAndIncrement(), new Product(1L, "아이스 카페 아메리카노 T", 4500, "https://image.istarbucks.co.kr/upload/store/skuimg/2021/04/[110563]_20210426095937947.jpg"));
-        productRepository.put(key.getAndIncrement(), new Product(2L, "아이스 카페 라떼 T", 5000, "https://image.istarbucks.co.kr/upload/store/skuimg/2021/04/[110569]_20210415143036138.jpg"));
-        productRepository.put(key.getAndIncrement(), new Product(3L, "아이스 스타벅스 돌체 라떼 T", 5900, "https://image.istarbucks.co.kr/upload/store/skuimg/2021/04/[128695]_20210426092032110.jpg"));
+    public ProductController(ProductDao productDao) {
+        this.productDao = productDao;
     }
 
     @GetMapping("/new")
@@ -49,12 +50,12 @@ public class ProductController {
     }
 
     @PostMapping
-    public String create(@ModelAttribute Product productDTO) {
-        Product product = new Product(key.getAndIncrement(), productDTO.getName(),
-            productDTO.getPrice(), productDTO.getImageUrl());
-        productRepository.put(product.getId(), product);
+    public String create(@ModelAttribute ProductDto productDto) {
+        Product product = productDto.toProduct();
 
-        return "redirect:/products/" + product.getId();
+        Product savedProduct = productDao.insert(product);
+
+        return "redirect:/products/" + savedProduct.getId();
     }
 
     @GetMapping

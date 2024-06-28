@@ -1,4 +1,4 @@
-package gift.domain.product;
+package gift.domain.product.entity;
 
 public class Product {
     private Long id;
@@ -16,6 +16,8 @@ public class Product {
     public Long getId() {
         return id;
     }
+
+    public void setId(Long id) { this.id = id; }
 
     public String getName() {
         return name;
