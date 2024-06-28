@@ -23,6 +23,41 @@ public class ProductController {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    @GetMapping("/products")
+    public Collection<Product> getProducts() {
+        String sql = "select * from products";
+        List<Product> customers = jdbcTemplate.query(
+                sql, (resultSet, rowNum) -> {
+                    Product customer = new Product(
+                            resultSet.getLong("id"),
+                            resultSet.getString("name"),
+                            resultSet.getInt("price"),
+                            resultSet.getString("imageUrl")
+                    );
+                    return customer;
+                });
+        return customers;
+    }
 
+    @GetMapping("/products/{id}")
+    public ResponseEntity<Product> getProductById(@PathVariable Long id) {
+        String sql = "select * from products where id = ?";
+        try {
+            Product product = jdbcTemplate.queryForObject(
+                    sql,
+                    new Object[]{id},
+                    (resultSet, rowNum) -> new Product(
+                            resultSet.getLong("id"),
+                            resultSet.getString("name"),
+                            resultSet.getInt("price"),
+                            resultSet.getString("ImageUrl")
+                    )
+            );
+            if (product != null)  return ResponseEntity.ok(product);
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
 }
