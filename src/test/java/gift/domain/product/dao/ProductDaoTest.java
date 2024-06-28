@@ -97,4 +97,22 @@ class ProductDaoTest {
         assertThat(updatedProduct.getPrice()).isEqualTo(product2.getPrice());
         assertThat(updatedProduct.getImageUrl()).isEqualTo(product2.getImageUrl());
     }
+
+    @Test
+    @DisplayName("DB 상품 삭제")
+    void delete() {
+        // given
+        Product product1 = new Product(null, "탕종 블루베리 베이글", 3500, "https://image.istarbucks.co.kr/upload/store/skuimg/2023/09/[9300000004823]_20230911131337469.jpg");
+        Product savedProduct = productDao.insert(product1);
+
+        // when
+        Product deletedProduct = productDao.update(savedProduct).get();
+
+        // then
+        assertThat(savedProduct).isNotNull();
+        assertThat(savedProduct.getId()).isEqualTo(product1.getId());
+        assertThat(savedProduct.getName()).isEqualTo(product1.getName());
+        assertThat(savedProduct.getPrice()).isEqualTo(product1.getPrice());
+        assertThat(savedProduct.getImageUrl()).isEqualTo(product1.getImageUrl());
+    }
 }
