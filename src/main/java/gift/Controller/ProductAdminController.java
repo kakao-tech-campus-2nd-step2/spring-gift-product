@@ -1,26 +1,22 @@
 package gift.Controller;
 
 import gift.Model.ProductModel;
-import org.springframework.http.ResponseEntity;
+import gift.Service.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @Controller
 @RequestMapping("/admin/products")
-public class ProductAdminController {
-    private final ProductController productController;
+public class ProductAdminController{
 
-    public ProductAdminController(ProductController productController) {
-        this.productController = productController;
-    }
+    @Autowired
+    private ProductService productService;
 
     @GetMapping
-    public String getAllProducts(Model model) {
-        List<ProductModel> products = productController.getAllProducts().getBody();
-        model.addAttribute("products", products);
+    public String listProducts(Model model) {
+        model.addAttribute("products", productService.getAllProducts());
         return "product-list";
     }
 
@@ -32,35 +28,26 @@ public class ProductAdminController {
 
     @PostMapping("/create")
     public String createProduct(@ModelAttribute ProductModel product) {
-        ResponseEntity<ProductModel> response = productController.createProduct(product);
-        if (response.getStatusCode().is2xxSuccessful()) {
-            return "redirect:/admin/products";
-        }
-        return "product-form";
+        productService.saveProduct(product);
+        return "redirect:/admin/products";
     }
 
     @GetMapping("/edit/{id}")
-    public String showEditForm(@PathVariable long id, Model model) {
-        ProductModel product = productController.getProductById(id).getBody();
-        if (product == null) {
-            return "redirect:/admin/products";
-        }
-        model.addAttribute("product", product);
+    public String showEditForm(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("product", productService.getProductById(id));
         return "product-form";
     }
 
     @PostMapping("/edit/{id}")
-    public String updateProduct(@PathVariable long id, @ModelAttribute ProductModel product) {
-        ResponseEntity<ProductModel> response = productController.updateProduct(id, product);
-        if (response.getStatusCode().is2xxSuccessful()) {
-            return "redirect:/admin/products";
-        }
-        return "product-form";
+    public String updateProduct(@PathVariable("id") Long id, @ModelAttribute ProductModel product) {
+        product.setId(id);
+        productService.updateProduct(product);
+        return "redirect:/admin/products";
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteProduct(@PathVariable long id) {
-        productController.deleteProduct(id);
+    public String deleteProduct(@PathVariable("id") Long id) {
+        productService.deleteProduct(id);
         return "redirect:/admin/products";
     }
 }
