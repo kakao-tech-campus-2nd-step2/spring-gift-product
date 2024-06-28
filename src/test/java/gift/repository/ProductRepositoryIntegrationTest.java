@@ -1,5 +1,4 @@
 package gift.repository;
-public class ProductRepositoryIntegrationTest {
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -20,49 +19,71 @@ public class ProductRepositoryIntegrationTest {
 
     @Test
     public void save() {
-        ProductForm product = new ProductForm("abc", 123, "test.com");
-        Product savedProduct = productRepository.save(product);
+        // 제품 저장 테스트
+        ProductForm productForm = new ProductForm("abc", 123, "test.com");
+        Product savedProduct = productRepository.save(productForm);
 
+        // 저장된 제품 조회
         Product findProduct = productRepository.findById(savedProduct.getId());
-        assertThat(product.getName()).isEqualTo(findProduct.getName());
-        assertThat(product.getPrice()).isEqualTo(findProduct.getPrice());
-        assertThat(product.getImageUrl()).isEqualTo(findProduct.getImageUrl());
+
+        // 저장된 제품과 조회된 제품 비교
+        assertThat(findProduct.getName()).isEqualTo(productForm.getName());
+        assertThat(findProduct.getPrice()).isEqualTo(productForm.getPrice());
+        assertThat(findProduct.getImageUrl()).isEqualTo(productForm.getImageUrl());
     }
 
     @Test
     public void delete() {
-        ProductForm product = new ProductForm("abc", 123, "test.com");
-        Product savedProduct = productRepository.save(product);
+        // 제품 삭제 테스트
+        ProductForm productForm = new ProductForm("abc", 123, "test.com");
+        Product savedProduct = productRepository.save(productForm);
 
+        // 제품 삭제
         productRepository.delete(savedProduct.getId());
+
+        // 삭제된 제품 조회
         Product findProduct = productRepository.findById(savedProduct.getId());
-        assertThat(findProduct).isEqualTo(null);
+
+        // 삭제된 제품이 null인지 검증
+        assertThat(findProduct).isNull();
     }
 
     @Test
     public void edit() {
-        ProductForm product = new ProductForm("abc", 123, "test.com");
-        Product savedProduct = productRepository.save(product);
+        // 제품 수정 테스트
+        ProductForm productForm = new ProductForm("abc", 123, "test.com");
+        Product savedProduct = productRepository.save(productForm);
 
-        ProductForm editProductForm = new ProductForm("def", product.getPrice(),
-            product.getImageUrl());
+        // 수정할 제품 정보 설정
+        ProductForm editProductForm = new ProductForm("def", productForm.getPrice(),
+            productForm.getImageUrl());
 
-        Product editProduct = productRepository.edit(savedProduct.getId(), editProductForm);
+        // 제품 수정
+        Product editedProduct = productRepository.edit(savedProduct.getId(), editProductForm);
+
+        // 수정된 제품 조회
         Product findProduct = productRepository.findById(savedProduct.getId());
-        assertThat(findProduct.getName()).isEqualTo(editProduct.getName());
+
+        // 수정된 제품의 이름이 예상과 일치하는지 검증
+        assertThat(findProduct.getName()).isEqualTo(editedProduct.getName());
     }
 
     @Test
     public void findAll() {
+        // 모든 제품 조회 테스트
         ProductForm product1 = new ProductForm("abc", 123, "test1.com");
         ProductForm product2 = new ProductForm("def", 234, "test2.com");
         ProductForm product3 = new ProductForm("ghi", 345, "test3.com");
 
+        // 제품 저장
         productRepository.save(product1);
         productRepository.save(product2);
         productRepository.save(product3);
 
+        // 모든 제품 조회
         List<Product> allProducts = productRepository.findAll();
+
+        // 조회된 제품 목록의 크기 검증
         assertThat(allProducts.size()).isEqualTo(3);
     }
 }

@@ -2,7 +2,6 @@ package gift.repository;
 
 import gift.model.Product;
 import gift.model.ProductForm;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.sql.DataSource;
@@ -11,7 +10,8 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
-public class JdbcProductRepository {
+public class JdbcProductRepository implements ProductRepository {
+
     private final JdbcTemplate jdbcTemplate;
 
     public JdbcProductRepository(DataSource dataSource) {
@@ -31,7 +31,7 @@ public class JdbcProductRepository {
         Number key = jdbcInsert.executeAndReturnKey(new MapSqlParameterSource(parameters));
 
         Product product = new Product();
-        product.setId((Long) key);
+        product.setId(key.longValue()); // Number 타입에서 Long으로 변환하여 setId 호출
         product.setName(form.getName());
         product.setPrice(form.getPrice());
         product.setImageUrl(form.getImageUrl());
@@ -64,6 +64,7 @@ public class JdbcProductRepository {
         return jdbcTemplate.query("select * from product", productRowMapper());
     }
 
+    // RowMapper 구현
     private RowMapper<Product> productRowMapper() {
         return (rs, rowNum) -> {
             Product product = new Product();
