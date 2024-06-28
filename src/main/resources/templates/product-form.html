@@ -10,10 +10,6 @@
     <h1 th:if="${product.id != null}">Edit Product</h1>
     <form th:action="@{${product.id == null} ? '/admin/add' : '/admin/edit/' + ${product.id}}" th:object="${product}" method="post">
         <p>
-            <label for="id">ID:</label>
-            <input type="text" id="id" th:field="*{id}" required/>
-        </p>
-        <p>
             <label for="name">Name:</label>
             <input type="text" id="name" th:field="*{name}" required/>
         </p>
