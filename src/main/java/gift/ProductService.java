@@ -15,7 +15,11 @@ public class ProductService {
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
-    
+    // 해당 id 가진 제품 검색후 product객체로 반환
+    public Product getProductById(Long id) {
+        return productRepository.findById(id);
+    }
+
 
 
 
