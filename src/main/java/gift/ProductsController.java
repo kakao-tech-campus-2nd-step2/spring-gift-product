@@ -1,6 +1,7 @@
 package gift;
 
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +18,12 @@ import org.springframework.web.servlet.ModelAndView;
 @RestController
 @RequestMapping("/api/products")
 public class ProductsController {
-    private final ProductRepository productRepository = new MemoryProductRepository();
+    @Autowired
+    private final ProductRepository productRepository;
+
+    public ProductsController(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
 
     @PostMapping
     public Product addNewProduct(@RequestBody Product product) {
