@@ -1,10 +1,6 @@
 package gift;
 
-import java.util.concurrent.atomic.AtomicLong;
-
 public class Product {
-
-    private static AtomicLong cnt = new AtomicLong(0);
     private Long id;
     private String name;
     private Integer price;
@@ -12,8 +8,8 @@ public class Product {
 
     public Product(){
     }
-    public Product(String name, Integer price, String imageUrl){
-        this.id = autoIncrement();
+    public Product(Long id, String name, Integer price, String imageUrl){
+        this.id = id;
         this.name = name;
         this.price = price;
         this.imageUrl = imageUrl;
@@ -22,31 +18,26 @@ public class Product {
         return id;
     }
 
+    public void setId(Long id){this.id = id; }
+
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    public void setName(String name) {this.name = name;}
 
-    public Integer getPrice() {
-        return price;
-    }
+    public Integer getPrice() { return this.price;}
 
     public void setPrice(Integer price) {
         this.price = price;
     }
 
     public String getImageUrl() {
-        return imageUrl;
+        return this.imageUrl;
     }
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
 
-    private Long autoIncrement(){
-        return cnt.incrementAndGet();
-    }
 }
