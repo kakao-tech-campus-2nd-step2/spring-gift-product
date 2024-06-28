@@ -2,11 +2,17 @@ package gift.repository;
 
 import gift.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.List;
+import java.util.Objects;
 
 @Repository
 public class ProductRepositoryImpl implements ProductRepository {
@@ -34,13 +40,27 @@ public class ProductRepositoryImpl implements ProductRepository {
     @Override
     public Product findById(Long id) {
         var sql = "SELECT * FROM product WHERE id = ?";
-        return jdbcTemplate.queryForObject(sql, productRowMapper, id);
+        try {
+            return jdbcTemplate.queryForObject(sql, productRowMapper, id);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
+
 
     @Override
     public void save(Product product) {
         var sql = "INSERT INTO product (name, price, imageUrl) VALUES (?, ?, ?)";
-        jdbcTemplate.update(sql, product.getName(), product.getPrice(), product.getImageUrl());
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, product.getName());
+            ps.setInt(2, product.getPrice());
+            ps.setString(3, product.getImageUrl());
+            return ps;
+        }, keyHolder);
+
+        product.setId(Objects.requireNonNull(keyHolder.getKey()).longValue());
     }
 
     @Override
