@@ -1,2 +1,0 @@
-INSERT INTO product (name, price, imageUrl) VALUES ('Product1', 100, 'http://example.com/product1.jpg');
-INSERT INTO product (name, price, imageUrl) VALUES ('Product2', 200, 'http://example.com/product2.jpg');
