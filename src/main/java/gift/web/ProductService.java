@@ -28,5 +28,10 @@ public class ProductService {
         return newProduct;
     }
 
+    public Product updateProduct(Long id, Product product) {
+        products.put(id, product);
+        return product;
+    }
+
 
 }
