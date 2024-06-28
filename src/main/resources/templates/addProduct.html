@@ -46,10 +46,10 @@
             })
             .then(response => response.text())
             .then(data => {
-                if (data === "Add") {
+                if (data === "Add successful") {
                     alert('Product Added!');
                     window.location.href = "/api/products";
-                } else if (data === "already") {
+                } else if (data === "Already exists id") {
                     alert('The product ID already exists.');
                 } else {
                     throw new Error('Unexpected response from the server');

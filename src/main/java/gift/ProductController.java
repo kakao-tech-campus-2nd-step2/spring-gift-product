@@ -24,9 +24,9 @@ public class ProductController {
     public ResponseEntity<String> setProduct(@RequestBody Product product) {
         try {
             productDao.insertProduct(product);
-            return ResponseEntity.ok("Add");
+            return ResponseEntity.ok("Add successful");
         } catch (DataIntegrityViolationException ex) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("already");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Already exists id");
         }
     }
     // 등록된 상품 업데이트(DB 연동)

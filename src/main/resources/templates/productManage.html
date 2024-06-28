@@ -43,13 +43,13 @@
         button.addEventListener('click', function() {
             var amount;
             do {
-                amount = prompt("구매할 수량을 입력하세요:", "1");
+                amount = prompt("Enter the quantity to purchase:", "1");
                 if(amount.trim() === ""){
                     return;
                 }
                 amount = parseInt(amount);
                 if (isNaN(amount) || amount <= 0) {
-                    alert("양수만 입력 가능합니다. 다시 입력해주세요.");
+                    alert("Invalid number. Please try again.");
                 } else {
                     break;
                 }

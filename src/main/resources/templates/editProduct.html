@@ -16,6 +16,9 @@
     <label for="price">Price:</label>
     <input type="number" id="price" name="price" th:value="${product.price}"><br><br>
 
+    <label for="amount">Amount:</label>
+    <input type="number" id="amount" name="amount" th:value="${product.amount}"><br><br>
+
     <label for="url">Url:</label>
     <input type="url" id="url" name="url" th:value="${product.imageUrl}"><br><br>
 
@@ -30,7 +33,8 @@
                 id: pId,
                 name: document.getElementById("name").value,
                 price: document.getElementById("price").value,
-                imageUrl: document.getElementById("url").value
+                imageUrl: document.getElementById("url").value,
+                amount: document.getElementById("amount").value
             };
 
             fetch('/api/products/'+ pId, {
