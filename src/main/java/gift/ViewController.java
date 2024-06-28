@@ -2,6 +2,7 @@ package gift;
 
 import java.util.List;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -49,6 +50,12 @@ public class ViewController {
     @PutMapping("edit/{id}")
     public String editProduct(@ModelAttribute Product product, @PathVariable Long id) {
         productService.updateProduct(id, product);
+        return "redirect:/products";
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public String deleteProduct(@PathVariable Long id) {
+        productService.deleteProduct(id);
         return "redirect:/products";
     }
 }
