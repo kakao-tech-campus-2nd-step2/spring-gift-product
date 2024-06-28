@@ -18,10 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class AdminController {
-
-    @Autowired
     private ProductDao productDao;
-
+    @Autowired
     AdminController(ProductDao productDao) {
         this.productDao = productDao;
     }

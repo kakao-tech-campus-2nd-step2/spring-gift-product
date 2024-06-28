@@ -18,9 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ProductController {
 
-    @Autowired
     private ProductDao productDao;
-
+    @Autowired
     ProductController(ProductDao productDao) {
         this.productDao = productDao;
     }
