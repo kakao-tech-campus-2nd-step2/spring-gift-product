@@ -3,6 +3,8 @@ package gift;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class ProductDao {
     private final JdbcTemplate jdbcTemplate;
@@ -39,5 +41,17 @@ public class ProductDao {
         var sql = "update products set amount = amount - ? where id = ? ";
         jdbcTemplate.update(sql,amount, id);
     }
-
+    public List<Product> selectAllProducts() {
+        var sql = "select id, productName, price, imageUrl, amount from products";
+        return jdbcTemplate.query(
+                sql,
+                (resultSet, rowNum) -> new Product(
+                        resultSet.getLong("id"),
+                        resultSet.getString("productName"),
+                        resultSet.getInt("price"),
+                        resultSet.getString("imageUrl"),
+                        resultSet.getInt("amount")
+                )
+        );
     }
+}
