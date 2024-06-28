@@ -30,14 +30,14 @@ public class AdminController {
     }
 
     @PostMapping("/add")
-    public String addProductSubmit(@ModelAttribute Product product) {
-        productService.addProduct(product);
+    public String addProduct(@ModelAttribute Product product) {
+        productService.createProduct(product);
         return "redirect:/admin";
     }
 
     @GetMapping("/edit/{id}")
     public String editProductForm(@PathVariable("id") Long id, Model model) {
-        Product product = productService.getProductById(id);
+        Product product = productService.getProduct(id);
         if (product == null) {
             return "redirect:/admin";
         }
@@ -46,14 +46,20 @@ public class AdminController {
     }
 
     @PostMapping("/edit/{id}")
-    public String editProductSubmit(@PathVariable("id") Long oldId, @ModelAttribute Product updatedProduct) {
-        productService.updateProduct(oldId, updatedProduct);
+    public String editProduct(@PathVariable("id") Long oldId, @ModelAttribute Product updatedProduct) {
+        boolean isUpdated = productService.updateProduct(oldId, updatedProduct);
+        if (!isUpdated) {
+            return "redirect:/admin";
+        }
         return "redirect:/admin";
     }
 
     @GetMapping("/delete/{id}")
     public String deleteProduct(@PathVariable("id") Long id) {
-        productService.deleteProduct(id);
+        boolean isDeleted = productService.deleteProduct(id);
+        if (!isDeleted) {
+            return "redirect:/admin";
+        }
         return "redirect:/admin";
     }
 }
