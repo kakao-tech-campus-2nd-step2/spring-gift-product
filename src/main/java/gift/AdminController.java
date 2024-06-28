@@ -50,4 +50,17 @@ public class AdminController {
         return "get";
     }
 
+    //Update
+    @GetMapping("/admin/put")
+    public String adminUpdatePage(){
+        return "update";
+    }
+
+    @PostMapping("/admin/put/submit")
+    public String submitUpdateProduct(@ModelAttribute Product product, Model model) {
+        productController.updateProduct(product.id(), product);
+        model.addAttribute("products", productController.getProducts());
+        return "get";
+    }
+
 }
