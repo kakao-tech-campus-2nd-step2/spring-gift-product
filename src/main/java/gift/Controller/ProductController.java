@@ -1,5 +1,7 @@
 package gift.Controller;
 
+import gift.Repository.ProductRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import gift.Model.Product;
 import gift.Model.RequestProduct;
@@ -11,11 +13,17 @@ import java.util.*;
 @Controller
 @RequestMapping("/api")
 public class ProductController {
-    private final Map<Long, Product> products = new HashMap<Long, Product>();
+    private final ProductRepository productRepository;
+
+    @Autowired
+    public ProductController(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+        productRepository.createProductTable();
+    }
 
     @GetMapping("/products")
     public String getProduct(Model model) {
-        List<Product> list = new LinkedList<>(products.values());
+        List<Product> list = productRepository.selectProduct();
         model.addAttribute("products", list);
         return "products";
     }
@@ -29,31 +37,28 @@ public class ProductController {
     @PostMapping("/products")
     public String newProduct(@ModelAttribute RequestProduct requestProduct) {
         Product product = new Product(requestProduct.name(), requestProduct.price(), requestProduct.imageUrl());
-        products.put(product.getId(), product);
+        productRepository.insertProduct(product);
         return "redirect:/api/products";
     }
 
     @GetMapping("/products/edit/{id}")
     public String editProductForm(@PathVariable("id") Long id, Model model) {
-        Product product = products.get(id);
+        Product product = productRepository.selectProductById(id);
         model.addAttribute("product", new RequestProduct(product.getName(), product.getPrice(), product.getImageUrl()));
         model.addAttribute("id", id);
         return "edit-product";
     }
 
-    @PostMapping("/products/edit/{id}")
+    @PutMapping("/products/edit/{id}")
     public String updateProduct(@PathVariable("id") Long id, @ModelAttribute RequestProduct requestProduct) {
-        Product product = products.get(id);
-        product.setName(requestProduct.name());
-        product.setPrice(requestProduct.price());
-        product.setImageUrl(requestProduct.imageUrl());
-
+        Product product = new Product(id, requestProduct.name(), requestProduct.price(), requestProduct.imageUrl());
+        productRepository.updateProduct(id, product);
         return "redirect:/api/products";
     }
 
-    @GetMapping("/products/delete/{id}")
+    @DeleteMapping("/products/delete/{id}")
     public String deleteProduct(@PathVariable("id") Long id) {
-        products.remove(id);
+        productRepository.deleteProduct(id);
         return "redirect:/api/products";
     }
 
