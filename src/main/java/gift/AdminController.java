@@ -24,4 +24,17 @@ public class AdminController {
         return "get";
     }
 
+    //ADD
+    @GetMapping("/admin/post")
+    public String adminAddPage(){
+        return "add";
+    }
+
+    @PostMapping("/admin/post/submit")
+    public String submitPostProduct(@ModelAttribute Product product, Model model) {
+        productController.addProduct(product);
+        model.addAttribute("products", productController.getProducts());
+        return "get";
+    }
+
 }
