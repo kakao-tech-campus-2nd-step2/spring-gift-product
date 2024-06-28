@@ -33,4 +33,15 @@ public class ProductService {
         return product;
     }
 
+    // 제품 수정
+    public Product updateProduct(Long id, Product productDetails) {
+        Product product = products.get(id);
+        if (product == null) {
+            throw new NoSuchElementException("Product not found with id " + id);
+        }
+        product.setName(productDetails.getName());
+        product.setPrice(productDetails.getPrice());
+        products.put(id, product);
+        return product;
+    }
 }

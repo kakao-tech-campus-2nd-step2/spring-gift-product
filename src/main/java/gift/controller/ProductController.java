@@ -40,4 +40,10 @@ public class ProductController {
         return productService.addProduct(product);
     }
 
+    // 제품 수정
+    @PutMapping("/{id}")
+    public Product updateProduct(@PathVariable Long id, @RequestBody Product productDetails) {
+        return productService.updateProduct(id, productDetails);
+    }
+
 }
