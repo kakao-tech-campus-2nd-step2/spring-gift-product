@@ -26,7 +26,8 @@ public class MemoryRepository {
     }
 
     public void updateProduct(long id, ProductDTO productDTO) {
-        products.replace(id, productDTO);
+        ProductDTO updatedProductDTO = new ProductDTO(id, productDTO.name(), productDTO.price(), productDTO.imageUrl());
+        products.replace(id, updatedProductDTO);
     }
 
     public void deleteProduct(long id) {
