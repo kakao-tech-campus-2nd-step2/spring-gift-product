@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 public class ProductDB {
 
     private static final Map<Long, ProductDTO> products = new ConcurrentHashMap<>();
+    private Integer last=0;
 
     public List<ProductDTO> getList() {
         return products.values().stream().toList();
@@ -20,7 +21,7 @@ public class ProductDB {
     }
 
     public int getLastId() {
-        return products.size();
+        return last++;
     }
 
     public void setProduct(long id, ProductDTO product) {
