@@ -14,3 +14,10 @@ Thymeleaf를 사용하여 서버 사이드 렌더링을 구현한다.
 1. CRUD에 해당하는 템플릿 생성
 2. CRUD 중 생성, 업데이트, 삭제는 다시 원래 읽기 주소로 리다이렉트
 3. CRUD 각각에 예외 처리
+
+## Step3
+
+- [X] h2 DB configuration 설정
+- [X] Product Repository 구현
+- [X] JDBC template으로 상품 정보 관리
+- [X] 서비스 레이어 분리
