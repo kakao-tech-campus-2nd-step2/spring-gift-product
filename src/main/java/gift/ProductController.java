@@ -22,6 +22,12 @@ public class ProductController {
         addProduct(new Product(nextId, "아이스 카페 아메리카노 T", 4500, "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg"));
     }
 
+    // 모든 상품 조회
+    @GetMapping
+    public ResponseEntity<List<Product>> getAllProducts() {
+        return ResponseEntity.ok(new ArrayList<>(products.values()));
+    }
+    
     // 상품 추가
     @PostMapping
     public ResponseEntity<Product> addProduct(@RequestBody Product product) {
