@@ -3,11 +3,9 @@ package gift.controller;
 import gift.model.Product;
 import gift.model.ProductDao;
 import gift.model.ProductRequest;
-import gift.model.ProductDaoImpl;
 import gift.model.ProductResponse;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,11 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ProductController {
 
-    @Autowired
     private ProductDao productDao;
 
-    ProductController(ProductDaoImpl productDaoImpl) {
-        this.productDao = productDaoImpl;
+    ProductController(ProductDao productDao) {
+        this.productDao = productDao;
     }
 
     @PostMapping("/api/product")
