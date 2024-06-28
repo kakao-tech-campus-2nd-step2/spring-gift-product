@@ -31,4 +31,18 @@ public class AdminController {
         model.addAttribute("productList", productList);
         return "list";
     }
+
+    @GetMapping("/add")
+    public String addProductForm(Model model){
+        model.addAttribute("product", new Product());
+        return "product-form";
+    }
+
+    @PostMapping("/add")
+    public String addProduct(@ModelAttribute Product product){
+        productDao.insertProduct(product);
+        return "redirect:/admin/list";
+    }
+
+
 }
