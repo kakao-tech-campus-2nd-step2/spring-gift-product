@@ -22,6 +22,18 @@ public class ProductDao {
       rs.getString("imageUrl")
   );
 
+  private void validateProduct(Product product) {
+    if (product.getName() == null || product.getName().trim().isEmpty()) {
+      throw new IllegalArgumentException("상품 이름은 비어 있을 수 없습니다.");
+    }
+    if (product.getPrice() <= 0) {
+      throw new IllegalArgumentException("상품 가격은 0보다 커야 합니다.");
+    }
+    if (product.getImageUrl() == null || product.getImageUrl().trim().isEmpty()) {
+      throw new IllegalArgumentException("상품 이미지 URL은 비어 있을 수 없습니다.");
+    }
+  }
+
   public List<Product> findAll() {
     return jdbcTemplate.query("SELECT * FROM product", rowMapper);
   }
@@ -31,11 +43,13 @@ public class ProductDao {
   }
 
   public int save(Product product) {
+    validateProduct(product);
     return jdbcTemplate.update("INSERT INTO product (name, price, imageUrl) VALUES (?, ?, ?)",
         product.getName(), product.getPrice(), product.getImageUrl());
   }
 
   public int update(Product product) {
+    validateProduct(product);
     return jdbcTemplate.update("UPDATE product SET name = ?, price = ?, imageUrl = ? WHERE id = ?",
         product.getName(), product.getPrice(), product.getImageUrl(), product.getId());
   }
