@@ -13,28 +13,22 @@ public class ProductRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    private final RowMapper<Product> productRowMapper = (resultSet, rowNum) ->
+        new Product(
+            resultSet.getLong("id"),
+            resultSet.getString("name"),
+            resultSet.getLong("price"),
+            resultSet.getString("imageUrl")
+        );
+
     public List<Product> checkProductsAll() {
         String sql = "SELECT * FROM products";
-        return jdbcTemplate.query(sql, (resultSet, rowNum) ->
-            new Product(
-                resultSet.getLong("id"),
-                resultSet.getString("name"),
-                resultSet.getLong("price"),
-                resultSet.getString("imageUrl")
-            )
-        );
+        return jdbcTemplate.query(sql, productRowMapper);
     }
 
     public Product checkProductsById(long id) {
         String sql = "SELECT * FROM products WHERE id = ?";
-        List<Product> products = jdbcTemplate.query(sql, new Object[]{id}, (resultSet, rowNum) ->
-            new Product(
-                resultSet.getLong("id"),
-                resultSet.getString("name"),
-                resultSet.getLong("price"),
-                resultSet.getString("imageUrl")
-            )
-        );
+        List<Product> products = jdbcTemplate.query(sql, new Object[]{id}, productRowMapper);
         return products.isEmpty() ? null : products.get(0);
     }
 
