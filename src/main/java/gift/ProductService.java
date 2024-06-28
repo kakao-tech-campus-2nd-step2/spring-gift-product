@@ -19,6 +19,11 @@ public class ProductService {
     public Product getProductById(Long id) {
         return productRepository.findById(id);
     }
+    //새로운 제품 db에 저장
+    public void saveProduct(Product product) {
+        productRepository.save(product);
+    }
+
 
 
 
