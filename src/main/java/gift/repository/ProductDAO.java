@@ -14,7 +14,6 @@ import java.util.NoSuchElementException;
 public class ProductDAO {
     @Autowired
     JdbcTemplate jdbcTemplate;
-    Map<Long, ProductRecord> records = new HashMap<>();
 
     private long idTraker = 1;
 
@@ -111,6 +110,9 @@ public class ProductDAO {
 
     private long getNewId() {
         while (isRecordExist(idTraker)) {
+            if (idTraker == Long.MAX_VALUE) {
+                idTraker = 0;
+            }
             idTraker++;
         }
 
