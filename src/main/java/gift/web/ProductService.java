@@ -16,5 +16,9 @@ public class ProductService {
         return List.copyOf(products.values());
     }
 
+    public Product getProductById(Long id) {
+        return products.get(id);
+    }
+
 
 }
