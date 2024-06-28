@@ -18,7 +18,7 @@
             <th><input type="checkbox"></th>
             <th>Name</th>
             <th>Price</th>
-            <th>Image URL</th>
+            <th>Image</th> <!-- 수정: Image URL을 Image로 변경 -->
             <th>Actions</th>
         </tr>
         </thead>
@@ -27,7 +27,7 @@
             <td><input type="checkbox"></td>
             <td th:text="${product.name}"></td>
             <td th:text="${product.price}"></td>
-            <td th:text="${product.imageUrl}"></td>
+            <td><img th:src="${product.imageUrl}" alt="Product Image" style="width: 50px; height: 50px;"></td> <!-- 수정: 이미지 태그 사용 -->
             <td>
                 <a th:href="@{/admin/products/edit/{id}(id=${product.id})}" class="btn btn-edit">✏️</a>
                 <a th:href="@{/admin/products/delete/{id}(id=${product.id})}" class="btn btn-delete">🗑️</a>
