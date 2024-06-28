@@ -27,8 +27,7 @@ public class ProductRepository {
     }
 
     public Product findById(Long id) {
-        return jdbcTemplate.queryForObject("SELECT * FROM products WHERE id = ?", new Object[]{id},
-            productRowMapper);
+        return jdbcTemplate.queryForObject("SELECT * FROM products WHERE id = ?", productRowMapper, id);
     }
 
     public int save(Product product) {
