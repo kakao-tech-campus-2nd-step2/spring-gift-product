@@ -33,6 +33,21 @@ edit.html : 기존 상품의 정보를 수정하는 페이지를 제공합니다
 
 
 
+# 3단계 
+## 조건 
+메모리에 저장하고 있던 모든 코드를 제거하고 H2 데이터베이스를 사용하도록 변경한다.
+사용하는 테이블은 애플리케이션이 실행될 때 구축되어야 한다.
+
+
+## 기능 설명
+- ProductRepository.java : 데이터베이스 CRUD(Create, Read, Update, Delete) 작업을 수행하는 메서드들을 정의합니다.
+- CreateTableExample.java : 데이터베이스 테이블을 생성하는 예제 코드입니다.
+- DatabaseConnector.java : 데이터베이스 연결을 설정하고 관리하는 기능을 제공합니다.
+- data.sql : 애플리케이션 시작 시 자동으로 실행되어 데이터베이스에 초기 데이터를 삽입합니다.
+- schema.sql : 터베이스 테이블의 구조를 정의하고 생성하는 SQL 스크립트들을 포함합니다. 
+
+
+
 ## 🛠 코드 구조
 ```plaintext
 spring-gift-product
@@ -41,10 +56,21 @@ spring-gift-product
         ├── java
         │   └── gift
         │       ├── Application.java
-        │       ├── ProductController.java
-        │       ├── ProductService.java
-        │       └── ProductModel.java
+        │       ├── Product.java
+        │       ├── controller
+        │       │   └── ProductController.java
+        │       ├── model
+        │       │   └── ProductModel.java
+        │       ├── repository
+        │       │   └── ProductRepository.java
+        │       ├── service
+        │       │   └── ProductService.java
+        │       └── DB
+        │           ├── CreateTableExample.java
+        │           └── DatabaseConnector.java
         └── resources
+            ├── data.sql
+            └── schema.sql
             ├── static
             │   └── css
             │       └── styles.css
