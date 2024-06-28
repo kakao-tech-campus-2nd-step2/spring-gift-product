@@ -2,7 +2,7 @@ package gift.controller;
 
 import gift.model.Product;
 import gift.model.ProductForm;
-import gift.repository.MemoryProductRepository;
+import gift.repository.ProductRepository;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/products")
 public class ProductController {
 
-    private final MemoryProductRepository repository;
+    private final ProductRepository repository;
 
-    public ProductController(MemoryProductRepository repository) {
+   public ProductController(ProductRepository repository) {
         this.repository = repository;
     }
 
