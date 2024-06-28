@@ -53,3 +53,16 @@
 - list : 상품 목록 페이지, 메인 페이지, 상품 추가, 수정, 삭제 버튼 존재
 - create : 상품 추가 페이지
 - update : 상품 수정 페이지
+
+# Step 3
+
+## 추가 기능
+- 메모리 데이터베이스 -> DBMS
+
+## 구현 기능 목록
+- ItmeRepository
+  - insert
+  - findById
+  - findAll
+  - update
+  - delete
