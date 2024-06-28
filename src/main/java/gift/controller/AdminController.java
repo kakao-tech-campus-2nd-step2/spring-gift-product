@@ -35,8 +35,8 @@ public class AdminController {
 
     //상품 추가 화면
     @GetMapping("/product-add")
-    public String productAdd(Model model) {
-        model.addAttribute("product", new Product());
+    public String productAdd() {
+
         return "product-add";
 
     }

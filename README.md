@@ -47,4 +47,6 @@
 
 ### Step3
 
-- ProductDao클래스를 이용해
+- ProductDao클래스를 이용해 데이터베이스 접근
+- Service 레이어 추가
+-

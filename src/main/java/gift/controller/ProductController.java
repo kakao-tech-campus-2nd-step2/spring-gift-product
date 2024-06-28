@@ -31,7 +31,6 @@ public class ProductController {
     //전체 product 목록 조회
     @GetMapping
     public List<Product> getProduct() {
-
         return productService.getAllProducts();
     }
 
