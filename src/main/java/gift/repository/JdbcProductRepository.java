@@ -34,7 +34,6 @@ public class JdbcProductRepository implements ProductRepository {
             rs.getString("image_url")
     );
 
-
     @Override
     public List<Product> findAll() {
         return jdbcTemplate.query(SELECT_ALL, productRowMapper);
@@ -62,6 +61,6 @@ public class JdbcProductRepository implements ProductRepository {
 
     @Override
     public void delete(Long id) {
-
+        jdbcTemplate.update(DELETE_PRODUCT, id);
     }
 }
