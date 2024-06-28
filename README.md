@@ -106,21 +106,21 @@ Content-Type: application/json
 
 * 모든 상품을 리스트로 조회하는 메인 페이지
 * 각 상품마다 update, delete 버튼 존재
-  * update 버튼은 `product_new_form.html` 페이지로 이동
+  * update 버튼은 `product_add_form.html` 페이지로 이동
   * delete 버튼은 추가적인 조작없이 delete method 전송을 통해 삭제 후 메인 페이지 새로 고침
 * 새 상품을 추가하는 버튼 존재
-  * 버튼을 누르면 `product_new_form.html` 페이지로 이동
+  * 버튼을 누르면 `product_edit_form.html` 페이지로 이동
 
 
 
-**product_new_form.html**
+**product_add_form.html**
 
 * 새 상품을 추가하는 페이지
-* 각 정보를 html 폼으로 입력받아 서버로 전송하면 json 형태로 전송받아 저장
+* 각 정보를 html 폼으로 입력받아 `POST /api/products`로 요청하여 저장
 
 
 
-**product_update_form.html**
+**product_edit_form.html**
 
 * 상품을 수정하는 페이지
-* 각 정보를 html 폼으로 입력받아 서버로 전송하면 json 형태로 전송받아 기존 정보를 대체/저장
+* 각 정보를 html 폼으로 입력받아 `PUT /api/products/{id}`로 요청하여 수정
