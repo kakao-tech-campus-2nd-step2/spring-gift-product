@@ -16,7 +16,8 @@ public class MemoryProductRepository implements ProductRepository {
 
     @Override
     public Product save(Product product) {
-        return products.put(product.getId(), product);
+        products.put(product.getId(), product);
+        return products.get(product.getId());
     }
 
     @Override
