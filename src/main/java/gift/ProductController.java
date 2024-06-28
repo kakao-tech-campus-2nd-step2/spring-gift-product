@@ -29,13 +29,11 @@ public class ProductController {
     }
 
     @PostMapping("/products")
-    public ProductResponse addProduct(
+    public void addProduct(
             @RequestBody ProductCreateRequest productCreateRequest
     ) {
         Product product = productOf(productCreateRequest);
-        products.save(product.id(), product);
-
-        return ProductResponse.from(product);
+        products.save(product);
     }
 
     @PutMapping("/products/{id}")
@@ -48,7 +46,7 @@ public class ProductController {
             throw new ProductNotFoundException();
         }
         Product updatedProduct = applyUpdate(originalProduct, productUpdateRequest);
-        products.save(id, updatedProduct);
+        products.save(updatedProduct);
     }
 
     @DeleteMapping("/products/{id}")
@@ -58,7 +56,7 @@ public class ProductController {
 
     private Product productOf(ProductCreateRequest productCreateRequest) {
         return new Product(
-                products.size() + 1L,
+            0L,
                 productCreateRequest.name(),
                 productCreateRequest.price(),
                 productCreateRequest.imageUrl()
