@@ -27,7 +27,7 @@
     <td th:text="${item.getId()}"></td>
     <td th:text="${item.getName()}"></td>
     <td th:text="${item.getPrice()}"></td>
-    <td><img th:src="${item.getImgUrl()}"/></td>
+    <td><img th:src="${item.getImgUrl()}" width="200" height="200"/></td>
     <td>
       <div class="action-buttons">
       <form th:action="@{/product/update/{id}(id = ${item.getId()})}" method="get">
