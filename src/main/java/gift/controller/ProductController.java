@@ -53,8 +53,9 @@ public class ProductController {
 
 
     @PutMapping(path = "/{id}", consumes = "application/json")
-    public ResponseEntity<Product> putProduct(@RequestBody ProductForm form, @PathVariable Long id) {
-        Product result = repository.save(form);
+    public ResponseEntity<Product> putProduct(@RequestBody ProductForm form,
+        @PathVariable Long id) {
+        Product result = repository.edit(id, form);
         if (result != null) {
             return ResponseEntity.status(HttpStatus.OK).body(result);
         }
