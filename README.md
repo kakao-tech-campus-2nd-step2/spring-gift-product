@@ -141,8 +141,14 @@ Content-Type: application/json
 
 #### 데이터베이스 구축
 
-- [ ] 기존 메모리 저장 로직 삭제
+- [x] 기존 메모리 저장 로직 삭제
 - [ ] H2 데이터베이스 연결
+- [ ] `ProductService`의 기존 메서드들 DB 로직으로 대체
+  - [ ] `getAllProducts`
+  - [ ] `getProductById`
+  - [ ] `addProduct`
+  - [ ] `updateProduct`
+  - [ ] `deleteProduct`
 
 
 
