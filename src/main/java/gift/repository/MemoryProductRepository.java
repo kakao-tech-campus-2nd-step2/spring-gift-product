@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Repository
 public class MemoryProductRepository implements ProductRepository {
 
     private Map<Long, Product> db = new HashMap<>();
