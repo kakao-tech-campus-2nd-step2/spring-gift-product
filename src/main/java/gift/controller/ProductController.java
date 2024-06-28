@@ -68,7 +68,7 @@ public class ProductController {
     }
 
     //상품 삭제 기능
-    @GetMapping("/{id}/delete")
+    @GetMapping("/delete/{id}")
     public String deleteProduct(@PathVariable("id") Long id, Model model) {
         Product product = productService.getProductById(id);
         if(product == null) {
@@ -79,7 +79,7 @@ public class ProductController {
     }
 
     //상품 수정 폼 페이지
-    @GetMapping("/{id}/update")
+    @GetMapping("/update/{id}")
     public String updateProductForm(@PathVariable("id") Long id, Model model) {
         Product product = productService.getProductById(id);
         if(product == null) {
