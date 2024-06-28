@@ -31,8 +31,8 @@ public class ProductController {
 
     @GetMapping
     public String getProducts(Model model) {
-        model.addAttribute("products", new ArrayList<>(products.values()));
-        model.addAttribute("product", new Product()); // Add empty product object for the form
+        model.addAttribute("products", productRepository.findAll());
+        model.addAttribute("product", new Product());
         return "product-list";
     }
 
