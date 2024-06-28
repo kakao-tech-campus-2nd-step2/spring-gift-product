@@ -25,9 +25,9 @@ public class ProductDao {
         jdbcTemplate.update(sql, product.getName(), product.getPrice(), product.getImageUrl(), product.getId());
     }
 
-    public void deleteProduct(Product product) {
+    public void deleteProduct(Long id) {
         var sql = "DELETE FROM products WHERE id = ?";
-        jdbcTemplate.update(sql, product.getId());
+        jdbcTemplate.update(sql, id);
     }
 
     public List<Product> getAllProducts() {
