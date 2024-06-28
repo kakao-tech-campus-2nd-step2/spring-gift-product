@@ -39,17 +39,6 @@ public class ProductDao {
         return products;
     }
 
-    private RowMapper<Product> productRowMapper() {
-        return (rs, rowNum) -> {
-            Product product = new Product();
-            product.setId(rs.getLong("id"));
-            product.setName(rs.getString("name"));
-            product.setPrice(rs.getInt("price"));
-            product.setImageUrl(rs.getString("imageUrl"));
-            return product;
-        };
-    }
-
     public void update(Long id, Product product) {
         String sql = "UPDATE products SET name=?, price=?, imageUrl=? where id=?";
         jdbcTemplate.update(sql,
@@ -63,5 +52,16 @@ public class ProductDao {
     public void delete(Long id) {
         String sql = "DELETE from products where id=?";
         jdbcTemplate.update(sql, id);
+    }
+
+    private RowMapper<Product> productRowMapper() {
+        return (rs, rowNum) -> {
+            Product product = new Product();
+            product.setId(rs.getLong("id"));
+            product.setName(rs.getString("name"));
+            product.setPrice(rs.getInt("price"));
+            product.setImageUrl(rs.getString("imageUrl"));
+            return product;
+        };
     }
 }
