@@ -3,8 +3,6 @@ package gift.Controller;
 import org.springframework.ui.Model;
 import gift.Model.Product;
 import gift.Model.RequestProduct;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,7 +38,7 @@ public class ProductController {
         Product product = products.get(id);
         model.addAttribute("product", new RequestProduct(product.getName(), product.getPrice(), product.getImageUrl()));
         model.addAttribute("id", id);
-            return "edit-product";
+        return "edit-product";
     }
 
     @PostMapping("/products/edit/{id}")
