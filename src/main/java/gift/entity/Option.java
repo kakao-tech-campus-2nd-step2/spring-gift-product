@@ -1,10 +1,9 @@
-package gift.DTO;
+package gift.entity;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
-
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-public class SaveOptionDTO {
+public class Option {
     int id;
     String option;
 
@@ -16,8 +15,9 @@ public class SaveOptionDTO {
         return option;
     }
 
-    public SaveOptionDTO(int id, String option) {
+    public Option(int id, String option) {
         this.id = id;
         this.option = option;
     }
+
 }

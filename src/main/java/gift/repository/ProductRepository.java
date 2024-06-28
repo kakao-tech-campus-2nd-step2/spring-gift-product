@@ -1,7 +1,7 @@
 package gift.repository;
 
-import gift.DTO.SaveOptionDTO;
 import gift.DTO.SaveProductDTO;
+import gift.entity.Option;
 import gift.entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -31,9 +31,9 @@ public class ProductRepository {
         jdbcTemplate.update(sql, saveProductDTO.getId(),saveProductDTO.getName(),saveProductDTO.getPrice(),saveProductDTO.getImageUrl());
     }
 
-    public void saveOption(SaveOptionDTO saveOptionDTO) {
+    public void saveOption(Option option) {
         var sql = "insert into option(id,option) values(?,?)";
-        jdbcTemplate.update(sql, saveOptionDTO.getId(), saveOptionDTO.getOption());
+        jdbcTemplate.update(sql, option.getId(), option.getOption());
     }
 
     public void deleteProductByID(int id) {
@@ -57,7 +57,14 @@ public class ProductRepository {
         ));
         return products;
     }
-
+    public List<Option> findOptionByID(int id){
+        var sql = "select * from option where id = ?";
+        List<Option> options = jdbcTemplate.query(sql,new Object[]{id}, (rs, rowNum) -> new Option(
+                rs.getInt("id"),
+                rs.getString("option")
+        ));
+        return options;
+    }
     public boolean isExistProduct(SaveProductDTO  saveProductDTO){
         var sql = "select * from product where id=?";
         List<SaveProductDTO> product = jdbcTemplate.query(sql,new Object[]{saveProductDTO.getId()}, (rs, rowNum) -> new SaveProductDTO(
@@ -69,9 +76,9 @@ public class ProductRepository {
         return !product.isEmpty();
     }
 
-    public boolean isExistOption(SaveOptionDTO saveOptionDTO){
+    public boolean isExistOption(Option saveOptionDTO){
         var sql = "select * from option where id=? and option=?";
-        List<SaveOptionDTO> opt = jdbcTemplate.query(sql,new Object[]{saveOptionDTO.getId(),saveOptionDTO.getOption()}, (rs, rowNum) -> new SaveOptionDTO(
+        List<Option> opt = jdbcTemplate.query(sql,new Object[]{saveOptionDTO.getId(),saveOptionDTO.getOption()}, (rs, rowNum) -> new Option(
                 rs.getInt("id"),
                 rs.getString("option")
         ));

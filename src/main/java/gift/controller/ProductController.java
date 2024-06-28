@@ -1,7 +1,7 @@
 package gift.controller;
 
-import gift.DTO.SaveOptionDTO;
 import gift.DTO.SaveProductDTO;
+import gift.entity.Option;
 import gift.entity.Product;
 import gift.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,23 +55,19 @@ public class  ProductController {
     public void addProduct(@RequestParam("id") int id, @RequestParam("name") String name,
                            @RequestParam("price") int price, @RequestParam("imageUrl") String imageUrl,
                            @RequestParam("options") String options) {
-        productService.saveProduct(new SaveProductDTO(id,name,price,imageUrl));
-        productService.saveOptions(new SaveOptionDTO(id,options));
+        productService.saveProduct(new Product(id,name,price,imageUrl,options));
     }
 
     @PostMapping("/api/products/delete")
     public void deleteProduct(@RequestParam("id") int id) {
         productService.deleteProduct(id);
-        productService.deleteOptions(id);
     }
 
     @PostMapping("/api/products/modify")
     public void modifyProduct(@RequestParam("id") int id, @RequestParam("name") String name,
                               @RequestParam("price") int price, @RequestParam("imageUrl") String imageUrl,
                               @RequestParam("options") String options) {
-        productService.deleteProduct(id);
-        productService.saveProduct(new SaveProductDTO(id,name,price,imageUrl));
-        productService.saveOptions(new SaveOptionDTO(id,options));
+        productService.modifyProduct(new Product(id,name,price,imageUrl,options));
     }
 
     @GetMapping("/api/product/{id}")

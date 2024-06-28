@@ -2,8 +2,8 @@ package gift.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import gift.DTO.SaveOptionDTO;
 import gift.DTO.SaveProductDTO;
+import gift.entity.Option;
 import gift.entity.Product;
 import gift.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,25 +34,26 @@ public class ProductService {
         return jsonProduct;
     }
 
-    public void saveProduct(SaveProductDTO saveProductDTO) {
-        productRepository.saveProduct(saveProductDTO);
-    }
+    public void saveProduct(Product product) {
+        SaveProductDTO saveProductDTO = new SaveProductDTO(product.getId(), product.getName(),product.getPrice(),product.getImageUrl());
 
-    public void saveOptions(SaveOptionDTO saveOptionDTO) {
-        List<String> optionList = Arrays.stream(saveOptionDTO.getOption().split(",")).toList();
+        if(!productRepository.isExistProduct(saveProductDTO))
+            productRepository.saveProduct(saveProductDTO);
+        List<String> optionList = Arrays.stream(product.getOption().split(",")).toList();
         for(String str : optionList){
-            productRepository.saveOption(new SaveOptionDTO(saveOptionDTO.getId(),str));
+            Option option = new Option(product.getId(), str);
+            if(!productRepository.isExistOption(option))
+                productRepository.saveOption(new Option(option.getId(),str));
         }
-
     }
 
     public void deleteProduct(int id) {
-        productRepository.deleteProductByID(id);
+        if(!productRepository.findProductByID(id).isEmpty())
+            productRepository.deleteProductByID(id);
+        if(!productRepository.findOptionByID(id).isEmpty())
+            productRepository.deleteOptionsByID(id);
     }
 
-    public void deleteOptions(int id) {
-        productRepository.deleteOptionsByID(id);
-    }
 
     public String getProductByID(int id) {
         List<Product> products = productRepository.findProductByID(id);
@@ -64,5 +65,11 @@ public class ProductService {
             e.printStackTrace();
         }
         return jsonProduct;
+    }
+
+    public void modifyProduct(Product product) {
+        deleteProduct(product.getId());
+        saveProduct(product);
+        //saveOptions(new Option(product.getId(), product.getOption()));
     }
 }
