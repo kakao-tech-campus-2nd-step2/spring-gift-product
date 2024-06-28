@@ -8,6 +8,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
+
     private final ProductDao productDao;
 
     public ProductController(ProductDao productDao) {
@@ -55,7 +56,7 @@ public class ProductController {
     /**
      * 주어진 ID에 해당하는 상품을 갱신함
      *
-     * @param id 갱신할 상품의 ID
+     * @param id      갱신할 상품의 ID
      * @param product 갱신할 상품 객체
      */
     @PutMapping("/{id}")
