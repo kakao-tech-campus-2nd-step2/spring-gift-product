@@ -51,3 +51,8 @@
   * 매니저가 product를 수정할 수 있는 화면
 * error.html
   * 예외가 발생한 경우 보여줄 화면
+ 
+---
+### 사용 방법
+* http://localhost:8080/products/read?password=qwer1234 로 접속하면 관리자 페이지
+* http://localhost:8080/h2-console 에서 DB 제어 가능. username=sa, url=jdbc:h2:mem:test
