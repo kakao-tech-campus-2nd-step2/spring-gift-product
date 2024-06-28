@@ -11,13 +11,18 @@ import java.util.*;
 @RequestMapping("/api/products")
 @Controller
 public class ProductController {
+    private final ProductDao productDao;
+
+    public ProductController(ProductDao productDao) {
+        this.productDao = productDao;
+    }
     private final Map<Long, Product> products = new HashMap<>();
 
-    // 새로운 상품 등록
+    // 새로운 상품 등록(데이터 베이스 연동)
     @PostMapping
     public ResponseEntity<String> setProduct(@RequestBody Product product) {
         if (!products.containsKey(product.id())) {
-            products.put(product.id(), product);
+            productDao.insertProduct(product);
             return ResponseEntity.ok("Add");
         } else {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("already");
