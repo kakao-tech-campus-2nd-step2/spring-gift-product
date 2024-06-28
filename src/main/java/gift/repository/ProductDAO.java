@@ -92,7 +92,9 @@ public class ProductDAO {
         if (!isRecordExist(id)) {
             throw new NoSuchElementException("Record not found");
         }
-        records.remove(id);
+
+        String sql = "DELETE FROM products WHERE id = ?";
+        jdbcTemplate.update(sql, id);
     }
 
 
