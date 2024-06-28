@@ -26,8 +26,8 @@ public class ProductService {
         productDao.save(product);
     }
 
-    public void updateProduct(Product product){
-        productDao.update(product);
+    public void updateProduct(Product product,Long id){
+        productDao.update(product,id);
     }
 
     public void deleteProduct(Long id){

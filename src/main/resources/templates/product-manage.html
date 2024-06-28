@@ -70,7 +70,7 @@
   <div class="content"><h1>상품 관리 페이지</h1>
     <h2>상품 목록</h2>
 
-    <div th:each="product : ${products.values()}">
+    <div th:each="product : ${products}">
 
       <div class="product">
         <img th:src="${product.imageUrl}" alt="상품 이미지">
@@ -140,7 +140,7 @@
       imageUrl:imageUrl
     };
 
-    fetch(`/product/edit/${productId}`, {
+    fetch(`/product/update/${productId}`, {
       method: 'PATCH',
       headers:{
         'Content-Type':'application/json'

@@ -45,23 +45,23 @@ public class ProductDaoImpl implements ProductDao{
     }
     public Product findById(Long id){
         String sql = "SELECT id, name, price, imageUrl FROM products WHERE id=?";
-        jdbcTemplate.queryForObject(sql,(resultSet,rowNum)->{
-            return new Product(
+         return jdbcTemplate.queryForObject(sql,(resultSet,rowNum)->
+             new Product(
                 resultSet.getLong("id"),
                 resultSet.getString("name"),
                 resultSet.getInt("price"),
                 resultSet.getString("imageUrl")
-            );
-        },id);
-        return null;
+            )
+        ,id);
     }
-    public void update(Product product){
-        String sql ="INSERT INTO products VALUSE(?,?,?,?)";
+    public void update(Product product,Long id){
+        String sql ="UPDATE products SET id=?, name=?, price=?, imageUrl=? WHERE id=?";
         jdbcTemplate.update(sql,
             product.getId(),
             product.getName(),
             product.getPrice(),
-            product.getImageUrl());
+            product.getImageUrl(),
+            id);
     }
     public void deleteById(Long id){
         String sql = "DELETE FROM products WHERE id=?";

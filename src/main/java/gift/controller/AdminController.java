@@ -1,5 +1,6 @@
 package gift.controller;
 
+import gift.Service.ProductService;
 import gift.domain.Product;
 import gift.domain.Products;
 import org.springframework.stereotype.Controller;
@@ -11,7 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/admin")
 public class AdminController {
 
-    Products products = Products.getInstance();
+    ProductService productService;
+    public AdminController(ProductService productService){
+        this.productService= productService;
+    }
 
     //기본화면
     @GetMapping
@@ -23,7 +27,7 @@ public class AdminController {
     //상품 관리 화면
     @GetMapping("/product-management")
     public String productManage(Model model) {
-        model.addAttribute("products",products.getProducts());
+        model.addAttribute("products",productService.getAllProducts());
 
         return "product-manage";
 

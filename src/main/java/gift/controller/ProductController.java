@@ -36,6 +36,11 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
+    @GetMapping("/{id}")
+    public Product getProductById(@PathVariable("id") long id){
+        return productService.getProductById(id);
+    }
+
     //product 추가
     @PostMapping
     public ResponseEntity<String> addProduct(@RequestBody Product product) {
@@ -49,12 +54,13 @@ public class ProductController {
     }
 
     //product 수정
-    @PatchMapping("/edit/{id}")
+    @PatchMapping("/update/{id}")
     public ResponseEntity<String> editProduct(@PathVariable("id") Long id,
         @RequestBody Product product) {
         try {
-            productService.updateProduct(product);
+            productService.updateProduct(product,id);
         } catch (Exception ex) {
+            System.out.println(ex);
             return new ResponseEntity<>("올바르지 않은 요청", HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>("product edit success", HttpStatus.OK);
