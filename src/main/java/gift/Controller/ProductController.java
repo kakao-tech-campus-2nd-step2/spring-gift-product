@@ -4,13 +4,12 @@ import gift.Model.Product;
 import gift.Model.ProductDAO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/api")
 public class ProductController {
     private final ProductDAO productDAO;
@@ -58,16 +57,12 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public String viewAllProducts(Model model){
-        List<Product> products = productDAO.selectAllProduct();
-        model.addAttribute("products", products);
-        return "products";
+    public List<Product> viewAllProducts(){
+        return productDAO.selectAllProduct();
     }
 
     @GetMapping("/products/{id}")
-    public String viewProduct(@PathVariable Long id, Model model){
-        Product product = productDAO.selectProduct(id);
-        model.addAttribute("products", product);
-        return "products";
+    public Product viewProduct(@PathVariable Long id, Model model){
+        return productDAO.selectProduct(id);
     }
 }

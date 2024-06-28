@@ -16,7 +16,7 @@ public class ProductDAO {
     public void createProductTable(){
         var sql = """
                 create table product(
-                    id bigint,
+                    id bigint PRIMARY KEY,
                     name varchar(255),
                     price int,
                     imageurl varchar(255)
