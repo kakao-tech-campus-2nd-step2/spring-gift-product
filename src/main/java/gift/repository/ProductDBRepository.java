@@ -55,15 +55,19 @@ public class ProductDBRepository implements ProductRepository{
         return products;
     }
 
+    //interface return type 으로 인해 Long type return
     @Override
-    public int update(Long id, int price){
+    public Long update(Long id, int price){
         String sql = "UPDATE product SET price = ? WHERE id = ?";
-        return jdbcTemplate.update(sql, price, id);
+        int updatedRow = jdbcTemplate.update(sql, price, id);
+        return (long) updatedRow;
     }
 
+    //interface return type 으로 인해 Long type return
     @Override
-    public int delete(Long id) {
+    public Long delete(Long id) {
         String sql = "DELETE FROM product WHERE id = ?";
-        return jdbcTemplate.update(sql, id);
+        int deletedRow = jdbcTemplate.update(sql, id);
+        return (long) deletedRow;
     }
 }
