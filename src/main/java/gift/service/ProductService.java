@@ -46,7 +46,7 @@ public class ProductService {
         if (!productDB.validateId(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "아이디가 존재하지 않습니다.");
         }
-        productDB.updateProduct(id, productMapper.updateProduct(productDB.getProduct(id), update));
+        productDB.updateProduct(id, productMapper.updateProduct(id, update));
     }
 
     public void deleteProduct(Long id) {

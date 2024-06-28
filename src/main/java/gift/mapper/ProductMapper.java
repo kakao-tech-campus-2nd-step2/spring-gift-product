@@ -11,10 +11,7 @@ public class ProductMapper {
     return new ProductDTO(index, create.getName(), create.getPrice(), create.getImageUrl());
   }
 
-  public ProductDTO updateProduct(ProductDTO product, Product.UpdateProduct update) {
-    product.setName(update.getName());
-    product.setPrice(update.getPrice());
-    product.setImageUrl(update.getImageUrl());
-    return product;
+  public ProductDTO updateProduct(Long id, Product.UpdateProduct update) {
+    return new ProductDTO(id,update.getName(),update.getPrice(), update.getImageUrl());
   }
 }
