@@ -55,3 +55,12 @@ public class Product {
 * product 삭제
   * /api/products/:id
   * 없으면 error 발생
+
+  # step 2
+### /api/products/admin
+상품 관리
+### /api/products/admin/add
+상품 추가
+### /api/products/admin/:id
+상품 편집 및 삭제 가능
+  
