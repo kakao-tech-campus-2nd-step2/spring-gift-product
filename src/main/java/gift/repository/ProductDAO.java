@@ -53,7 +53,7 @@ public class ProductDAO {
             throw new DuplicateKeyException("A record with the given ID already exists.");
         }
 
-        ProductRecord record = product.withId(getNewId());
+        ProductRecord record = product.withId(id);
 
         String sql = "insert into products values (?, ?, ?, ?)";
         jdbcTemplate.update(sql, record.id(), record.name(), record.price(), record.imageUrl());
