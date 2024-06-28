@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -38,12 +39,11 @@ public class ProductService {
     }
 
     public ProductResponse createProduct(ProductRequest request) {
-        Product product = new Product(request);
-        return new ProductResponse(productRepository.save(product));
-    }
-
-    public void createProduct(Product product) {
-        productRepository.save(product);
+        Optional<Product> product = productRepository.findById(request.id());
+        if (product.isPresent()) {
+            throw new IllegalArgumentException("해당 상품은 이미 존재하고 있습니다");
+        }
+        return new ProductResponse(productRepository.save(new Product(request)));
     }
 
     public Long deleteProductById(Long id) {
