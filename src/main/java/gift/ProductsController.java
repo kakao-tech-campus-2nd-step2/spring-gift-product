@@ -47,15 +47,16 @@ public class ProductsController {
 
     @PutMapping("/{id}")
     public Product updateProduct(@PathVariable Long id, @RequestBody Product product) {
-        if (productRepository.existsById(id)) {
+        if (!productRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
+        product.setId(id);
         return productRepository.update(product);
     }
 
     @DeleteMapping("/{id}")
     public void deleteProduct(@PathVariable Long id) {
-        if (productRepository.existsById(id)) {
+        if (!productRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         productRepository.deleteById(id);

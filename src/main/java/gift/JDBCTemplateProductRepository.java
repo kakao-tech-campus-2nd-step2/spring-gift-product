@@ -50,7 +50,9 @@ public class JDBCTemplateProductRepository implements ProductRepository{
 
     @Override
     public Product update(Product product) {
-        return null;
+        String sql = "UPDATE product SET name = ?, price = ?, imageUrl = ? WHERE id = ?";
+        jdbcTemplate.update(sql, product.getName(), product.getPrice(), product.getImageUrl(), product.getId());
+        return product;
     }
 
     @Override
@@ -60,7 +62,10 @@ public class JDBCTemplateProductRepository implements ProductRepository{
 
     @Override
     public boolean existsById(Long id) {
-        return false;
+        String sql = "SELECT COUNT(*) FROM product WHERE id = ?";
+        Integer count = jdbcTemplate.queryForObject(sql, new Object[]{id}, Integer.class);
+        System.out.println(count);
+        return count != null && count > 0;
     }
 
     private RowMapper<Product> productRowMapper() {
