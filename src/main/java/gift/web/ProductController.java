@@ -20,8 +20,7 @@ public class ProductController {
 
     @GetMapping
     public ResponseEntity<List<Product>> getProducts() {
-        // 여기에는 products 전체 상품을 리턴
-        return new ResponseEntity<>(List.copyOf(products.values()), HttpStatus.OK);
+        return new ResponseEntity<>(productService.getProducts(), HttpStatus.OK);
     }
 
     // products/{상품번호}의 GetMapping
