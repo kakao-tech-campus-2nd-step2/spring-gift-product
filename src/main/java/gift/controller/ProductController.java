@@ -28,4 +28,10 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
+    // 특정 제품 조회
+    @GetMapping("/{id}")
+    public Product getProductById(@PathVariable Long id) {
+        return productService.getProductById(id);
+    }
+
 }
