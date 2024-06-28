@@ -1,16 +1,16 @@
 # spring-gift-product
 
-<hr>
 
 ### 상품 관리 프로젝트
 
+<hr>
+
 <br>
 
-<hr>
 
 ### 구현 기능 목록
 
-<br>
+<hr>
 
 ### STEP1 (CRUD 작성)
 1. 상품 조회
