@@ -1,5 +1,6 @@
 package gift.controller;
 
+import gift.common.exception.ProductNotFoundException;
 import gift.controller.req.ProductRequest;
 import gift.model.Product;
 import gift.model.repository.ProductRepository;
@@ -30,7 +31,8 @@ public class AdminController {
 
     @GetMapping("/products/{id}")
     public String showEditProductForm(@PathVariable("id") Long id, Model model) {
-        Product product = productRepository.find(id).orElseThrow(IllegalArgumentException::new);
+        Product product = productRepository.find(id)
+                .orElseThrow(() -> ProductNotFoundException.of(id));
 
         model.addAttribute("product", product);
         return "admin/edit";
@@ -46,7 +48,8 @@ public class AdminController {
     @PatchMapping("/products/{id}")
     public String productModify(@PathVariable("id") Long id, @RequestBody ProductRequest modifyProduct){
 
-        Product findedProduct = productRepository.find(id).orElseThrow(IllegalArgumentException::new);
+        Product findedProduct = productRepository.find(id)
+                .orElseThrow(() -> ProductNotFoundException.of(id));
 
         productRepository.save(modifyProduct.toModel(id));
         return "admin/list";
@@ -54,7 +57,8 @@ public class AdminController {
 
     @DeleteMapping("/products/{id}")
     public String productDelete(@PathVariable("id") Long id){
-        Product findedProduct = productRepository.find(id).orElseThrow(IllegalArgumentException::new);
+        Product findedProduct = productRepository.find(id)
+                .orElseThrow(() -> ProductNotFoundException.of(id));
 
         findedProduct.delete();
         productRepository.save(findedProduct);

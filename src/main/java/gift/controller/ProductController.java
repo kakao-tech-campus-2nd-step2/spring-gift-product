@@ -1,6 +1,8 @@
 package gift.controller;
 
 
+import gift.common.exception.ProductException;
+import gift.common.exception.ProductNotFoundException;
 import gift.controller.req.ProductRequest;
 import gift.controller.res.ProductResponse;
 import gift.model.Product;
@@ -38,7 +40,8 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ProductResponse> productDetails(@PathVariable("id") Long id) {
-        Product foundProduct = productRepository.find(id).orElseThrow(IllegalArgumentException::new);
+        Product foundProduct = productRepository.find(id)
+                .orElseThrow(() -> ProductNotFoundException.of(id));
 
         return ResponseEntity.ok()
                 .body(ProductResponse.fromModel(foundProduct));
@@ -55,7 +58,8 @@ public class ProductController {
     @PatchMapping("/{id}")
     public ResponseEntity<String> productModify(@PathVariable("id") Long id,
                                                 @RequestBody ProductRequest modifyProduct) {
-        Product findedProduct = productRepository.find(id).orElseThrow(IllegalArgumentException::new);
+        Product findedProduct = productRepository.find(id)
+                .orElseThrow(() -> ProductNotFoundException.of(id));
 
         productRepository.save(modifyProduct.toModel(id));
 
@@ -65,7 +69,8 @@ public class ProductController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> productDelete(@PathVariable("id") Long id) {
-        Product findedProduct = productRepository.find(id).orElseThrow(IllegalArgumentException::new);
+        Product findedProduct = productRepository.find(id)
+                .orElseThrow(() -> ProductNotFoundException.of(id));
 
         findedProduct.delete();
         productRepository.save(findedProduct);
