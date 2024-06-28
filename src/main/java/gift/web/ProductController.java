@@ -6,27 +6,25 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController //컨트롤러를 JSON을 반환하는 컨트롤러로 만들어줌
 @RequestMapping("/api/products")
 public class ProductController {
 
     private final Map<Long, Product> products = new HashMap<>();
 
     @GetMapping
-    public String getProducts(Model model) {
-        model.addAttribute("data", products.values());
-        return "products";
+    public ResponseEntity<List<Product>> getProducts() {
+        // 여기에는 products 전체 상품을 리턴
+        return new ResponseEntity<>(List.copyOf(products.values()), HttpStatus.OK);
     }
 
     // products/{상품번호}의 GetMapping
     @GetMapping("/{id}") //Query Param과 Path Variable 사용의 차이점 알아보기
-    public String getProduct(@PathVariable Long id, Model model) {
-        if(products.containsKey(id)) model.addAttribute("product", products.get(id));
-        return "products";
+    public ResponseEntity<Product> getProduct(@PathVariable Long id) {
+        if(products.containsKey(id)) return new ResponseEntity<>(products.get(id), HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping
