@@ -22,9 +22,9 @@ public class ProductService {
     public Long addProduct(ProductRequestDto productDto){
         Product product = Product.toEntity(productDto);
 
-        productRepository.save(product);
+        Product savedProduct = productRepository.save(product);
 
-        return product.getId();
+        return savedProduct.getId();
     }
 
     public ProductResponseDto findProductById(Long id){
@@ -39,19 +39,23 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
-    public void updateProduct(Long id, int price){
-        int updatedRow = productRepository.update(id, price);
+    public Long updateProduct(Long id, int price){
+        Long updatedRow = productRepository.update(id, price);
 
         if(updatedRow == 0){
             throw new NoSuchElementException("해당 상품은 존재하지 않습니다.");
         }
+
+        return updatedRow;
     }
 
-    public void deleteProduct(Long id){
-        int deletedRow = productRepository.delete(id);
+    public Long deleteProduct(Long id){
+        Long deletedRow = productRepository.delete(id);
 
         if(deletedRow == 0){
             throw new NoSuchElementException("해당 상품은 존재하지 않습니다.");
         }
+
+        return deletedRow;
     }
 }
