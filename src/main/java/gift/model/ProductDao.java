@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
-@Component
+@Repository
 public class ProductDao {
 
     private final JdbcTemplate jdbcTemplate;
@@ -69,6 +69,7 @@ public class ProductDao {
     }
 
     public void delete(Long id) {
-
+        var sql = "delete from product where id = ?";
+        jdbcTemplate.update(sql, id);
     }
 }
