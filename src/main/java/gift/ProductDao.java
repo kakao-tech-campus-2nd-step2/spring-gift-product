@@ -10,4 +10,18 @@ public class ProductDao {
     public ProductDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
+    public void createProductTable() {
+        var sql = """
+            create table customer (
+              id bigint,
+              name varchar(255),
+              price money,
+              imageUrl varchar(255),
+              amount int,
+              primary key (id)
+            )
+            """;
+        jdbcTemplate.execute(sql);
+    }
+
 }
