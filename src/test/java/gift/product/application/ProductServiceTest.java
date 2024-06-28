@@ -1,13 +1,16 @@
 package gift.product.application;
 
 import gift.product.domain.Product;
-import gift.product.domain.ProductRepository;
+import gift.product.domain.ProductMemoryRepository;
 import gift.product.application.command.ProductCreateCommand;
 import gift.product.application.command.ProductUpdateCommand;
+import gift.product.domain.ProductRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -24,9 +27,12 @@ public class ProductServiceTest {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
     @AfterEach
     public void endUp() {
-        productRepository.findAll().clear();
+        jdbcTemplate.execute("TRUNCATE TABLE product");
     }
 
     @Test
