@@ -24,14 +24,14 @@ public class ProductService {
         productRepository.save(product);
     }
 
-//    public void deleteProduct(Long id) {
-//        products.remove(id);
-//    }
-//
-//    public void modifyProduct(Long id, Product product) {
-//        product.setId(id);
-//        products.put(id, product);
-//    }
+    public void deleteProduct(Long id) {
+        productRepository.deleteById(id);
+    }
+
+    public void modifyProduct(Long id, Product product) {
+        product.setId(id);
+        productRepository.update(product);
+    }
 
 
 }
