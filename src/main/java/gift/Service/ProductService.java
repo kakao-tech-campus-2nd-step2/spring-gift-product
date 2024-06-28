@@ -2,12 +2,16 @@ package gift.Service;
 
 import gift.domain.Product;
 import gift.domain.ProductDaoImpl;
+import gift.domain.ProductValidator;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ProductService {
     private final ProductDaoImpl productDao;
+
+    private final ProductValidator productValidator = new ProductValidator();
 
     public ProductService(ProductDaoImpl productDao){
         this.productDao = productDao;
