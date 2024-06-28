@@ -37,7 +37,7 @@ public class ProductDao {
     
     public Product getProductById(Long id) {
         var sql = "SELECT * FROM products WHERE id = ?";
-        return jdbcTemplate.queryForObject(sql, productRowMapper);
+        return jdbcTemplate.queryForObject(sql, productRowMapper, id);
     }
 
     private final RowMapper<Product> productRowMapper = (rs, rowNum) -> new Product(

@@ -22,6 +22,12 @@ public class Product {
         this.imageUrl = productResponseDto.imageUrl();
     }
 
+    public Product(String name, int price, String imageUrl) {
+        this.name = name;
+        this.price = price;
+        this.imageUrl = imageUrl;
+    }
+
     public Product(Long id, String name, int price, String imageUrl) {
         this.id = id;
         this.name = name;
