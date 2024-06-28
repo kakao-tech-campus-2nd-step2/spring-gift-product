@@ -3,12 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <title>Manage Products</title>
-  <link rel="stylesheet" th:href="@{/admin/list.css}">
 </head>
 <body>
 <div class="header-container">
   <h1>Manage Products</h1>
-  <button class="add-button" onclick="addProduct()">추가</button>
+  <a href="/admin/list/add"> 상품 추가</a>
 </div>
   <table class="product-table">
     <thead>
@@ -23,48 +22,15 @@
     <tbody>
     <tr th:each="product: ${productList}">
       <td><a th:href="@{/admin/product/{id}(id=${product.id})}" th:text="${product.id}">id</a></td>
-      <td><span th:text="${product.name}">name</span></td>
-      <td><span th:text="${product.price}">price</span></td>
-      <td><img th:text="${product.imageUrl}" alt="no image">imageUrl</img></td>
-      <td rowspan="2">
-        <button type="button" th:onclick="'updateProduct(' + ${product.id} + ')'">수정</button>
-        <form th:action="@{/admin/product}" th:object="${product}" method="get">
-          <input type="hidden" name="_method" value="delete"/>
-          <div>
-            <button type="submit">삭제</button>
-          </div>
-        </form>
+      <td><span th:text="${product.name}"></span></td>
+      <td><span th:text="${product.price}"></span></td>
+      <td><img th:text="${product.imageUrl}" alt="no image"></img></td>
+      <td>
+        <a th:href="@{/admin/list/edit/{id}(id = ${product.id})}">수정</a>
+        <a th:href="@{/admin/list/delete/{id}(id = ${product.id})}">삭제</a>
     </td>
     </tr>
     </tbody>
   </table>
-
-<script th.inline="javascript">
-function addProduct() {
-  window.location.href = '/admin/product/add';
-}
-function updateProduct(id){
-
-}
-function deleteProduct(id) {
-    fetch('/admin/product/' + id, {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        console.log('Product deleted successfully');
-        // 페이지 새로고침이나 목록 업데이트 등 추가 작업 수행
-    })
-    .catch(error => {
-        console.error('There has been a problem with your fetch operation:', error);
-    });
-}
-
-</script>
 </body>
 </html>
