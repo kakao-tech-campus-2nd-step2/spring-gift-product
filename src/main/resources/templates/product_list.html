@@ -5,13 +5,15 @@
     <title>상품 리스트</title>
 </head>
 <body>
+<a th:href="@{/product/new}">New</a>
 <table border="1">
     <thead>
     <tr>
         <th>상품 ID</th>
         <th>상품 이름</th>
         <th>가격</th>
-        <th>imageURL</th>
+        <th>image URL</th>
+        <th>Actions</th>
     </tr>
     </thead>
     <tbody>
@@ -20,18 +22,30 @@
         <td class="productName" th:text="${product.name}">테스트 상품 이름</td>
         <td class="productPrice" th:text="${product.price}">12345</td>
         <td class="productImageURL" th:text="${product.imageUrl}">imageURL example</td>
+        <td>
+            <button type="button" th:href="@{/products/edit/{id}(id=product.id)}">Edit</button>
+            <!-- 삭제 버튼 추가 예정 -->
+        </td>
     </tr>
     <tr>
         <td class="productId">1</td>
         <td class="productName">테스트 상품 이름</td>
         <td class="productPrice">12345</td>
         <td class="productImageURL">imageURL example</td>
+        <td>
+            <button type="button" th:href="@{/products/edit/{id}(id=product.id)}">Edit</button>
+            <!-- 삭제 버튼 추가 예정 -->
+        </td>
     </tr>
     <tr>
         <td class="productId">2</td>
         <td class="productName">테스트 상품 이름</td>
         <td class="productPrice">12345</td>
         <td class="productImageURL">imageURL example</td>
+        <td>
+            <button type="button" th:href="@{/products/edit/{id}(id=product.id)}">Edit</button>
+            <!-- 삭제 버튼 추가 예정 -->
+        </td>
     </tr>
     </tbody>
 </table>
