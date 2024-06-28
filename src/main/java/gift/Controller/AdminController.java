@@ -35,7 +35,7 @@ public class AdminController {
 
     @PostMapping("/add")
     public String addProduct(@ModelAttribute Product product, Model model) {
-        if (productRepository.checkProductsById(product.id()) != null) {
+        if (isProductIdExists(product.id())) {
             model.addAttribute("error", "존재하는 ID 입니다.");
             model.addAttribute("product", product);
             return "add_product_form";
@@ -55,7 +55,7 @@ public class AdminController {
     public String editProduct(@PathVariable("id") long id, @ModelAttribute Product updatedProduct,
         Model model) {
         if (id != updatedProduct.id()
-            && productRepository.checkProductsById(updatedProduct.id()) != null) {
+            && isProductIdExists(updatedProduct.id())) {
             model.addAttribute("error", "존재하는 ID 입니다.");
             model.addAttribute("product", productRepository.checkProductsById(id));
             return "edit_product_form";
@@ -68,5 +68,9 @@ public class AdminController {
     public String deleteProduct(@PathVariable("id") long id) {
         productRepository.deleteProduct(id);
         return "redirect:/admin/products";
+    }
+
+    private boolean isProductIdExists(long id) {
+        return productRepository.checkProductsById(id) != null;
     }
 }
