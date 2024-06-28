@@ -13,8 +13,6 @@ public class ProductDao {
 
     public ProductDao(){
         this.products = new HashMap<>();
-        Product test = new Product(1L, "test", 1000, "url");
-        products.put(test.getId(), test);
     }
 
     public List<Product> selectAllProduct(){
