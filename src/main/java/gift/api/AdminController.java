@@ -1,6 +1,5 @@
 package gift.api;
 
-import gift.dto.ProductRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,13 +31,14 @@ public class AdminController {
 
     // 상품 삭제
     @DeleteMapping("/{id}")
-    public Long deleteProduct(@PathVariable("id") Long id) {
-        return productController.deleteProduct(id);
+    public String deleteProduct(@PathVariable("id") Long id) {
+        productController.deleteProduct(id);
+        return "redirect:/admin";
     }
 
-    // 상품 수정
-    @PatchMapping("/{id}")
-    public Long updateProduct(@PathVariable("id") Long id, @RequestBody ProductRequest request) {
-        return productController.updateProduct(id, request);
+    // 상품 수정 폼 표시
+    @GetMapping("/edit/{id}")
+    public String updateProduct(@PathVariable("id") Long id) {
+        return "product-edit-form";
     }
 }
