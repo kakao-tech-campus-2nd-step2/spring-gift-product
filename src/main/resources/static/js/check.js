@@ -29,7 +29,7 @@ document.querySelectorAll('.delete-btn').forEach(button => {
 
 // Function to delete a product
 function deleteProduct(id) {
-    fetch(`/pinkbeen/products/${id}`, {
+    fetch(`/yeti/products/${id}`, {
         method: 'DELETE'
     })
     .then(response => {
@@ -74,7 +74,7 @@ document.getElementById('editProductForm').addEventListener('submit', function(e
         imageUrl: form.imageUrl.value
     };
 
-    fetch(`/pinkbeen/products/${originalId}`, {
+    fetch(`/yeti/products/${originalId}`, {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -92,7 +92,7 @@ document.getElementById('editProductForm').addEventListener('submit', function(e
     .then(result => {
         // 모달 닫기
         $('#editProduct').modal('hide');
-        window.location.href = "/pinkbeen/products";
+        window.location.href = "/yeti/products";
     })
 
     .catch(error => {

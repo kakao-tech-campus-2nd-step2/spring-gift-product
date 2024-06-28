@@ -35,18 +35,18 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="product : ${products}" th:data-id="${product.value.id}">
+        <tr th:each="product : ${products}" th:data-id="${product.id}">
             <td><input type="checkbox"></td>
-            <td th:text="${product.value.id}"></td>
-            <td th:text="${product.value.name}"></td>
-            <td th:text="${product.value.price}"></td>
-            <td th:text="${product.value.imageUrl}"></td>
+            <td th:text="${product.id}"></td>
+            <td th:text="${product.name}"></td>
+            <td th:text="${product.price}"></td>
+            <td th:text="${product.imageUrl}"></td>
             <td>
                 <button class="edit-btn" type="button" data-toggle="modal" data-target="#editProduct"
-                        th:data-id="${product.value.id}" th:data-name="${product.value.name}" th:data-price="${product.value.price}" th:data-imageurl="${product.value.imageUrl}">
+                        th:data-id="${product.id}" th:data-name="${product.name}" th:data-price="${product.price}" th:data-imageurl="${product.imageUrl}">
                     <i class="fas fa-pencil-alt"></i>
                 </button>
-                <button type="button" class="delete-btn" th:data-id="${product.value.id}"><i class="fas fa-trash"></i></button>
+                <button type="button" class="delete-btn" th:data-id="${product.id}"><i class="fas fa-trash"></i></button>
             </td>
         </tr>
         </tbody>
