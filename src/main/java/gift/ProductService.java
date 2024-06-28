@@ -4,10 +4,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ProductService {
+    private JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
     public List<Product> getAllProducts() {
 //        select 로직으로 변경
 //        // product가 존재하지 않으면 null 반환
@@ -15,6 +24,7 @@ public class ProductService {
 //            return null;
 //        }
 //        return new ArrayList<>(products.values());
+        return null;
     }
 
     public Product getProductById(long id) {
@@ -23,6 +33,7 @@ public class ProductService {
 //            return products.get(id);
 //        }
 //        throw new IllegalArgumentException("[ERROR] ID가 " + id + "인 상품을 찾을 수 없습니다.");
+        return null;
     }
 
     public void addProduct(Product product) {
