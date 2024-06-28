@@ -14,7 +14,7 @@ public class ProductDao {
         var sql = """
             create table customer (
               id bigint,
-              name varchar(255),
+              productName varchar(255),
               price money,
               imageUrl varchar(255),
               amount int,
@@ -23,5 +23,8 @@ public class ProductDao {
             """;
         jdbcTemplate.execute(sql);
     }
-
+    public void insertProduct(Product product) {
+        var sql = "insert into customer (id, productName, price, imageUrl, amount) values (?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql, product.id(), product.name(), product.price(),product.imageUrl(), product.amount());
+    }
 }
