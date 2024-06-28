@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/baseLayout}">
+
+  <th:block layout:fragment="content">
+    <form th:object="${productDto}" method="post">
+      <label>Name
+        <input type="text" th:value="*{name}" name="name" required="required">
+      </label>
+      <label>Price
+        <input type="text" th:value="*{price}" name="price" required="required">
+      </label>
+      <label>Image Url
+        <input type="text" th:value="*{imageUrl}" name="imageUrl">
+      </label>
+
+      <button type="submit">Add</button>
+    </form>
+  </th:block>
+</html>

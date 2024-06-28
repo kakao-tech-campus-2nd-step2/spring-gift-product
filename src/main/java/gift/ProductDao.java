@@ -1,5 +1,6 @@
 package gift;
 
+import java.sql.Types;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.simple.JdbcClient;
@@ -17,9 +18,11 @@ public class ProductDao {
                     .list();
     }
 
-    public void insert(Product product) {
-        jdbcClient.sql("insert into product (name, price, imageUrl) values (?,?,?)")
-            .param(List.of(product.name(), product.price(), product.imageUrl()))
+    public void insert(ProductDto productDto) {
+        jdbcClient.sql("insert into product (name, price, imageUrl) values (:name, :price, :imageUrl)")
+            .param("name", productDto.getName(), Types.VARCHAR)
+            .param("price", productDto.getPrice(), Types.INTEGER)
+            .param("imageUrl", productDto.getImageUrl(), Types.VARCHAR)
             .update();
     }
 

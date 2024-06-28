@@ -4,7 +4,9 @@
       th:fragment="header">
 <th:block>
   <h1>Manage Products</h1>
-  <button>Add New Product</button>
+  <form th:action="@{/api/products/add}">
+    <button>Add New Product</button>
+  </form>
   <button>Delete</button>
 </th:block>
 </html>
