@@ -28,12 +28,6 @@ public class ProductService {
     }
 
     public void addProduct(ProductDto productDto) {
-        if (productJdbcRepository.isExistProductId(productDto.getId())) {
-            throw new IllegalArgumentException("Already Exist Product ID");
-        }
-        if (productDto.getId() == null || !isValidLong(productDto.getId())){
-            throw new IllegalArgumentException("Invalid Product ID");
-        }
         productJdbcRepository.addProduct(productDto);
     }
 
