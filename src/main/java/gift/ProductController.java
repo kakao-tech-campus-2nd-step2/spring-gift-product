@@ -68,3 +68,15 @@ public class ProductController {
     }
 
 }
+    @GetMapping("/view/{id}")
+    public String getProductDetails(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes) {
+        try {
+            Product product = productRepository.findById(id);
+            model.addAttribute("product", product);
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Product not found: " + e.getMessage());
+            return "redirect:/products";
+        }
+        return "product-detail";
+    }
+
