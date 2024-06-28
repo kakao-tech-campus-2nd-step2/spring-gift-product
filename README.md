@@ -20,3 +20,13 @@
 - products.html: 존재하는 모든 상품의 목록을 보여주는 화면
 - addForm.html: 추가할 상품의 정보를 입력하는 화면
 - editForm.html: 수정할 상품의 변경 정보를 입력하는 화면  
+
+## 3단계
+### 상품 정보의 저장 공간을 기존 자바 컬렉션에서 데이터베이스로 변경
+- ProductDao: JdbcTemplate를 이용한 Dao 구축
+  - 데이터 삽입
+  - 데이터 변경
+  - 데이터 삭제
+  - 데이터 조회(단건 조회, 전체 조회)
+- schema.sql/data.sql: 애플리케이션 실행 시 자동으로 테이블/상품 데이터 생성
+- Controller: step1/step2 Controller 모두 상품 데이터 저장 공간을 HashMap<>에서 H2 Database로 이전
