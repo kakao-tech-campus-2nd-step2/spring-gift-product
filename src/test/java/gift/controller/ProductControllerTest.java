@@ -8,21 +8,32 @@ import gift.repository.ProductRepositoryImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 class ProductControllerTest {
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     private ProductController productController;
     private ProductService productService;
 
     @BeforeEach
     void setUp() {
-        ProductRepository productRepository = new ProductRepositoryImpl();
+        ProductRepository productRepository = new ProductRepositoryImpl(jdbcTemplate);
         productService = new ProductServiceImpl(productRepository);
         productController = new ProductController(productService);
     }
@@ -42,7 +53,6 @@ class ProductControllerTest {
         assertEquals(2, products.size());
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
-
 
     @Test
     @DisplayName("ID로 특정 제품 조회")
