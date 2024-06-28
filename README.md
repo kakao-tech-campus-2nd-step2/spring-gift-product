@@ -36,3 +36,17 @@
   - 데이터 입력 받은 후 Controller에 json 형식으로 제공
 - 상품 수정 html
   - 데이터 입력 받은 후 Controller에 json 형시긍로 제공
+
+ # 3단계 기능 요구사항
+ ---
+ ## ProductRepository
+ - JdbcTemplate
+ - createTable()
+ - findAll()
+ - findById()
+ - save()
+ - update()
+ - deleteById()
+## DatabaseInitializer
+ - productRepository
+ - run(String... args)
