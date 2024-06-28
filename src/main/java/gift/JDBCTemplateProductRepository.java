@@ -3,6 +3,7 @@ package gift;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -27,7 +28,11 @@ public class JDBCTemplateProductRepository implements ProductRepository{
 
     @Override
     public Product insert(Product product) {
-        return null;
+        Long id = sequence.getAndIncrement();
+        product.setId(id);
+        var sql = "insert into product (id, name, price, imageUrl) values (?, ?, ?, ?)";
+        jdbcTemplate.update(sql, product.getId(), product.getName(), product.getPrice(), product.getImageUrl());
+        return product;
     }
 
     @Override
