@@ -16,7 +16,7 @@ import java.util.List;
 @Controller
 public class ProductController {
     @Autowired
-//    @Qualifier("MEMORY DATABASE") memoryDB(Map<Long, Product>>) 원하면 주석 풀고 아래 H2를 주석화 시킬 것
+    //@Qualifier("MEMORY DATABASE") //memoryDB(Map<Long, Product>>) 원하면 주석 풀고 아래 H2를 주석화 시킬 것
     @Qualifier("H2 DATABASE")
     ProductDB productDB;
 
@@ -66,8 +66,12 @@ public class ProductController {
 
     @PostMapping("/edit")
     public String getEditForm(Product product) {
-        productDB.editProduct(product);
-        return "redirect:/";
+        try {
+            productDB.editProduct(product);
+            return "redirect:/";
+        } catch (Exception e) {
+            return "version-SSR/edit-error";
+        }
     }
 
 }

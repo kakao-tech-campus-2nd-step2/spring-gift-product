@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ProductDB {
     //추가
-    void addProduct(Product product);
+    void addProduct(Product product) throws Exception;
 
     //읽기
     Product getProduct(Long id);
@@ -19,5 +19,5 @@ public interface ProductDB {
     void removeProducts(List<Long> productIds);
 
     //수정
-    void editProduct(Product product);
+    void editProduct(Product product) throws Exception;
 }

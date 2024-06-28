@@ -1,5 +1,6 @@
 package gift.controller;
 
+import gift.db.ProductDB;
 import gift.dto.Product;
 import gift.db.ProductMemoryDB;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +18,12 @@ public class ProductRestController {
     //상품 추가
     @PostMapping("api/products")
     public String addProduct(@RequestBody Product product) {
-        if (productDB.hasProductId(product.getId())) {
+        try {
+            productDB.addProduct(product);
+            return "상품 추가 성공!";
+        }catch (Exception e) {
             return "추가 실패, 해당 id를 가진 상품이 이미 존재합니다.";
         }
-        productDB.addProduct(product);
-        return "상품 추가 성공!";
     }
 
     //Read
@@ -35,11 +37,12 @@ public class ProductRestController {
     //해당 id를 가진 상품 정보를 수정
     @PutMapping("api/products/{id}")
     public String updateProduct(@PathVariable("id") Long id, @RequestBody Product product) {
-        if (productDB.hasProductId(id)) {
-            productDB.addProduct(product);
+        try {
+            productDB.editProduct(product);
             return "상품 수정 성공!";
+        }catch (Exception e) {
+            return "수정 실패, 해당 id를 가진 상품이 존재하지 않습니다";
         }
-        return "수정 실패, 해당 id를 가진 상품이 존재하지 않습니다";
     }
 
     //Delete
