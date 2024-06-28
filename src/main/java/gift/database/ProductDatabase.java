@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 
@@ -16,7 +18,13 @@ public class ProductDatabase {
     // 좀 더 알아봐야겠다!
     private final Map<Long, Product> products = new ConcurrentHashMap<>();
 
+    // 자동으로 제품 ID를 등록하기 위해
+    private final AtomicLong idGenerator = new AtomicLong(0);
+
     public void save(Product product){
+        if (product.getId() == null) {
+            product.setId(idGenerator.incrementAndGet());
+        }
         products.put(product.getId(), product);
     }
 
@@ -25,7 +33,7 @@ public class ProductDatabase {
     }
 
     public Product getByName(String name){
-        return findByName(name).orElseThrow(IllegalAccessError::new);
+        return findByName(name).orElseThrow(NoSuchElementException::new);
     }
 
     public Optional<Product> findByName(String name){

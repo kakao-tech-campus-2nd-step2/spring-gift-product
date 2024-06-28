@@ -3,6 +3,8 @@ package gift.controller;
 import gift.database.ProductDatabase;
 import gift.model.Product;
 import java.util.List;
+import java.util.NoSuchElementException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,16 +38,18 @@ public class ProductController {
         if (product == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(productDatabase.findById(id));
+        return ResponseEntity.ok(product);
     }
 
     @GetMapping("/nameSearch")
     public ResponseEntity<Product> getProductByName(@RequestParam("name") String name) {
-        Product product = productDatabase.getByName(name);
-        if (product == null) {
+        try{
+            Product product = productDatabase.getByName(name);
+            return ResponseEntity.ok(product);
+
+        } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(productDatabase.getByName(name));
     }
 
     @PostMapping
@@ -77,4 +81,5 @@ public class ProductController {
         productDatabase.deleteById(id);
         return ResponseEntity.noContent().build();
     }
+
 }
