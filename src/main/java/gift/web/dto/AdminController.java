@@ -20,7 +20,7 @@ public class AdminController {
 
     @GetMapping
     public String getProducts(Model model) {
-        model.getAttribute("products", productService.getProducts());
+        model.addAttribute("products", productService.getProducts());
         return "products";
     }
 
