@@ -2,6 +2,7 @@ package gift.controller;
 
 import gift.database.ProductDatabase;
 import gift.model.Product;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,18 +39,19 @@ public class ThymeleafProductController {
 
     @GetMapping("/edit/{id}")
     public String editProductForm(@PathVariable("id") Long id, Model model) {
-        Product product = productDatabase.findById(id);
-        if (product == null) {
+        Optional<Product> productOpt = productDatabase.findById(id);
+        if (productOpt.isEmpty()) {
             return "redirect:/products";
         }
-        model.addAttribute("product", product);
+        model.addAttribute("product", productOpt.get());
         return "edit-product";
     }
 
     @PutMapping("/{id}")
     public String updateProduct(@PathVariable("id") Long id, @ModelAttribute Product product) {
-        Product existingProduct = productDatabase.findById(id);
-        if (existingProduct != null) {
+        Optional<Product> existingProductOpt = productDatabase.findById(id);
+        if (existingProductOpt.isPresent()) {
+            Product existingProduct = existingProductOpt.get();
             existingProduct.setName(product.getName());
             existingProduct.setPrice(product.getPrice());
             existingProduct.setImageUrl(product.getImageUrl());
@@ -61,7 +63,10 @@ public class ThymeleafProductController {
 
     @DeleteMapping("/{id}")
     public String deleteProduct(@PathVariable("id") Long id) {
-        productDatabase.deleteById(id);
+        Optional<Product> productOpt = productDatabase.findById(id);
+        if (productOpt.isPresent()) {
+            productDatabase.deleteById(id);
+        }
         return "redirect:/products";
     }
 
