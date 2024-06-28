@@ -1,7 +1,7 @@
 package gift.controller;
 
 import gift.model.Product;
-import gift.repository.ProductRepository;
+import gift.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.*;
 public class AdminController {
 
     @Autowired
-    private ProductRepository productRepository;
+    private ProductService productService;
 
     @GetMapping
     public String listProducts(Model model) {
-        model.addAttribute("products", productRepository.getAllProducts());
+        model.addAttribute("products", productService.getAllProducts());
         return "list";
     }
 
@@ -27,27 +27,35 @@ public class AdminController {
     }
 
     @PostMapping("/add")
-    public String addProduct(@ModelAttribute Product product) {
-        productRepository.addProduct(product);
-        return "redirect:/admin/products"; // DB에 상품 추가 후 목록 페이지로 리다이렉트
+    public String addProduct(@ModelAttribute Product product, Model model) {
+        String result = productService.createProduct(product);
+        if (result.equals("상품 생성")) {
+            model.addAttribute("products", productService.getAllProducts());
+            return "redirect:/admin/products"; // 상품 추가 후 목록 페이지로 리다이렉트
+        }
+        return "create";
     }
+
 
     @GetMapping("/update/{id}")
     public String editProductForm(@PathVariable Long id, Model model) {
-        Product product = productRepository.getProduct(id);
+        Product product = productService.getProduct(id);
         model.addAttribute("product", product);
         return "update";
     }
 
     @PostMapping("/update/{id}")
     public String editProduct(@PathVariable Long id, @ModelAttribute Product product) {
-        productRepository.updateProduct(id, product);
-        return "redirect:/admin/products";
+        String response = productService.editProduct(id, product);
+        if (response.equals("상품 수정")) {
+            return "redirect:/admin/products"; // DB에 상품 수정 후 목록 페이지로 리다이렉트
+        }
+        return "update";
     }
 
     @PostMapping("/delete/{id}")
     public String deleteProduct(@PathVariable Long id) {
-        productRepository.removeProduct(id);
-        return "redirect:/admin/products";
+        productService.deleteProduct(id); // 상품 삭제 메소드 호출
+        return "redirect:/admin/products"; // 상품 삭제 후 목록 페이지로 리다이렉트
     }
 }
