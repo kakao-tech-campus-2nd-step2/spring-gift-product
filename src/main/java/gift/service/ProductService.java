@@ -44,4 +44,12 @@ public class ProductService {
         products.put(id, product);
         return product;
     }
+
+    // 제품 삭제
+    public void deleteProduct(Long id) {
+        if (!products.containsKey(id)) {
+            throw new NoSuchElementException("Product not found with id " + id);
+        }
+        products.remove(id);
+    }
 }
