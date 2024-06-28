@@ -44,7 +44,7 @@ public class ProductController {
     // 상품 수정(Update)
     @PutMapping("/{id}")
     public ResponseEntity<String> updateProduct(@PathVariable Long id, @RequestBody Product product) {
-        String response = productService.updateProduct(id, product);
+        String response = productService.editProduct(id, product);
         if (response.equals("상품 수정")) {
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
