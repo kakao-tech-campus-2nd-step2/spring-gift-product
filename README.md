@@ -69,3 +69,9 @@ ___
   - 데이터에 접근 및 조작하는 기능을 `ProductRepository`로 위임
   - `ProductRepository`를 사용해 상품 정보를 저장, 조회, 수정, 삭제
 
+## Step4 - E2E 테스트
+
+### 구현할 기능 목록
+
+- [x] : EndToEndTest
+  - RestClient를 사용해 API 테스트 구현
