@@ -5,7 +5,7 @@ import gift.main.dto.ProductRequest;
 import gift.main.dto.Response;
 import gift.main.dto.SingleProductResponse;
 import gift.main.entity.Product;
-import gift.main.handler.MapToProductTransformer;
+import gift.main.handler.ProductTransformer;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -46,7 +46,7 @@ public class ProductController {
     @PostMapping("/product")
     public Response addProduct(@RequestBody ProductRequest productRequest) {
         long id = idGenerator.incrementAndGet();
-        producstRepository.put(id, MapToProductTransformer.convertToProduct(id,productRequest));
+        producstRepository.put(id, ProductTransformer.convertToProduct(id,productRequest));
         return new Response(200, "정상등록되었습니다.");
     }
 
@@ -55,7 +55,7 @@ public class ProductController {
         if (!producstRepository.containsKey(id)) {
             return new Response(400, "해당 id값은 존재하지 않습니다.");
         }
-        producstRepository.replace((long) id, MapToProductTransformer.convertToProduct(id, productRequest));
+        producstRepository.replace((long) id, ProductTransformer.convertToProduct(id, productRequest));
 
         return new Response(200, "정상 수정되었습니다.");
     }
