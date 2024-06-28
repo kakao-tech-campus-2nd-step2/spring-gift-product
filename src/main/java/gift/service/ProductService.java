@@ -25,7 +25,10 @@ public class ProductService {
 
     public Product addProduct(ProductDto product) {
         //이미 존재하는 상품 등록 시도시 예외 발생
-        productRepository.findByContents(product).orElseThrow(ProductAlreadyExistsException::new);
+        var search = productRepository.findByContents(product);
+        if (search.isPresent()) {
+            throw new ProductAlreadyExistsException();
+        }
 
         //상품 등록
         return productRepository.save(product);
