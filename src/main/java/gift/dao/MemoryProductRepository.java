@@ -1,7 +1,6 @@
 package gift.dao;
 
 import gift.domain.Product;
-import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-@Repository
 public class MemoryProductRepository implements ProductRepository {
 
     private final Map<Long, Product> products = new HashMap<>();
