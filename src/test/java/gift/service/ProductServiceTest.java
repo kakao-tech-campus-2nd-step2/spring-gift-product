@@ -19,7 +19,7 @@ class ProductServiceTest {
     private List<Product.CreateProduct> list = new ArrayList<>();
 
     @BeforeEach
-    public void BeforeAll() {
+    public void setUp() {
         list.add(new Product.CreateProduct("test1", 100, "test1"));
         list.add(new Product.CreateProduct("test2", 100, "test2"));
         list.add(new Product.CreateProduct("test3", 100, "test3"));
