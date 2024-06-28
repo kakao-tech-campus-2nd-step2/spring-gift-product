@@ -2,15 +2,13 @@ package gift.product;
 
 public class Product {
 
-    private static Long idCounter = 1L;
-
     private final Long id;
     private String name;
     private Integer price;
     private String imageUrl;
 
-    public Product(String name, Integer price, String imageUrl) {
-        this.id = idCounter++;
+    public Product(Long id, String name, Integer price, String imageUrl) {
+        this.id = id;
         this.name = name;
         this.price = price;
         this.imageUrl = imageUrl;
