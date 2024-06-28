@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Admin</title>
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
 </head>
 <body>
     <h1>Admin Page</h1>
@@ -14,7 +15,6 @@
     <div>
         <table>
             <tr>
-                <th>ID</th>
                 <th>이미지</th>
                 <th>상품명</th>
                 <th>가격</th>
@@ -22,7 +22,6 @@
                 <th>삭제</th>
             </tr>
             <tr th:each ="product : ${products}">
-                <td th:text="${product.id}"></td>
                 <td>
                     <img th:src="${product.imageUrl}" th:alt="${product.name} + ' image'"/>
                 </td>
