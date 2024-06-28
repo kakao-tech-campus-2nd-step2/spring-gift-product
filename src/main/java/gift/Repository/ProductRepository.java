@@ -13,7 +13,7 @@ public class ProductRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public List<Product> checkAll() {
+    public List<Product> checkProductsAll() {
         String sql = "SELECT * FROM products";
         return jdbcTemplate.query(sql, (resultSet, rowNum) ->
             new Product(
@@ -25,7 +25,7 @@ public class ProductRepository {
         );
     }
 
-    public Product checkById(long id) {
+    public Product checkProductsById(long id) {
         String sql = "SELECT * FROM products WHERE id = ?";
         List<Product> products = jdbcTemplate.query(sql, new Object[]{id}, (resultSet, rowNum) ->
             new Product(
@@ -38,20 +38,20 @@ public class ProductRepository {
         return products.isEmpty() ? null : products.get(0);
     }
 
-    public Product save(Product product) {
+    public Product saveProduct(Product product) {
         String sql = "INSERT INTO products (id, name, price, imageUrl) VALUES (?, ?, ?, ?)";
         jdbcTemplate.update(sql, product.id(), product.name(), product.price(), product.imageUrl());
         return product;
     }
 
-    public void delete(long id) {
+    public void deleteProduct(long id) {
         String sql = "DELETE FROM products WHERE id = ?";
         jdbcTemplate.update(sql, id);
     }
 
     public void updateProduct(Product product, long oldId) {
-        delete(oldId);
-        save(product);
+        deleteProduct(oldId);
+        saveProduct(product);
     }
 
 }
