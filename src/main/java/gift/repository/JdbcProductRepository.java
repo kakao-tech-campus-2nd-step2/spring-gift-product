@@ -52,7 +52,7 @@ public class JdbcProductRepository implements ProductRepository {
 
     @Override
     public void save(Product product) {
-
+        jdbcTemplate.update(INSERT_PRODUCT, product.getName(), product.getPrice(), product.getDescription(), product.getImageUrl());
     }
 
     @Override
