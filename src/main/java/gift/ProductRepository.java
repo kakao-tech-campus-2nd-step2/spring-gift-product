@@ -36,4 +36,7 @@ public class ProductRepository {
     public boolean isExist(Long id) {
         return products.containsKey(id);
     }
+    public Product findProductById(Long id) {
+        return products.get(id);
+    }
 }

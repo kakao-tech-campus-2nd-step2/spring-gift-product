@@ -35,6 +35,10 @@ public class ProductService {
         return productRepository.deleteProduct(id);
     }
 
+    public Product getProductById(Long id) {
+        return productRepository.findProductById(id);
+    }
+
     private boolean isExist(Long id) {
         return productRepository.isExist(id);
     }
