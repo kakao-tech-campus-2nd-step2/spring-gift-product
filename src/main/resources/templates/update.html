@@ -17,6 +17,7 @@
     <input type="number" id="price" name="price" th:field="*{price}">
     <label for="imgUrl">Image URL</label>
     <input type="text" id="imgUrl" name="imgUrl" th:field="*{imgUrl}">
+    <div th:if="${e != null}" th:text="${e}" style="background-color: red;color: white"></div>
     <button type="submit">Submit</button>
   </form>
 </div>

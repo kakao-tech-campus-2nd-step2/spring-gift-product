@@ -24,17 +24,17 @@
   <tbody>
 
   <tr th:each="item : ${list}">
-    <td th:text="${item.getValue().getId()}"></td>
-    <td th:text="${item.getValue().getName()}"></td>
-    <td th:text="${item.getValue().getPrice()}"></td>
-    <td><img th:src="${item.getValue().getImgUrl()}"/></td>
+    <td th:text="${item.getId()}"></td>
+    <td th:text="${item.getName()}"></td>
+    <td th:text="${item.getPrice()}"></td>
+    <td><img th:src="${item.getImgUrl()}"/></td>
     <td>
       <div class="action-buttons">
-      <form th:action="@{/product/update/{id}(id = ${item.getValue().getId()})}" method="get">
+      <form th:action="@{/product/update/{id}(id = ${item.getId()})}" method="get">
         <button type="submit">수정</button>
       </form>
 
-      <form th:action="@{/product/delete/{id}(id = ${item.getValue().getId()})}" method="post">
+      <form th:action="@{/product/delete/{id}(id = ${item.getId()})}" method="post">
         <input type="hidden" name="_method" value="DELETE">
         <button type="submit">삭제</button>
       </form>
