@@ -4,6 +4,7 @@ import gift.database.ProductDatabase;
 import gift.model.Product;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -34,22 +35,20 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable("id") Long id) {
-        Product product = productDatabase.findById(id);
-        if (product == null) {
+        Optional<Product> productOpt = productDatabase.findById(id);
+        if (productOpt.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(product);
+        return ResponseEntity.ok(productOpt.get());
     }
 
     @GetMapping("/nameSearch")
     public ResponseEntity<Product> getProductByName(@RequestParam("name") String name) {
-        try{
-            Product product = productDatabase.getByName(name);
-            return ResponseEntity.ok(product);
-
-        } catch (NoSuchElementException e) {
+        Optional<Product> productOpt = productDatabase.findByName(name);
+        if (productOpt.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
+        return ResponseEntity.ok(productOpt.get());
     }
 
     @PostMapping
@@ -61,10 +60,11 @@ public class ProductController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> updateProduct(@PathVariable("id") Long id, @RequestBody Product product) {
-        Product oldProduct = productDatabase.findById(id);
-        if (oldProduct == null) {
+        Optional<Product> oldProductOpt = productDatabase.findById(id);
+        if (oldProductOpt.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
+        Product oldProduct = oldProductOpt.get();
         oldProduct.setName(product.getName());
         oldProduct.setPrice(product.getPrice());
         oldProduct.setImageUrl(product.getImageUrl());
@@ -74,8 +74,8 @@ public class ProductController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable("id") Long id) {
-        Product product = productDatabase.findById(id);
-        if (product == null) {
+        Optional<Product> productOpt = productDatabase.findById(id);
+        if (productOpt.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
         productDatabase.deleteById(id);
