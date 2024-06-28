@@ -1,20 +1,21 @@
 package gift.product.service;
 
+import gift.product.dao.ProductDao;
 import gift.product.model.ProductVo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
 
-    private final Map<Long, ProductVo> products = new HashMap<>();
+    @Autowired
+    private static ProductDao productDao;
 
     public void addProduct(ProductVo productVo) {
-        products.put(productVo.getId(), productVo);
+        productDao.addProduct();
     }
 
     public void modifyProduct(ProductVo productVo) {
