@@ -1,28 +1,13 @@
 package gift;
 
-import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/products")
 public class ProductController {
-    private final Map<Long, Product> products = new HashMap<>();
-    private long nextId = 1L;
-
-    @PostConstruct
-    public void init() {
-        Product product1 = new Product();
-        product1.setId(8146027);
-        product1.setName("아이스 카페 아메리카노 T");
-        product1.setPrice(4500);
-        product1.setImageUrl("https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg");
-        products.put(product1.getId(), product1);
     private final ProductRepository productRepository;
 
     public ProductController(ProductRepository productRepository) {
@@ -67,7 +52,6 @@ public class ProductController {
         return "redirect:/products";
     }
 
-}
     @GetMapping("/view/{id}")
     public String getProductDetails(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes) {
         try {
@@ -80,3 +64,13 @@ public class ProductController {
         return "product-detail";
     }
 
+    @GetMapping("/{id}")
+    @ResponseBody
+    public Product getProductById(@PathVariable("id") Long id) {
+        try {
+            return productRepository.findById(id);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Product not found: " + e.getMessage());
+        }
+    }
+}
