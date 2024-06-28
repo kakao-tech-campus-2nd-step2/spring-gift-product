@@ -1,49 +1,72 @@
 package gift.service;
 
-import java.util.ArrayList;
+import gift.model.Product;
+import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.stereotype.Service;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.stereotype.Service;
-
-import gift.model.Product;
-
 @Service
 public class ProductService {
-    
-    private Map<Long, Product> products = new HashMap<>();
-    
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
+    private SimpleJdbcInsert jdbcInsert;
+
+    @PostConstruct
+    public void setup() {
+        this.jdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
+                .withTableName("products")
+                .usingGeneratedKeyColumns("id");
+    }
+
+    private static final class ProductMapper implements RowMapper<Product> {
+        @Override
+        public Product mapRow(ResultSet rs, int rowNum) throws SQLException {
+            Long id = rs.getLong("id");
+            String name = rs.getString("name");
+            int price = rs.getInt("price");
+            String imageUrl = rs.getString("imageUrl");
+            return new Product(id, name, price, imageUrl);
+        }
+    }
+
     public List<Product> getAllProducts() {
-        return new ArrayList<>(products.values());
+        String sql = "SELECT * FROM products";
+        return jdbcTemplate.query(sql, new ProductMapper());
     }
-    
-    public Product getProductById(long id) {
-        return products.get(id);
-    }
-    
-    public Product addProduct(Product product) {
-        products.put(product.getId(), product);
-        return product;
-    }
-    
-    public Product updateProduct(long oldId, Product updatedProduct) {
-        Product existingProduct = products.get(oldId);
-        if (existingProduct == null) {
-            return null;
-        }
 
-        products.remove(oldId);
-
-        products.put(updatedProduct.getId(), updatedProduct);
-        return updatedProduct;
+    public Product getProduct(long id) {
+        String sql = "SELECT * FROM products WHERE id = ?";
+        return jdbcTemplate.queryForObject(sql, new Object[]{id}, new ProductMapper());
     }
-    
-    public boolean deleteProduct(long id) {
-        if (!products.containsKey(id)) {
-            return false;
-        }
-        products.remove(id);
-        return true;
+
+    public Product createProduct(Product product) {
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("name", product.getName());
+        parameters.put("price", product.getPrice());
+        parameters.put("imageUrl", product.getImageUrl());
+
+        Number newId = jdbcInsert.executeAndReturnKey(parameters);
+        return new Product(newId.longValue(), product.getName(), product.getPrice(), product.getImageUrl());
+    }
+
+    public int updateProduct(Product updatedProduct) {
+        String sql = "UPDATE products SET name = ?, price = ?, imageUrl = ? WHERE id = ?";
+        return jdbcTemplate.update(sql, updatedProduct.getName(), updatedProduct.getPrice(), updatedProduct.getImageUrl(), updatedProduct.getId());
+    }
+
+    public int deleteProduct(long id) {
+        String sql = "DELETE FROM products WHERE id = ?";
+        return jdbcTemplate.update(sql, id);
     }
 }
