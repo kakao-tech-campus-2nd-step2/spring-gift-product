@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>상품 목록</h1>
-<table border="1">
+<table border="2">
   <thead>
   <tr>
     <th>Name</th>
@@ -27,7 +27,8 @@
   </tr>
   </tbody>
 </table>
-<a href="/admin/products/add">상품 추가</a>
+<button class="btn btn-warning"
+        th:onclick="'location.href=\'/admin/products/add/' + [[${product.id}]] + '\';'">상품 추가</button>
 </body>
 </html>
 
