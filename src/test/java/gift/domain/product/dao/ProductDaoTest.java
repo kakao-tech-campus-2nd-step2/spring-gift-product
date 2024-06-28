@@ -32,6 +32,9 @@ class ProductDaoTest {
         assertThat(savedProduct.getImageUrl()).isEqualTo(product.getImageUrl());
     }
 
+    /**
+     * 리스트 인덱스 번호 때문에 개별 실행해야 함.
+     */
     @Test
     @DisplayName("DB 전체 상품 조회")
     void findAll() {
@@ -62,16 +65,36 @@ class ProductDaoTest {
     void findById() {
         // given
         Product product = new Product(null, "탕종 블루베리 베이글", 3500, "https://image.istarbucks.co.kr/upload/store/skuimg/2023/09/[9300000004823]_20230911131337469.jpg");
-        productDao.insert(product);
+        Product savedProduct = productDao.insert(product);
 
         // when
-        Product savedProduct = productDao.findById(4).get();
+        Product foundProduct = productDao.findById(savedProduct.getId()).get();
 
         // then
-        assertThat(savedProduct).isNotNull();
-        assertThat(savedProduct.getId()).isNotNull();
-        assertThat(savedProduct.getName()).isEqualTo(product.getName());
-        assertThat(savedProduct.getPrice()).isEqualTo(product.getPrice());
-        assertThat(savedProduct.getImageUrl()).isEqualTo(product.getImageUrl());
+        assertThat(foundProduct).isNotNull();
+        assertThat(foundProduct.getId()).isNotNull();
+        assertThat(foundProduct.getName()).isEqualTo(product.getName());
+        assertThat(foundProduct.getPrice()).isEqualTo(product.getPrice());
+        assertThat(foundProduct.getImageUrl()).isEqualTo(product.getImageUrl());
+    }
+
+
+    @Test
+    @DisplayName("DB 상품 수정")
+    void update() {
+        // given
+        Product product1 = new Product(null, "탕종 블루베리 베이글", 3500, "https://image.istarbucks.co.kr/upload/store/skuimg/2023/09/[9300000004823]_20230911131337469.jpg");
+        Product savedProduct = productDao.insert(product1);
+        Product product2 = new Product(savedProduct.getId(), "오트 콜드 브루", 5800, "https://image.istarbucks.co.kr/upload/store/skuimg/2021/04/[9200000003285]_20210416154437069.jpg");
+
+        // when
+        Product updatedProduct = productDao.update(product2).get();
+
+        // then
+        assertThat(updatedProduct).isNotNull();
+        assertThat(updatedProduct.getId()).isEqualTo(savedProduct.getId());
+        assertThat(updatedProduct.getName()).isEqualTo(product2.getName());
+        assertThat(updatedProduct.getPrice()).isEqualTo(product2.getPrice());
+        assertThat(updatedProduct.getImageUrl()).isEqualTo(product2.getImageUrl());
     }
 }
