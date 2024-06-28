@@ -35,8 +35,7 @@ public class ProductRepository {
 
     public void updateProduct(Long id, Product.UpdateProduct update) {
         String sql = "UPDATE Product SET id = ?, name = ?, price = ?, imageUrl = ? WHERE id = ?";
-        jdbcTemplate.update(sql, update.getName(), update.getPrice(), update.getImageUrl(),
-            id);
+        jdbcTemplate.update(sql, id, update.getName(), update.getPrice(), update.getImageUrl(), id);
     }
 
     public void removeProduct(Long id) {
@@ -46,7 +45,7 @@ public class ProductRepository {
 
     public boolean validateId(Long id) {
         String sql = "SELECT EXISTS(SELECT 1 FROM Product WHERE id = ?)";
-        if (jdbcTemplate.update(sql, id)==1){
+        if (jdbcTemplate.queryForObject(sql, new Object[]{id}, Integer.class)==1){
             return true;
         }
         return false;
