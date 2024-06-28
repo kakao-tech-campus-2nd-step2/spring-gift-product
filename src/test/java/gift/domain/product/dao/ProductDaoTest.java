@@ -38,8 +38,8 @@ class ProductDaoTest {
         // given
         Product product1 = new Product(null, "탕종 블루베리 베이글", 3500, "https://image.istarbucks.co.kr/upload/store/skuimg/2023/09/[9300000004823]_20230911131337469.jpg");
         Product product2 = new Product(null, "오트 콜드 브루", 5800, "https://image.istarbucks.co.kr/upload/store/skuimg/2021/04/[9200000003285]_20210416154437069.jpg");
-        Product savedProduct1 = productDao.insert(product1);
-        Product savedProduct2 = productDao.insert(product2);
+        productDao.insert(product1);
+        productDao.insert(product2);
 
         // when
         List<Product> productList = productDao.findAll();
@@ -55,5 +55,23 @@ class ProductDaoTest {
         assertThat(productList.get(4).getName()).isEqualTo(product2.getName());
         assertThat(productList.get(4).getPrice()).isEqualTo(product2.getPrice());
         assertThat(productList.get(4).getImageUrl()).isEqualTo(product2.getImageUrl());
+    }
+
+    @Test
+    @DisplayName("DB 특정 상품 조회")
+    void findById() {
+        // given
+        Product product = new Product(null, "탕종 블루베리 베이글", 3500, "https://image.istarbucks.co.kr/upload/store/skuimg/2023/09/[9300000004823]_20230911131337469.jpg");
+        productDao.insert(product);
+
+        // when
+        Product savedProduct = productDao.findById(4);
+
+        // then
+        assertThat(savedProduct).isNotNull();
+        assertThat(savedProduct.getId()).isNotNull();
+        assertThat(savedProduct.getName()).isEqualTo(product.getName());
+        assertThat(savedProduct.getPrice()).isEqualTo(product.getPrice());
+        assertThat(savedProduct.getImageUrl()).isEqualTo(product.getImageUrl());
     }
 }
