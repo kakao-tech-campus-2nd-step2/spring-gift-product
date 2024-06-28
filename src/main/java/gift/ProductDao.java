@@ -35,4 +35,9 @@ public class ProductDao {
         var sql = "update products set productName = ? , price = ?, imageUrl = ? amount = ? where id = ? ";
         jdbcTemplate.update(sql, product.name(), product.price(),product.imageUrl(), product.amount(), product.id());
     }
-}
+    public void purchaseProduct(long id, int amount){
+        var sql = "update products set amount = amount - ? where id = ? ";
+        jdbcTemplate.update(sql,amount, id);
+    }
+
+    }
