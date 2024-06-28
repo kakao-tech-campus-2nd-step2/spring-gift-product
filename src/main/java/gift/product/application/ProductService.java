@@ -1,9 +1,10 @@
 package gift.product.application;
 
 import gift.product.domain.Product;
-import gift.product.domain.ProductRepository;
+import gift.product.domain.ProductMemoryRepository;
 import gift.product.application.command.ProductCreateCommand;
 import gift.product.application.command.ProductUpdateCommand;
+import gift.product.domain.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,14 +36,10 @@ public class ProductService {
     }
 
     public void update(ProductUpdateCommand command) {
-        Product product = productRepository.findById(command.productId())
+        productRepository.findById(command.productId())
                 .orElseThrow(() -> new NoSuchElementException("Product not found"));
 
-        product.update(
-                command.name(),
-                command.price(),
-                command.imageUrl()
-        );
+        productRepository.updateProduct(command);
     }
 
     public void delete(Long productId) {
