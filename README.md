@@ -1,6 +1,6 @@
 # spring-gift-product
 
-## step1 : 상품 API
+## step 1 : 상품 API
 
 ### 기능 요구 사항
 
@@ -40,3 +40,15 @@ Admin Page를 위한 적절한 endpoint 설정 및 thymeleaf SSR 수행
 - update.html : 상품 업데이트 페이지. endpoint : http://localhost:8080/admin/put
 
 상품의 id를 입력받은 후, 제출을 통해 ProductController의 데이터 접근.
+
+## step 3 : 데이터베이스 적용
+
+### 기능 요구 사항
+
+자바 컬렉션 프레임워크(JDBC)를 사용하여 메모리에 저장하던 상품 정보를 데이터베이스에 저장한다.
+
+## 클래스 설명
+
+### ProductRepository
+
+내부 database와 연결할 수 있는 객체. JdbcTemplate 사용.
