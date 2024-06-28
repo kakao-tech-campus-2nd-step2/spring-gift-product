@@ -18,7 +18,6 @@ import java.util.Map;
 public class ProductController {
 
     private final Map<Long, Product> products = new HashMap<>();
-    private Long sequenceId = 1L;
     private final ProductDao dao;
 
     public ProductController(JdbcClient jdbcClient) {
