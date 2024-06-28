@@ -3,9 +3,9 @@ package gift.domain.product.controller;
 import gift.domain.product.dao.ProductDao;
 import gift.domain.product.dto.ProductDto;
 import gift.domain.product.entity.Product;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.http.HttpStatus;
@@ -67,9 +67,9 @@ public class ProductController {
 
     @GetMapping("/{productId}")
     public String readById(@PathVariable long productId, Model model) {
-        Product product = productDao.findById(productId);
+        Optional<Product> product = productDao.findById(productId);
 
-        if (product == null) {
+        if (product.isEmpty()) {
             return "error";
         }
         model.addAttribute("product", product);

@@ -65,7 +65,7 @@ class ProductDaoTest {
         productDao.insert(product);
 
         // when
-        Product savedProduct = productDao.findById(4);
+        Product savedProduct = productDao.findById(4).get();
 
         // then
         assertThat(savedProduct).isNotNull();

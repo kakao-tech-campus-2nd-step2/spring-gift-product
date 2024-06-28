@@ -4,6 +4,7 @@ import gift.domain.product.dto.ProductDto;
 import gift.domain.product.entity.Product;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -36,11 +37,15 @@ public class ProductDao {
         return jdbcClient.sql(sql).query(ProductDto.class).stream().map(ProductDto::toProduct).toList();
     }
 
-    public Product findById(long id) {
+    public Optional<Product> findById(long id) {
         String sql = "SELECT * FROM product WHERE id = ?";
 
-        return jdbcClient.sql(sql)
-            .param(id)
-            .query(ProductDto.class).single().toProduct();
+        Optional<ProductDto> productDto = jdbcClient.sql(sql).param(id).query(ProductDto.class)
+            .optional();
+
+        if (productDto.isPresent()) {
+            return productDto.map(ProductDto::toProduct);
+        }
+        return Optional.empty();
     }
 }
