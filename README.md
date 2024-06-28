@@ -1,11 +1,15 @@
 # spring-gift-product
 
+<br>
+
 ### 상품 관리 프로젝트
 
+<br>
 <hr>
 
 ### 구현 기능 목록
 
+<br>
 <hr>
 
 ### STEP1 (CRUD 작성)
@@ -22,4 +26,5 @@
 ### STEP3 (데이터 베이스 연동)
 1. H2 DB 연동
 
+<br>
 ### junit으로 테스트 코드 작성
