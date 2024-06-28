@@ -64,4 +64,11 @@ public class ProductDao {
                 .param("imageUrl", editedProduct.imageUrl(), Types.VARCHAR)
                 .update();
     }
+
+    public Integer deleteProduct(Long id) {
+        String sql = "DELETE FROM product WHERE id = :id";
+        return jdbcClient.sql(sql)
+                .param("id", id)
+                .update();
+    }
 }

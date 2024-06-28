@@ -5,14 +5,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/api/products")
 public class ProductController {
-    Map<Long, Product> productMap = new HashMap<>();
     private final ProductDao productDao;
 
     public ProductController(ProductDao productDao) {
@@ -91,8 +88,9 @@ public class ProductController {
      */
     @PostMapping("/{id}")
     public String deleteProduct(@PathVariable(name = "id") Long id) {
-        if(productMap.containsKey(id)) {
-            productMap.remove(id);
+        try {
+            productDao.deleteProduct(id);
+        } catch(DataAccessException e) {
         }
         return "redirect:/api/products";
     }
