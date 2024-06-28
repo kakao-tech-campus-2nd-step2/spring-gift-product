@@ -47,12 +47,13 @@ public class ProductController {
     }
 
     @PostMapping("/{id}")
-    public String updateProduct(@PathVariable Long id, @ModelAttribute Product product) {
-        if (!products.containsKey(id)) {
-            throw new IllegalArgumentException("상품이 없습니다.");
+    public String updateProduct(@PathVariable Long id, @ModelAttribute Product product, RedirectAttributes redirectAttributes) {
+        try {
+            product.setId(id);
+            productRepository.update(product);
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Error updating product: " + e.getMessage());
         }
-        product.setId(id);
-        products.put(id, product);
         return "redirect:/products";
     }
 
