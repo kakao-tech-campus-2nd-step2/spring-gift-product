@@ -5,6 +5,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.jdbc.core.JdbcTemplate;
+import java.util.Arrays;
+import java.util.List;
 
 @SpringBootApplication
 public class Application implements CommandLineRunner {
@@ -26,6 +28,16 @@ public class Application implements CommandLineRunner {
             "price BIGINT NOT NULL," +
             "imageurl VARCHAR(2083) NOT NULL" +
             ")");
+
+        List<Object[]> initialData = Arrays.asList(
+            new Object[]{"스타벅스 1만원 교환권", 10000, "http://example.com/image1.jpg"},
+            new Object[]{"Jelly Bunny", 20000, "http://example.com/image2.jpg"},
+            new Object[]{"Camper", 30000, "http://example.com/image3.jpg"}
+        );
+
+        jdbcTemplate.batchUpdate("INSERT INTO products (name, price, imageurl) VALUES (?, ?, ?)",
+            initialData);
+
     }
 
 }
