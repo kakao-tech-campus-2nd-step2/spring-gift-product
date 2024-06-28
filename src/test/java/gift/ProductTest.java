@@ -7,10 +7,14 @@ import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
+@SpringBootTest
 public class ProductTest {
 
-    private final ProductService productService = new ProductService();
+    @Autowired
+    private ProductService productService;
 
     @AfterEach
     public void productsInit() {
@@ -24,7 +28,6 @@ public class ProductTest {
     public void insertProductTest() {
         ProductDTO productDTO = new ProductDTO("사과", 3000, "사진링크");
         Product product = productService.insertProduct(productDTO);
-        Assertions.assertThat(product.getId()).isEqualTo(1L);
         Assertions.assertThat(product.getName()).isEqualTo("사과");
         Assertions.assertThat(product.getPrice()).isEqualTo(3000);
         Assertions.assertThat(product.getImageUrl()).isEqualTo("사진링크");
@@ -33,10 +36,9 @@ public class ProductTest {
     @Test
     public void getProductTest() {
         ProductDTO productDTO = new ProductDTO("사과", 3000, "사진링크");
-        productService.insertProduct(productDTO);
+        Product insertedProduct = productService.insertProduct(productDTO);
 
-        Product product = productService.getProduct(1L);
-        Assertions.assertThat(product.getId()).isEqualTo(1L);
+        Product product = productService.getProduct(insertedProduct.getId());
         Assertions.assertThat(product.getName()).isEqualTo("사과");
         Assertions.assertThat(product.getPrice()).isEqualTo(3000);
         Assertions.assertThat(product.getImageUrl()).isEqualTo("사진링크");
@@ -48,7 +50,6 @@ public class ProductTest {
         productService.insertProduct(productDTO);
 
         List<Product> productAll = productService.getProductAll();
-        Assertions.assertThat(productAll.get(0).getId()).isEqualTo(1L);
         Assertions.assertThat(productAll.get(0).getName()).isEqualTo("사과");
         Assertions.assertThat(productAll.get(0).getPrice()).isEqualTo(3000);
         Assertions.assertThat(productAll.get(0).getImageUrl()).isEqualTo("사진링크");
@@ -73,12 +74,11 @@ public class ProductTest {
         productService.insertProduct(productDTO);
 
         productDTO = new ProductDTO("바나나", 1500, "사진링크2");
-        productService.insertProduct(productDTO);
+        Product product = productService.insertProduct(productDTO);
 
-        productService.deleteProduct(1L);
+        productService.deleteProduct(product.getId());
 
         List<Product> productAll = productService.getProductAll();
         Assertions.assertThat(productAll.size()).isEqualTo(1);
-        Assertions.assertThat(productAll.get(0).getId()).isEqualTo(2L);
     }
 }
