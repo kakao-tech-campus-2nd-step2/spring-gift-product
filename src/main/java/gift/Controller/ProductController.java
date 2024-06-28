@@ -1,5 +1,6 @@
 package gift.Controller;
 
+import org.springframework.ui.Model;
 import gift.Model.Product;
 import gift.Model.RequestProduct;
 import org.springframework.http.HttpStatus;
@@ -14,16 +15,11 @@ import java.util.*;
 public class ProductController {
     private final Map<Long, Product> products = new HashMap<Long, Product>();
 
-    @GetMapping("/products") //조회
-    public List<Product> getMethod() {
-        List<Product> list = new LinkedList<Product>();
-        Iterator<Long> keys = products.keySet().iterator();
-        while (keys.hasNext()) {
-            Long key = keys.next();
-            Product data = products.get(key);
-            list.add(data);
-        }
-        return list;
+    @GetMapping("/products")
+    public String getMethod(Model model) {
+        List<Product> list = new LinkedList<>(products.values());
+        model.addAttribute("products", list);
+        return "products";
     }
 
     @GetMapping("/products/{id}") //조회
