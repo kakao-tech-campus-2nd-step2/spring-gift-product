@@ -25,8 +25,13 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping
-    public ResponseEntity<List<ProductSimple>> getProductList() {
+    public ResponseEntity<List<ProductDTO>> getProductList() {
         return ResponseEntity.ok(productService.getProductList());
+    }
+
+    @GetMapping("/simple")
+    public ResponseEntity<List<ProductSimple>> getSimpleProductList() {
+        return ResponseEntity.ok(productService.getSimpleProductList());
     }
 
     @GetMapping("/{id}")

@@ -20,7 +20,11 @@ public class ProductService {
     @Autowired
     private ProductMapper productMapper;
 
-    public List<ProductSimple> getProductList() {
+    public List<ProductDTO> getProductList() {
+        return productDB.getList();
+    }
+
+    public List<ProductSimple> getSimpleProductList() {
         List<ProductSimple> list = new ArrayList<>();
 
         for (ProductDTO p : productDB.getList()) {
