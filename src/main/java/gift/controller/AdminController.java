@@ -25,7 +25,7 @@ public class AdminController {
 
     @GetMapping("/add")
     public String addProductForm(Model model) {
-        model.addAttribute("product", new Product());
+        model.addAttribute("product", new Product(null, "", 0, ""));
         return "product-form";
     }
 
@@ -46,9 +46,9 @@ public class AdminController {
     }
 
     @PostMapping("/edit/{id}")
-    public String editProduct(@PathVariable("id") Long oldId, @ModelAttribute Product updatedProduct) {
-        boolean isUpdated = productService.updateProduct(oldId, updatedProduct);
-        if (!isUpdated) {
+    public String editProduct(@PathVariable("id") Long id, @ModelAttribute Product updatedProduct) {
+        int rowsAffected = productService.updateProduct(updatedProduct);
+        if (rowsAffected == 0) {
             return "redirect:/admin";
         }
         return "redirect:/admin";
@@ -56,8 +56,8 @@ public class AdminController {
 
     @GetMapping("/delete/{id}")
     public String deleteProduct(@PathVariable("id") Long id) {
-        boolean isDeleted = productService.deleteProduct(id);
-        if (!isDeleted) {
+        int rowsAffected = productService.deleteProduct(id);
+        if (rowsAffected == 0) {
             return "redirect:/admin";
         }
         return "redirect:/admin";
