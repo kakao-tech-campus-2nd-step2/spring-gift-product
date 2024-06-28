@@ -26,7 +26,7 @@ class ProductH2DBTest {
     private ProductH2DB productH2DB;
 
     @Test
-    void testAddProduct() {
+    void testAddProduct() throws Exception {
         //given
         Product product = new Product(5L, "Espresso", 3000, "https://example.com/espresso.jpg");
         productH2DB.addProduct(product);

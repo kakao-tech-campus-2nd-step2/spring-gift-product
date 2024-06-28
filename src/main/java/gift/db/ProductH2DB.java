@@ -21,7 +21,7 @@ public class ProductH2DB implements ProductDB {
     }
 
     @PostConstruct
-    public void initialize() {
+    public void initialize() throws Exception{
         createProductTable();
         addProduct(new Product(1L, "Americano", 4500, "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg"));
         addProduct(new Product(2L, "Latte", 5500, "https://cdn.pixabay.com/photo/2023/07/08/13/17/coffee-8114518_1280.png"));
@@ -44,7 +44,7 @@ public class ProductH2DB implements ProductDB {
 
 
     @Override
-    public void addProduct(Product product) {
+    public void addProduct(Product product) throws Exception {
         String sql = "INSERT INTO product (id, name, price, imageUrl) VALUES (?, ?, ?, ?)";
         jdbcTemplate.update(sql, product.getId(), product.getName(), product.getPrice(), product.getImageUrl());
     }
