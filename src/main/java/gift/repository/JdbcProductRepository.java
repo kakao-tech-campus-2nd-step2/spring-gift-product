@@ -35,4 +35,28 @@ public class JdbcProductRepository implements ProductRepository {
     );
 
 
+    @Override
+    public List<Product> findAll() {
+        return jdbcTemplate.query(SELECT_ALL, productRowMapper);
+    }
+
+    @Override
+    public Optional<Product> findById(Long id) {
+        return Optional.empty();
+    }
+
+    @Override
+    public void save(Product product) {
+
+    }
+
+    @Override
+    public void update(Product product) {
+
+    }
+
+    @Override
+    public void delete(Long id) {
+
+    }
 }
