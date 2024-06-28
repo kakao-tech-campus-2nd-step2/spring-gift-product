@@ -6,7 +6,6 @@ public class Product {
     private double price;
     private String imageUrl;
 
-
     public Product(Long id, String name, double price, String imageUrl) {
         this.id = id;
         this.name = name;
@@ -44,5 +43,15 @@ public class Product {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", price=" + price +
+            ", imageUrl='" + imageUrl + '\'' +
+            '}';
     }
 }
