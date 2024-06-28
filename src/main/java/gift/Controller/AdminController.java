@@ -52,8 +52,10 @@ public class AdminController {
     }
 
     @PutMapping("/edit/{id}")
-    public String editProduct(@PathVariable("id") long id, @ModelAttribute Product updatedProduct, Model model) {
-        if (id != updatedProduct.id() && productRepository.checkProductsById(updatedProduct.id()) != null) {
+    public String editProduct(@PathVariable("id") long id, @ModelAttribute Product updatedProduct,
+        Model model) {
+        if (id != updatedProduct.id()
+            && productRepository.checkProductsById(updatedProduct.id()) != null) {
             model.addAttribute("error", "존재하는 ID 입니다.");
             model.addAttribute("product", productRepository.checkProductsById(id));
             return "edit_product_form";
