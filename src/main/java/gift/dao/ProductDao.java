@@ -72,6 +72,6 @@ public class ProductDao implements ProductRepository {
                 SET name = ?, price = ?, image_url = ?
                 WHERE id = ?
                 """;
-        return jdbcTemplate.update(sql, product.getName(), product.getPrice(), product.getImageUrl(), product.getId());
+        return jdbcTemplate.update(sql, product.getName(), product.getPrice(), product.getImageUrl(), id);
     }
 }
