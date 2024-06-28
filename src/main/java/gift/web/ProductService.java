@@ -20,5 +20,13 @@ public class ProductService {
         return products.get(id);
     }
 
+    public Product createProduct(Product product) {
+        Long id = incrementCounter.getAndIncrement(); // 1씩 증가하는 id
+        Product newProduct = new Product(id, product.name(), product.price(), product.imageUrl());
+        products.put(id, newProduct);
+
+        return newProduct;
+    }
+
 
 }
