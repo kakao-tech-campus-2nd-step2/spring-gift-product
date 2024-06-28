@@ -24,4 +24,17 @@ public class ProductRepository {
             )
         );
     }
+
+    public Product checkById(long id) {
+        String sql = "SELECT * FROM products WHERE id = ?";
+        List<Product> products = jdbcTemplate.query(sql, new Object[]{id}, (resultSet, rowNum) ->
+            new Product(
+                resultSet.getLong("id"),
+                resultSet.getString("name"),
+                resultSet.getLong("price"),
+                resultSet.getString("imageUrl")
+            )
+        );
+        return products.isEmpty() ? null : products.get(0);
+    }
 }
