@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 public class AdminController {
     private final ProductService productService;
 
-    @Autowired
     public AdminController(ProductService productService) {
         this.productService = productService;
     }
@@ -27,12 +26,6 @@ public class AdminController {
         return "redirect:/admin/products";
     }
 
-    @PostMapping("/delete/{id}")
-    public String deleteProduct(@PathVariable("id") Long id) {
-        productService.deleteProduct(id);
-        return "redirect:/admin/products";
-    }
-
     // 상품 수정 폼 보여주기
     @GetMapping("/update/{id}")
     public String showEditProductForm(@PathVariable("id") Long id, Model model) {
@@ -45,6 +38,12 @@ public class AdminController {
     @PostMapping("/update/{id}")
     public String updateProduct(@PathVariable("id") Long id, @ModelAttribute Product updatedProduct) {
         productService.updateProduct(id, updatedProduct);
+        return "redirect:/admin/products";
+    }
+
+    @PostMapping("/delete/{id}")
+    public String deleteProduct(@PathVariable("id") Long id) {
+        productService.deleteProduct(id);
         return "redirect:/admin/products";
     }
 }
