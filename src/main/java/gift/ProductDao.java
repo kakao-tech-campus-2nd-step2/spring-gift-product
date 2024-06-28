@@ -12,7 +12,7 @@ public class ProductDao {
     }
     public void createProductTable() {
         var sql = """
-            create table customer (
+            create table product (
               id bigint,
               productName varchar(255),
               price money,
@@ -26,5 +26,9 @@ public class ProductDao {
     public void insertProduct(Product product) {
         var sql = "insert into customer (id, productName, price, imageUrl, amount) values (?, ?, ?, ?, ?)";
         jdbcTemplate.update(sql, product.id(), product.name(), product.price(),product.imageUrl(), product.amount());
+    }
+    public void deleteProduct(long id) {
+        var sql = "delete from product where id = ?";
+        jdbcTemplate.update(sql, id);
     }
 }
