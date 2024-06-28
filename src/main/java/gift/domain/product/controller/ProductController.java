@@ -39,12 +39,12 @@ public class ProductController {
 
     @GetMapping("/edit/{productId}")
     public String renderingEditForm(@PathVariable long productId, Model model) {
-        Product product = productRepository.get(productId);
+        Optional<Product> product = productDao.findById(productId);
 
-        if (product == null) {
+        if (product.isEmpty()) {
             return "error";
         }
-        model.addAttribute("product", product);
+        model.addAttribute("product", product.get());
 
         return "edit-product";
     }
@@ -72,24 +72,20 @@ public class ProductController {
         if (product.isEmpty()) {
             return "error";
         }
-        model.addAttribute("product", product);
+        model.addAttribute("product", product.get());
 
         return "product";
     }
 
     @PutMapping("/{productId}")
-    public String update(@PathVariable long productId, @ModelAttribute Product productDTO) {
-        Product product = productRepository.get(productId);
+    public String update(@PathVariable long productId, @ModelAttribute ProductDto productDto) {
+        Product product = productDto.toProduct();
+        product.setId(productId);
 
-        if (product == null) {
-            return "error";
-        }
-        product.setName(productDTO.getName());
-        product.setPrice(productDTO.getPrice());
-        product.setImageUrl(productDTO.getImageUrl());
-        productRepository.put(productId, product);
+        Optional<Product> updatedProduct = productDao.update(product);
 
-        return "redirect:/products/" + product.getId();
+        return updatedProduct.map(value -> "redirect:/products/" + value.getId()).orElse("error");
+
     }
 
     @DeleteMapping("/{productId}")

@@ -43,9 +43,23 @@ public class ProductDao {
         Optional<ProductDto> productDto = jdbcClient.sql(sql).param(id).query(ProductDto.class)
             .optional();
 
-        if (productDto.isPresent()) {
-            return productDto.map(ProductDto::toProduct);
+        if (productDto.isEmpty()) {
+            return Optional.empty();
         }
-        return Optional.empty();
+        return productDto.map(ProductDto::toProduct);
+    }
+
+    public Optional<Product> update(Product product) {
+        String sql = "UPDATE product SET name = ?, price = ?, image_url = ? WHERE id = ?";
+
+        int nOfRowsAffected = jdbcClient.sql(sql).param(product.getName()).param(product.getPrice())
+            .param(product.getImageUrl()).param(product.getId())
+            .update();
+
+        if (nOfRowsAffected <= 0) {
+            return Optional.empty();
+        }
+
+        return Optional.of(product);
     }
 }
