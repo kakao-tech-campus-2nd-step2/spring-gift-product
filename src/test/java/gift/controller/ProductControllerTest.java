@@ -33,10 +33,10 @@ class ProductControllerTest {
     @BeforeEach
     void setUp() {
         product = new Product.Builder()
-                .id(8146027L)
-                .name("아이스 카페 아메리카노 T")
-                .price(4500)
-                .imageUrl("https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg")
+                .id(1L)
+                .name("Sample Product 1")
+                .price(1000)
+                .imageUrl("https://example.com/sample1.jpg")
                 .build();
     }
 
@@ -44,43 +44,52 @@ class ProductControllerTest {
     void getAllProducts() throws Exception {
         when(productService.getAllProducts()).thenReturn(Collections.singletonList(product));
 
-        mockMvc.perform(get("/api/products"))
+        mockMvc.perform(get("/products"))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$[0].name").value("아이스 카페 아메리카노 T"));
+                .andExpect(content().contentType(MediaType.TEXT_HTML))
+                .andExpect(view().name("products"))
+                .andExpect(model().attributeExists("products"))
+                .andExpect(model().attribute("products", Collections.singletonList(product)));
     }
 
     @Test
     void addProduct() throws Exception {
         doNothing().when(productService).addProduct(any(Product.class));
 
-        mockMvc.perform(post("/api/products")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"id\": 2, \"name\": \"새 상품\", \"price\": 1000, \"imageUrl\": \"https://example.com/newproduct.jpg\"}"))
-                .andExpect(status().isOk());
+        mockMvc.perform(post("/products")
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .param("name", "New Product")
+                        .param("price", "3000")
+                        .param("imageUrl", "https://example.com/newproduct.jpg"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/products"));
 
         verify(productService, times(1)).addProduct(any(Product.class));
     }
 
     @Test
     void updateProduct() throws Exception {
-        doNothing().when(productService).updateProduct(eq(8146027L), any(Product.class));
+        doNothing().when(productService).updateProduct(eq(1L), any(Product.class));
 
-        mockMvc.perform(put("/api/products/8146027")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"id\": 8146027, \"name\": \"업데이트된 상품\", \"price\": 5000, \"imageUrl\": \"https://example.com/updatedproduct.jpg\"}"))
-                .andExpect(status().isOk());
+        mockMvc.perform(post("/products/edit/1")
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .param("name", "Updated Product")
+                        .param("price", "1500")
+                        .param("imageUrl", "https://example.com/updatedproduct.jpg"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/products"));
 
-        verify(productService, times(1)).updateProduct(eq(8146027L), any(Product.class));
+        verify(productService, times(1)).updateProduct(eq(1L), any(Product.class));
     }
 
     @Test
     void deleteProduct() throws Exception {
-        doNothing().when(productService).deleteProduct(8146027L);
+        doNothing().when(productService).deleteProduct(1L);
 
-        mockMvc.perform(delete("/api/products/8146027"))
-                .andExpect(status().isOk());
+        mockMvc.perform(get("/products/delete/1"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/products"));
 
-        verify(productService, times(1)).deleteProduct(8146027L);
+        verify(productService, times(1)).deleteProduct(1L);
     }
 }
