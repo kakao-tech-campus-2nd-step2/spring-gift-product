@@ -1,11 +1,14 @@
 package gift;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,13 +21,8 @@ public class ProductService {
     }
 
     public List<Product> getAllProducts() {
-//        select 로직으로 변경
-//        // product가 존재하지 않으면 null 반환
-//        if(products.isEmpty()) {
-//            return null;
-//        }
-//        return new ArrayList<>(products.values());
-        return null;
+        String sql = "SELECT * FROM products";
+        return jdbcTemplate.query(sql, productRowMapper());
     }
 
     public Product getProductById(long id) {
@@ -68,5 +66,17 @@ public class ProductService {
 //            );
 //        }
 //        products.remove(id);
+    }
+
+    private RowMapper<Product> productRowMapper() {
+        return (rs, rowNum) -> {
+            Product product = new Product(
+                rs.getLong("id"),
+                rs.getString("name"),
+                rs.getInt("price"),
+                rs.getString("imageUrl")
+            );
+            return product;
+        };
     }
 }
