@@ -19,22 +19,21 @@ public class MemoryProductRepositoryTest {
 
     @Test
     public void save() {
-        Product product = new Product("abc", 123, "www.test.com");
+         ProductForm product = new ProductForm("abc", 123, "www.test.com");
+          Product savedProduct = repository.save(product);
 
-        repository.save(product);
+          Product result = repository.findById(savedProduct.getId());
 
-        Product result = repository.findById(product.getId());
-
-        assertThat(result).isEqualTo(product);
+         assertThat(result).isEqualTo(savedProduct);
     }
 
     @Test
     @DisplayName("existing id")
     public void delete_exist() {
-        Product product = new Product("abc", 123, "www.test.com");
-        repository.save(product);
+       ProductForm product = new ProductForm("abc", 123, "www.test.com");
+        Product savedProduct = repository.save(product);
 
-        boolean result = repository.delete(product.getId());
+         boolean result = repository.delete(savedProduct.getId());
 
         assertThat(result).isEqualTo(true);
     }
@@ -42,7 +41,7 @@ public class MemoryProductRepositoryTest {
     @Test
     @DisplayName("nonexistent id")
     public void delete_nonexistent() {
-        Product product = new Product("abc", 123, "www.test.com");
+         ProductForm product = new ProductForm("abc", 123, "www.test.com");
         repository.save(product);
 
         boolean result = repository.delete(0L);
@@ -52,11 +51,12 @@ public class MemoryProductRepositoryTest {
 
     @Test
     public void edit() {
-        Product product1 = new Product("abc", 123, "www.test.com");
-        repository.save(product1);
+       ProductForm product1 = new ProductForm("abc", 123, "www.test.com");
+        Product savedProduct1 = repository.save(product1);
 
-        boolean result = repository.edit(product1.getId(), new Product("def", 123, "www.test.com"));
-        Product product2 = repository.findById(product1.getId());
+          boolean result = repository.edit(savedProduct1.getId(),
+            new ProductForm("def", 123, "www.test.com"));
+        Product product2 = repository.findById(savedProduct1.getId());
 
         assertThat(result).isEqualTo(true);
         assertThat(product2.getName()).isEqualTo("def");
@@ -64,8 +64,8 @@ public class MemoryProductRepositoryTest {
 
     @Test
     public void findAll() {
-        Product product1 = new Product("abc", 123, "www.test1.com");
-        Product product2 = new Product("def", 456, "www.test2.com");
+        ProductForm product1 = new ProductForm("abc", 123, "www.test1.com");
+        ProductForm product2 = new ProductForm("def", 456, "www.test2.com");
 
         repository.save(product1);
         repository.save(product2);
