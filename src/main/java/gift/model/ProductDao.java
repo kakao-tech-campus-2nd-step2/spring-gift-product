@@ -34,7 +34,17 @@ public class ProductDao {
     }
 
     public Product findById(Long id) {
-        return null;
+        var sql = "select id, name, price, imageUrl from product where id = ?";
+        return jdbcTemplate.queryForObject(
+            sql,
+            (resultSet, rowNum) -> new Product(
+                resultSet.getLong("id"),
+                resultSet.getString("name"),
+                resultSet.getInt("price"),
+                resultSet.getString("imageUrl")
+            ),
+            id
+        );
     }
 
     public List<Product> findAll() {
