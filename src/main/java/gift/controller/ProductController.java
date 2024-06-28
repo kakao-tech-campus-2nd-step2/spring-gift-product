@@ -1,5 +1,7 @@
-package gift;
+package gift.controller;
 
+import gift.model.ProductModel;
+import gift.service.ProductService;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
