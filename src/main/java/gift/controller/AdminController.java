@@ -30,4 +30,9 @@ public class AdminController {
         model.addAttribute("product", productService.getProduct(id));
         return "product";
     }
+
+    @GetMapping("/new")
+    public String addProduct() {
+        return "new-product";
+    }
 }

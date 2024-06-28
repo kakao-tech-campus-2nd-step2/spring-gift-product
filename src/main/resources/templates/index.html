@@ -9,7 +9,9 @@
 <body>
     <div class="header">
         <span id="title">Manage Product</span>
-        <button id="product-add-btn">Add New Product</button>
+        <a th:href="@{/admin/products/new}">
+            <button class="btn primary-btn">Add New Product</button>
+        </a>
     </div>
     <table class="product-list">
         <tr>
