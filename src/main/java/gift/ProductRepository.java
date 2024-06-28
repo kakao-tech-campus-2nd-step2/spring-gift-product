@@ -21,3 +21,14 @@ public class ProductRepository {
             .usingGeneratedKeyColumns("id");
     }
 
+    public List<Product> findAll() {
+        return jdbcTemplate.query("SELECT * FROM products", (rs, rowNum) -> {
+            Product product = new Product();
+            product.setId(rs.getLong("id"));
+            product.setName(rs.getString("name"));
+            product.setPrice(rs.getInt("price"));
+            product.setImageUrl(rs.getString("image_url"));
+            return product;
+        });
+    }
+
