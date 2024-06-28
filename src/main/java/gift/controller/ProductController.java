@@ -1,114 +1,114 @@
 package gift.controller;
 
-import gift.dto.Product;
+import gift.model.Product;
+import gift.service.ProductService;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class ProductController {
 
-    private final Map<Long, Product> products = new HashMap<>();
+    public final ProductService productService;
 
-    @GetMapping("/api/products")
-    public String getAllProducts(Model model) {
-        if (!products.isEmpty()) {
-            model.addAttribute("productDto", products.values());
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
+
+    @GetMapping("/")
+    public String retreiveAllProducts(Model model) {
+        if (!productService.isProductsRepositoryEmpty()) {
+            model.addAttribute("productDto", productService.getAllProducts().values());
         }
         return "getproducts";
     }
 
-    @GetMapping("/api/products/{id}")
-    public String getProduct(@PathVariable(name = "id") Long id, Model model) {
-        if (products.isEmpty()) {
+    @GetMapping("/product/{id}")
+    public String retreiveProduct(@PathVariable(name = "id") Long id, Model model) {
+        var productData = productService.getProduct(id);
+        if (productData != null) {
             return "Empty Products";
         }
-        if (!products.containsKey(id)) {
+        if (!productService.getAllProducts().containsKey(id)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build().toString();
         }
-        var product = products.get(id);
+        var product = productService.getAllProducts().get(id);
         model.addAttribute("productDto", product);
         return "getproducts";
     }
 
-    @GetMapping("/api/products/add/form")
-    public String addProductForm(Model model) {
+    @GetMapping("/product/add/form")
+    public String registerProductForm(Model model) {
         model.addAttribute("productDto", new Product());
         return "addproductform";
     }
 
-    @PostMapping("/api/products/add")
-    public String addProduct(@ModelAttribute("productDto") Product product,
+    @PostMapping("/product/add")
+    public String registerProduct(@ModelAttribute("productDto") Product product,
         HttpServletResponse response) {
         var newProduct = new Product(product.getId(), product.getName(), product.getPrice(),
             product.getImageUrl());
         if (handleBadAttribute(response, product)) {
             return null;
         }
-        if (handleAlreadyExist(products.containsKey(product.getId()), response)) {
+        if (handleAlreadyExist(response, product)) {
             return null;
         }
-        products.put(newProduct.getId(), newProduct);
-        return "redirect:/api/products";
+        productService.addProduct(newProduct);
+        return "redirect:/";
     }
 
-    @GetMapping("/api/products/update/form")
+    @GetMapping("/product/update/form")
     public String updateProductForm(Model model) {
         model.addAttribute("productDto", new Product());
         return "updateproductform";
     }
 
 
-    @PostMapping("/api/products/update")
-    public String updateProductsName(@ModelAttribute(name = "productDto") Product product,HttpServletResponse httpServletResponse
-        ) {
+    @PostMapping("/product/update")
+    public String updateProductsName(@ModelAttribute(name = "productDto") Product product,
+        HttpServletResponse httpServletResponse
+    ) {
         if (handleBadAttribute(httpServletResponse, product)) {
             return null;
         }
-        if (handleNonExistProduct(product, httpServletResponse)) {
+        if (handleNonExistProduct(httpServletResponse, product)) {
             return null;
         }
-        var updatedProduct = products.get(product.getId());
-        updatedProduct.setName(product.getName());
-        updatedProduct.setPrice(product.getPrice());
-        updatedProduct.setImageUrl(product.getImageUrl());
-        return "redirect:/api/products";
+        productService.updateProductDetail(product);
+        return "redirect:/";
     }
 
 
-    @GetMapping("/api/products/delete/form")
+    @GetMapping("/product/delete/form")
     public String deleteProductForm(Model model) {
         model.addAttribute("productDto", new Product());
         return "deleteproduct";
     }
 
-    @GetMapping("/api/products/delete")
+    @GetMapping("/product/delete")
     public String deleteProduct(@ModelAttribute(name = "productDto") Product product,
         HttpServletResponse httpServletResponse) {
-        if (handleNonExistProduct(product, httpServletResponse)) {
+        if (handleNonExistProduct(httpServletResponse, product)) {
             return null;
         }
-        products.remove(product.getId());
-        return "redirect:/api/products";
+        productService.deleteProductById(product.getId());
+        return "redirect:/";
     }
 
-    private boolean handleNonExistProduct(Product product, HttpServletResponse httpServletResponse) {
-        if (!products.containsKey(product.getId())) {
+    private boolean handleNonExistProduct(HttpServletResponse httpServletResponse,
+        Product product) {
+        if (!productService.isExistProduct(product)) {
             httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
             try {
-                httpServletResponse.sendRedirect("/api/products");
+                httpServletResponse.sendRedirect("/");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -117,11 +117,11 @@ public class ProductController {
         return false;
     }
 
-    private boolean handleAlreadyExist(boolean containsProductKey, HttpServletResponse response) {
-        if (containsProductKey) {
+    private boolean handleAlreadyExist(HttpServletResponse response, Product product) {
+        if (productService.isExistProduct(product)) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             try {
-                response.sendRedirect("/api/products");
+                response.sendRedirect("/");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -131,13 +131,13 @@ public class ProductController {
     }
 
     private boolean handleBadAttribute(HttpServletResponse response, Product newProduct) {
-        if (newProduct.getId() == null|| newProduct.getId() < 0 || newProduct.getName().isEmpty()
+        if (newProduct.getId() == null || newProduct.getId() < 0 || newProduct.getName().isEmpty()
             || newProduct.getPrice() < 0
             || newProduct.getImageUrl().isEmpty()) {
             // BAD_REQUEST임을 알리는 동시에 다시 리다이렉트 시킬 수 있다.
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             try {
-                response.sendRedirect("/api/products");
+                response.sendRedirect("/");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
