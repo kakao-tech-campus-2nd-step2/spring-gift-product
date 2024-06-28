@@ -50,7 +50,8 @@ public class ProductRepository {
         product.setId(newId.longValue());
     }
 
-    public void update(Product product) {
+    public void update(Long id, Product product) {
+        product.setId(id);
         jdbcTemplate.update("UPDATE products SET name = ?, price = ?, imageUrl = ? WHERE id = ?",
                 product.getName(), product.getPrice(), product.getImageUrl(), product.getId());
     }

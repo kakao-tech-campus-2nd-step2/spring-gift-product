@@ -7,15 +7,15 @@ import org.springframework.stereotype.Controller;
 @Controller
 @RequestMapping("/api/products")
 public class ProductController {
-    private final ProductService productService;
+    private final ProductRepository productRepository;
 
-    public ProductController(ProductService productService) {
-        this.productService = productService;
+    public ProductController(ProductRepository productRepository) {
+        this.productRepository = productRepository;
     }
 
     @GetMapping
     public String getAllProducts(Model model) {
-        model.addAttribute("products", productService.getAllProducts());
+        model.addAttribute("products", productRepository.findAll());
         return "index";//index.html로 매핑(메인 화면)
     }
 
@@ -27,26 +27,26 @@ public class ProductController {
 
     @PostMapping("/add")
     public String addProduct(@ModelAttribute Product product) {
-        productService.addProduct(product);
+        productRepository.save(product);
         return "redirect:/api/products";//상품 추가 끝나면 메인페이지로~
     }
 
     @GetMapping("/edit/{id}")
     public String editProductForm(@PathVariable Long id, Model model) {
-        Product product = productService.getProductById(id);
+        Product product = productRepository.findById(id);
         model.addAttribute("product", product);
         return "editProduct";//editProduct.html로 매핑(상품 수정 화면)
     }
 
     @PostMapping("/edit/{id}")
     public String updateProduct(@PathVariable Long id, @ModelAttribute Product product) {
-        productService.modifyProduct(id, product);
+        productRepository.update(id, product);
         return "redirect:/api/products";//상품 수정 끝나면 메인페이지로~
     }
 
     @GetMapping("/delete/{id}")
     public String deleteProduct(@PathVariable Long id) {
-        productService.deleteProduct(id);
+        productRepository.deleteById(id);
         return "redirect:/api/products";//상품 삭제 끝나면 메인페이지로~
     }
 
