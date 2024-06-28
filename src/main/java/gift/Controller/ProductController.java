@@ -16,7 +16,7 @@ public class ProductController {
     private final Map<Long, Product> products = new HashMap<Long, Product>();
 
     @GetMapping("/products")
-    public String getMethod(Model model) {
+    public String getProduct(Model model) {
         List<Product> list = new LinkedList<>(products.values());
         model.addAttribute("products", list);
         return "products";
@@ -29,27 +29,28 @@ public class ProductController {
     }
 
     @PostMapping("/products")
-    public String postMethod(@ModelAttribute RequestProduct requestProduct) {
+    public String newProduct(@ModelAttribute RequestProduct requestProduct) {
         Product product = new Product(requestProduct.name(), requestProduct.price(), requestProduct.imageUrl());
         products.put(product.getId(), product);
         return "redirect:/api/products";
     }
 
-    @PutMapping("/products/{id}")
-    public ResponseEntity<String> putMethod(@RequestBody RequestProduct requestProduct, @PathVariable("id") Long id) {
-        boolean isExist = products.containsKey(id);
-        if (isExist) {
-            Product product = new Product(requestProduct.name(), requestProduct.price(), requestProduct.imageUrl());
-            Product original = products.get(id);
+    @GetMapping("/products/edit/{id}")
+    public String editProductForm(@PathVariable("id") Long id, Model model) {
+        Product product = products.get(id);
+        model.addAttribute("product", new RequestProduct(product.getName(), product.getPrice(), product.getImageUrl()));
+        model.addAttribute("id", id);
+            return "edit-product";
+    }
 
-            original.setName(product.getName());
-            original.setPrice(product.getPrice());
-            original.setImageUrl(product.getImageUrl());
+    @PostMapping("/products/edit/{id}")
+    public String updateProduct(@PathVariable("id") Long id, @ModelAttribute RequestProduct requestProduct) {
+        Product product = products.get(id);
+        product.setName(requestProduct.name());
+        product.setPrice(requestProduct.price());
+        product.setImageUrl(requestProduct.imageUrl());
 
-            return ResponseEntity.status(HttpStatus.OK).body("Update Complete.");
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product not found");
-
+        return "redirect:/api/products";
     }
 
     @DeleteMapping("/products/{id}")
