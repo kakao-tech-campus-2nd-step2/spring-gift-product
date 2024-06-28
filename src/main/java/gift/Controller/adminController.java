@@ -56,4 +56,9 @@ public class AdminController {
         return "redirect:/admin/list";
     }
 
+    @GetMapping("/delete/{id}")
+    public String deleteProduct(@PathVariable("id") Long id){
+        productDao.deleteProductById(id);
+        return "redirect:/admin/list";
+    }
 }
