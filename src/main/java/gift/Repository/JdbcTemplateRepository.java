@@ -3,6 +3,7 @@ package gift.Repository;
 import gift.Model.Item;
 import gift.Model.ItemDTO;
 import java.util.List;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -23,7 +24,14 @@ public class JdbcTemplateRepository implements ItemRepository{
 
     @Override
     public Item findById(Long id) {
-        return null;
+        try {
+            Item item = jdbcTemplate.queryForObject(
+                "select * from item where id =?",
+                new Object[]{id},
+                new BeanPropertyRowMapper<>(Item.class)
+            );
+            return item;
+        }catch (Exception e){return null;}
     }
 
     @Override
