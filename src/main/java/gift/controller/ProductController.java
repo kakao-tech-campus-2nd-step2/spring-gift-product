@@ -3,13 +3,12 @@ package gift.controller;
 import gift.Product;
 import gift.service.ProductService;
 import java.util.List;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -35,20 +34,24 @@ public class ProductController {
     }
 
     // 제품 추가
-    @PostMapping
-    public Product addProduct(@RequestBody Product product) {
-        return productService.addProduct(product);
+    @ResponseBody
+    @PostMapping("/add")
+    public String addProduct(@ModelAttribute Product product) {
+        productService.addProduct(product);
+        return "{status: success}";
     }
 
     // 제품 수정
-    @PutMapping("/{id}")
-    public Product updateProduct(@PathVariable Long id, @RequestBody Product productDetails) {
-        return productService.updateProduct(id, productDetails);
+    @PostMapping("/update/{id}")
+    public String updateProduct(@ModelAttribute Product product) {
+        productService.updateProduct(product);
+        return "{status: success}";
     }
 
     // 제품 삭제
-    @DeleteMapping("/{id}")
-    public void deleteProduct(@PathVariable Long id) {
+    @GetMapping("/delete/{id}")
+    public String deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
+        return "{status: success}";
     }
 }
