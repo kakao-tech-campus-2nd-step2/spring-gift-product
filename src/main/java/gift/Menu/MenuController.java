@@ -11,8 +11,11 @@ import org.springframework.ui.Model;
 @Controller
 @RequestMapping("/menu")
 public class MenuController {
-    MenuRepository menuRepository = new MenuRepository();
-    MenuService menuService = new MenuService(menuRepository);
+
+    private final MenuService menuService;
+    public MenuController(MenuService menuService){
+        this.menuService = menuService;
+    }
 
     @PostMapping
     public String save(
@@ -28,7 +31,6 @@ public class MenuController {
         model.addAttribute("menus", menus);
         return menus;
     }
-
 
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Long id, Model model) {
