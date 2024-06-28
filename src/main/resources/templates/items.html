@@ -5,6 +5,7 @@
 </head>
 <body>
     <h1>Product List</h1>
+    <a href="/add">상품 등록</a>
     <table>
         <thead>
         <tr>
@@ -16,10 +17,10 @@
         </thead>
         <tbody>
             <tr th:each="product : ${products}">
-                <td th:text="${product.id()}">1</td>
-                <td th:text="${product.name}">Product Name</td>
-                <td th:text="${product.price}">100</td>
-                <td th:text="${product.imgUrl}">imgUrl</td>
+                <td th:text="${product.id}"></td>
+                <td th:text="${product.name}"></td>
+                <td th:text="${product.price}"></td>
+                <td th:text="${product.imgUrl}"></td>
             </tr>
         </tbody>
     </table>
