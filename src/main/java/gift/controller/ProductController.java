@@ -89,11 +89,11 @@ public class ProductController {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable(value = "id") Long id) {
-        if (!productExists(id)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        Boolean result = dao.deleteProduct(id);
+        if (result) {
+            return ResponseEntity.noContent().build();
         }
-        products.remove(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
     /**

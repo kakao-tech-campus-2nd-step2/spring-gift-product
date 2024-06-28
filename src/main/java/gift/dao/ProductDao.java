@@ -53,5 +53,13 @@ public class ProductDao {
         return resultRowNum == 1;
     }
 
+    public Boolean deleteProduct(Long id) {
+        String sql = "DELETE FROM product WHERE id = ?";
+        int resultRowNum = this.jdbcClient.sql(sql)
+                .param(id)
+                .update();
+        return resultRowNum == 1;
+
+    }
 
 }
