@@ -1,8 +1,9 @@
 package gift.controller;
 
 import gift.model.Product;
-import gift.model.ProductRequest;
 import gift.model.ProductDao;
+import gift.model.ProductRequest;
+import gift.model.ProductDaoImpl;
 import gift.model.ProductResponse;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,8 @@ public class AdminController {
     @Autowired
     private ProductDao productDao;
 
-    AdminController(ProductDao productDao) {
-        this.productDao = productDao;
+    AdminController(ProductDaoImpl productDaoImpl) {
+        this.productDao = productDaoImpl;
     }
 
     @GetMapping("/admin/product")

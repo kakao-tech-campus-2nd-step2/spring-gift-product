@@ -1,8 +1,9 @@
 package gift.controller;
 
 import gift.model.Product;
-import gift.model.ProductRequest;
 import gift.model.ProductDao;
+import gift.model.ProductRequest;
+import gift.model.ProductDaoImpl;
 import gift.model.ProductResponse;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,8 +22,8 @@ public class ProductController {
     @Autowired
     private ProductDao productDao;
 
-    ProductController(ProductDao productDao) {
-        this.productDao = productDao;
+    ProductController(ProductDaoImpl productDaoImpl) {
+        this.productDao = productDaoImpl;
     }
 
     @PostMapping("/api/product")
