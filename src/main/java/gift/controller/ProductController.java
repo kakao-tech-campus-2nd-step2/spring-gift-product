@@ -35,7 +35,7 @@ public class ProductController {
 
     @PostMapping()
     public void addProduct(@RequestBody Product product){
-        productDao.InsertProduct(product);
+        productDao.insertProduct(product);
     }
 
     @PutMapping("/{id}")
