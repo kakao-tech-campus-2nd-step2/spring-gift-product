@@ -7,7 +7,11 @@ import org.springframework.ui.Model;
 
 @Controller
 public class ViewController {
-    ProductService productService = new ProductService();
+    private final ProductService productService;
+
+    public ViewController(ProductService productService) {
+        this.productService = productService;
+    }
 
     @RequestMapping(value = "/products")
     public String products(Model model) {
@@ -16,5 +20,4 @@ public class ViewController {
         model.addAttribute("products", products);
         return "product_list.html";
     }
-
 }
