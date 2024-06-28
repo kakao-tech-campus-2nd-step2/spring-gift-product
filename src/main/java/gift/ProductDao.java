@@ -12,7 +12,7 @@ public class ProductDao {
     }
     public void createProductTable() {
         var sql = """
-            create table product (
+            create table products (
               id bigint,
               productName varchar(255),
               price money,
@@ -24,11 +24,15 @@ public class ProductDao {
         jdbcTemplate.execute(sql);
     }
     public void insertProduct(Product product) {
-        var sql = "insert into customer (id, productName, price, imageUrl, amount) values (?, ?, ?, ?, ?)";
+        var sql = "insert into products (id, productName, price, imageUrl, amount) values (?, ?, ?, ?, ?)";
         jdbcTemplate.update(sql, product.id(), product.name(), product.price(),product.imageUrl(), product.amount());
     }
     public void deleteProduct(long id) {
-        var sql = "delete from product where id = ?";
+        var sql = "delete from products where id = ?";
         jdbcTemplate.update(sql, id);
+    }
+    public void updateProduct(Product product){
+        var sql = "update products set productName = ? , price = ?, imageUrl = ? amount = ? where id = ? ";
+        jdbcTemplate.update(sql, product.name(), product.price(),product.imageUrl(), product.amount(), product.id());
     }
 }
