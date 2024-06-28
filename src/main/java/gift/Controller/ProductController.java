@@ -22,17 +22,17 @@ public class ProductController {
         return "products";
     }
 
-    @GetMapping("/products/{id}") //조회
-    public Product single_getMethod(@PathVariable("id") Long id) {
-        Product data = products.get(id);
-
-        return data;
+    @GetMapping("/products/new")
+    public String newProductForm(Model model) {
+        model.addAttribute("product", new RequestProduct("", 0, ""));
+        return "new-product";
     }
 
     @PostMapping("/products")
-    public void postMethod(@RequestBody RequestProduct requestProduct) {
+    public String postMethod(@ModelAttribute RequestProduct requestProduct) {
         Product product = new Product(requestProduct.name(), requestProduct.price(), requestProduct.imageUrl());
         products.put(product.getId(), product);
+        return "redirect:/api/products";
     }
 
     @PutMapping("/products/{id}")
