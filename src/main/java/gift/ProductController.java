@@ -60,4 +60,12 @@ public class ProductController {
         }
     }
 
+    @PostMapping("/products")
+    public ResponseEntity<Void> addProduct(@RequestBody Product product) {
+        String sql = "INSERT INTO products(id, name, price, imageUrl) VALUES (?,?,?,?)";
+        jdbcTemplate.update(sql, product.id(), product.name(), product.price(), product.imageUrl());
+        return ResponseEntity.ok().build();
+    }
+
+
 }
