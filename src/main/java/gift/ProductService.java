@@ -26,12 +26,8 @@ public class ProductService {
     }
 
     public Product getProductById(long id) {
-//        select 로직으로 변경
-//        if(products.containsKey(id)) {
-//            return products.get(id);
-//        }
-//        throw new IllegalArgumentException("[ERROR] ID가 " + id + "인 상품을 찾을 수 없습니다.");
-        return null;
+        String sql = "SELECT * FROM products WHERE id = ?";
+        return jdbcTemplate.queryForObject(sql, productRowMapper(), id);
     }
 
     public void addProduct(Product product) {
