@@ -78,7 +78,7 @@ $(document).ready(function() {
   $('#add-button').click(function() {
     var name = $('#new-name').val();
     var price = $('#new-price').val();
-    var imageUrl = $('#modal-imageUrl').val();
+    var imageUrl = $('#new-imageUrl').val();
     addProduct(name, price, imageUrl);
   });
 
@@ -111,12 +111,12 @@ $(document).ready(function() {
     });
   }
 
-  function addProduct(name, price) {
+  function addProduct(name, price, imageUrl) {
     $.ajax({
       url: '/api/products',
       type: 'POST',
       contentType: 'application/json',
-      data: JSON.stringify({name: name, price: price}),
+      data: JSON.stringify({name: name, price: price, imageUrl:imageUrl}),
       success: function() {
         loadProducts();
         $('#new-name').val('');
