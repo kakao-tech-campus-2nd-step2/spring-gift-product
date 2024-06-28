@@ -24,7 +24,10 @@
         <td th:text="${product.imageUrl}">Image URL</td>
         <td>
             <a th:href="@{/api/products/edit/{id}(id=${product.id})}">Edit</a>
-            <a th:href="@{/api/products/delete/{id}(id=${product.id})}">Delete</a>
+            <form th:action="@{/api/products/delete/{id}(id=${product.id})}" method="post" style="display:inline;">
+                <input type="hidden" name="_method" value="delete"/>
+                <button type="submit">Delete</button>
+            </form>
         </td>
     </tr>
     </tbody>
