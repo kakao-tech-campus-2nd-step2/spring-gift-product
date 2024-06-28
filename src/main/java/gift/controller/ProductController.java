@@ -53,7 +53,18 @@ public class ProductController {
      */
     @PostMapping("/api/products")
     public String addProduct(Product product){
-        String sql = "INSERT INTO products(id, name, price, imageUrl) VALUES (?,?,?,?)";
+        String sql = "select id from products";
+        List<Long> idList = jdbcTemplate.query(
+                sql, (resultSet, rowNum) -> {
+                    Long id = resultSet.getLong("id");
+                    return id;
+                });
+        for (Long l : idList) {
+            if(l.equals(product.getId()))
+                return "redirect:/api/products";
+        }
+
+        sql = "INSERT INTO products(id, name, price, imageUrl) VALUES (?,?,?,?)";
         jdbcTemplate.update(sql, product.getId(), product.getName(), product.getPrice(), product.getImageUrl());
         return "redirect:/api/products";
     }
