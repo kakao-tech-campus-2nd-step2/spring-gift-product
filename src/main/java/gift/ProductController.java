@@ -1,35 +1,36 @@
 package gift;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.NoSuchElementException;
+import java.util.List;
 
 @RestController
 public class ProductController {
+    @Autowired
     //Product 클래스를 저장하는 해시맵
-    private final Map<Long, Product> products = new HashMap<>();
+    private final ProductDAO productDAO;
+    public ProductController(ProductDAO productDAO) {
+        this.productDAO = productDAO;
+        productDAO.create();
+        productDAO.insert(new Product(1, "test", 1, "test"));
+    }
 
-    // 접속 주소 : localhost:8080/api/products
-    @GetMapping("/api/products")
-    public java.util.Collection <Product> getAllProduct() {
-        // 해시맵에 포함된 모든 객체를 반환
-
-        return products.values();
+    @GetMapping("api/products")
+    public List<Product> getAllProducts() {
+        return productDAO.selectAll();
     }
 
     @GetMapping("/api/products/{id}")
     public Product getProduct(@PathVariable long id) {
-        // 주어진 id에 해당하는 객체를 반환
-        return products.get(id);
+        return productDAO.select(id);
     }
 
     @PostMapping("/api/products")
     public HttpStatus addProduct(@RequestBody Product product) {
         //json 입력을 받아 product 객체 만들고 해시맵에 저장
-        products.put(product.id(), product);
+        productDAO.insert(product);
         return HttpStatus.CREATED;
 
     }
@@ -38,10 +39,10 @@ public class ProductController {
     public HttpStatus removeProduct(@PathVariable long id) {
         // 입력된 id에 해당하는 해시맵 내 객체 삭제
         try {
-            products.remove(id);
+            productDAO.delete(id);
             return HttpStatus.NO_CONTENT;
         }
-        catch (NoSuchElementException e) {
+        catch (Exception e) {
             return HttpStatus.NOT_FOUND;
         }
     }
@@ -49,7 +50,7 @@ public class ProductController {
     @PutMapping("/api/products/{id}")
     public HttpStatus updateProduct(@PathVariable long id, @RequestBody Product product) {
         // 입력된 id에 해당하는 해시맵 내 객체 수정
-        products.put(id, product);
+        productDAO.update(id, product);
         return HttpStatus.OK;
     }
 }
