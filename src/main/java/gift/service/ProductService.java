@@ -1,49 +1,57 @@
 package gift.service;
 
 import gift.model.Product;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import javax.sql.DataSource;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class ProductService {
-    private final Map<Long, Product> products = new HashMap<>();
 
-    public ProductService() {
-        // 초기 데이터 추가
-        Product product = new Product.Builder()
-                .id(8146027L)
-                .name("아이스 카페 아메리카노 T")
-                .price(4500)
-                .imageUrl("https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg")
-                .build();
-        products.put(product.getId(), product);
+    private final JdbcTemplate jdbcTemplate;
+    private final SimpleJdbcInsert simpleJdbcInsert;
+    private final RowMapper<Product> productRowMapper = (rs, rowNum) -> new Product.Builder()
+            .id(rs.getLong("id"))
+            .name(rs.getString("name"))
+            .price(rs.getInt("price"))
+            .imageUrl(rs.getString("imageUrl"))
+            .build();
+
+    public ProductService(JdbcTemplate jdbcTemplate, DataSource dataSource) {
+        this.jdbcTemplate = jdbcTemplate;
+        this.simpleJdbcInsert = new SimpleJdbcInsert(dataSource)
+                .withTableName("product")
+                .usingGeneratedKeyColumns("id");
     }
 
     public List<Product> getAllProducts() {
-        return new ArrayList<>(products.values());
+        return jdbcTemplate.query("SELECT * FROM product", productRowMapper);
     }
 
     public void addProduct(Product product) {
-        products.put(product.getId(), product);
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("name", product.getName());
+        parameters.put("price", product.getPrice());
+        parameters.put("imageUrl", product.getImageUrl());
+        simpleJdbcInsert.execute(parameters);
     }
 
     public void updateProduct(Long id, Product updatedProduct) {
-        if (products.containsKey(id)) {
-            products.put(id, new Product.Builder()
-                    .id(id)
-                    .name(updatedProduct.getName())
-                    .price(updatedProduct.getPrice())
-                    .imageUrl(updatedProduct.getImageUrl())
-                    .build());
-        }
+        jdbcTemplate.update("UPDATE product SET name = ?, price = ?, imageUrl = ? WHERE id = ?",
+                updatedProduct.getName(), updatedProduct.getPrice(), updatedProduct.getImageUrl(), id);
     }
 
     public void deleteProduct(Long id) {
-        products.remove(id);
+        jdbcTemplate.update("DELETE FROM product WHERE id = ?", id);
     }
 
     public Product getProductById(Long id) {
-        return products.get(id);
+        return jdbcTemplate.queryForObject("SELECT * FROM product WHERE id = ?", productRowMapper, id);
     }
 }
