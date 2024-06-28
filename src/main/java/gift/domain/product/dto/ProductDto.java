@@ -5,6 +5,6 @@ import gift.domain.product.entity.Product;
 public record ProductDto(Long id, String name, int price, String imageUrl) {
 
     public Product toProduct() {
-        return new Product(null, name, price, imageUrl);
+        return new Product(id, name, price, imageUrl);
     }
 }
