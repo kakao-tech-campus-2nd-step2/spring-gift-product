@@ -14,4 +14,12 @@ public class ProductController {
 
     private final Map<Long, Product> products = new HashMap<>();
     private long nextId = 1; // 상품 ID 생성을 위한 변수
+
+    // 상품 추가
+    @PostMapping
+    public ResponseEntity<Product> addProduct(@RequestBody Product product) {
+        product.setId(nextId++);
+        products.put(product.getId(), product);
+        return ResponseEntity.ok(product);
+    }
 }
