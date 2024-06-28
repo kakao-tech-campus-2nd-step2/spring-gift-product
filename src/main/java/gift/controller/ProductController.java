@@ -6,6 +6,7 @@ import gift.domain.Product.ProductSimple;
 import gift.service.ProductService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,13 +25,13 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping
-    public List<ProductSimple> getProductList() {
-        return productService.getProductList();
+    public ResponseEntity<List<ProductSimple>> getProductList() {
+        return ResponseEntity.ok(productService.getProductList());
     }
 
     @GetMapping("/{id}")
-    public ProductDTO getProduct(@PathVariable long id) {
-        return productService.getProduct(id);
+    public ResponseEntity<ProductDTO> getProduct(@PathVariable long id) {
+        return ResponseEntity.ok(productService.getProduct(id));
     }
 
     @PostMapping
