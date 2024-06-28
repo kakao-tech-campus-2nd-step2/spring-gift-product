@@ -22,16 +22,11 @@ public class ProductH2DB implements ProductDB {
 
     @PostConstruct
     public void initialize() {
-        createOptionTable();
         createProductTable();
-        Product defaultProduct1 = new Product(1L, "Americano", 4500, "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg");
-        addProduct(defaultProduct1);
-        Product defaultProduct2 = new Product(2L, "Latte", 5500, "https://cdn.pixabay.com/photo/2023/07/08/13/17/coffee-8114518_1280.png");
-        addProduct(defaultProduct2);
-        Product defaultProduct3 = new Product(3L, "Sandwich", 7700, "https://cdn.pixabay.com/photo/2023/08/12/02/58/sandwich-8184642_1280.png");
-        addProduct(defaultProduct3);
-        Product defaultProduct4 = new Product(4L, "Cup Cake", 10000, "https://cdn.pixabay.com/photo/2023/05/31/14/41/ai-generated-8031574_1280.png");
-        addProduct(defaultProduct4);
+        addProduct(new Product(1L, "Americano", 4500, "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg"));
+        addProduct(new Product(2L, "Latte", 5500, "https://cdn.pixabay.com/photo/2023/07/08/13/17/coffee-8114518_1280.png"));
+        addProduct(new Product(3L, "Sandwich", 7700, "https://cdn.pixabay.com/photo/2023/08/12/02/58/sandwich-8184642_1280.png"));
+        addProduct(new Product(4L, "Cup Cake", 10000, "https://cdn.pixabay.com/photo/2023/05/31/14/41/ai-generated-8031574_1280.png"));
     }
 
     private void createProductTable() {
@@ -42,18 +37,6 @@ public class ProductH2DB implements ProductDB {
                   price int,
                   imageUrl varchar(255),
                   primary key (id)
-                )
-                """;
-        jdbcTemplate.execute(sql);
-    }
-
-    public void createOptionTable() {
-        var sql = """
-                create table option (
-                  productId bigint,
-                  optionNumber bigint,
-                  optionContent varchar(255),
-                  primary key (productId,optionNumber)
                 )
                 """;
         jdbcTemplate.execute(sql);
@@ -106,7 +89,6 @@ public class ProductH2DB implements ProductDB {
             product.setName(rs.getString("name"));
             product.setPrice(rs.getInt("price"));
             product.setImageUrl(rs.getString("imageUrl"));
-            // 필요한 다른 필드들도 여기에 설정
             return product;
         }
     }
