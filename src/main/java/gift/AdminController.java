@@ -37,4 +37,17 @@ public class AdminController {
         return "get";
     }
 
+    //DELETE
+    @GetMapping("/admin/delete")
+    public String adminDeletePage(){
+        return "delete";
+    }
+
+    @PostMapping("/admin/delete/submit")
+    public String submitDeleteProduct(@RequestParam("id") Long id, Model model){
+        productController.deleteProduct(id);
+        model.addAttribute("products", productController.getProducts());
+        return "get";
+    }
+
 }
