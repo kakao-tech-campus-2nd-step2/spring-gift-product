@@ -4,7 +4,9 @@ import gift.web.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -34,5 +36,11 @@ public class AdminController {
     @GetMapping("/create")
     public String createProduct(Model model) {
         return "create";
+    }
+
+    @PostMapping
+    public String createProduct(@ModelAttribute Product product) {
+        productService.createProduct(product);
+        return "redirect:/admin/products";
     }
 }
