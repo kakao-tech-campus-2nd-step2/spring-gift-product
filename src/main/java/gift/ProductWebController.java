@@ -50,4 +50,14 @@ public class ProductWebController {
         model.addAttribute("product", product);
         return "productEdit";
     }
+    @PostMapping("/products/edit/{id}")
+    public String editProduct(@RequestParam Long id, @RequestParam String name, @RequestParam int price, @RequestParam String imageUrl) {
+        Product product = new Product();
+        product.setName(name);
+        product.setPrice(price);
+        product.setImageUrl(imageUrl);
+
+        productService.updateProduct(id, product);
+        return "redirect:/products";
+    }
 }
