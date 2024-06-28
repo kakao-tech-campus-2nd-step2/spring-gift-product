@@ -1,121 +1,111 @@
 package gift;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import gift.controller.ProductController;
 import gift.dto.Product;
+import gift.service.ProductService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.List;
+
+import static org.hamcrest.Matchers.*;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(ProductController.class)  // 'ProductController' 클래스의 웹 계층을 테스트
+@SpringBootTest
+@AutoConfigureMockMvc
 public class ProductControllerTest {
 
     @Autowired
     private MockMvc mockMvc;  //Spring MockMvc 프레임워크를 사용하여 HTTP 요청 및 응답 테스트
 
     @Autowired
-    private ObjectMapper objectMapper;
+    private ProductService productService;
 
     private Product sampleProduct;
 
+
     @BeforeEach
     void setUp() {
-        sampleProduct = new Product(
-                null,
-                "아이스 카페 아메리카노 T",
-                4500L,
-                "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg"
-        );
+        sampleProduct = new Product();
+        sampleProduct.setName("아이스 카페 아메리카노 T");
+        sampleProduct.setPrice(4500L);
+        sampleProduct.setImageUrl("https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg");
+        productService.addProduct(sampleProduct);
     }
 
     @Test
     @DisplayName("상품 조회 테스트")
     void getProductsTest() throws Exception {
-        mockMvc.perform(get("/api/products")  // 'api/products' 경로로 GET 요청
-                        .contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/api/products"))  // 'api/products' 경로로 GET 요청
                 .andExpect(status().isOk())  // 응답 상태 코드가 '200 OK'인지 검증
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON));  // 응답 컨텐츠 타입이 JSON인지 검증
+                .andExpect(model().attributeExists("products"))
+                .andExpect(model().attribute("products", hasItem(hasProperty("name", is("아이스 카페 아메리카노 T")))));
     }
 
     @Test
     @DisplayName("상품 추가 테스트")
     public void addProductTest() throws Exception {
-
-        String productJson = objectMapper.writeValueAsString(sampleProduct);  // 상품 객체를 JSON 문자열로 변환
-
         mockMvc.perform(post("/api/products")  // '/api/products' 경로로 POST 요청
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(productJson))
-                .andExpect(status().isCreated())  // 응답 상태 코드가 '201 CREATED'인지 검증
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                // 응답에서 상품 정보가 일치하는지 검증
-                .andExpect(jsonPath("$.id").isNumber())
-                .andExpect(jsonPath("$.name").value(sampleProduct.getName()))
-                .andExpect(jsonPath("$.price").value(sampleProduct.getPrice()))
-                .andExpect(jsonPath("$.imageUrl").value(sampleProduct.getImageUrl()));
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .param("name", "복숭아 아이스티 T")
+                        .param("price", "5900")
+                        .param("imageUrl", "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/api/products"));
+
+        mockMvc.perform(get("/api/products"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("products"))
+                .andExpect(model().attribute("products", hasItem(hasProperty("name", is("복숭아 아이스티 T")))));
     }
 
     @Test
     @DisplayName("상품 수정 테스트")
-    void updateProductTest() throws Exception {
+    void editProductTest() throws Exception {
 
-        String productJson = objectMapper.writeValueAsString(sampleProduct);
+        Product existingProduct = productService.getAllProducts().get(0);
 
-        // 상품 추가
-        String response = mockMvc.perform(post("/api/products")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(productJson))
-                .andExpect(status().isCreated())
-                .andReturn()
-                .getResponse()
-                .getContentAsString();
+        mockMvc.perform(post("/api/products/" + existingProduct.getId())
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .param("name", "아이스 카페 아메리카노 T Updated")
+                        .param("price", "3000")
+                        .param("imageUrl", "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/api/products"));
 
-        Product addedProduct = objectMapper.readValue(response, Product.class);
-
-        // 추가되어 있는 상품 정보 변경
-        addedProduct.setName("아이스 카페 아메리카노 T updated");
-        addedProduct.setPrice(5000L);
-        String updatedProductJson = objectMapper.writeValueAsString(addedProduct);
-
-        mockMvc.perform(put("/api/products/" + addedProduct.getId())
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(updatedProductJson))
+        mockMvc.perform(get("/api/products"))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                // 변경된 상품 정보가 일치하는지 확인
-                .andExpect(jsonPath("$.id").value(addedProduct.getId()))
-                .andExpect(jsonPath("$.name").value("아이스 카페 아메리카노 T updated"))
-                .andExpect(jsonPath("$.price").value(5000L));
+                .andExpect(model().attributeExists("products"))
+                .andExpect(model().attribute("products", hasItem(hasProperty("name", is("아이스 카페 아메리카노 T Updated")))));
     }
 
     @Test
     @DisplayName("상품 삭제 테스트")
     void deleteProductTest() throws Exception {
 
-        String productJson = objectMapper.writeValueAsString(sampleProduct);
+        Product existingProduct = productService.getAllProducts().get(0);
+        String productName = existingProduct.getName();
 
-        // 상품 추가
-        String response = mockMvc.perform(post("/api/products")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(productJson))
-                .andExpect(status().isCreated())
-                .andReturn()
-                .getResponse()
-                .getContentAsString();
+        mockMvc.perform(get("/api/products/" + existingProduct.getId())
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/api/products"));
 
-        Product addedProduct = objectMapper.readValue(response, Product.class);
-
-        // 추가되어 있는 상품 삭제
-        mockMvc.perform(delete("/api/products/" + addedProduct.getId())  // '/api/products/{id}' 경로로 DELETE 요청
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNoContent());
+        mockMvc.perform(get("/api/products"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("products"))
+                .andDo(result -> {
+                    List<Product> products = (List<Product>) result.getModelAndView().getModel().get("products");
+                    products.forEach(System.out::println); // 디버깅을 위해 출력
+                })
+                .andExpect(model().attribute("products", not(hasItem(hasProperty("name", is(productName))))));
 
     }
 
