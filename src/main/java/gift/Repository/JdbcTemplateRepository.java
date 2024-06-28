@@ -17,7 +17,8 @@ public class JdbcTemplateRepository implements ItemRepository{
 
     @Override
     public void insert(ItemDTO itemDTO) {
-
+        var sql = "insert into item (name,price,imgUrl) values (?,?,?)";
+        jdbcTemplate.update(sql,itemDTO.getName(),itemDTO.getPrice(),itemDTO.getImgUrl());
     }
 
     @Override
