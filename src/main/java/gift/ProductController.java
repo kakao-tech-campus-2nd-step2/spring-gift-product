@@ -1,12 +1,8 @@
 package gift;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,15 +15,15 @@ import org.springframework.ui.Model;
 @RequestMapping("/admin")
 public class ProductController {
 
-    private final Map<Long, Product> products = new HashMap<>();
+    private ProductDao productDao;
 
-    public ProductController(){
-        products.put(814607L, new Product(814607, "아이스 카페 아메리카노 T", 4500, "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg"));
+    public ProductController(ProductDao productDao){
+        this.productDao = productDao;
     }
 
     @GetMapping("")
     public String getProducts(Model model) {
-        List<Product> productList = new ArrayList<>(products.values());
+        List<Product> productList = productDao.getProducts();
         model.addAttribute("products", productList);
         return "admin_page";
     }
@@ -39,14 +35,13 @@ public class ProductController {
 
     @PostMapping("/new")
     public String addProduct(@ModelAttribute Product product, Model model) {
-        Product newProduct = new Product(product.id(), product.name(), product.price(), product.imageUrl());
-        products.put(product.id(), newProduct);
+        productDao.insertProduct(product);
         return "redirect:/admin";
     }
 
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
-        Product product = products.get(id);
+        Product product = productDao.getProduct(id);
         if (product != null) {
             model.addAttribute("product", product);
             return "edit_product_form";
@@ -56,13 +51,13 @@ public class ProductController {
 
     @PostMapping("/edit/{id}")
     public String updateProduct(@PathVariable Long id, @ModelAttribute Product updatedProduct) {
-        products.put(id, updatedProduct);  
+        productDao.updateProduct(updatedProduct);
         return "redirect:/admin";
     }
 
     @PostMapping("/delete/{id}")
     public String deleteProduct(@PathVariable Long id) {
-        products.remove(id);
+        productDao.deleteProduct(id);
         return "redirect:/admin";
     }
 }
