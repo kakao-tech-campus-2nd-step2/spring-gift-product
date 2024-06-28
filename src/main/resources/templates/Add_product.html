@@ -9,7 +9,7 @@
 <form th:action="@{/admin/products}" th:object="${product}" method="post">
   <div>
     <label for="name">Id:</label>
-    <input type="text" id="id" th:field="*{id}" required />
+    <input type="number" id="id" th:field="*{id}" required />
   </div>
   <div>
     <label for="name">Name:</label>
