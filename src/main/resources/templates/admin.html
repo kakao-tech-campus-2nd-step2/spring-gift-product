@@ -1,11 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Admin</title>
 </head>
 <body>
     <h1>Admin Page</h1>
-
+    <div>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>이미지</th>
+                <th>상품명</th>
+                <th>가격</th>
+            </tr>
+            <tr th:each ="product : ${products}">
+                <td th:text="${product.id}"></td>
+                <td>
+                    <img th:src="${product.imageUrl}" th:alt="${product.name} + ' image'"/>
+                </td>
+                <td th:text="${product.name}"></td>
+                <td th:text="${product.price}"></td>
+            </tr>
+        </table>
+    </div>
 </body>
 </html>

@@ -2,11 +2,13 @@ package gift.repository;
 
 import gift.model.ProductRecord;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
+@Repository
 public class ProductDAO {
     private Map<Long, ProductRecord> records = new HashMap<Long, ProductRecord>();
     private long idTraker = 1;

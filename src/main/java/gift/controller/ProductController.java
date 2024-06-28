@@ -2,6 +2,7 @@ package gift.controller;
 
 import gift.model.ProductRecord;
 import gift.repository.ProductDAO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -11,7 +12,8 @@ import java.util.NoSuchElementException;
 
 @RestController
 public class ProductController {
-    private ProductDAO productDAO = new ProductDAO();
+    @Autowired
+    private ProductDAO productDAO;
 
     @GetMapping("/products")
     public ProductRecord[] getAllProducts() {
