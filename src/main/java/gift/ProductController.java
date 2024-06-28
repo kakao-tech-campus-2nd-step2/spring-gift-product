@@ -1,5 +1,6 @@
 package gift;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -16,15 +17,15 @@ public class ProductController {
     public ProductController(ProductDao productDao) {
         this.productDao = productDao;
     }
-    private final Map<Long, Product> products = new HashMap<>();
+    //private final Map<Long, Product> products = new HashMap<>();
 
     // 새로운 상품 등록(DB 연동)
     @PostMapping
     public ResponseEntity<String> setProduct(@RequestBody Product product) {
-        if (!products.containsKey(product.id())) {
+        try {
             productDao.insertProduct(product);
             return ResponseEntity.ok("Add");
-        } else {
+        } catch (DataIntegrityViolationException ex) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("already");
         }
     }
