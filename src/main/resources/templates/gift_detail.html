@@ -31,7 +31,7 @@
     <div class="gift-details">
         <p><strong>이름:</strong> <span th:text="${gift.name}"></span></p>
         <p><strong>가격:</strong> <span th:text="${gift.price}"></span> 원</p>
-        <p><strong>이미지 URL:</strong> <a th:href="${gift.imageUrl}" th:text="${gift.imageUrl}" target="_blank"></a></p>
+        <p><strong>이미지 URL:</strong> <span th:text="${gift.imageUrl}" target="_blank"></span></p>
     </div>
     <div class="text-center mt-4">
         <a th:href="@{|/admin/modify/${gift.id}|}" class="btn btn-warning">상품 수정</a>

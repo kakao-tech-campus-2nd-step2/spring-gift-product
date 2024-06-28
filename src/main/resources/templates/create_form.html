@@ -23,9 +23,12 @@
         .form-control {
             margin-bottom: 15px;
         }
-        .btn-submit {
-            display: block;
-            width: 100%;
+        .btn-container {
+            display: flex;
+            gap: 10px;
+        }
+        .btn-container .btn {
+            flex: 1;
         }
     </style>
 </head>
@@ -46,7 +49,10 @@
                 <label for="imageUrl" class="form-label">이미지 URL</label>
                 <input type="text" name="imageUrl" id="imageUrl" class="form-control">
             </div>
-            <input type="submit" value="저장하기" class="btn btn-primary btn-submit">
+            <div class="btn-container">
+                <input type="submit" value="저장하기" class="btn btn-primary">
+                <a th:href="@{/admin}" class="btn btn-secondary">메인으로</a>
+            </div>
         </form>
     </div>
 </div>
