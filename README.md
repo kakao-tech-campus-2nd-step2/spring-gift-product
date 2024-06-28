@@ -16,7 +16,7 @@
 
 ### 모델 설계
 
-- [ ] 상품을 표현하는 객체를 생성하기
+- [x] 상품을 표현하는 객체를 생성하기
   - 상품의 구성요소
     - id: int
     - name: string
@@ -69,7 +69,9 @@
     "price": 4500,
     "imageUrl": "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg"
   },
-  {}, ...
+  { "id": 1, "name":  "name", "price": 2000, "imageUrl": "url" },
+  {},
+  {}
 ]
 ```
 
