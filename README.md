@@ -16,3 +16,14 @@
 Thymeleaf 기반 서버 사이드 렌더링 관리자 화면 구현
 - 메인페이지 -> 현재 상품리스트 나열
   - add, delete, update 버튼
+---
+### step 3
+Spring Jdbc 기반 DB 적용
+- DB ERD
+  - Product
+    - id(PK): BIGINT(AUTO_INCREMENT)
+    - name: VARCHAR(255)(NOT NULL)
+    - price: BIGINT(NOT NULL)
+    - imageurl: VARCHAR(2083)(NOT NULL)
+- 테이블 생성 쿼리
+- Product CRUD 쿼리
