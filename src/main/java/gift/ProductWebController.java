@@ -36,4 +36,11 @@ public class ProductWebController {
         productService.createProduct(product);
         return "redirect:/products";
     }
+    @PostMapping("/products/delete")
+    public String deleteProduct(@RequestParam List<Long> productIds) {
+        for (Long id : productIds) {
+            productService.deleteProduct(id);
+        }
+        return "redirect:/products";
+    }
 }
