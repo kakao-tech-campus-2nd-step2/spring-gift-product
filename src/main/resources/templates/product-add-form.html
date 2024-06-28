@@ -5,11 +5,11 @@
 </head>
 <body>
   <h1>Add New Product</h1>
-  <form th:action="@{'/admin/add'}" method="post">
+  <form onsubmit="addProduct();">
     <input type="hidden"/>
     <div>
       <label for="id">ID</label>
-      <input type="text" id="id" required/>
+      <input type="number" id="id" required/>
     </div>
     <div>
       <label for="name">Name</label>
@@ -28,5 +28,34 @@
       <a th:href="@{/admin}">Cancel</a>
     </div>
   </form>
+<script>
+    function addProduct() {
+        const id = document.getElementById('id').value;
+        const name = document.getElementById('name').value;
+        const price = parseInt(document.getElementById('price').value);
+        const imageUrl = document.getElementById('imageUrl').value;
+
+        fetch('/api/products', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                id: id,
+                name: name,
+                price: price,
+                imageUrl: imageUrl })
+        })
+            .then(response => response.json())
+            .then(data => {
+                alert('상품이 추가되었습니다.');
+                window.location.href = '/admin';
+            })
+            .catch(error => {
+                console.error('Error: ', error);
+                alert('상품 추가 중 오류가 발생했습니다.');
+            });
+    }
+</script>
 </body>
 </html>
