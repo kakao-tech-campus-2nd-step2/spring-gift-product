@@ -1,10 +1,12 @@
 package gift.product.domain;
 
 import gift.product.application.command.ProductCreateCommand;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,9 +19,12 @@ public class ProductRepositoryTest {
     @Autowired
     private ProductRepository productRepository;
 
-    @BeforeEach
-    public void setUp() {
-        productRepository.findAll().clear();
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
+    @AfterEach
+    public void endUp() {
+        jdbcTemplate.execute("TRUNCATE TABLE product");
     }
 
     @Test
