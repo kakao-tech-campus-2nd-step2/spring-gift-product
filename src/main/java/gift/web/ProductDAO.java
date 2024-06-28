@@ -60,15 +60,21 @@ public class ProductDAO {
     public void updateProduct(Product product) {
         var sql = "update products set name = ?, price = ?, image_url = ? where id = ?";
         jdbcTemplate.update(
+            sql,
             product.name(),
             product.price(),
-            product.imageUrl()
+            product.imageUrl(),
             product.id()
         );
     }
 
-    public void deleteProductById(long id) {
-        var sql = "delete from products where id = ?";
-        jdbcTemplate.update(sql, id);
+    public Product deleteProductById(long id) {
+        Product product = selectProductById(id);
+        if (product != null) {
+            var sql = "delete from products where id = ?";
+            jdbcTemplate.update(sql, id);
+            return product;
+        }
+        return null;
     }
 }
