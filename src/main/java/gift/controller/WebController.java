@@ -12,7 +12,11 @@ import java.util.List;
 
 @Controller
 public class WebController {
-    private final ProductService productService = new ProductService();
+    private final ProductService productService;
+
+    public WebController(ProductService productService) {
+        this.productService = productService;
+    }
 
     @GetMapping("/lists")
     public String itemList(Model model){
