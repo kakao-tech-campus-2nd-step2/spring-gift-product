@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>Add New Product</h1>
-<form action="#" th:action="@{/api/products/add}" th:object="${productDto}" method="post">
+<form action="#" th:action="@{/product/add}" th:object="${productDto}" method="post">
   <div>
     <label for="id">ID:</label>
     <input type="text" id="id" th:field="*{id}" placeholder="Enter product ID" />

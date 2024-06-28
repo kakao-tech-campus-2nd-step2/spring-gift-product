@@ -8,7 +8,7 @@
 </head>
 <body>
 <h1>Update Product</h1>
-<form th:action="@{/api/products/update}" th:object="${productDto}" method="post">
+<form th:action="@{/product/update}" th:object="${productDto}" method="post">
   <input type="hidden" name="_method" value="put"/>
 
   <div>
