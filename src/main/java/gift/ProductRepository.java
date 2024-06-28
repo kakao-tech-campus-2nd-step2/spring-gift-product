@@ -28,7 +28,10 @@ public class ProductRepository {
                 resultSet.getInt("price"),
                 resultSet.getString("imgUrl")
             ));
-        return products.isEmpty() ? Optional.empty() : Optional.of(products.get(0));
+        if (products.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(products.get(0));
     }
 
     public List<Product> findAll() {
