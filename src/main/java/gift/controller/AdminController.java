@@ -28,4 +28,9 @@ public class AdminController {
 
         return "product_edit";
     }
+
+    @GetMapping("/products/add")
+    public String addProduct(Model model) {
+        return "product_add";
+    }
 }
