@@ -2,6 +2,7 @@ package gift.product.dao;
 
 import gift.product.model.ProductVo;
 import java.sql.Connection;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.client.RestClientAutoConfiguration;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -43,22 +44,15 @@ public class ProductDao {
         );
     }
 
-    public ProductVo selectProduct(Connection connection, long id) throws Exception {
-        var sql = "select id, name, price, imageUrl from product_list where id = ?";
-        var statement = connection.prepareStatement(sql);
-        statement.setLong(1, id);
-        var resultSet = statement.executeQuery();
-        ProductVo product = new ProductVo();
-        if(resultSet.next()) {
-            product.setId(resultSet.getLong("id"));
-            product.setName(resultSet.getString("name"));
-            product.setPrice(resultSet.getInt("price"));
-            product.setImageUrl(resultSet.getString("imageUrl"));
-            return product;
-        }
-        resultSet.close();
-        statement.close();
-        return null;
+    public List<ProductVo> searchProducts(String keyword) {
+        var sql = "select id, name, price, imageUrl from product_list where lower(name) like ?";
+        String searchKeyword = "%" + keyword.toLowerCase() + "%";
+        return jdbcTemplate.query(sql, (resultSet, rowNum) -> new ProductVo(
+            resultSet.getLong("id"),
+            resultSet.getString("name"),
+            resultSet.getInt("price"),
+            resultSet.getString("imageUrl")
+        ), searchKeyword);
     }
 
     public void deleteProduct(long id) {
