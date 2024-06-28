@@ -65,4 +65,15 @@ public class ProductDao {
         var sql = "delete from product_list where id = ?";
         jdbcTemplate.update(sql, id);
     }
+
+    public void modifyProduct(ProductVo productVo) {
+        var sql = "update product_list set name = ?, price = ?, imageUrl = ? where id = ?";
+        jdbcTemplate.update(
+            sql,
+            productVo.getName(),
+            productVo.getPrice(),
+            productVo.getImageUrl(),
+            productVo.getId()
+        );
+    }
 }
