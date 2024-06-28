@@ -1,5 +1,6 @@
 package gift.Controller;
 
+import gift.Model.Item;
 import gift.Model.ItemDTO;
 import gift.Service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,20 +34,32 @@ public class ItemController {
     }
 
     @PostMapping("/create")
-    public String createItem(@ModelAttribute("item") ItemDTO itemDTO){
+    public String createItem(Model model,@ModelAttribute("item") ItemDTO itemDTO){
+        if(itemDTO.getImgUrl().length() > 255){
+            model.addAttribute("item",itemDTO);
+            model.addAttribute("e","Url은 255를 넘을수 없습니다");
+            return "create";
+        }
         itemService.insertItem(itemDTO);
         return "redirect:/product/list";
     }
 
     @GetMapping("/update/{id}")
     public String getUpdateForm(@PathVariable Long id,Model model){
-        ItemDTO itemDTO = itemService.findItem(id);
+        Item item = itemService.findItem(id);
+        ItemDTO itemDTO = new ItemDTO(item.getName(),item.getPrice(),item.getImgUrl());
         model.addAttribute("item",itemDTO);
         model.addAttribute("id",id);
         return "update";
     }
+
     @PutMapping("/update/{id}")
-    public String updateItem(@PathVariable Long id,@ModelAttribute ItemDTO itemDTO){
+    public String updateItem(Model model,@PathVariable Long id,@ModelAttribute ItemDTO itemDTO){
+        if(itemDTO.getImgUrl().length() > 255){
+            model.addAttribute("item",itemDTO);
+            model.addAttribute("e","Url은 255를 넘을수 없습니다");
+            return "update";
+        }
         itemService.updateItem(itemDTO,id);
         return "redirect:/product/list";
     }
