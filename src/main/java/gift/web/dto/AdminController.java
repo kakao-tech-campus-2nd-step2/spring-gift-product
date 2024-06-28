@@ -34,13 +34,34 @@ public class AdminController {
     }
 
     @GetMapping("/create")
-    public String createProduct(Model model) {
+    public String createProductForm(Model model) {
         return "create";
     }
 
     @PostMapping
     public String createProduct(@ModelAttribute Product product) {
         productService.createProduct(product);
+        return "redirect:/admin/products";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String editProductForm(@PathVariable Long id, Model model) {
+        Product product = productService.getProductById(id);
+        if (product != null) {
+            model.addAttribute("product", product);
+        }
+        return "edit";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String editProduct(@PathVariable Long id, @ModelAttribute Product product) {
+        productService.updateProduct(id, product);
+        return "redirect:/admin/products";
+    }
+
+    @PostMapping("/delete/{id}")
+    public String deleteProduct(@PathVariable Long id) {
+        productService.deleteProduct(id);
         return "redirect:/admin/products";
     }
 }
