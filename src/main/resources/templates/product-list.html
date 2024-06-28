@@ -35,9 +35,9 @@
       <td th:text="${product.price}"></td>
       <td><img th:src="${product.imageUrl}" alt="Product Image" style="width:100px;height:auto;"/></td>
       <td>
-        <button class="btn btn-warning" th:onclick="'editProduct(' + ${product.id} + ')'">Edit</button>
+        <button class="btn btn-warning" th:onclick="'editProduct(' + ${product.id} + ')'">수정</button>
         <form th:action="@{/products/delete/{id}(id=${product.id})}" method="post" style="display:inline;">
-          <button type="submit" class="btn btn-danger">Delete</button>
+          <button type="submit" class="btn btn-danger">삭제</button>
         </form>
       </td>
     </tr>
