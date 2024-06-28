@@ -2,9 +2,9 @@ package gift.domain.product;
 
 public class Product {
     private Long id;
-    private final String name;
-    private final int price;
-    private final String imgUrl;
+    private String name;
+    private int price;
+    private String imgUrl;
 
     public Product(Long id, String name, int price, String imgUrl) {
         this.id = id;
@@ -40,4 +40,15 @@ public class Product {
         this.id = id;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
 }

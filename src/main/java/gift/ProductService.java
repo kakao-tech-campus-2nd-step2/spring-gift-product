@@ -22,4 +22,18 @@ public class ProductService {
     public ProductResponseDto findProduct(Long id){
         return new ProductResponseDto(productRepository.findById(id));
     }
+
+    public ProductResponseDto editProduct(Long id, ProductRequestDto request){
+        Product product = productRepository.findById(id);
+        product.setName(request.getName());
+        product.setPrice(request.getPrice());
+        product.setImgUrl(request.getImgUrl());
+        return new ProductResponseDto(product);
+    }
+
+    public void deleteProduct(Long id){
+        if (productRepository.deleteById(id) == null) {
+            throw new IllegalArgumentException();
+        }
+    }
 }

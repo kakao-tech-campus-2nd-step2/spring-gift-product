@@ -29,4 +29,8 @@ public class ProductRepository {
     public Product findById(Long id){
         return storage.get(id);
     }
+
+    public Product deleteById(Long id){
+        return storage.remove(id);
+    }
 }

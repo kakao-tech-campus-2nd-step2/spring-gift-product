@@ -3,6 +3,7 @@ package gift.controller;
 import gift.ProductService;
 import gift.dto.ProductRequestDto;
 import gift.dto.ProductResponseDto;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,8 +12,6 @@ import java.util.List;
 @RequestMapping("/api/products")
 public class ProductController {
     private final ProductService productService = new ProductService();
-    //TODO 상품 삭제 기능
-    //TODO 상품 수정 기능
 
     /**
      * 상품 등록 API
@@ -23,13 +22,26 @@ public class ProductController {
         productService.addProduct(requestDto);
     }
 
-    @GetMapping("")
+    @GetMapping("/all")
     public List<ProductResponseDto> getAll(){
         return productService.findAll();
     }
 
-    @GetMapping("")
-    public ProductResponseDto getProduct(@RequestParam("id") long id){
+    @GetMapping("/{id}")
+    public ProductResponseDto getProduct(@PathVariable("id") Long id){
         return productService.findProduct(id);
+    }
+
+    @PutMapping("/edit/{id}")
+    public ProductResponseDto editProduct(
+            @PathVariable("id") Long id,
+            @RequestBody ProductRequestDto request){
+        return productService.editProduct(id,request);
+    }
+
+    @DeleteMapping("/delete")
+    public HttpStatus deleteProduct(@RequestParam("id") Long id){
+        productService.deleteProduct(id);
+        return HttpStatus.NO_CONTENT;
     }
 }
