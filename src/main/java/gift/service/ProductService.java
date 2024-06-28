@@ -1,35 +1,38 @@
 package gift.service;
-
+import gift.dao.ProductDao;
 import gift.entity.Product;
-import gift.repository.ProductRepository;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ProductService {
-  @Autowired
-  private ProductRepository productRepository;
+  private ProductDao productDao;
 
-  public ProductService(ProductRepository productRepository) {
-    this.productRepository = productRepository;
+  @Autowired
+  public ProductService(ProductDao productDao) {
+    this.productDao = productDao;
   }
 
   public List<Product> findAll(){
-    return productRepository.findAll();
+    return productDao.findAll();
   }
 
-  public Optional<Product> findById(Long id){
-    return productRepository.findById(id);
+  public Product getProductById(int id) {
+    return productDao.findById(id);
   }
 
-  public Product save(Product product){
-    return productRepository.save(product);
+  public Product addProduct(Product product) {
+    productDao.save(product);
+    return product;
+  }
+  public Product updateProduct(Product product) {
+    productDao.update(product);
+    return product;
   }
 
-  public void deleteById(Long id){
-    productRepository.deleteById(id);
+  public void deleteProduct(int id) {
+    productDao.deleteById(id);
   }
 
 }
