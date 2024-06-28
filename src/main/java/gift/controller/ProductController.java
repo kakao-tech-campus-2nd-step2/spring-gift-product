@@ -4,9 +4,12 @@ import gift.dto.CreateProduct;
 import gift.dto.EditProduct;
 import gift.dto.ProductDTO;
 import gift.dto.ProductDetailDTO;
+import gift.entity.Product;
 import gift.service.ProductService;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -50,6 +53,15 @@ public class ProductController {
             @PathVariable Long id
     ) {
         return productService.deleteProduct(id);
+    }
+
+
+    //step2 타임리프 구현
+    @GetMapping("/index")
+    public String thMap(Model model){
+        Map<Long, ProductDTO> product= getAllProducts();
+        model.addAttribute("product",product);
+        return "static/index";
     }
 
 
