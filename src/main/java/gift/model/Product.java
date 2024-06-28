@@ -34,9 +34,23 @@ public class Product {
         this.id = id;
     }
 
+     public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
     public void setProduct(Product product) {
         this.name = product.getName();
         this.price = product.getPrice();
         this.imageUrl = product.imageUrl;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", price=" + price +
+            ", imageUrl='" + imageUrl + '\'' +
+            '}';
     }
 }
