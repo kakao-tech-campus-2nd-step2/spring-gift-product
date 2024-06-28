@@ -20,7 +20,7 @@ Thymeleaf 기반 서버 사이드 렌더링 관리자 화면 구현
 ### step 3
 Spring Jdbc 기반 DB 적용
 - DB ERD
-  - Product
+  - products
     - id(PK): BIGINT(AUTO_INCREMENT)
     - name: VARCHAR(255)(NOT NULL)
     - price: BIGINT(NOT NULL)
