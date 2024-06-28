@@ -7,6 +7,9 @@ public class ProductDTO {
     private Integer price;
     private String imageUrl;
 
+    public ProductDTO() {
+    }
+
     public ProductDTO(Long id, String name, Integer price, String imageUrl) {
         this.id = id;
         this.name = name;

@@ -5,6 +5,7 @@ import gift.DTO.ProductDTO;
 import gift.domain.Product;
 import gift.domain.Product.ProductSimple;
 import gift.mapper.ProductMapper;
+import gift.repository.ProductRepository;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,16 +19,18 @@ public class ProductService {
     @Autowired
     private ProductDB productDB;
     @Autowired
+    private ProductRepository productRepository;
+    @Autowired
     private ProductMapper productMapper;
 
     public List<ProductDTO> getProductList() {
-        return productDB.getList();
+        return productRepository.getList();
     }
 
     public List<ProductSimple> getSimpleProductList() {
         List<ProductSimple> list = new ArrayList<>();
 
-        for (ProductDTO p : productDB.getList()) {
+        for (ProductDTO p : productRepository.getList()) {
             list.add(new ProductSimple(p.getId(), p.getName()));
         }
 
@@ -35,29 +38,28 @@ public class ProductService {
     }
 
     public ProductDTO getProduct(Long id) {
-        if (!productDB.validateId(id)) {
+        if (!productRepository.validateId(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "아이디가 존재하지 않습니다.");
         }
-        return productDB.getProduct(id);
+        return productRepository.getProduct(id);
     }
 
     public void createProduct(Product.CreateProduct create) {
-        long index = productDB.getLastId();
-        productDB.setProduct(index, productMapper.createProduct(index, create));
+        productRepository.setProduct(create);
     }
 
     public void updateProduct(Product.UpdateProduct update, Long id) {
-        if (!productDB.validateId(id)) {
+        if (!productRepository.validateId(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "아이디가 존재하지 않습니다.");
         }
-        productDB.updateProduct(id, productMapper.updateProduct(id, update));
+        productRepository.updateProduct(id,update);
     }
 
     public void deleteProduct(Long id) {
-        if (!productDB.validateId(id)) {
+        if (!productRepository.validateId(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "아이디가 존재하지 않습니다.");
         }
-        productDB.removeProduct(id);
+        productRepository.removeProduct(id);
     }
 
 }
