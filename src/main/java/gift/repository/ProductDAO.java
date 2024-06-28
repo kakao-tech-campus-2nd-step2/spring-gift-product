@@ -78,7 +78,7 @@ public class ProductDAO {
     }
 
     private long getNewId() {
-        if (isRecordExist(idTraker)) {
+        while (isRecordExist(idTraker)) {
             idTraker++;
         }
 
