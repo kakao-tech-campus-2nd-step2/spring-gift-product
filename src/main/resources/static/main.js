@@ -46,3 +46,26 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+function deleteProduct(btn) {
+    console.log(btn.dataset.productId);
+    if(confirm("해당 상품을 삭제하시겠습니까?")) {
+        fetch('/api/products/' + btn.dataset.productId, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        }).then(response => {
+            if (response.ok) {
+                window.location.href = '/admin/products';
+            } else {
+                return response.json().then(errorData => {
+                    throw new Error(errorData.message || '상품을 삭제하지 못하였습니다.');
+                });
+            }
+        })
+        .catch(error => {
+            alert('Error: ' + error.message);
+        });
+    }
+}

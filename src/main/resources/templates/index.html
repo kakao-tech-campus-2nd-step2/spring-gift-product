@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Products</title>
+    <script src="/main.js" defer></script>
 </head>
 <body>
     <div class="header">
@@ -34,6 +35,7 @@
                 <a th:href="@{'/admin/products/edit/' + ${product.id}}">
                     <button class="btn primary-btn">Edit</button>
                 </a>
+                <button class="btn danger-btn" th:data-product-id="${product.id}" onclick="deleteProduct(this)">Delete</button>
             </td>
         </tr>
     </table>
