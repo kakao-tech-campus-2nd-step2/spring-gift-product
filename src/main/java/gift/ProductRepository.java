@@ -58,3 +58,7 @@ public class ProductRepository {
             product.getName(), product.getPrice(), product.getImageUrl(), product.getId());
     }
 
+    public void deleteById(Long id) {
+        jdbcTemplate.update("DELETE FROM products WHERE id = ?", id);
+    }
+}
