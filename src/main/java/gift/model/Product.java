@@ -1,5 +1,7 @@
 package gift.model;
 
+import java.beans.ConstructorProperties;
+
 public class Product {
 	
 	private Long id;
@@ -7,6 +9,7 @@ public class Product {
 	private int price;
 	private String imageUrl;
 	
+	@ConstructorProperties({"id", "name", "price", "imageUrl"})
 	public Product(Long id, String name, int price, String imageUrl) {
 		this.id = id;
 		this.name = name;
