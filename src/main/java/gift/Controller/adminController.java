@@ -44,5 +44,16 @@ public class AdminController {
         return "redirect:/admin/list";
     }
 
+    @GetMapping("/edit/{id}")
+    public String updateProductForm(@PathVariable("id") Long id, Model model){
+        model.addAttribute("product", productDao.selectProductById(id));
+        return "product-form";
+    }
+
+    @PostMapping("edit/{id}")
+    public String updateProduct(@PathVariable("id") Long id, @ModelAttribute Product product){
+        productDao.updateProductById(id, product);
+        return "redirect:/admin/list";
+    }
 
 }
