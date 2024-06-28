@@ -1,39 +1,45 @@
 package gift.service;
 
+import gift.dto.ProductRequestDto;
 import gift.model.Product;
+import gift.repository.ProductRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.List;
 
 @Service
 public class ProductService {
-    private final Map<Long, Product> products = new HashMap<>();
-    private Long nextId = 1L;
+
+    @Autowired
+    private ProductRepository productRepository;
 
     public List<Product> getAllProducts() {
-        return new ArrayList<>(products.values());
+        return productRepository.findAll();
     }
 
-    public Product getProductById(Long id) {
-        return products.get(id);
+    public void addProduct(ProductRequestDto productRequestDto) {
+        Product product = new Product();
+        product.setName(productRequestDto.getName());
+        product.setPrice(productRequestDto.getPrice());
+        product.setImageUrl(productRequestDto.getImageUrl());
+        productRepository.save(product);
     }
 
-    public Product addProduct(Product product) {
-        product.setId(nextId++);
-        products.put(product.getId(), product);
-        return product;
+    public Product getProductById(long id) {
+        return productRepository.findById(id).orElse(null);
     }
 
-    public Product updateProduct(Long id, Product updatedProduct) {
-        if (!products.containsKey(id)) {
-            return null;
-        }
-        updatedProduct.setId(id);
-        products.put(id, updatedProduct);
-        return updatedProduct;
+    public void updateProduct(long id, ProductRequestDto productRequestDto) {
+        Product product = new Product();
+        product.setId(id);
+        product.setName(productRequestDto.getName());
+        product.setPrice(productRequestDto.getPrice());
+        product.setImageUrl(productRequestDto.getImageUrl());
+        productRepository.update(product);
     }
 
-    public boolean deleteProduct(Long id) {
-        return products.remove(id) != null;
+    public void deleteProduct(long id) {
+        productRepository.deleteById(id);
     }
 }
