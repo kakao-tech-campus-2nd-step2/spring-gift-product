@@ -60,7 +60,7 @@ public class ProductController {
 
     @GetMapping
     public String readAll(Model model) {
-        List<Product> productList = new ArrayList<>(productRepository.values());
+        List<Product> productList = productDao.findAll();
         model.addAttribute("products", productList);
         return "products";
     }

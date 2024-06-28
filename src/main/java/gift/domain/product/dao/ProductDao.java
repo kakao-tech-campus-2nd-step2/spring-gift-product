@@ -1,6 +1,8 @@
 package gift.domain.product.dao;
 
+import gift.domain.product.dto.ProductDto;
 import gift.domain.product.entity.Product;
+import java.util.List;
 import java.util.Objects;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -26,5 +28,11 @@ public class ProductDao {
         product.setId(Objects.requireNonNull(keyHolder.getKey()).longValue());
 
         return product;
+    }
+
+    public List<Product> findAll() {
+        String sql = "SELECT * FROM product";
+
+        return jdbcClient.sql(sql).query(ProductDto.class).stream().map(ProductDto::toProduct).toList();
     }
 }
