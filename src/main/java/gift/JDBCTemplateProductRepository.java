@@ -37,12 +37,15 @@ public class JDBCTemplateProductRepository implements ProductRepository{
 
     @Override
     public List<Product> findAll() {
-        return null;
+        return jdbcTemplate.query("select * from product", productRowMapper());
     }
 
     @Override
     public Product findById(Long id) {
-        return null;
+        var sql = "select * from product where id = ?";
+        return jdbcTemplate.queryForObject(
+            sql, productRowMapper(), id
+        );
     }
 
     @Override
@@ -58,5 +61,17 @@ public class JDBCTemplateProductRepository implements ProductRepository{
     @Override
     public boolean existsById(Long id) {
         return false;
+    }
+
+    private RowMapper<Product> productRowMapper() {
+        return (rs, rowNum) -> {
+            Long id = rs.getLong("id");
+            String name = rs.getString("name");
+            Integer price = rs.getInt("price");
+            String imageUrl = rs.getString("imageUrl");
+            Product product = new Product(name, price, imageUrl);
+            product.setId(id);
+            return product;
+        };
     }
 }
