@@ -36,7 +36,10 @@ public class JdbcTemplateRepository implements ItemRepository{
 
     @Override
     public List<Item> findAll() {
-        return null;
+        return jdbcTemplate.query(
+            "select* from item",
+            new BeanPropertyRowMapper<Item>(Item.class)
+        );
     }
 
     @Override
