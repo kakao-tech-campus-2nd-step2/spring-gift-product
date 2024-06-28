@@ -49,5 +49,9 @@ public class ProductRepository {
         jdbcTemplate.update(sql, id);
     }
 
+    public void updateProduct(Product product, long oldId) {
+        delete(oldId);
+        save(product);
+    }
 
 }
