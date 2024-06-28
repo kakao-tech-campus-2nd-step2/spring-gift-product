@@ -27,6 +27,14 @@ public class ProductService {
         return productRepository.updateProduct(id, product);
     }
 
+    public Long deleteProduct(Long id) {
+        if(!isExist(id)) {
+
+            return -1L;
+        }
+        return productRepository.deleteProduct(id);
+    }
+
     private boolean isExist(Long id) {
         return productRepository.isExist(id);
     }
