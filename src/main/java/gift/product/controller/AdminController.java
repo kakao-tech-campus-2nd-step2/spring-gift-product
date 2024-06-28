@@ -16,8 +16,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/admin/products")
 public class AdminController {
 
+    private final ProductRepository productRepository;
+
     @Autowired
-    private ProductRepository productRepository;
+    public AdminController(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
 
     @GetMapping
     public String products(Model model) {

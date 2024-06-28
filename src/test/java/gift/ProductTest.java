@@ -13,8 +13,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class ProductTest {
 
+    private final ProductService productService;
+
     @Autowired
-    private ProductService productService;
+    public ProductTest(ProductService productService) {
+        this.productService = productService;
+    }
 
     @AfterEach
     public void productsInit() {

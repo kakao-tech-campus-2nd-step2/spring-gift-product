@@ -19,8 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/products")
 public class ProductController {
 
+    private final ProductService productService;
+
     @Autowired
-    private ProductService productService;
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
 
     @PostMapping("/insert")
     public ResponseEntity<Product> insertProduct(@RequestBody ProductDTO productDTO) {

@@ -10,8 +10,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProductService {
 
+    private final ProductRepository productRepository;
+
     @Autowired
-    private ProductRepository productRepository;
+    public ProductService(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
 
     public Product insertProduct(ProductDTO productDTO) {
         Product product = new Product(productDTO.name(), productDTO.price(), productDTO.imageUrl());

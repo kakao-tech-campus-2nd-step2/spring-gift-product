@@ -15,8 +15,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class ProductRepository {
 
+    private final JdbcTemplate jdbcTemplate;
+
     @Autowired
-    private JdbcTemplate jdbcTemplate;
+    public ProductRepository(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     public void save(Product product) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
