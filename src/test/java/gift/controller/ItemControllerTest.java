@@ -38,7 +38,7 @@ public class ItemControllerTest {
 
     @Test
     @DisplayName("리스트 요청 핸들러 테스트")
-    public void test1() throws Exception{
+    public void getListPageTest() throws Exception{
         List<Item> list = new ArrayList<>();
         given(itemService.getList()).willReturn(list);
         mockMvc.perform(get("/product/list"))
@@ -48,7 +48,7 @@ public class ItemControllerTest {
     }
     @Test
     @DisplayName("상품 추가 요청 핸들러 테스트")
-    void test2() throws Exception{
+    void createItemTest() throws Exception{
         mockMvc.perform(MockMvcRequestBuilders.post("/product/create")
                 .param("price",String.valueOf(itemDTO.price()))
                 .param("name",itemDTO.name())
@@ -59,7 +59,7 @@ public class ItemControllerTest {
     }
     @Test
     @DisplayName("상품 수정 페이지 요청 헨들러 테스트")
-    void test3() throws Exception{
+    void updatePageTest() throws Exception{
         Item item = new Item(testId,"김치",2000L,"url");
         ItemDTO updated = new ItemDTO("김치",2000L,"url");
         given(itemService.findItem(testId)).willReturn(item);

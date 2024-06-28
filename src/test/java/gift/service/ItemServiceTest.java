@@ -21,7 +21,7 @@ public class ItemServiceTest {
 
     @Test
     @DisplayName("상품 추가 기능 검사")
-    void Test1() {
+    void insertItemTest() {
         //when
         itemService.insertItem(itemDTO);
         Item item = itemService.findItem(testId);
@@ -35,7 +35,7 @@ public class ItemServiceTest {
     @Test
     @Transactional
     @DisplayName("상품 수정 기능 검사")
-    void test2(){
+    void updateItemTest(){
         //when
         itemService.insertItem(itemDTO);
         itemService.updateItem(new ItemDTO("커피", 2000L, "nnn"),testId);
@@ -50,7 +50,7 @@ public class ItemServiceTest {
     @Test
     @Transactional
     @DisplayName("상품 삭제 테스트")
-    void test3(){
+    void deleteItemTest(){
         //when
         itemService.insertItem(itemDTO);
         itemService.deleteItem(testId);
