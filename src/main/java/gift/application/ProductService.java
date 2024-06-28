@@ -65,7 +65,8 @@ public class ProductService {
                 () -> new IllegalArgumentException("해당 상품은 존재하지 않습니다")
         );
         product.update(request);
-        return product.getId();
+        productRepository.update(id, product);
+        return id;
     }
 
 }

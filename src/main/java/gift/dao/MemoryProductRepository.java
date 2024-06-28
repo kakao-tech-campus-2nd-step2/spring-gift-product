@@ -37,4 +37,9 @@ public class MemoryProductRepository implements ProductRepository {
     public void deleteAll() {
         products.clear();
     }
+
+    @Override
+    public int update(Long id, Product product) {
+        return Math.toIntExact(products.put(id, product).getId());
+    }
 }

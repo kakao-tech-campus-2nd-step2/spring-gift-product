@@ -66,6 +66,7 @@ public class ProductDao implements ProductRepository {
         jdbcTemplate.update(sql);
     }
 
+    @Override
     public int update(Long id, Product product) {
         String sql = """
                 UPDATE product
