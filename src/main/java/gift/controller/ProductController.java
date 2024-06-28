@@ -1,9 +1,9 @@
-package gift.Controller;
+package gift.controller;
 
 import gift.DTO.ProductDTO;
-import gift.Domain.Product;
-import gift.Domain.Product.ProductSimple;
-import gift.Service.ProductService;
+import gift.domain.Product;
+import gift.domain.Product.ProductSimple;
+import gift.service.ProductService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;

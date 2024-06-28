@@ -1,4 +1,4 @@
-package gift.Domain;
+package gift.domain;
 
 import org.springframework.lang.NonNull;
 

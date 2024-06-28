@@ -1,8 +1,8 @@
-package gift.Service;
+package gift.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import gift.Domain.Product;
+import gift.domain.Product;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;

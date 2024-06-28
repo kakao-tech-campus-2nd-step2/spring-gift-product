@@ -1,10 +1,10 @@
-package gift.Service;
+package gift.service;
 
 import gift.DB.ProductDB;
 import gift.DTO.ProductDTO;
-import gift.Domain.Product;
-import gift.Domain.Product.ProductSimple;
-import gift.Mapper.ProductMapper;
+import gift.domain.Product;
+import gift.domain.Product.ProductSimple;
+import gift.mapper.ProductMapper;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
