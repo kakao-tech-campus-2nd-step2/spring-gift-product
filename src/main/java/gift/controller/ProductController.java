@@ -2,12 +2,14 @@ package gift.controller;
 
 import gift.model.Product;
 import gift.service.ProductService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/api/products")
+@Controller
+@RequestMapping("/products")
 public class ProductController {
 
     private final ProductService productService;
@@ -17,22 +19,66 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<Product> getAllProducts() {
-        return productService.getAllProducts();
+    public String getAllProducts(Model model) {
+        List<Product> products = productService.getAllProducts();
+        model.addAttribute("products", products);
+        return "products"; // Thymeleaf 템플릿 파일 이름 (products.html)
+    }
+
+    @GetMapping("/add")
+    public String showAddProductForm(Model model) {
+        model.addAttribute("product", new Product.Builder().build());
+        return "addProduct"; // Thymeleaf 템플릿 파일 이름 (addProduct.html)
     }
 
     @PostMapping
-    public void addProduct(@RequestBody Product product) {
-        productService.addProduct(product);
+    public String addProduct(@RequestParam String name, @RequestParam int price, @RequestParam String imageUrl) {
+        try {
+            Product product = new Product.Builder()
+                    .name(name)
+                    .price(price)
+                    .imageUrl(imageUrl)
+                    .build();
+            productService.addProduct(product);
+            return "redirect:/products";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "error"; // 에러 발생 시 표시할 페이지 (error.html)
+        }
     }
 
-    @PutMapping("/{id}")
-    public void updateProduct(@PathVariable Long id, @RequestBody Product product) {
-        productService.updateProduct(id, product);
+    @GetMapping("/edit/{id}")
+    public String showEditProductForm(@PathVariable Long id, Model model) {
+        Product product = productService.getProductById(id);
+        model.addAttribute("product", product);
+        return "editProduct"; // Thymeleaf 템플릿 파일 이름 (editProduct.html)
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteProduct(@PathVariable Long id) {
-        productService.deleteProduct(id);
+    @PostMapping("/edit/{id}")
+    public String updateProduct(@PathVariable Long id, @RequestParam String name, @RequestParam int price, @RequestParam String imageUrl) {
+        try {
+            Product updatedProduct = new Product.Builder()
+                    .id(id)
+                    .name(name)
+                    .price(price)
+                    .imageUrl(imageUrl)
+                    .build();
+            productService.updateProduct(id, updatedProduct);
+            return "redirect:/products";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "error"; // 에러 발생 시 표시할 페이지 (error.html)
+        }
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteProduct(@PathVariable Long id) {
+        try {
+            productService.deleteProduct(id);
+            return "redirect:/products";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "error"; // 에러 발생 시 표시할 페이지 (error.html)
+        }
     }
 }
