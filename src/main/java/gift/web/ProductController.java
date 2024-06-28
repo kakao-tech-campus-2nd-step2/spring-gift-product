@@ -26,7 +26,10 @@ public class ProductController {
     // products/{상품번호}의 GetMapping
     @GetMapping("/{id}") //Query Param과 Path Variable 사용의 차이점 알아보기
     public ResponseEntity<Product> getProduct(@PathVariable Long id) {
-        if(products.containsKey(id)) return new ResponseEntity<>(products.get(id), HttpStatus.OK);
+        Product product = productService.getProductById(id);
+        if(product != null) {
+            return new ResponseEntity<>(product, HttpStatus.OK);
+        }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
