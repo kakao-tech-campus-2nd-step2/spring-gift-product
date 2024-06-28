@@ -2,41 +2,38 @@ package gift.Service;
 
 import gift.Model.Item;
 import gift.Model.ItemDTO;
+import gift.Repository.ItemRepository;
 import java.util.HashMap;
+import java.util.List;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ItemService {
-    private final HashMap<Long, Item> itemRepository = new HashMap<>();
-    private Long NumId = 1L;
+
+    private ItemRepository itemRepository;
+
+    public ItemService(ItemRepository itemRepository) {
+        this.itemRepository = itemRepository;
+    }
 
     //Item 저장 메서드
     public void insertItem(ItemDTO itemDTO){
-        Item item = new Item(NumId,
-            itemDTO.getName(),itemDTO.getPrice(),itemDTO.getImgUrl());
-        itemRepository.put(NumId++,item);
+       itemRepository.insert(itemDTO);
     }
 
     //Item 조회 메서드
-    public ItemDTO findItem(Long id){
-        if(itemRepository.containsKey(id)) {
-            Item item = itemRepository.get(id);
-            return new ItemDTO( item.getName(),item.getPrice(), item.getImgUrl());
-        }
-        return null;
+    public Item findItem(Long id){
+       return itemRepository.findById(id);
     }
     //Item 목록 반환 메서드
-    public HashMap<Long, Item> getList(){
-        return itemRepository;
+    public List<Item> getList(){
+        return itemRepository.findAll();
     }
 
     public void updateItem(ItemDTO itemDTO,Long id){
-        Item item = new Item(
-            id,itemDTO.getName(),itemDTO.getPrice(),itemDTO.getImgUrl());
-        itemRepository.replace(id,item);
+        itemRepository.update(id,itemDTO);
     }
     public void deleteItem(Long id){
-        itemRepository.remove(id);
+        itemRepository.delete(id);
     }
-
 }
