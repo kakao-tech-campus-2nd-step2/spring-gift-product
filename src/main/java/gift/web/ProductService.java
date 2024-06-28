@@ -9,31 +9,37 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ProductService {
-    private final Map<Long, Product> products = new HashMap<>();
+    private final ProductDAO productDAO;
+
+    public ProductService(ProductDAO productDAO) {
+        this.productDAO = productDAO;
+        productDAO.createProductTable();
+    }
     private final AtomicLong incrementCounter = new AtomicLong(1); // ID를 관리할 변수
 
     public List<Product> getProducts() {
-        return List.copyOf(products.values());
+        return List.copyOf(productDAO.selectAllProducts());
     }
 
     public Product getProductById(Long id) {
-        return products.get(id);
+        return productDAO.selectProductById(id);
     }
 
     public Product createProduct(Product product) {
         Long id = incrementCounter.getAndIncrement(); // 1씩 증가하는 id
         Product newProduct = new Product(id, product.name(), product.price(), product.imageUrl());
-        products.put(id, newProduct);
+        productDAO.insertProduct(newProduct);
 
         return newProduct;
     }
 
     public Product updateProduct(Long id, Product product) {
-        products.put(id, product);
-        return product;
+        Product newProduct = new Product(product.id(), product.name(), product.price(), product.imageUrl());
+        productDAO.updateProduct(newProduct);
+        return newProduct;
     }
 
     public boolean deleteProduct(Long id) {
-        return products.remove(id) != null;
+        return productDAO.deleteProductById(id) != null;
     }
 }
