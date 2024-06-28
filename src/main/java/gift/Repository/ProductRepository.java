@@ -1,10 +1,12 @@
 package gift.Repository;
 
 import gift.Model.Product;
-import java.util.List;
+import jakarta.annotation.PostConstruct;
+import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -13,6 +15,8 @@ public class ProductRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    private SimpleJdbcInsert simpleJdbcInsert;
+
     private final RowMapper<Product> productRowMapper = (resultSet, rowNum) ->
         new Product(
             resultSet.getLong("id"),
@@ -20,6 +24,12 @@ public class ProductRepository {
             resultSet.getLong("price"),
             resultSet.getString("imageUrl")
         );
+
+    @PostConstruct
+    public void init() {
+        simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
+            .withTableName("products");
+    }
 
     public List<Product> checkProductsAll() {
         String sql = "SELECT * FROM products";
@@ -32,9 +42,20 @@ public class ProductRepository {
         return products.isEmpty() ? null : products.get(0);
     }
 
-    public Product saveProduct(Product product) {
+    /*public Product saveProduct(Product product) {
         String sql = "INSERT INTO products (id, name, price, imageUrl) VALUES (?, ?, ?, ?)";
         jdbcTemplate.update(sql, product.id(), product.name(), product.price(), product.imageUrl());
+        return product;
+    }*/
+
+    public Product saveProduct(Product product) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("id", product.id());
+        params.put("name", product.name());
+        params.put("price", product.price());
+        params.put("imageUrl", product.imageUrl());
+
+        simpleJdbcInsert.execute(params);
         return product;
     }
 
