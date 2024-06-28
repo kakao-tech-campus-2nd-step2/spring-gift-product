@@ -12,8 +12,10 @@ public class ProductRepository {
     private final Map<Long,Product> products = new HashMap<>();
     private Long nextId = 1L;
 
-    public void addProduct(Product product) {
-        products.put(nextId++,product);
+    public Product addProduct(Product product) {
+        product.setId(nextId++);
+        products.put(product.getId(),product);
+        return product;
     }
 
     public List<Product> findAll() {
@@ -30,7 +32,6 @@ public class ProductRepository {
         product.setName(updateProduct.getName());
         product.setPrice(updateProduct.getPrice());
         product.setImageUrl(updateProduct.getImageUrl());
-        products.put(id, product);
         return product;
     }
 
