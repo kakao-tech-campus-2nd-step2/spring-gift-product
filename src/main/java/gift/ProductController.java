@@ -30,12 +30,9 @@ public class ProductController {
     }
     // 등록된 상품 업데이트
     @PutMapping("/{id}")
-    public Object updateProduct(@PathVariable Long id, @RequestBody Product product) {
-        if(products.containsKey(id)){
-            products.put(id, product);
-            return product;
-        }
-        return "Update failed";
+    public String updateProduct(@PathVariable Long id, @RequestBody Product product) {
+        productDao.updateProduct(product);
+        return "Update Success";
     }
     // 등록된 상품 수정 페이지 표시
     @GetMapping("/edit/{id}")
