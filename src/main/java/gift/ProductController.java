@@ -34,9 +34,9 @@ public class ProductController {
     }
 
     @PostMapping("/update/{id}")
-    public ResponseEntity<Void> update(@PathVariable("id") long id, Product product) {
-        productDao.update(id, product);
-        return ResponseEntity.ok().build();
+    public String update(@PathVariable("id") long id, ProductDto productDto, Model model) {
+        productDao.update(id, productDto);
+        return view(model);
     }
 
     @DeleteMapping("/delete/{id}")

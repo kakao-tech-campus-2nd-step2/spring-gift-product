@@ -26,9 +26,12 @@ public class ProductDao {
             .update();
     }
 
-    public void update(long id, Product product) {
-        jdbcClient.sql("update product set name = ?, price = ?, imageUrl = ? where id = ?")
-            .param(List.of(product.name(), product.price(), product.imageUrl(), id))
+    public void update(long id, ProductDto productDto) {
+        jdbcClient.sql("update product set name = :name, price = :price, imageUrl = :imageUrl where id = :id")
+            .param("name", productDto.getName(), Types.VARCHAR)
+            .param("price", productDto.getPrice(), Types.INTEGER)
+            .param("imageUrl", productDto.getImageUrl(), Types.VARCHAR)
+            .param("id", id, Types.BIGINT)
             .update();
     }
 
