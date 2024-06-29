@@ -37,10 +37,8 @@ public class MapProductDao implements ProductRepository {
     @Override
     public Optional<Product> find(final Long id) {
         Product product = products.get(id);
-        if(product == null || product.isDeleted()){
-            return Optional.empty();
-        }
-        return Optional.of(product);
+
+        return Optional.ofNullable(product);
     }
 
     @Override
