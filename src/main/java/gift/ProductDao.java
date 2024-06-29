@@ -10,6 +10,7 @@ import java.util.List;
 public class ProductDao {
 
     private final JdbcClient jdbcClient;
+    private final ProductRowMapper productRowMapper = new ProductRowMapper();
 
     public ProductDao(JdbcClient jdbcClient) {
         this.jdbcClient = jdbcClient;
@@ -39,12 +40,7 @@ public class ProductDao {
     public List<Product> selectProducts() {
         String sql = "SELECT * FROM product;";
         return jdbcClient.sql(sql)
-                .query((rs, rowNum) -> new Product(
-                        rs.getLong("id"),
-                        rs.getString("name"),
-                        rs.getLong("price"),
-                        rs.getString("imageUrl")
-                        ))
+                .query(productRowMapper)
                 .list();
     }
 
@@ -56,12 +52,7 @@ public class ProductDao {
         String sql = "SELECT * FROM product WHERE id = :id;";
         return jdbcClient.sql(sql)
                 .param("id", id)
-                .query((rs, rowNum) -> new Product(
-                        rs.getLong("id"),
-                        rs.getString("name"),
-                        rs.getLong("price"),
-                        rs.getString("imageUrl")
-                ))
+                .query(productRowMapper)
                 .single();
     }
 
