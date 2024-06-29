@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,22 +23,17 @@ public class ProductController {
     @GetMapping()
     public String view(Model model) {
         model.addAttribute("products", productDao.getAllProducts());
-        return "administrator";
-    }
-
-    @GetMapping("/add")
-    public String addForm(Model model) {
         model.addAttribute("productDto", new ProductDto());
-        return "content/addForm";
+        return "administrator";
     }
 
     @PostMapping("/add")
-    public String add(@ModelAttribute("productDto") ProductDto productDto) {
+    public String add(@ModelAttribute("productDto") ProductDto productDto, Model model) {
         productDao.insert(productDto);
-        return "administrator";
+        return view(model);
     }
 
-    @PatchMapping("/update/{id}")
+    @PostMapping("/update/{id}")
     public ResponseEntity<Void> update(@PathVariable("id") long id, Product product) {
         productDao.update(id, product);
         return ResponseEntity.ok().build();
