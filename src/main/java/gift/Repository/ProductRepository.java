@@ -14,6 +14,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class ProductRepository {
 
+    private static final String TABLE_NAME = "product";
+    private static final String FIELD_ID = "id";
+    private static final String FIELD_NAME = "name";
+    private static final String FIELD_PRICE = "price";
+    private static final String FIELD_IMAGE_URL = "imageUrl";
+
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
@@ -21,47 +27,47 @@ public class ProductRepository {
 
     private final RowMapper<Product> productRowMapper = (resultSet, rowNum) ->
         new Product(
-            resultSet.getLong("id"),
-            resultSet.getString("name"),
-            resultSet.getLong("price"),
-            resultSet.getString("imageUrl")
+            resultSet.getLong(FIELD_ID),
+            resultSet.getString(FIELD_NAME),
+            resultSet.getLong(FIELD_PRICE),
+            resultSet.getString(FIELD_IMAGE_URL)
         );
 
     @PostConstruct
     public void init() {
         simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
-            .withTableName("products");
+            .withTableName(TABLE_NAME);
     }
 
     public List<Product> findProductsAll() {
-        String sql = "SELECT * FROM products";
+        String sql = "SELECT * FROM " + TABLE_NAME;
         return jdbcTemplate.query(sql, productRowMapper);
     }
 
     public Product findProductsById(long id) {
-        String sql = "SELECT * FROM products WHERE id = ?";
+        String sql = "SELECT * FROM " + TABLE_NAME + " WHERE " + FIELD_ID + " = ?";
         List<Product> products = jdbcTemplate.query(sql, new Object[]{id}, productRowMapper);
         return products.isEmpty() ? null : products.get(0);
     }
-    
+
     public Product saveProduct(Product product) {
         Map<String, Object> params = new HashMap<>();
-        params.put("id", product.id());
-        params.put("name", product.name());
-        params.put("price", product.price());
-        params.put("imageUrl", product.imageUrl());
+        params.put(FIELD_ID, product.id());
+        params.put(FIELD_NAME, product.name());
+        params.put(FIELD_PRICE, product.price());
+        params.put(FIELD_IMAGE_URL, product.imageUrl());
 
         simpleJdbcInsert.execute(params);
         return product;
     }
 
     public void deleteProduct(long id) {
-        String sql = "DELETE FROM products WHERE id = ?";
+        String sql = "DELETE FROM " + TABLE_NAME + " WHERE " + FIELD_ID + " = ?";
         jdbcTemplate.update(sql, id);
     }
 
     public void updateProduct(Product product, long id) {
-        String sql = "UPDATE products SET id = ?, name = ?, price = ?, imageUrl = ? WHERE id = ?";
+        String sql = "UPDATE " + TABLE_NAME + " SET " + FIELD_ID + " = ?, " + FIELD_NAME + " = ?, " + FIELD_PRICE + " = ?, " + FIELD_IMAGE_URL + " = ? WHERE " + FIELD_ID + " = ?";
         jdbcTemplate.update(sql, product.id(), product.name(), product.price(), product.imageUrl(),
             id);
     }
