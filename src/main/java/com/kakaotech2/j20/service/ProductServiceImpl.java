@@ -38,6 +38,7 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public void create(ProductDTO dto) {
         db.put((long) count,new Product(count,dto.getName(),dto.getPrice(),dto.getImageUrl()));
+        count++;
     }
 
     @Override
