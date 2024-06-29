@@ -1,17 +1,19 @@
 package gift;
 
+import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.SoftAssertions.*;
+
 import gift.product.dto.ProductDTO;
 import gift.product.model.Product;
 import gift.product.service.ProductService;
 import java.util.List;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public class ProductTest {
+class ProductTest {
 
     private final ProductService productService;
 
@@ -32,9 +34,12 @@ public class ProductTest {
     public void insertProductTest() {
         ProductDTO productDTO = new ProductDTO("사과", 3000, "사진링크");
         Product product = productService.insertProduct(productDTO);
-        Assertions.assertThat(product.getName()).isEqualTo("사과");
-        Assertions.assertThat(product.getPrice()).isEqualTo(3000);
-        Assertions.assertThat(product.getImageUrl()).isEqualTo("사진링크");
+
+        assertSoftly(softly -> {
+                assertThat(product.getName()).isEqualTo("사과");
+                assertThat(product.getPrice()).isEqualTo(3000);
+                assertThat(product.getImageUrl()).isEqualTo("사진링크");
+        });
     }
 
     @Test
@@ -43,9 +48,13 @@ public class ProductTest {
         Product insertedProduct = productService.insertProduct(productDTO);
 
         Product product = productService.getProduct(insertedProduct.getId());
-        Assertions.assertThat(product.getName()).isEqualTo("사과");
-        Assertions.assertThat(product.getPrice()).isEqualTo(3000);
-        Assertions.assertThat(product.getImageUrl()).isEqualTo("사진링크");
+
+        assertSoftly(softly -> {
+            assertThat(product.getName()).isEqualTo("사과");
+            assertThat(product.getPrice()).isEqualTo(3000);
+            assertThat(product.getImageUrl()).isEqualTo("사진링크");
+        });
+
     }
 
     @Test
@@ -54,9 +63,12 @@ public class ProductTest {
         productService.insertProduct(productDTO);
 
         List<Product> productAll = productService.getProductAll();
-        Assertions.assertThat(productAll.get(0).getName()).isEqualTo("사과");
-        Assertions.assertThat(productAll.get(0).getPrice()).isEqualTo(3000);
-        Assertions.assertThat(productAll.get(0).getImageUrl()).isEqualTo("사진링크");
+
+        assertSoftly(softly -> {
+            assertThat(productAll.get(0).getName()).isEqualTo("사과");
+            assertThat(productAll.get(0).getPrice()).isEqualTo(3000);
+            assertThat(productAll.get(0).getImageUrl()).isEqualTo("사진링크");
+        });
     }
 
     @Test
@@ -67,9 +79,12 @@ public class ProductTest {
         ProductDTO productUpdatedDTO = new ProductDTO("사과", 5500, "사진링크2");
 
         Product productUpdated = productService.updateProduct(product.getId(), productUpdatedDTO);
-        Assertions.assertThat(productUpdated.getName()).isEqualTo("사과");
-        Assertions.assertThat(productUpdated.getPrice()).isEqualTo(5500);
-        Assertions.assertThat(productUpdated.getImageUrl()).isEqualTo("사진링크2");
+
+        assertSoftly(softly -> {
+            assertThat(productUpdated.getName()).isEqualTo("사과");
+            assertThat(productUpdated.getPrice()).isEqualTo(5500);
+            assertThat(productUpdated.getImageUrl()).isEqualTo("사진링크2");
+        });
     }
 
     @Test
@@ -83,6 +98,6 @@ public class ProductTest {
         productService.deleteProduct(product.getId());
 
         List<Product> productAll = productService.getProductAll();
-        Assertions.assertThat(productAll.size()).isEqualTo(1);
+        assertThat(productAll).hasSize(1);
     }
 }

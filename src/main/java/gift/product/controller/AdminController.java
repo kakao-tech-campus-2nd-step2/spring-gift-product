@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/admin/products")
 public class AdminController {
 
+    public static final String REDIRECT_ADMIN_PRODUCTS = "redirect:/admin/products";
     private final ProductRepository productRepository;
 
     @Autowired
@@ -31,9 +31,10 @@ public class AdminController {
     }
 
     @PostMapping
-    public String deleteProduct(Product product, RedirectAttributes redirectAttributes) {
+    public String deleteProduct(Product product) {
         productRepository.delete(product.getId());
-        return "redirect:/admin/products";
+        return REDIRECT_ADMIN_PRODUCTS;
+
     }
 
     @GetMapping("/insert")
@@ -42,9 +43,9 @@ public class AdminController {
     }
 
     @PostMapping("/insert")
-    public String insertProduct(Product product, RedirectAttributes redirectAttributes) {
+    public String insertProduct(Product product) {
         productRepository.save(product);
-        return "redirect:/admin/products";
+        return REDIRECT_ADMIN_PRODUCTS;
     }
 
     @GetMapping("/update/{id}")
@@ -55,15 +56,8 @@ public class AdminController {
     }
 
     @PostMapping("/update/{id}")
-    public String updateForm(Product product, RedirectAttributes redirectAttributes) {
+    public String updateForm(Product product) {
         productRepository.update(product);
-        return "redirect:/admin/products";
+        return REDIRECT_ADMIN_PRODUCTS;
     }
-
-//    @PostConstruct
-//    public void init() {
-//        productRepository.save(new Product("아이스 카페 아메리카노 T", 4500,
-//            "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg"));
-//        productRepository.save(new Product("사과", 3000, "사과링크1"));
-//    }
 }
