@@ -23,8 +23,8 @@
           <td th:text="${product.imageUrl}"></td>
           <td>
             <div style="display: flex; justify-content: space-between;">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateModal">
-                  Update
+                <button class="btn btn-primary icon" data-toggle="modal" data-target="#updateModal">
+                  <i class="fa-solid fa-pen" style="color: #FFD43B;"></i>
                 </button>
                 <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div class="modal-dialog" role="document">
@@ -48,14 +48,16 @@
                           </label>
                         </div>
                         <div class="modal-footer">
-                          <button type="submit" class="btn btn-primary">Add</button>
+                          <button type="submit" class="btn btn-primary">Update</button>
                         </div>
                       </form>
                     </div>
                   </div>
                 </div>
               <form th:action="@{/api/products/delete/{id}(id=${product.id})}" method="post">
-                <button>Delete</button>
+                <button class="icon">
+                  <i class="fa-solid fa-trash" style="color: #ff0000;"></i>
+                </button>
               </form>
             </div>
           </td>
