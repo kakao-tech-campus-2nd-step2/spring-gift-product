@@ -15,7 +15,7 @@ public class ProductController {
     public ProductController(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
-    
+
     @PostMapping
     public Product addProduct(@RequestBody Product newProduct) {
         return productRepository.saveProduct(newProduct);
@@ -25,8 +25,8 @@ public class ProductController {
     public Product getProduct(@PathVariable(value = "id") long id) {
         return productRepository.checkProductsById(id);
     }
-
-    @GetMapping("/all")
+    
+    @GetMapping
     public List<Product> getAllProduct() {
         return productRepository.checkProductsAll();
     }
