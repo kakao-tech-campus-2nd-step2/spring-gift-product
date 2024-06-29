@@ -2,7 +2,6 @@ package gift.Controller;
 
 import gift.Model.Product;
 import gift.Repository.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
