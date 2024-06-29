@@ -5,13 +5,15 @@ import com.kakaotech2.j20.Product;
 public class ProductDTO {
     //DTO는 생성 후 변화하지 않으므로 final 지정
 
-    private final Long id;
+    private  Long id;
 
-    private final String name;
+    private  String name;
 
-    private final Integer price;
+    private  Integer price;
 
-    private final String imageUrl;
+    private  String imageUrl;
+
+    public ProductDTO() {}
 
     public ProductDTO(Long id, String name, Integer price, String imageUrl) {
         this.id = id;
@@ -42,5 +44,21 @@ public class ProductDTO {
 
     public String getImageUrl() {
         return imageUrl;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
