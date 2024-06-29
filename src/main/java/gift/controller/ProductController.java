@@ -50,7 +50,7 @@ public class ProductController {
     public ResponseEntity<String> productSave(@RequestBody ProductRequest newProduct) {
         productRepository.save(newProduct.toModel());
 
-        return ResponseEntity.created(null)
+        return ResponseEntity.created(null) // ORM의 Dirty Checking을 사용할 수 없어 쿼리를 한번 더 날려야해서 null로 설정
                 .body("Product created");
     }
 
