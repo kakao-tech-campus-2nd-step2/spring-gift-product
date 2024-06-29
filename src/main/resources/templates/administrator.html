@@ -7,7 +7,7 @@
   <th:block layout:fragment="content">
     <table>
       <tr>
-        <th></th>
+<!--        <th></th>-->
         <th>ID</th>
         <th>Name</th>
         <th>Price</th>
@@ -16,7 +16,7 @@
       </tr>
       <th:block th:each="product:${products}">
         <tr>
-          <td><input type="checkbox" name="product" /></td>
+<!--          <td><input type="checkbox" name="product" /></td>-->
           <td th:text="${product.id}"></td>
           <td th:text="${product.name}"></td>
           <td th:text="${product.price}"></td>
@@ -54,7 +54,9 @@
                     </div>
                   </div>
                 </div>
-              <button>Delete</button>
+              <form th:action="@{/api/products/delete/{id}(id=${product.id})}" method="post">
+                <button>Delete</button>
+              </form>
             </div>
           </td>
         </tr>
