@@ -8,16 +8,21 @@
   <h1>gift 상품 주문 관리자 페이지</h1>
 
 
-  <ol>
-    <tr th:each="product : ${products}">
-      <td th:text="|id : ${product.id}|"></td>
-      <td th:text="|name : ${product.name}|"></td>
-      <td th:text="|price : ${product.price}|"></td>
-      <td th:text="|imageUrl : ${product.imageUrl}|"></td>
-    </tr>
-  </ol>
+  <table>
+    <tbody>
+      <tr th:each="product : ${products}">
+        <td> <span th:text="|id : ${product.id}|">아이디</span></td>
+        <td> <span th:text="|name : ${product.name}|">상품명</span></td>
+        <td> <span th:text="|price : ${product.price}|">가격</span></td>
+        <td> <span th:text="|imageUrl : ${product.imageUrl}|">이미지</span></td>
+      </tr>
+    </tbody>
 
-  <form action="/api/products" th:action th:object="${productDTO}" method="post">
+  </table>
+
+
+
+  <form action="/admin" th:action th:object="${productDTO}" method="post">
     <div>
       <label for="productId">상품 ID</label>
       <input type="number" id="productId" th:field="*{id}">
@@ -33,10 +38,11 @@
     </div>
     <div>
       <label for="productImgUrl">이미지주소</label>
-      <input type="text" id="productImgUrl" th:field="*{imgUrl}">
+      <input type="text" id="productImgUrl" th:field="*{imageUrl}">
     </div>
+    <button type="submit">상품 추가하기</button>
   </form>
-  <button type="submit">상품 수정하기</button>
+
 
 
 </body>
