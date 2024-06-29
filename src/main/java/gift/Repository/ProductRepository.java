@@ -33,12 +33,12 @@ public class ProductRepository {
             .withTableName("products");
     }
 
-    public List<Product> checkProductsAll() {
+    public List<Product> findProductsAll() {
         String sql = "SELECT * FROM products";
         return jdbcTemplate.query(sql, productRowMapper);
     }
 
-    public Product checkProductsById(long id) {
+    public Product findProductsById(long id) {
         String sql = "SELECT * FROM products WHERE id = ?";
         List<Product> products = jdbcTemplate.query(sql, new Object[]{id}, productRowMapper);
         return products.isEmpty() ? null : products.get(0);

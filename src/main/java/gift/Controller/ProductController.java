@@ -23,12 +23,12 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public Product getProduct(@PathVariable(value = "id") long id) {
-        return productRepository.checkProductsById(id);
+        return productRepository.findProductsById(id);
     }
-    
+
     @GetMapping
     public List<Product> getAllProduct() {
-        return productRepository.checkProductsAll();
+        return productRepository.findProductsAll();
     }
 
     @DeleteMapping("/{id}")
@@ -38,6 +38,6 @@ public class ProductController {
 
     @PutMapping("/{id}")
     public Product updateProduct(@PathVariable("id") long id, @RequestBody Product updatedProduct) {
-        return productRepository.checkProductsById(id);
+        return productRepository.findProductsById(id);
     }
 }

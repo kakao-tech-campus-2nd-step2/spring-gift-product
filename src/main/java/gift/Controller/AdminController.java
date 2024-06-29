@@ -24,7 +24,7 @@ public class AdminController {
 
     @GetMapping
     public String listProducts(Model model) {
-        model.addAttribute("products", productRepository.checkProductsAll());
+        model.addAttribute("products", productRepository.findProductsAll());
         return "product_list";
     }
 
@@ -47,7 +47,7 @@ public class AdminController {
 
     @GetMapping("/edit/{id}")
     public String showEditProductForm(@PathVariable("id") long id, Model model) {
-        Product product = productRepository.checkProductsById(id);
+        Product product = productRepository.findProductsById(id);
         model.addAttribute("product", product);
         return "edit_product_form";
     }
@@ -58,7 +58,7 @@ public class AdminController {
         if (id != updatedProduct.id()
             && isProductIdExists(updatedProduct.id())) {
             model.addAttribute("error", "존재하는 ID 입니다.");
-            model.addAttribute("product", productRepository.checkProductsById(id));
+            model.addAttribute("product", productRepository.findProductsById(id));
             return "edit_product_form";
         }
         productRepository.updateProduct(updatedProduct, id);
@@ -72,6 +72,6 @@ public class AdminController {
     }
 
     private boolean isProductIdExists(long id) {
-        return productRepository.checkProductsById(id) != null;
+        return productRepository.findProductsById(id) != null;
     }
 }
