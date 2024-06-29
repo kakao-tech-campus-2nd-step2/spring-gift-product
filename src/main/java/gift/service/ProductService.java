@@ -6,6 +6,7 @@ import gift.dto.ProductDTO;
 import gift.dto.ProductDetailDTO;
 import gift.entity.Product;
 import gift.repository.CollectionDB;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -13,6 +14,7 @@ import java.util.Map;
 
 @Service
 public class ProductService {
+    @Autowired
     private final CollectionDB collectionDB;
 
     public ProductService(CollectionDB collectionDB) {

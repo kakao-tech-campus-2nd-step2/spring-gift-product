@@ -15,18 +15,12 @@ import java.util.Map;
 @RestController
 public class ProductController {
     private final ProductService productService;
-
     public ProductController(ProductService productService) {
         this.productService = productService;
     }
 
     @PostMapping("/api/products")
-    public void createProduct(
-            @RequestBody CreateProduct.Request request
-            )
-    {
-        productService.createProduct(request);
-    }
+    public void createProduct(@RequestBody CreateProduct.Request request){ productService.createProduct(request);}
 
     @GetMapping("/api/products")
     public Map<Long,ProductDTO> getAllProducts() {
@@ -54,15 +48,4 @@ public class ProductController {
     ) {
         return productService.deleteProduct(id);
     }
-
-
-    //step2 타임리프 구현
-    @GetMapping("/index")
-    public String thMap(Model model){
-        Map<Long, ProductDTO> product= getAllProducts();
-        model.addAttribute("product",product);
-        return "static/index";
-    }
-
-
 }
