@@ -5,8 +5,39 @@
   <title>상품 관리자 페이지</title>
 </head>
 <body>
-  <ul>
-    <li th:each="product : ${products}" th:text="|id : ${product.id} name : ${product.name} price : ${product.price} img : ${product.imageUrl}|"></li>
-  </ul>
+  <h1>gift 상품 주문 관리자 페이지</h1>
+
+
+  <ol>
+    <tr th:each="product : ${products}">
+      <td th:text="|id : ${product.id}|"></td>
+      <td th:text="|name : ${product.name}|"></td>
+      <td th:text="|price : ${product.price}|"></td>
+      <td th:text="|imageUrl : ${product.imageUrl}|"></td>
+    </tr>
+  </ol>
+
+  <form action="/api/products" th:action th:object="${productDTO}" method="post">
+    <div>
+      <label for="productId">상품 ID</label>
+      <input type="number" id="productId" th:field="*{id}">
+    </div>
+
+    <div>
+      <label for="productName">상품명</label>
+      <input type="text" id="productName" th:field="*{name}">
+    </div>
+    <div>
+      <label for="productPrice">가격</label>
+      <input type="text" id="productPrice" th:field="*{price}">
+    </div>
+    <div>
+      <label for="productImgUrl">이미지주소</label>
+      <input type="text" id="productImgUrl" th:field="*{imgUrl}">
+    </div>
+  </form>
+  <button type="submit">상품 수정하기</button>
+
+
 </body>
 </html>
