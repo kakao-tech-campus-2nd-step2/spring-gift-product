@@ -1,5 +1,7 @@
-package gift;
+package gift.persistence;
 
+import gift.core.Product;
+import jakarta.annotation.Nonnull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -31,13 +33,13 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     @Override
     public boolean exists(Long id) {
-        String sql = "SELECT COUNT(`id`) FROM `products` WHERE `id` = ?";
-        Integer result = jdbcTemplate.queryForObject(sql, Integer.class, id);
-        return result != null && result > 0;
+        String sql = "SELECT EXISTS(SELECT 1 FROM `products` WHERE `id` = ?)";
+        Boolean result = jdbcTemplate.queryForObject(sql, Boolean.class, id);
+        return result != null && result;
     }
 
     @Override
-    public void save(Product product) {
+    public void save(@Nonnull Product product) {
         if (exists(product.id())) {
             String sql = "UPDATE `products` SET `name` = ?, `price` = ?, `image_url` = ? WHERE `id` = ?";
             jdbcTemplate.update(sql, product.name(), product.price(), product.imageUrl(), product.id());

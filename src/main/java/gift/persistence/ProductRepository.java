@@ -1,4 +1,7 @@
-package gift;
+package gift.persistence;
+
+import gift.core.Product;
+import jakarta.annotation.Nonnull;
 
 import java.util.List;
 
@@ -8,7 +11,7 @@ public interface ProductRepository {
 
     boolean exists(Long id);
 
-    void save(Product product);
+    void save(@Nonnull Product product);
 
     int size();
 
