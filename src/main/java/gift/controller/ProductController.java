@@ -2,6 +2,7 @@ package gift.controller;
 
 import gift.model.Product;
 import gift.service.ProductService;
+import gift.service.ProductService.ProductServiceStatus;
 import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,9 +18,9 @@ public class ProductController {
 
     // 상품 추가(Create)
     @PostMapping
-    public ResponseEntity<String> addProduct(@RequestBody Product product) {
-        String response = productService.createProduct(product);
-        if (response.equals("상품 생성")) {
+    public ResponseEntity<ProductServiceStatus> addProduct(@RequestBody Product product) {
+        ProductServiceStatus response = productService.createProduct(product);
+        if (response == ProductServiceStatus.SUCCESS ) {
             return new ResponseEntity<>(response, HttpStatus.CREATED);
         }
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
@@ -43,9 +44,9 @@ public class ProductController {
 
     // 상품 수정(Update)
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateProduct(@PathVariable Long id, @RequestBody Product product) {
-        String response = productService.editProduct(id, product);
-        if (response.equals("상품 수정")) {
+    public ResponseEntity<ProductServiceStatus> updateProduct(@PathVariable Long id, @RequestBody Product product) {
+        ProductServiceStatus response = productService.editProduct(id, product);
+        if (response == ProductServiceStatus.SUCCESS) {
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
@@ -53,9 +54,9 @@ public class ProductController {
 
     // 상품 삭제(Delete)
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteProduct(@PathVariable Long id) {
-        String response = productService.deleteProduct(id);
-        if (response.equals("상품 삭제")) {
+    public ResponseEntity<ProductServiceStatus> deleteProduct(@PathVariable Long id) {
+        ProductServiceStatus response = productService.deleteProduct(id);
+        if (response == ProductServiceStatus.SUCCESS) {
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);

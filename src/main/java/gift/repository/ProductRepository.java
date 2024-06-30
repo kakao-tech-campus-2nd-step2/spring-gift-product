@@ -34,9 +34,8 @@ public class ProductRepository {
         jdbcTemplate.update(sql, product.getName(), product.getPrice(), product.getImageUrl(), id);
     }
 
-    public String removeProduct(Long id) {
+    public void removeProduct(Long id) {
         String sql = "DELETE FROM products WHERE id = ?";
         jdbcTemplate.update(sql, id);
-        return "상품 삭제";
     }
 }
