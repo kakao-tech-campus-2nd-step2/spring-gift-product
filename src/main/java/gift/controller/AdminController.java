@@ -2,6 +2,8 @@ package gift.controller;
 
 import gift.model.Product;
 import gift.model.ProductDao;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +32,7 @@ public class AdminController {
     }
 
     @GetMapping("admin/product/{id}")
-    public String updateProduct(@PathVariable("id") Long id, Model model) {
+    public String updateProduct(@PathVariable("id") @NotNull @Min(1) Long id, Model model) {
         Product product = productDao.findById(id);
         model.addAttribute("product", product);
         return "edit";
@@ -43,14 +45,14 @@ public class AdminController {
     }
 
     @PutMapping("admin/product/{id}")
-    public String updateProduct(@PathVariable("id") Long id,
+    public String updateProduct(@PathVariable("id") @NotNull @Min(1) Long id,
                                 @ModelAttribute ProductRequest request) {
         productDao.updateById(id, request);
         return "redirect:/";
     }
 
     @DeleteMapping("/admin/product/{id}")
-    public String delete(@PathVariable("id") Long id) {
+    public String delete(@PathVariable("id") @NotNull @Min(1) Long id) {
         productDao.deleteById(id);
         return "redirect:/";
     }

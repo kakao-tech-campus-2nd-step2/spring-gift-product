@@ -2,9 +2,10 @@ package gift.controller;
 
 import gift.model.Product;
 import gift.model.ProductDao;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.lang.NonNull;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +28,7 @@ public class ProductController {
 
     @Validated
     @GetMapping("/product/{id}")
-    public ResponseEntity<Product> getProduct(@PathVariable("id") long id) {
+    public ResponseEntity<Product> getProduct(@PathVariable("id") @NotNull @Min(1) Long id) {
         Product product = productDao.findById(id);
         return ResponseEntity.ok().body(product);
     }
@@ -39,14 +40,14 @@ public class ProductController {
     }
 
     @PutMapping("/product/{id}")
-    public ResponseEntity<Void> updateProduct(@PathVariable("id") long id,
+    public ResponseEntity<Void> updateProduct(@PathVariable("id") @NotNull @Min(1) Long id,
                                               @RequestBody ProductRequest request) {
         productDao.updateById(id, request);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/product/{id}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable("id") long id) {
+    public ResponseEntity<Void> deleteProduct(@PathVariable("id") @NotNull @Min(1) Long id) {
         productDao.deleteById(id);
         return ResponseEntity.ok().build();
     }
