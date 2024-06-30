@@ -2,6 +2,7 @@ package gift.db;
 
 import gift.dto.Product;
 import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -14,14 +15,12 @@ import java.util.List;
 @Component
 @Qualifier("H2 DATABASE")
 public class ProductH2DB implements ProductDB {
-    private final JdbcTemplate jdbcTemplate;
 
-    public ProductH2DB(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     @PostConstruct
-    public void initialize() throws Exception{
+    public void initialize() throws Exception {
         createProductTable();
         addProduct(new Product(1L, "Americano", 4500, "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg"));
         addProduct(new Product(2L, "Latte", 5500, "https://cdn.pixabay.com/photo/2023/07/08/13/17/coffee-8114518_1280.png"));
@@ -44,7 +43,7 @@ public class ProductH2DB implements ProductDB {
 
 
     @Override
-    public void addProduct(Product product) throws Exception {
+    public void addProduct(Product product) {
         String sql = "INSERT INTO product (id, name, price, imageUrl) VALUES (?, ?, ?, ?)";
         jdbcTemplate.update(sql, product.getId(), product.getName(), product.getPrice(), product.getImageUrl());
     }
