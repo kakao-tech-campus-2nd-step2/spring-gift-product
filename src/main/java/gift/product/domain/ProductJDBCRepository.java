@@ -13,21 +13,23 @@ import java.util.Optional;
 public class ProductJDBCRepository implements ProductRepository {
 
     private final JdbcTemplate jdbcTemplate;
+    private final RowMapper<Product> productRowMapper;
 
     public ProductJDBCRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+        this.productRowMapper = productRowMapper();
     }
 
     @Override
     public List<Product> findAll() {
         String sql = "SELECT * FROM product";
-        return jdbcTemplate.query(sql, productRowMapper());
+        return jdbcTemplate.query(sql, productRowMapper);
     }
 
     @Override
     public Optional<Product> findById(Long productId) {
         String sql = "SELECT * FROM product WHERE id = ?";
-        return jdbcTemplate.query(sql, productRowMapper(), productId)
+        return jdbcTemplate.query(sql, productRowMapper, productId)
                 .stream()
                 .findFirst();
     }
