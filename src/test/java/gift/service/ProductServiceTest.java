@@ -5,7 +5,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.BDDMockito.willDoNothing;
 
-import gift.controller.request.ProductRequest;
+import gift.controller.ProductRequest;
 import gift.domain.Product;
 import gift.domain.ProductRepository;
 import java.util.List;

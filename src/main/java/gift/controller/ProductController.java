@@ -1,7 +1,5 @@
 package gift.controller;
 
-import gift.controller.request.ProductRequest;
-import gift.controller.response.ProductResponse;
 import gift.service.ProductService;
 import java.util.List;
 import org.springframework.http.HttpStatus;

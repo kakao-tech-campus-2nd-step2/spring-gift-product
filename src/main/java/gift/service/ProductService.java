@@ -1,7 +1,7 @@
 package gift.service;
 
-import gift.controller.request.ProductRequest;
-import gift.controller.response.ProductResponse;
+import gift.controller.ProductRequest;
+import gift.controller.ProductResponse;
 import gift.domain.Product;
 import gift.domain.ProductRepository;
 import java.util.List;

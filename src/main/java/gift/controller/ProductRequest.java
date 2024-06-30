@@ -1,4 +1,4 @@
-package gift.controller.request;
+package gift.controller;
 
 import gift.domain.Product;
 

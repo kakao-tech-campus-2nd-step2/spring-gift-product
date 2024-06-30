@@ -1,6 +1,6 @@
 package gift.domain;
 
-import gift.controller.response.ProductResponse;
+import gift.controller.ProductResponse;
 
 public class Product {
 
