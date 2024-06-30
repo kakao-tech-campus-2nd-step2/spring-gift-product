@@ -1,6 +1,5 @@
 package gift.Menu;
 
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,8 +12,8 @@ public class MenuService {
         this.menuRepository = menuRepository;
     }
 
-    public Menu save(String name,int price, String imageUrl){
-        Menu menu = new Menu(name,price,imageUrl);
+    public Menu save(String name, int price, String imageUrl) {
+        Menu menu = new Menu(name, price, imageUrl);
         return menuRepository.save(menu);
     }
 
@@ -29,7 +28,7 @@ public class MenuService {
     }
 
     public void update(Long id, String name, int price, String imageUrl) {
-        menuRepository.update(id,name,price,imageUrl);
+        menuRepository.update(id, name, price, imageUrl);
     }
 
     public Menu findById(Long id) {

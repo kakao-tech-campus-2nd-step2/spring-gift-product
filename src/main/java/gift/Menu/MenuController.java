@@ -26,10 +26,10 @@ public class MenuController {
     }
 
     @GetMapping
-    public List<Menu> read(Model model){
+    public String read(Model model){
         List<Menu> menus = menuService.findall();
         model.addAttribute("menus", menus);
-        return menus;
+        return "Menu";
     }
 
     @GetMapping("/edit/{id}")
@@ -65,6 +65,4 @@ public class MenuController {
         model.addAttribute("menus", menus);
         return "Menu";
     }
-
-
 }

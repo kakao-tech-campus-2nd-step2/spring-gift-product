@@ -11,7 +11,8 @@ public class Menu {
         this.price = price;
         this.imageUrl = imageUrl;
     }
-    public Menu(long id,String name, int price, String imageUrl) {
+
+    public Menu(long id, String name, int price, String imageUrl) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -30,7 +31,7 @@ public class Menu {
         return name;
     }
 
-    public void update(String name, int price, String imageUrl){
+    public void update(String name, int price, String imageUrl) {
         this.name = name;
         this.price = price;
         this.imageUrl = imageUrl;
