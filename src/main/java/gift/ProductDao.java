@@ -9,8 +9,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class ProductDao {
 
-    @Autowired
-    private JdbcClient jdbcClient;
+    private final JdbcClient jdbcClient;
+
+    public ProductDao(JdbcClient jdbcClient) {
+        this.jdbcClient = jdbcClient;
+    }
 
     public List<Product> getAllProducts() {
         return jdbcClient.sql("select * from product")
