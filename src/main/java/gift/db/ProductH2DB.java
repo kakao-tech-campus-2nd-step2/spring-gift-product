@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Component
-@Qualifier("H2 DATABASE")
+@Qualifier("h2Database")
 public class ProductH2DB implements ProductDB {
 
     @Autowired
@@ -40,7 +40,6 @@ public class ProductH2DB implements ProductDB {
                 """;
         jdbcTemplate.execute(sql);
     }
-
 
     @Override
     public void addProduct(Product product) {

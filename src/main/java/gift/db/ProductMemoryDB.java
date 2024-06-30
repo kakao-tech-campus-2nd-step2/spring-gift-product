@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-@Qualifier("MEMORY DATABASE")
+@Qualifier("memoryDatabase")
 public class ProductMemoryDB implements ProductDB {
     private final Map<Long, Product> products = new HashMap<>();
 
@@ -48,7 +48,10 @@ public class ProductMemoryDB implements ProductDB {
     }
 
     @Override
-    public void removeProduct(Long id) {
+    public void removeProduct(Long id) throws Exception{
+        if(!products.containsKey(id)){
+            throw new Exception();
+        }
         products.remove(id);
     }
 
