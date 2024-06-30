@@ -32,9 +32,14 @@ public class ProductService {
         return allProductsDTO ;
     }
 
-    public void createProduct(CreateProduct.Request request) {
-        Product product = new Product(request.getName(),request.getPrice(), request.getImageUrl());
-        collectionDB.saveProduct(request.getId(), product);
+    public boolean createProduct(CreateProduct.Request request) {
+        try {
+            Product product = new Product(request.getName(),request.getPrice(), request.getImageUrl());
+            collectionDB.saveProduct(request.getId(), product);
+            return true;
+        }catch (Exception e) {
+            return false;
+        }
     }
 
     public ProductDetailDTO getProductDetail(Long id) {
