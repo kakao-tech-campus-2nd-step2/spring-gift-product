@@ -20,9 +20,6 @@ public class ProductController {
     private ProductDao productDao;
 
     @Autowired
-    public void setProductDao(ProductDao productDao){
-        this.productDao = productDao;
-    }
     @GetMapping("")
     public List<Product> getAllProducts(){
         return productDao.selectAllProduct();
