@@ -2,20 +2,12 @@ package gift.service;
 
 import gift.dto.ProductDTO;
 import gift.repository.H2Repository;
-import gift.repository.MemoryRepository;
 import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ProductService {
-
-//    private final MemoryRepository repository;
-//
-//    @Autowired
-//    public ProductService(MemoryRepository memoryRepository) {
-//        this.repository = memoryRepository;
-//    }
 
     private final H2Repository repository;
 
