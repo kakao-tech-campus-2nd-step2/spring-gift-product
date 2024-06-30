@@ -4,6 +4,8 @@ import gift.model.Product;
 import gift.model.ProductDao;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +25,7 @@ public class ProductController {
         return ResponseEntity.ok().body(products);
     }
 
+    @Validated
     @GetMapping("/product/{id}")
     public ResponseEntity<Product> getProduct(@PathVariable("id") long id) {
         Product product = productDao.findById(id);
@@ -45,7 +48,7 @@ public class ProductController {
     @DeleteMapping("/product/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable("id") long id) {
         productDao.deleteById(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build();
     }
 
 }
