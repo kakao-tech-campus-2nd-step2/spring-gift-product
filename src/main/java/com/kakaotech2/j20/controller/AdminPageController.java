@@ -5,9 +5,12 @@ import com.kakaotech2.j20.service.ProductService;
 import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -30,6 +33,12 @@ public class AdminPageController {
     @PostMapping("/admin") //admin으로 오는 post에 대해서 submit
     public String adminPageSubmit(@ModelAttribute("productDTO") ProductDTO productDTO) {
         pm.create(productDTO); //서비스에 접근해서 해당 부분을 추가해주도록 한다.
+        return "redirect:/admin";
+    }
+
+    @DeleteMapping("/admin/{id}")
+    public String adminPageDelete(@PathVariable Long id) {
+        pm.delete(id);
         return "redirect:/admin";
     }
 }
