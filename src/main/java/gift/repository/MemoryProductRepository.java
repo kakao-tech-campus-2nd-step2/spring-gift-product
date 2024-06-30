@@ -2,6 +2,8 @@ package gift.repository;
 
 import gift.model.ProductDAO;
 import gift.model.ProductDTO;
+import gift.util.ProductUtility;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,12 +15,9 @@ public class MemoryProductRepository implements ProductRepository {
     private static Long id = 0L;
 
     @Override
-    public ProductDAO save(ProductDTO form) {
-        ProductDAO product = new ProductDAO();
+    public ProductDAO save(ProductDTO productDTO) {
+        ProductDAO product = ProductUtility.productDTOToDAO(new ProductDAO(), productDTO);
         product.setId(++id);
-        product.setName(form.getName());
-        product.setPrice(form.getPrice());
-        product.setImageUrl(form.getImageUrl());
 
         db.put(product.getId(), product);
         return product;
@@ -31,15 +30,12 @@ public class MemoryProductRepository implements ProductRepository {
     }
 
     @Override
-    public ProductDAO edit(Long id, ProductDTO form) {
+    public ProductDAO edit(Long id, ProductDTO productDTO) {
         ProductDAO result = findById(id);
         if (result == null) {
             return null;
         }
-        result.setName(form.getName());
-        result.setPrice(form.getPrice());
-        result.setImageUrl(form.getImageUrl());
-        return result;
+        return ProductUtility.productDTOToDAO(result, productDTO);
     }
 
     @Override

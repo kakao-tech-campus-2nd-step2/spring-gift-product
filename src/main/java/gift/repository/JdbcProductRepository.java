@@ -2,10 +2,13 @@ package gift.repository;
 
 import gift.model.ProductDAO;
 import gift.model.ProductDTO;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.sql.DataSource;
+
+import gift.util.ProductUtility;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -20,22 +23,19 @@ public class JdbcProductRepository implements ProductRepository {
     }
 
     @Override
-    public ProductDAO save(ProductDTO form) {
+    public ProductDAO save(ProductDTO productDTO) {
         SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
         jdbcInsert.withTableName("product").usingGeneratedKeyColumns("id");
 
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put("name", form.getName());
-        parameters.put("price", form.getPrice());
-        parameters.put("imageUrl", form.getImageUrl());
+        parameters.put("name", productDTO.getName());
+        parameters.put("price", productDTO.getPrice());
+        parameters.put("imageUrl", productDTO.getImageUrl());
 
         Number key = jdbcInsert.executeAndReturnKey(new MapSqlParameterSource(parameters));
 
-        ProductDAO product = new ProductDAO();
+        ProductDAO product = ProductUtility.productDTOToDAO(new ProductDAO(), productDTO);
         product.setId((Long) key);
-        product.setName(form.getName());
-        product.setPrice(form.getPrice());
-        product.setImageUrl(form.getImageUrl());
 
         return product;
     }
@@ -47,16 +47,16 @@ public class JdbcProductRepository implements ProductRepository {
     }
 
     @Override
-    public ProductDAO edit(Long id, ProductDTO form) {
+    public ProductDAO edit(Long id, ProductDTO productDTO) {
         jdbcTemplate.update("update product set name = ?, price = ?, imageUrl = ? where id = ?",
-            form.getName(), form.getPrice(), form.getImageUrl(), id);
+                productDTO.getName(), productDTO.getPrice(), productDTO.getImageUrl(), id);
         return findById(id);
     }
 
     @Override
     public ProductDAO findById(Long id) {
         List<ProductDAO> result = jdbcTemplate.query("select * from product where id = ?",
-            productRowMapper(), id);
+                productRowMapper(), id);
         return result.stream().findFirst().orElse(null);
     }
 
