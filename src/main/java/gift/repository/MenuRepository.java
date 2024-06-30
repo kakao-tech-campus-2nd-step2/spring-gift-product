@@ -3,8 +3,11 @@ package gift.repository;
 import gift.domain.Menu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +18,13 @@ public class MenuRepository {
 
     @Autowired
     private final JdbcTemplate jdbcTemplate;
+
+    private final RowMapper<Menu> menuRowMapper = new RowMapper<Menu>() {
+        @Override
+        public Menu mapRow(ResultSet rs, int rowNum) throws SQLException {
+            return new Menu(rs.getLong("id"), rs.getString("name"), rs.getInt("price"), rs.getString("imageUrl"));
+        }
+    };
 
     public MenuRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -30,12 +40,7 @@ public class MenuRepository {
         String sql = "select id, name, price,imageUrl from menus where id = ?";
         return jdbcTemplate.queryForObject(
                 sql,
-                (resultSet, rowNum) -> new Menu(
-                        resultSet.getLong("id"),
-                        resultSet.getString("name"),
-                        resultSet.getInt("price"),
-                        resultSet.getString("imageUrl")
-                ),
+                menuRowMapper,
                 id
         );
     }
@@ -43,15 +48,8 @@ public class MenuRepository {
     public List<Menu> findAll() {
         String sql = "select id, name, price,imageUrl from menus";
         List<Menu> menus = jdbcTemplate.query(
-                sql, (resultSet, rowNum) -> {
-                    Menu menu = new Menu(
-                            resultSet.getLong("id"),
-                            resultSet.getString("name"),
-                            resultSet.getInt("price"),
-                            resultSet.getString("imageUrl")
-                    );
-                    return menu;
-                });
+                sql,
+                menuRowMapper);
         return menus;
     }
 
