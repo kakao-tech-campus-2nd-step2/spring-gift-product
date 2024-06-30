@@ -76,8 +76,7 @@
                 return;
             }
 
-            const selectedProductIds = Array.from(checkboxes).map(cb => cb.value); // 선택된 상품 ID 배열 생성
-
+            const selectedProductIds = Array.from(checkboxes).map(cb => cb.value);
             fetch('/product', {
                 method: 'DELETE',
                 headers: {
@@ -87,7 +86,7 @@
             })
                 .then(response => {
                     if (response.ok) {
-                        location.reload(); // 성공 시 페이지 새로고침
+                        location.reload();
                     } else {
                         alert('상품 삭제에 실패했습니다.');
                     }
