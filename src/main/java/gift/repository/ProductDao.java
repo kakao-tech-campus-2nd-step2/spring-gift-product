@@ -12,8 +12,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class ProductDao {
 
+    private final JdbcTemplate jdbcTemplate;
+
     @Autowired
-    private JdbcTemplate jdbcTemplate;
+    public ProductDao(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     public void insertProduct(Product product) {
         var sql = "INSERT INTO products(name,price,image_url) VALUES (?, ?, ?)";

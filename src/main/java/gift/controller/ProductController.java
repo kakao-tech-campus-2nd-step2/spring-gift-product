@@ -19,8 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ProductController {
 
+    private final ProductDao productDao;
+
     @Autowired
-    private ProductDao productDao;
+    public ProductController(ProductDao productDao) {
+        this.productDao = productDao;
+    }
 
     @GetMapping("/api/products")
     public ResponseEntity<List<ProductResponseDto>> getAllProducts() {

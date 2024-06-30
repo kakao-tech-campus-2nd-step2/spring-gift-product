@@ -13,8 +13,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class ProductViewController {
 
+    private final ProductDao productDao;
+
     @Autowired
-    private ProductDao productDao;
+    public ProductViewController(ProductDao productDao) {
+        this.productDao = productDao;
+    }
 
     @GetMapping("/step2/products")
     public String getAllProducts(Model model) {
