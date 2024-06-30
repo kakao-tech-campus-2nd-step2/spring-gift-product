@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -21,16 +22,20 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public ResponseEntity<List<Product>> getProducts() {
+    public ResponseEntity<List<ProductResponse>> getProducts() {
         List<Product> products = productDao.findAll();
-        return ResponseEntity.ok().body(products);
+        List<ProductResponse> responses = products.stream().map(
+                ProductResponse::from
+        ).toList();
+        return ResponseEntity.ok().body(responses);
     }
 
     @Validated
     @GetMapping("/product/{id}")
-    public ResponseEntity<Product> getProduct(@PathVariable("id") @NotNull @Min(1) Long id) {
+    public ResponseEntity<ProductResponse> getProduct(@PathVariable("id") @NotNull @Min(1) Long id) {
         Product product = productDao.findById(id);
-        return ResponseEntity.ok().body(product);
+        ProductResponse response = ProductResponse.from(product);
+        return ResponseEntity.ok().body(response);
     }
 
     @PostMapping("/product")
