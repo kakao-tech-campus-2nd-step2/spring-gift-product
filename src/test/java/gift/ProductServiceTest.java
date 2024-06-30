@@ -6,12 +6,14 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 class ProductServiceTest {
 
     @Test
-    @DisplayName("getAllProducts empty test")
-    void getAllProductsEmptyTest() {
+    @DisplayName("getAllProducts null test")
+    void getAllProductsNullTest() {
         //given
         ProductService productService = new ProductService();
 
