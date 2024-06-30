@@ -15,19 +15,17 @@ import java.util.List;
 
 @Controller
 public class ProductController {
-    @Autowired
-    //@Qualifier("MEMORY DATABASE") //memoryDB(Map<Long, Product>>) 원하면 주석 풀고 아래 H2를 주석화 시킬 것
-    @Qualifier("H2 DATABASE")
-    ProductDB productDB;
 
-    //상품 보여주기
+    @Autowired
+    @Qualifier("h2Database")
+    private ProductDB productDB;
+
     @GetMapping("/")
     public String getProducts(Model model) {
         model.addAttribute("products", productDB.getProducts());
         return "version-SSR/index";
     }
 
-    //상품 추가하기
     @GetMapping("/add")
     public String getAddForm(Model model) {
         model.addAttribute("product", new Product()); // Add an empty Product object for the form
@@ -44,7 +42,6 @@ public class ProductController {
         }
     }
 
-    //상품 삭제하기
     @PostMapping("/deleteSelected")
     public String deleteSelectedProduct(@RequestParam("productIds") List<Long> productIds) {
         productDB.removeProducts(productIds);
@@ -52,12 +49,11 @@ public class ProductController {
     }
 
     @PostMapping("/delete")
-    public String deleteProduct(@RequestParam("productId") Long productId) {
+    public String deleteProduct(@RequestParam("productId") Long productId) throws Exception {
         productDB.removeProduct(productId);
         return "redirect:/";
     }
 
-    //상품 수정하기
     @GetMapping("/edit/{id}")
     public String getEditForm(@PathVariable("id") long id, Model model) {
         model.addAttribute("product", productDB.getProduct(id)); // Add an empty Product object for the form

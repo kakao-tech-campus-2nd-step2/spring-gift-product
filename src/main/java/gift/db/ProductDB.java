@@ -5,19 +5,17 @@ import gift.dto.Product;
 import java.util.List;
 
 public interface ProductDB {
-    //추가
+
     void addProduct(Product product) throws Exception;
 
-    //읽기
     Product getProduct(Long id);
 
     List<Product> getProducts();
 
-    //삭제
-    void removeProduct(Long id);
+    void removeProduct(Long id) throws Exception;
 
     void removeProducts(List<Long> productIds);
 
-    //수정
     void editProduct(Product product) throws Exception;
+
 }
