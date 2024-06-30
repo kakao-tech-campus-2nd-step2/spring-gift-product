@@ -3,7 +3,6 @@ package gift;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,7 +11,7 @@ class ProductServiceTest {
 
     @Test
     @DisplayName("getAllProducts empty test")
-    void getAllProductsEmptyTest() throws Exception {
+    void getAllProductsEmptyTest() {
         //given
         ProductService productService = new ProductService();
 
@@ -25,7 +24,7 @@ class ProductServiceTest {
 
     @Test
     @DisplayName("getAllProducts test")
-    void getAllProductsTest() throws Exception {
+    void getAllProductsTest() {
         //given
         ProductService productService = new ProductService();
         Product product1 = new Product(1L, "product1", 10000, null);
@@ -45,7 +44,7 @@ class ProductServiceTest {
 
     @Test
     @DisplayName("getProductById exception test")
-    void getProductByIdExceptionTest() throws Exception {
+    void getProductByIdExceptionTest() {
         //given
         ProductService productService = new ProductService();
         Product product1 = new Product(1L, "product1", 10000, null);
@@ -59,7 +58,7 @@ class ProductServiceTest {
 
     @Test
     @DisplayName("getProductById test")
-    void getProductByIdTest() throws Exception {
+    void getProductByIdTest() {
         //given
         ProductService productService = new ProductService();
         Product product1 = new Product(1L, "product1", 10000, null);
@@ -76,7 +75,7 @@ class ProductServiceTest {
 
     @Test
     @DisplayName("updateProduct test")
-    void updateProductTest() throws Exception {
+    void updateProductTest() {
         //given
         ProductService productService = new ProductService();
         Product product1 = new Product(1L, "product1", 10000, null);
@@ -97,7 +96,7 @@ class ProductServiceTest {
     
     @Test
     @DisplayName("deleteProduct test")
-    void deleteProductTest() throws Exception {
+    void deleteProductTest() {
         //given
         ProductService productService = new ProductService();
         Product product1 = new Product(1L, "product1", 10000, null);
@@ -118,7 +117,7 @@ class ProductServiceTest {
 
     @Test
     @DisplayName("deleteProduct exception test")
-    void deleteProductExceptionTest() throws Exception {
+    void deleteProductExceptionTest() {
         //given
         ProductService productService = new ProductService();
         Product product1 = new Product(1L, "product1", 10000, null);
