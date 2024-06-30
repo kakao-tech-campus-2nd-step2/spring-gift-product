@@ -17,7 +17,7 @@ public class AdminController {
         this.repository = repository;
     }
 
-    @GetMapping("")
+    @GetMapping()
     public String adminPage(Model model) {
         model.addAttribute("products", repository.findAll());
         return "admin";
@@ -34,7 +34,7 @@ public class AdminController {
     }
 
     @GetMapping("/{id}")
-    public String getAdminAddPage(@PathVariable Long id, Model model) {
+    public String getAdminAddPage(@PathVariable("id") Long id, Model model) {
         model.addAttribute("product", repository.findById(id));
         return "adminProductDetail";
     }

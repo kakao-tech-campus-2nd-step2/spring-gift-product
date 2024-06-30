@@ -19,7 +19,7 @@ public class ProductController {
         this.repository = repository;
     }
 
-    @GetMapping("")
+    @GetMapping()
     public List<ProductDAO> getAllProducts() {
         return repository.findAll();
     }
@@ -33,7 +33,7 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
 
-    @PostMapping(path = "", consumes = "application/json")
+    @PostMapping(consumes = "application/json")
     public ResponseEntity<ProductDAO> postProduct(@RequestBody ProductDTO form) {
         ProductDAO result = repository.save(form);
         if (result != null) {
@@ -44,7 +44,7 @@ public class ProductController {
 
     @PutMapping(path = "/{id}", consumes = "application/json")
     public ResponseEntity<ProductDAO> putProduct(@RequestBody ProductDTO form,
-                                                 @PathVariable Long id) {
+                                                 @PathVariable("id") Long id) {
         ProductDAO result = repository.edit(id, form);
         if (result != null) {
             return ResponseEntity.status(HttpStatus.OK).body(result);
@@ -53,7 +53,7 @@ public class ProductController {
     }
 
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity<String> deleteProduct(@PathVariable Long id) {
+    public ResponseEntity<String> deleteProduct(@PathVariable("id") Long id) {
         boolean result = repository.delete(id);
         if (result) {
             return ResponseEntity.status(HttpStatus.OK).body("Successfully deleted");
