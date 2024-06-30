@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@RestController("/products")
 public class ProductController {
 
     private final ProductRepository productRepository;
@@ -25,7 +25,7 @@ public class ProductController {
         this.productRepository = productRepository;
     }
 
-    @GetMapping("/products")
+    @GetMapping
     public List<ProductResponseDto> getAllProducts() {
         return productRepository
             .findAll()
@@ -34,12 +34,12 @@ public class ProductController {
             .toList();
     }
 
-    @GetMapping("/products/{id}")
+    @GetMapping("/{id}")
     public ProductResponseDto getProduct(@PathVariable Long id) {
         return ProductResponseDto.from(productRepository.get(id));
     }
 
-    @PostMapping("/products")
+    @PostMapping
     public void addProduct(
         @RequestBody ProductCreateRequestDto productCreateRequest
     ) {
@@ -47,7 +47,7 @@ public class ProductController {
         productRepository.save(product);
     }
 
-    @PutMapping("/products/{id}")
+    @PutMapping("{id}")
     public void updateProduct(
         @PathVariable Long id,
         @RequestBody ProductUpdateRequestDto productUpdateRequest
@@ -60,7 +60,7 @@ public class ProductController {
         productRepository.save(updatedProduct);
     }
 
-    @DeleteMapping("/products/{id}")
+    @DeleteMapping("/{id}")
     public void deleteProduct(@PathVariable Long id) {
         productRepository.remove(id);
     }
