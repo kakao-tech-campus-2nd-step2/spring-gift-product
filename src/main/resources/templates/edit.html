@@ -6,8 +6,8 @@
 </head>
 <body>
 <h1>새 상품 등록</h1>
-<form th:action="@{/admin/product/update/{id}(id=${product.id})}" th:object="${product}" method="post">
-    <input type="hidden" name="_method" value="put" />
+<form th:action="@{/admin/product/{id}(id=${product.id})}" th:object="${product}" method="post">
+    <input type="hidden" name="_method" value="PUT" />
     <div>
         <label for="name_edit">상품명:</label>
         <input type="text" id="name_edit" name="name" th:field="*{name}" required/>

@@ -4,10 +4,7 @@ import gift.model.Product;
 import gift.model.ProductDao;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,27 +29,27 @@ public class AdminController {
         return "new";
     }
 
-    @GetMapping("admin/product/update/{id}")
+    @GetMapping("admin/product/{id}")
     public String updateProduct(@PathVariable("id") Long id, Model model) {
         Product product = productDao.findById(id);
         model.addAttribute("product", product);
         return "edit";
     }
 
-    @PostMapping("admin/product/new")
+    @PostMapping("admin/product")
     public String newProduct(@ModelAttribute ProductRequest request) {
         productDao.save(request);
         return "redirect:/";
     }
 
-    @PostMapping("admin/product/update/{id}")
+    @PutMapping("admin/product/{id}")
     public String updateProduct(@PathVariable("id") Long id,
                                 @ModelAttribute ProductRequest request) {
         productDao.updateById(id, request);
         return "redirect:/";
     }
 
-    @PostMapping("/admin/product/delete/{id}")
+    @DeleteMapping("/admin/product/{id}")
     public String delete(@PathVariable("id") Long id) {
         productDao.deleteById(id);
         return "redirect:/";
