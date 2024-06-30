@@ -1,7 +1,10 @@
 package gift.controller;
 
+import gift.controller.DTO.ProductRequestDto;
+import gift.controller.DTO.ProductResponseDto;
 import gift.model.ProductDao;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,24 +23,31 @@ public class ProductController {
     private ProductDao productDao;
 
     @Autowired
+    public ProductController(ProductDao productDao){
+        this.productDao = productDao;
+    }
+
     @GetMapping("")
-    public List<Product> getAllProducts(){
-        return productDao.selectAllProduct();
+    public List<ProductResponseDto> getAllProducts(){
+        return productDao.selectAllProduct()
+            .stream()
+            .map(Product::toProductResponseDto)
+            .collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
-    public Product getProduct(@PathVariable("id") Long id){
-        return productDao.selectProductById(id);
+    public ProductResponseDto getProduct(@PathVariable("id") Long id){
+        return productDao.selectProductById(id).toProductResponseDto();
     }
 
     @PostMapping()
-    public void addProduct(@RequestBody Product product){
-        productDao.insertProduct(product);
+    public void addProduct(@RequestBody ProductRequestDto productRequestDto){
+        productDao.insertProduct(productRequestDto.toEntity());
     }
 
     @PutMapping("/{id}")
-    public void updateProduct(@RequestBody Product product, @PathVariable("id") Long id){
-        productDao.updateProductById(id, product);
+    public void updateProduct(@RequestBody ProductRequestDto productRequestDto, @PathVariable("id") Long id){
+        productDao.updateProductById(id, productRequestDto.toEntity());
     }
 
     @DeleteMapping("/{id}")
