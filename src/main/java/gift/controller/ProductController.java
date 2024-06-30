@@ -35,19 +35,21 @@ public class ProductController {
 
   @PutMapping("/{id}")
   public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product product) {
-    if (!productService.findById(id).isPresent()) {
+    boolean updated = productService.updateProduct(id, product);
+    if (updated) {
+      return ResponseEntity.ok(product);
+    } else {
       return ResponseEntity.notFound().build();
     }
-    product.setId(id);
-    return ResponseEntity.ok(productService.save(product));
   }
 
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
-    if (!productService.findById(id).isPresent()) {
+    boolean deleted = productService.deleteById(id);
+    if (deleted) {
+      return ResponseEntity.noContent().build();
+    } else {
       return ResponseEntity.notFound().build();
     }
-    productService.deleteById(id);
-    return ResponseEntity.noContent().build();
   }
 }

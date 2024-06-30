@@ -9,7 +9,6 @@ import java.util.Optional;
 
 @Service
 public class ProductService {
-
   private final ProductRepository productRepository;
 
   public ProductService(ProductRepository productRepository) {
@@ -28,7 +27,20 @@ public class ProductService {
     return productRepository.save(product);
   }
 
-  public void deleteById(Long id) {
+  public boolean updateProduct(Long id, Product product) {
+    if (!productRepository.findById(id).isPresent()) {
+      return false;
+    }
+    product.setId(id);
+    productRepository.save(product);
+    return true;
+  }
+
+  public boolean deleteById(Long id) {
+    if (!productRepository.findById(id).isPresent()) {
+      return false;
+    }
     productRepository.deleteById(id);
+    return true;
   }
 }
