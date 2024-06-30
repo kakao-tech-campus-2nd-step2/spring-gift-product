@@ -76,5 +76,19 @@ class ProductControllerTest {
             .andExpect(jsonPath("$.imageUrl").value(product.getImageUrl()));
     }
 
+    @Test
+    public void testAddProduct() throws Exception{
+        //given
+        ObjectMapper objectMapper = new ObjectMapper();
+        Product product = new Product(1L,"Product",100,"imageUrl");
+        String jsonBody = objectMapper.writeValueAsString(product);
+
+        mockMvc.perform(post("/product")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(jsonBody))
+            .andExpect(status().isCreated());
+
+    }
+
 
 }
