@@ -1,5 +1,8 @@
-package gift.Menu;
+package gift.controller;
 
+import gift.domain.MenuRequest;
+import gift.service.MenuService;
+import gift.domain.Menu;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;

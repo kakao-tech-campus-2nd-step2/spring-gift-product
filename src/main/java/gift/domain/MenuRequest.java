@@ -1,4 +1,4 @@
-package gift.Menu;
+package gift.domain;
 
 public record MenuRequest(
         String name,

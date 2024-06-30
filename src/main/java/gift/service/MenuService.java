@@ -1,5 +1,7 @@
-package gift.Menu;
+package gift.service;
 
+import gift.domain.Menu;
+import gift.repository.MenuRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

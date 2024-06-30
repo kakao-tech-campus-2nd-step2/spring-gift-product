@@ -1,5 +1,6 @@
-package gift.Menu;
+package gift.repository;
 
+import gift.domain.Menu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
