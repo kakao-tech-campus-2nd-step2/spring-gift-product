@@ -3,6 +3,7 @@ package gift.controller;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -21,6 +22,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.RequestBuilder;
 
 //@SpringBootTest
 //@AutoConfigureMockMvc
@@ -44,6 +46,7 @@ class ProductControllerTest {
         //given
         Product product1 = new Product(1L, "product1", 100, "imageUrl1");
         Product product2 = new Product(2L, "product2", 200, "imageUrl2");
+
         List<Product> allProducts = Arrays.asList(product1, product2);
         when(productService.getAllProducts()).thenReturn(allProducts);
 
@@ -96,4 +99,20 @@ class ProductControllerTest {
             .andExpect(status().isNoContent());
 
     }
+
+    @Test
+    public void testUpdateProduct() throws Exception{
+        //given
+        ObjectMapper objectMapper = new ObjectMapper();
+        Product product = new Product(1L,"Product",100,"imageUrl");
+        String jsonBody = objectMapper.writeValueAsString(product);
+
+
+        mockMvc.perform(patch("/product/1")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(jsonBody))
+            .andExpect(status().isOk());
+    }
+
+
 }
