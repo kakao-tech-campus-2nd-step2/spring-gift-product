@@ -6,6 +6,13 @@ public class ProductResponseDto {
     private int price;
     private String imageUrl;
 
+    public ProductResponseDto(Long id, String name, int price, String imageUrl) {
+        this.imageUrl = imageUrl;
+        this.price = price;
+        this.name = name;
+        this.id = id;
+    }
+
     public Long getId() {
         return id;
     }

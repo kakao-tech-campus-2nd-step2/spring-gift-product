@@ -1,5 +1,7 @@
 package gift.model;
 
+import gift.controller.DTO.ProductResponseDto;
+
 public class Product{
     private Long id;
     private String name;
@@ -45,5 +47,14 @@ public class Product{
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public ProductResponseDto toProductResponseDto(){
+        return new ProductResponseDto(
+            id,
+            name,
+            price,
+            imageUrl
+        );
     }
 }
