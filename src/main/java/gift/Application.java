@@ -23,12 +23,13 @@ public class Application implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         jdbcTemplate.execute("DROP TABLE products IF EXISTS");
         jdbcTemplate.execute("CREATE TABLE products ("
             + "id LONG,"
             + " name VARCHAR(255),"
-            + " price INT, imageUrl VARCHAR(255),"
+            + " price INT,"
+            + " imageUrl VARCHAR(255),"
             + " PRIMARY KEY (id))"
         );
     }
