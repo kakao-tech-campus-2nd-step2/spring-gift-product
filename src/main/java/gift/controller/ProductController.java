@@ -1,7 +1,7 @@
 package gift.controller;
 
-import gift.model.Product;
-import gift.model.ProductForm;
+import gift.model.ProductDAO;
+import gift.model.ProductDTO;
 import gift.repository.ProductRepository;
 import java.util.List;
 import org.springframework.http.HttpStatus;
@@ -26,13 +26,13 @@ public class ProductController {
     }
 
     @GetMapping("")
-    public List<Product> getAllProducts() {
+    public List<ProductDAO> getAllProducts() {
         return repository.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProduct(@PathVariable Long id) {
-        Product result = repository.findById(id);
+    public ResponseEntity<ProductDAO> getProduct(@PathVariable Long id) {
+        ProductDAO result = repository.findById(id);
         if (result != null) {
             return ResponseEntity.status(HttpStatus.OK).body(result);
         }
@@ -40,8 +40,8 @@ public class ProductController {
     }
 
     @PostMapping(path = "", consumes = "application/json")
-    public ResponseEntity<Product> postProduct(@RequestBody ProductForm form) {
-        Product result = repository.save(form);
+    public ResponseEntity<ProductDAO> postProduct(@RequestBody ProductDTO form) {
+        ProductDAO result = repository.save(form);
         if (result != null) {
             return ResponseEntity.status(HttpStatus.OK).body(result);
         }
@@ -49,9 +49,9 @@ public class ProductController {
     }
 
     @PutMapping(path = "/{id}", consumes = "application/json")
-    public ResponseEntity<Product> putProduct(@RequestBody ProductForm form,
-        @PathVariable Long id) {
-        Product result = repository.edit(id, form);
+    public ResponseEntity<ProductDAO> putProduct(@RequestBody ProductDTO form,
+                                                 @PathVariable Long id) {
+        ProductDAO result = repository.edit(id, form);
         if (result != null) {
             return ResponseEntity.status(HttpStatus.OK).body(result);
         }

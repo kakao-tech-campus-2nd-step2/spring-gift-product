@@ -1,17 +1,17 @@
 package gift.model;
 
-public class Product {
+public class ProductDAO {
 
     private Long id;
     private String name;
     private int price;
     private String imageUrl;
 
-    public Product() {
+    public ProductDAO() {
         this.id = 0L;
     }
 
-    public Product(String name, int price, String imageUrl) {
+    public ProductDAO(String name, int price, String imageUrl) {
         this.id = 0L;
         this.name = name;
         this.price = price;

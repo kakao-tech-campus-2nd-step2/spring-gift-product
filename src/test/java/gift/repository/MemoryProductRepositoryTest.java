@@ -2,8 +2,8 @@ package gift.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import gift.model.Product;
-import gift.model.ProductForm;
+import gift.model.ProductDAO;
+import gift.model.ProductDTO;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
@@ -20,11 +20,11 @@ public class MemoryProductRepositoryTest {
 
     @Test
     public void save() {
-        ProductForm product = new ProductForm("abc", 123, "www.test.com");
+        ProductDTO product = new ProductDTO("abc", 123, "www.test.com");
 
-        Product savedProduct = repository.save(product);
+        ProductDAO savedProduct = repository.save(product);
 
-        Product result = repository.findById(savedProduct.getId());
+        ProductDAO result = repository.findById(savedProduct.getId());
 
         assertThat(result).isEqualTo(savedProduct);
     }
@@ -32,8 +32,8 @@ public class MemoryProductRepositoryTest {
     @Test
     @DisplayName("existing id")
     public void delete_exist() {
-        ProductForm product = new ProductForm("abc", 123, "www.test.com");
-        Product savedProduct = repository.save(product);
+        ProductDTO product = new ProductDTO("abc", 123, "www.test.com");
+        ProductDAO savedProduct = repository.save(product);
 
         boolean result = repository.delete(savedProduct.getId());
 
@@ -43,7 +43,7 @@ public class MemoryProductRepositoryTest {
     @Test
     @DisplayName("nonexistent id")
     public void delete_nonexistent() {
-        ProductForm product = new ProductForm("abc", 123, "www.test.com");
+        ProductDTO product = new ProductDTO("abc", 123, "www.test.com");
         repository.save(product);
 
         boolean result = repository.delete(0L);
@@ -53,25 +53,25 @@ public class MemoryProductRepositoryTest {
 
     @Test
     public void edit() {
-        ProductForm product = new ProductForm("abc", 123, "www.test.com");
-        Product savedProduct = repository.save(product);
+        ProductDTO product = new ProductDTO("abc", 123, "www.test.com");
+        ProductDAO savedProduct = repository.save(product);
 
-        Product editedProduct = repository.edit(savedProduct.getId(),
-            new ProductForm("def", 123, "www.test.com"));
-        Product product2 = repository.findById(editedProduct.getId());
+        ProductDAO editedProduct = repository.edit(savedProduct.getId(),
+            new ProductDTO("def", 123, "www.test.com"));
+        ProductDAO product2 = repository.findById(editedProduct.getId());
 
         assertThat(product2.getName()).isEqualTo("def");
     }
 
     @Test
     public void findAll() {
-        ProductForm product1 = new ProductForm("abc", 123, "www.test1.com");
-        ProductForm product2 = new ProductForm("def", 456, "www.test2.com");
+        ProductDTO product1 = new ProductDTO("abc", 123, "www.test1.com");
+        ProductDTO product2 = new ProductDTO("def", 456, "www.test2.com");
 
         repository.save(product1);
         repository.save(product2);
 
-        List<Product> result = repository.findAll();
+        List<ProductDAO> result = repository.findAll();
 
         assertThat(result.size()).isEqualTo(2);
     }

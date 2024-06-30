@@ -1,21 +1,20 @@
 package gift.repository;
 
-import gift.model.Product;
-import gift.model.ProductForm;
+import gift.model.ProductDAO;
+import gift.model.ProductDTO;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.springframework.stereotype.Repository;
 
 public class MemoryProductRepository implements ProductRepository {
 
-    private Map<Long, Product> db = new HashMap<>();
+    private Map<Long, ProductDAO> db = new HashMap<>();
     private static Long id = 0L;
 
     @Override
-    public Product save(ProductForm form) {
-        Product product = new Product();
+    public ProductDAO save(ProductDTO form) {
+        ProductDAO product = new ProductDAO();
         product.setId(++id);
         product.setName(form.getName());
         product.setPrice(form.getPrice());
@@ -27,13 +26,13 @@ public class MemoryProductRepository implements ProductRepository {
 
     @Override
     public boolean delete(Long id) {
-        Product result = db.remove(id);
+        ProductDAO result = db.remove(id);
         return result != null;
     }
 
     @Override
-    public Product edit(Long id, ProductForm form) {
-        Product result = findById(id);
+    public ProductDAO edit(Long id, ProductDTO form) {
+        ProductDAO result = findById(id);
         if (result == null) {
             return null;
         }
@@ -44,12 +43,12 @@ public class MemoryProductRepository implements ProductRepository {
     }
 
     @Override
-    public Product findById(Long id) {
+    public ProductDAO findById(Long id) {
         return db.get(id);
     }
 
     @Override
-    public List<Product> findAll() {
+    public List<ProductDAO> findAll() {
         return new ArrayList<>(db.values());
     }
 
