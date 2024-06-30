@@ -2,17 +2,16 @@ package gift.repository;
 
 import gift.model.ProductDAO;
 import gift.model.ProductDTO;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import javax.sql.DataSource;
-
 import gift.util.ProductUtility;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+
+import javax.sql.DataSource;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class JdbcProductRepository implements ProductRepository {
 

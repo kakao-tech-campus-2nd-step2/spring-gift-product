@@ -1,13 +1,14 @@
 package gift.repository;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import gift.model.ProductDAO;
 import gift.model.ProductDTO;
-import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class MemoryProductRepositoryTest {
 

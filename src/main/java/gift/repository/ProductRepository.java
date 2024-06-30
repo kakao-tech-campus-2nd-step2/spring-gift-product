@@ -2,6 +2,7 @@ package gift.repository;
 
 import gift.model.ProductDAO;
 import gift.model.ProductDTO;
+
 import java.util.List;
 
 public interface ProductRepository {

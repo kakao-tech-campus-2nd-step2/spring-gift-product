@@ -1,18 +1,12 @@
 package gift.config;
 
 import gift.controller.AdminController;
-import gift.repository.JdbcProductRepository;
 import gift.repository.MemoryProductRepository;
 import gift.repository.ProductRepository;
-import jakarta.annotation.PostConstruct;
-
-import javax.sql.DataSource;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
-import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
+
+import javax.sql.DataSource;
 
 @Configuration
 public class SpringConfig {
