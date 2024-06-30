@@ -25,7 +25,6 @@ public class AdminPageController {
     @GetMapping("/admin")
     public String adminPage(Model model) {
         model.addAttribute("products",pm.readAll());
-        System.out.println(pm.readAll().stream().count());
         model.addAttribute("productDTO",new ProductDTO());
         return "admin/index";//렌더링하는 html 이름
     }
