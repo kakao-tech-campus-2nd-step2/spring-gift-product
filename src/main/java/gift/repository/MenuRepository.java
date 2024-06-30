@@ -16,7 +16,6 @@ import java.util.Map;
 public class MenuRepository {
     private Long id = 1L;
 
-    @Autowired
     private final JdbcTemplate jdbcTemplate;
 
     private final RowMapper<Menu> menuRowMapper = new RowMapper<Menu>() {
