@@ -1,9 +1,11 @@
 package gift.service;
 
 import gift.controller.request.ProductRequest;
+import gift.controller.response.ProductResponse;
 import gift.domain.Product;
 import gift.domain.ProductRepository;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,12 +17,14 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public List<Product> getProducts() {
-        return productRepository.findAll();
+    public List<ProductResponse> getProducts() {
+        return productRepository.findAll().stream()
+            .map(Product::toDto)
+            .collect(Collectors.toList());
     }
 
-    public Product getProduct(Long productId) {
-        return productRepository.findById(productId);
+    public ProductResponse getProduct(Long productId) {
+        return productRepository.findById(productId).toDto();
     }
 
     public void addProduct(ProductRequest request) {

@@ -1,7 +1,7 @@
 package gift.controller;
 
 import gift.controller.request.ProductRequest;
-import gift.domain.Product;
+import gift.controller.response.ProductResponse;
 import gift.service.ProductService;
 import java.util.List;
 import org.springframework.http.HttpStatus;
@@ -26,26 +26,26 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Product>> productList() {
+    public ResponseEntity<List<ProductResponse>> productList() {
         return ResponseEntity.ok()
             .body(productService.getProducts());
     }
 
     @GetMapping("/{productId}")
-    public ResponseEntity<Product> productOne(@PathVariable Long productId) {
+    public ResponseEntity<ProductResponse> productOne(@PathVariable Long productId) {
         return ResponseEntity.ok()
             .body(productService.getProduct(productId));
     }
 
     @PostMapping
-    public ResponseEntity<Product> productAdd(@RequestBody ProductRequest request) {
+    public ResponseEntity<Void> productAdd(@RequestBody ProductRequest request) {
         productService.addProduct(request);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("/{productId}")
-    public ResponseEntity<Product> productEdit(@PathVariable Long productId,
+    public ResponseEntity<Void> productEdit(@PathVariable Long productId,
         @RequestBody ProductRequest request) {
         productService.editProduct(productId, request);
 
@@ -53,7 +53,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/{productId}")
-    public ResponseEntity<Long> productRemove(@PathVariable Long productId) {
+    public ResponseEntity<Void> productRemove(@PathVariable Long productId) {
         productService.removeProduct(productId);
 
         return ResponseEntity.ok().build();

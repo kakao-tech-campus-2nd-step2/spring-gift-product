@@ -11,7 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gift.controller.request.ProductRequest;
-import gift.domain.Product;
+import gift.controller.response.ProductResponse;
 import gift.service.ProductService;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -56,7 +56,7 @@ class ProductControllerTest {
     void productOne() throws Exception {
         //given
         Long productId = 1L;
-        Product product = new Product();
+        ProductResponse product = new ProductResponse();
 
         given(productService.getProduct(productId)).willReturn(product);
 

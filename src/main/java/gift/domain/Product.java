@@ -1,5 +1,7 @@
 package gift.domain;
 
+import gift.controller.response.ProductResponse;
+
 public class Product {
 
     private Long id;
@@ -24,6 +26,11 @@ public class Product {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public ProductResponse toDto() {
+        return new ProductResponse(this.getId(), this.getName(), this.getPrice(),
+            this.getImageUrl());
     }
 
     public void changeName(String name) {
