@@ -116,7 +116,7 @@ class ProductControllerTest {
                         .param("price", "6000")
                         .param("imageUrl", "https://example.com/mocha.png"))
                 .andExpect(status().isOk());
-                //.andExpect(view().name("redirect:/"));
+        //.andExpect(view().name("redirect:/"));
     }
 
     @Test
@@ -131,7 +131,7 @@ class ProductControllerTest {
                         .param("price", "6000")
                         .param("imageUrl", "https://example.com/mocha.png"))
                 .andExpect(status().is3xxRedirection());
-                //.andExpect(view().name("version-SSR/add-error"));
+        //.andExpect(view().name("version-SSR/add-error"));
     }
 
     @Test
@@ -192,7 +192,7 @@ class ProductControllerTest {
                 .andExpect(model().attributeExists("product"));
     }
 
-//    @Test => 뭐가 문제인지 모르겠음 ...
+//    @Test //=> 뭐가 문제인지 모르겠음 ...
 //    void testGetEditForm_Memory() throws Exception {
 //        Mockito.when(productDBMemory.getProduct(1L)).thenReturn(product1);
 //
