@@ -1,7 +1,6 @@
-package gift;
+package gift.restapi.dto.request;
 
-public record Product(
-        Long id,
+public record ProductCreateRequest(
         String name,
         Integer price,
         String imageUrl

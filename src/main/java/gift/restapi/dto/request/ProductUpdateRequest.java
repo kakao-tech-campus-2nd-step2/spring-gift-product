@@ -1,4 +1,4 @@
-package gift;
+package gift.restapi.dto.request;
 
 public record ProductUpdateRequest(
         String name,

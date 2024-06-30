@@ -1,6 +1,7 @@
-package gift;
+package gift.core;
 
-public record ProductCreateRequest(
+public record Product(
+        Long id,
         String name,
         Integer price,
         String imageUrl

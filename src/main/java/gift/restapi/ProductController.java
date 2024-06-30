@@ -1,5 +1,11 @@
-package gift;
+package gift.restapi;
 
+import gift.core.Product;
+import gift.core.ProductNotFoundException;
+import gift.persistence.ProductRepository;
+import gift.restapi.dto.request.ProductCreateRequest;
+import gift.restapi.dto.request.ProductUpdateRequest;
+import gift.restapi.dto.response.ProductResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

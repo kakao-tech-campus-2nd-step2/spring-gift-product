@@ -1,4 +1,6 @@
-package gift;
+package gift.restapi.dto.response;
+
+import gift.core.Product;
 
 public record ProductResponse(
         Long id,
