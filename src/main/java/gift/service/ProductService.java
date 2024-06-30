@@ -24,27 +24,25 @@ public class ProductService {
         return repository.getProduct(id);
     }
 
-    public boolean addProduct(ProductDTO productDTO) {
-        if (repository.getProducts().contains(productDTO)) {
-            return false;
-        }
+    public ProductDTO addProduct(ProductDTO productDTO) {
         repository.addProduct(productDTO);
-        return true;
+        return productDTO;
     }
 
-    public boolean updateProduct(long id, ProductDTO productDTO) {
+    public ProductDTO updateProduct(long id, ProductDTO productDTO) {
         if (repository.getProduct(id) == null) {
-            return false;
+            throw new IllegalArgumentException("해당 상품을 수정할 수 없습니다.");
         }
         repository.updateProduct(id, productDTO);
-        return true;
+        return productDTO;
     }
 
-    public boolean deleteProduct(long id) {
-        if (repository.getProduct(id) == null) {
-            return false;
+    public ProductDTO deleteProduct(long id) {
+        ProductDTO deletedProduct = repository.getProduct(id);
+        if (deletedProduct == null) {
+            throw new IllegalArgumentException("해당 상품을 삭제할 수 없습니다.");
         }
         repository.deleteProduct(id);
-        return true;
+        return deletedProduct;
     }
 }

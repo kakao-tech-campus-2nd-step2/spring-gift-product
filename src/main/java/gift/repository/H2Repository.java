@@ -3,6 +3,7 @@ package gift.repository;
 import gift.dto.ProductDTO;
 import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -24,7 +25,11 @@ public class H2Repository {
 
     public ProductDTO getProduct(Long id) {
         var sql = "SELECT * FROM PRODUCT WHERE id = ?";
-        return jdbcTemplate.queryForObject(sql, productRowMapper(), id);
+        try {
+            return jdbcTemplate.queryForObject(sql, productRowMapper(), id);
+        } catch (IncorrectResultSizeDataAccessException e) {
+            return null;
+        }
     }
 
     public void addProduct(ProductDTO productDTO) {
