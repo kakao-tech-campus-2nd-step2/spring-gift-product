@@ -1,7 +1,6 @@
 package gift.repository;
 
 import gift.dto.ProductDTO;
-import jakarta.annotation.PostConstruct;
 import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -16,19 +15,6 @@ public class H2Repository {
     @Autowired
     public H2Repository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
-    }
-
-    @PostConstruct
-    public void createProductTable() {
-        var sql = """
-            CREATE TABLE PRODUCT (
-                id BIGINT AUTO_INCREMENT PRIMARY KEY,
-                name VARCHAR(255),
-                price INT,
-                imageUrl VARCHAR(255)
-            )
-            """;
-        jdbcTemplate.execute(sql);
     }
 
     public Collection<ProductDTO> getProducts() {
