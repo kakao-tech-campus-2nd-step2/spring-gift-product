@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -45,16 +44,16 @@ public class ProductController {
     }
 
     @PutMapping("/product/{id}")
-    public ResponseEntity<Void> updateProduct(@PathVariable("id") @NotNull @Min(1) Long id,
+    public ResponseEntity<Long> updateProduct(@PathVariable("id") @NotNull @Min(1) Long id,
                                               @RequestBody ProductRequest request) {
         productDao.updateById(id, request);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(id);
     }
 
     @DeleteMapping("/product/{id}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable("id") @NotNull @Min(1) Long id) {
+    public ResponseEntity<Long> deleteProduct(@PathVariable("id") @NotNull @Min(1) Long id) {
         productDao.deleteById(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(id);
     }
 
 }
