@@ -1,4 +1,4 @@
-package gift.Menu;
+package gift.domain;
 
 public class Menu {
     private Long id;
@@ -7,12 +7,10 @@ public class Menu {
     private String imageUrl;
 
     public Menu(String name, int price, String imageUrl) {
-        this.name = name;
-        this.price = price;
-        this.imageUrl = imageUrl;
+        this(null,name,price,imageUrl);
     }
 
-    public Menu(long id, String name, int price, String imageUrl) {
+    public Menu(Long id, String name, int price, String imageUrl) {
         this.id = id;
         this.name = name;
         this.price = price;
