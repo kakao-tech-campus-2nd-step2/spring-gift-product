@@ -48,6 +48,31 @@ class ProductServiceTest {
         assertThat(result.size()).isEqualTo(1);
     }
 
+    @Test
+    void getProductById() {
+        //given
+        given(productDao.findById(1L)).willReturn(product);
 
+        //when
+        Product result = productService.getProductById(1L);
+
+        //then
+        assertThat(result).isEqualTo(product);
+    }
+
+//    @Test
+//    void saveProduct() {
+//        //given
+//
+//    }
+//
+//    @Test
+//    void updateProduct() {
+//    }
+//
+//    @Test
+//    void deleteProduct() {
+//    }
+//추후 Dao 클래스 리팩토링 후 작성예정.
 
 }
