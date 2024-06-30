@@ -18,16 +18,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ProductController {
 
-    private final ProductRepository products;
+    private final ProductRepository productRepository;
 
     @Autowired
-    public ProductController(ProductRepository products) {
-        this.products = products;
+    public ProductController(ProductRepository productRepository) {
+        this.productRepository = productRepository;
     }
 
     @GetMapping("/products")
     public List<ProductResponseDto> getAllProducts() {
-        return products
+        return productRepository
             .findAll()
             .stream()
             .map(ProductResponseDto::from)
@@ -36,7 +36,7 @@ public class ProductController {
 
     @GetMapping("/products/{id}")
     public ProductResponseDto getProduct(@PathVariable Long id) {
-        return ProductResponseDto.from(products.get(id));
+        return ProductResponseDto.from(productRepository.get(id));
     }
 
     @PostMapping("/products")
@@ -44,7 +44,7 @@ public class ProductController {
         @RequestBody ProductCreateRequestDto productCreateRequest
     ) {
         Product product = productOf(productCreateRequest);
-        products.save(product);
+        productRepository.save(product);
     }
 
     @PutMapping("/products/{id}")
@@ -52,17 +52,17 @@ public class ProductController {
         @PathVariable Long id,
         @RequestBody ProductUpdateRequestDto productUpdateRequest
     ) {
-        Product originalProduct = products.get(id);
+        Product originalProduct = productRepository.get(id);
         if (originalProduct == null) {
             throw new RuntimeException("Product not found");
         }
         Product updatedProduct = applyUpdate(originalProduct, productUpdateRequest);
-        products.save(updatedProduct);
+        productRepository.save(updatedProduct);
     }
 
     @DeleteMapping("/products/{id}")
     public void deleteProduct(@PathVariable Long id) {
-        products.remove(id);
+        productRepository.remove(id);
     }
 
     private Product productOf(ProductCreateRequestDto productCreateRequest) {
