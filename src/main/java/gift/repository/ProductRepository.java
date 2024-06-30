@@ -2,10 +2,11 @@ package gift.repository;
 
 import gift.domain.Product;
 import java.util.List;
+import java.util.Optional;
 
 public interface ProductRepository {
 
-    Product get(Long id);
+    Optional<Product> findById(Long id);
 
     boolean exists(Long id);
 

@@ -36,8 +36,11 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public ProductResponseDto getProduct(@PathVariable Long id) {
-        return ProductResponseDto.from(productRepository.get(id));
+        Product product = productRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Product not found"));
+        return ProductResponseDto.from(product);
     }
+
 
     @PostMapping
     public void addProduct(
@@ -47,15 +50,14 @@ public class ProductController {
         productRepository.save(product);
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public void updateProduct(
         @PathVariable Long id,
         @RequestBody ProductUpdateRequestDto productUpdateRequest
     ) {
-        Product originalProduct = productRepository.get(id);
-        if (originalProduct == null) {
-            throw new RuntimeException("Product not found");
-        }
+        Product originalProduct = productRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Product not found"));
+
         Product updatedProduct = applyUpdate(originalProduct, productUpdateRequest);
         productRepository.save(updatedProduct);
     }

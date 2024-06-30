@@ -2,6 +2,7 @@ package gift.repository;
 
 import gift.domain.Product;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -25,9 +26,14 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public Product get(Long id) {
+    public Optional<Product> findById(Long id) {
         String sql = "SELECT * FROM `products` WHERE `id` = ?";
-        return jdbcTemplate.queryForObject(sql, rowMapper, id);
+        try {
+            Product product = jdbcTemplate.queryForObject(sql, rowMapper, id);
+            return Optional.ofNullable(product);
+        } catch (Exception e) {
+            return Optional.empty();
+        }
     }
 
     @Override
