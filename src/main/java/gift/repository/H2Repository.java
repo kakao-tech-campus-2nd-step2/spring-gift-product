@@ -45,9 +45,9 @@ public class H2Repository {
         return simpleJdbcInsert.executeAndReturnKey(parameters).longValue();
     }
 
-    public void updateProduct(long id, ProductDTO productDTO) {
+    public void updateProduct(ProductDTO productDTO) {
         var sql = "UPDATE PRODUCT SET name = ?, price = ?, imageUrl = ? WHERE id = ?";
-        jdbcTemplate.update(sql, productDTO.name(), productDTO.price(), productDTO.imageUrl(), id);
+        jdbcTemplate.update(sql, productDTO.name(), productDTO.price(), productDTO.imageUrl(), productDTO.id());
     }
 
     public void deleteProduct(long id) {
