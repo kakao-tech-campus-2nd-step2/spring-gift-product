@@ -22,17 +22,17 @@ public class MenuService {
         return menus;
     }
 
-    public Long delete(Long id) {
-        Long deletedId = menuRepository.delete(id);
-        return id;
+    public Menu findById(Long id) {
+        Menu menu = menuRepository.findById(id);
+        return menu;
     }
 
     public void update(Long id, String name, int price, String imageUrl) {
         menuRepository.update(id, name, price, imageUrl);
     }
 
-    public Menu findById(Long id) {
-        Menu menu = menuRepository.findById(id);
-        return menu;
+    public Long delete(Long id) {
+        Long deletedId = menuRepository.delete(id);
+        return id;
     }
 }
