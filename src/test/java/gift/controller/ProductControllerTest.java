@@ -61,5 +61,20 @@ class ProductControllerTest {
             .andExpect(jsonPath("$[1].imageUrl").value(product2.getImageUrl()));
     }
 
+    @Test
+    public void testGetProductById() throws Exception {
+        //given
+        Product product = new Product(1L, "product1", 100, "imageUrl1");
+        when(productService.getProductById(1L)).thenReturn(product);
+
+        //when & given
+        mockMvc.perform(get("/product/1"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.id").value(product.getId()))
+            .andExpect(jsonPath("$.name").value(product.getName()))
+            .andExpect(jsonPath("$.price").value(product.getPrice()))
+            .andExpect(jsonPath("$.imageUrl").value(product.getImageUrl()));
+    }
+
 
 }
