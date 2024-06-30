@@ -90,5 +90,10 @@ class ProductControllerTest {
 
     }
 
+    @Test
+    public void testDeleteProduct() throws Exception{
+        mockMvc.perform(delete("/product/1"))
+            .andExpect(status().isNoContent());
 
+    }
 }
