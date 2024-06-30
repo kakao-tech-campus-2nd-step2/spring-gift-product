@@ -6,6 +6,7 @@ public class ProductResponseDto {
     private int price;
     private String imageUrl;
 
+    public ProductResponseDto(){}
     public ProductResponseDto(Long id, String name, int price, String imageUrl) {
         this.imageUrl = imageUrl;
         this.price = price;

@@ -1,8 +1,11 @@
 package gift.controller;
 
+import gift.controller.DTO.ProductRequestDto;
+import gift.controller.DTO.ProductResponseDto;
 import gift.model.ProductDao;
 import gift.model.Product;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,20 +27,23 @@ public class AdminController {
 
     @GetMapping
     public String getAllProducts(Model model){
-        List<Product> productList = productDao.selectAllProduct();
+        List<ProductResponseDto> productList = productDao.selectAllProduct()
+            .stream()
+            .map(Product::toProductResponseDto)
+            .collect(Collectors.toList());
         model.addAttribute("productList", productList);
         return "list";
     }
 
     @GetMapping("/add")
     public String addProductForm(Model model){
-        model.addAttribute("product", new Product());
+        model.addAttribute("product", new ProductResponseDto());
         return "product-form";
     }
 
     @PostMapping("/add")
-    public String addProduct(@ModelAttribute Product product){
-        productDao.insertProduct(product);
+    public String addProduct(@ModelAttribute ProductRequestDto productRequestDto){
+        productDao.insertProduct(productRequestDto.toEntity());
         return "redirect:/admin/list";
     }
 
@@ -48,8 +54,8 @@ public class AdminController {
     }
 
     @PostMapping("edit/{id}")
-    public String updateProduct(@PathVariable("id") Long id, @ModelAttribute Product product){
-        productDao.updateProductById(id, product);
+    public String updateProduct(@PathVariable("id") Long id, @ModelAttribute ProductRequestDto productRequestDto){
+        productDao.updateProductById(id, productRequestDto.toEntity());
         return "redirect:/admin/list";
     }
 
