@@ -1,9 +1,7 @@
 package gift.db;
 
 import gift.dto.Product;
-import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.context.properties.bind.ConstructorBinding;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -14,10 +12,10 @@ import java.util.Map;
 @Component
 @Qualifier("memoryDatabase")
 public class ProductMemoryDB implements ProductDB {
+
     private final Map<Long, Product> products = new HashMap<>();
 
     ProductMemoryDB() {
-        //초기 데이터
         products.put(1L, new Product(1L, "Americano", 4500, "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg"));
         products.put(2L, new Product(2L, "Latte", 5500, "https://cdn.pixabay.com/photo/2023/07/08/13/17/coffee-8114518_1280.png"));
         products.put(3L, new Product(3L, "Sandwich", 7700, "https://cdn.pixabay.com/photo/2023/08/12/02/58/sandwich-8184642_1280.png"));
@@ -26,11 +24,10 @@ public class ProductMemoryDB implements ProductDB {
 
     @Override
     public void addProduct(Product product) throws Exception {
-        if(hasProductId(product.getId())){
+        if (hasProductId(product.getId())) {
             throw new Exception();
         }
         products.put(product.getId(), product);
-
     }
 
     @Override
@@ -48,8 +45,8 @@ public class ProductMemoryDB implements ProductDB {
     }
 
     @Override
-    public void removeProduct(Long id) throws Exception{
-        if(!products.containsKey(id)){
+    public void removeProduct(Long id) throws Exception {
+        if (!products.containsKey(id)) {
             throw new Exception();
         }
         products.remove(id);
@@ -64,7 +61,7 @@ public class ProductMemoryDB implements ProductDB {
 
     @Override
     public void editProduct(Product product) throws Exception {
-        if(!hasProductId(product.getId())){
+        if (!hasProductId(product.getId())) {
             throw new Exception();
         }
         products.put(product.getId(), product);
@@ -73,4 +70,5 @@ public class ProductMemoryDB implements ProductDB {
     public boolean hasProductId(Long id) {
         return products.containsKey(id);
     }
+
 }
