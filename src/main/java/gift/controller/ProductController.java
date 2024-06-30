@@ -35,7 +35,7 @@ public class ProductController {
     @GetMapping("/{id}")
     public ProductResponseDto getProduct(@PathVariable Long id) {
         Product product = productRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Product not found"));
+            .orElseThrow(() -> new NoSuchElementException(id));
         return ProductResponseDto.from(product);
     }
 
