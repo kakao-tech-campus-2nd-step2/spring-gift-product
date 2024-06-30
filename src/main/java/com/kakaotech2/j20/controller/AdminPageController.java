@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -35,9 +36,28 @@ public class AdminPageController {
         return "redirect:/admin";
     }
 
+    @PutMapping("/admin/{id}")
+    public String adminPageUpdate(@PathVariable Long id,@ModelAttribute("productDTO") ProductDTO productDTO) {
+        changeCheckAndUpdate(id,productDTO);
+        return "redirect:/admin";
+    }
+
     @DeleteMapping("/admin/{id}")
     public String adminPageDelete(@PathVariable Long id) {
         pm.delete(id);
         return "redirect:/admin";
+    }
+
+    private void changeCheckAndUpdate(Long id, ProductDTO dto) {
+
+        if (dto.getName().length()>0){
+            pm.updateName(id, dto.getName());
+        }
+        if (dto.getPrice()!=null){
+            pm.updatePrice(id, dto.getPrice());
+        }
+        if (dto.getImageUrl().length()>0){
+            pm.updateImageUrl(id, dto.getImageUrl());
+        }
     }
 }
