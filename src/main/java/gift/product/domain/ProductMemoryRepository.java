@@ -6,9 +6,11 @@ import gift.product.application.command.ProductUpdateCommand;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class ProductMemoryRepository implements ProductRepository {
     private final List<Product> products = new ArrayList<>();
+    private final AtomicLong nextId = new AtomicLong(1);
 
     public List<Product> findAll() {
         return products;
@@ -21,11 +23,9 @@ public class ProductMemoryRepository implements ProductRepository {
     }
 
     public void addProduct(ProductCreateCommand product) {
-        Long nextId = products.isEmpty() ? 1L : products.getLast().getId() + 1L;
-
         products.add(
                 new Product(
-                        nextId,
+                        nextId.getAndIncrement(),
                         product.name(),
                         product.price(),
                         product.imageUrl()
