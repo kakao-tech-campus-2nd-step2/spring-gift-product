@@ -2,13 +2,12 @@ package gift.db;
 
 import gift.dto.Product;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 class ProductMemoryDBTest {
 
     static ProductMemoryDB productMemoryDB;
@@ -18,7 +17,7 @@ class ProductMemoryDBTest {
     }
 
     @Test
-    void testAddProduct() throws Exception{
+    void testAddProduct() throws Exception {
         //given
         Product newProduct = new Product(5L, "Mocha", 6000, "https://example.com/mocha.png");
 
@@ -49,7 +48,11 @@ class ProductMemoryDBTest {
 
     @Test
     void testRemoveProduct() {
-        productMemoryDB.removeProduct(1L);
+        try {
+            productMemoryDB.removeProduct(1L);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         assertNull(productMemoryDB.getProduct(1L));
     }
 
@@ -65,7 +68,7 @@ class ProductMemoryDBTest {
     }
 
     @Test
-    void testEditProduct() throws Exception{
+    void testEditProduct() throws Exception {
         Product updatedProduct = new Product(1L, "Espresso", 5000, "https://example.com/espresso.png");
         productMemoryDB.editProduct(updatedProduct);
 
@@ -78,4 +81,5 @@ class ProductMemoryDBTest {
         assertTrue(productMemoryDB.hasProductId(1L));
         assertFalse(productMemoryDB.hasProductId(999L));
     }
+
 }
