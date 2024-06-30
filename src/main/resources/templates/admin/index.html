@@ -15,6 +15,11 @@
         <td> <span th:text="|name : ${product.name}|">상품명</span></td>
         <td> <span th:text="|price : ${product.price}|">가격</span></td>
         <td> <span th:text="|imageUrl : ${product.imageUrl}|">이미지</span></td>
+        <td>
+          <form th:action="@{/admin/{id}(id=${product.id})}" method="#" th:method="delete">
+            <button type="submit">삭제하기</button>
+          </form>
+        </td>
       </tr>
     </tbody>
 
@@ -23,10 +28,6 @@
 
 
   <form action="/admin" th:action th:object="${productDTO}" method="post">
-    <div>
-      <label for="productId">상품 ID</label>
-      <input type="number" id="productId" th:field="*{id}">
-    </div>
 
     <div>
       <label for="productName">상품명</label>
