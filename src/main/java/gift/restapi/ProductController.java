@@ -13,16 +13,16 @@ import java.util.List;
 
 @RestController
 public class ProductController {
-    private final ProductRepository products;
+    private final ProductRepository productRepository;
 
     @Autowired
-    public ProductController(ProductRepository products) {
-        this.products = products;
+    public ProductController(ProductRepository productRepository) {
+        this.productRepository = productRepository;
     }
 
     @GetMapping("/products")
     public List<ProductResponse> getAllProducts() {
-        return products
+        return productRepository
                 .findAll()
                 .stream()
                 .map(ProductResponse::from)
@@ -31,7 +31,7 @@ public class ProductController {
 
     @GetMapping("/products/{id}")
     public ProductResponse getProduct(@PathVariable Long id) {
-        return ProductResponse.from(products.get(id));
+        return ProductResponse.from(productRepository.get(id));
     }
 
     @PostMapping("/products")
@@ -39,7 +39,7 @@ public class ProductController {
             @RequestBody ProductCreateRequest productCreateRequest
     ) {
         Product product = productOf(productCreateRequest);
-        products.save(product);
+        productRepository.save(product);
     }
 
     @PutMapping("/products/{id}")
@@ -47,17 +47,17 @@ public class ProductController {
             @PathVariable Long id,
             @RequestBody ProductUpdateRequest productUpdateRequest
     ) {
-        Product originalProduct = products.get(id);
+        Product originalProduct = productRepository.get(id);
         if (originalProduct == null) {
             throw new ProductNotFoundException();
         }
         Product updatedProduct = applyUpdate(originalProduct, productUpdateRequest);
-        products.save(updatedProduct);
+        productRepository.save(updatedProduct);
     }
 
     @DeleteMapping("/products/{id}")
     public void deleteProduct(@PathVariable Long id) {
-        products.remove(id);
+        productRepository.remove(id);
     }
 
     private Product productOf(ProductCreateRequest productCreateRequest) {
