@@ -11,7 +11,6 @@ import java.util.Map;
 
 @Repository
 public class MenuRepository {
-    private final Map<Long, Menu> menus = new HashMap<>();
     private Long id = 1L;
 
     @Autowired
