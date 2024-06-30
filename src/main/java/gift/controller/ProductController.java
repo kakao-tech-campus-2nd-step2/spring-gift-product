@@ -52,13 +52,15 @@ public class ProductController {
 
     @PostMapping("/api/products")
     public void addProduct(@RequestBody ProductResponseDto productResponseDto) {
-        Product product = new Product(productResponseDto);
+        Product product = new Product(productResponseDto.name(),
+            productResponseDto.price(), productResponseDto.imageUrl());
         productDao.insertProduct(product);
     }
 
     @PutMapping("/api/products")
     public void updateProduct(@RequestBody ProductResponseDto productResponseDto) {
-        Product updatedProduct = new Product(productResponseDto);
+        Product updatedProduct = new Product(productResponseDto.id(), productResponseDto.name(),
+            productResponseDto.price(), productResponseDto.imageUrl());
         productDao.updateProduct(updatedProduct);
     }
 
