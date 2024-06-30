@@ -30,6 +30,19 @@ public class ProductDTO {
         this.imageUrl = product.getImageUrl();
     }
 
+    //디버깅을 위한 toString 추가
+
+
+    @Override
+    public String toString() {
+        return "ProductDTO{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", price=" + price +
+            ", imageUrl='" + imageUrl + '\'' +
+            '}';
+    }
+
     public Long getId() {
         return id;
     }
