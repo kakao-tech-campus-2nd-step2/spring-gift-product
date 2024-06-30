@@ -2,20 +2,28 @@ package gift.repository;
 
 import gift.dto.ProductDTO;
 import java.util.Collection;
+import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class H2Repository {
 
     private final JdbcTemplate jdbcTemplate;
+    private final SimpleJdbcInsert simpleJdbcInsert;
 
     @Autowired
-    public H2Repository(JdbcTemplate jdbcTemplate) {
+    public H2Repository(JdbcTemplate jdbcTemplate, DataSource dataSource) {
         this.jdbcTemplate = jdbcTemplate;
+        this.simpleJdbcInsert = new SimpleJdbcInsert(dataSource)
+            .withTableName("PRODUCT")
+            .usingGeneratedKeyColumns("id");
     }
 
     public Collection<ProductDTO> getProducts() {
@@ -32,9 +40,9 @@ public class H2Repository {
         }
     }
 
-    public void addProduct(ProductDTO productDTO) {
-        var sql = "INSERT INTO PRODUCT (name, price, imageUrl) VALUES (?, ?, ?)";
-        jdbcTemplate.update(sql, productDTO.name(), productDTO.price(), productDTO.imageUrl());
+    public long addProduct(ProductDTO productDTO) {
+        SqlParameterSource parameters = new BeanPropertySqlParameterSource(productDTO);
+        return simpleJdbcInsert.executeAndReturnKey(parameters).longValue();
     }
 
     public void updateProduct(long id, ProductDTO productDTO) {

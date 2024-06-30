@@ -25,8 +25,8 @@ public class ProductService {
     }
 
     public ProductDTO addProduct(ProductDTO productDTO) {
-        repository.addProduct(productDTO);
-        return productDTO;
+        long id = repository.addProduct(productDTO);
+        return repository.getProduct(id);
     }
 
     public ProductDTO updateProduct(long id, ProductDTO productDTO) {
