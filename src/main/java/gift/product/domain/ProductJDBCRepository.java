@@ -4,19 +4,25 @@ import gift.product.application.command.ProductCreateCommand;
 import gift.product.application.command.ProductUpdateCommand;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Repository
 public class ProductJDBCRepository implements ProductRepository {
 
     private final JdbcTemplate jdbcTemplate;
+    private final SimpleJdbcInsert simpleJdbcInsert;
     private final RowMapper<Product> productRowMapper;
 
     public ProductJDBCRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+        this.simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
+                .withTableName("product")
+                .usingGeneratedKeyColumns("id");
         this.productRowMapper = productRowMapper();
     }
 
@@ -36,12 +42,12 @@ public class ProductJDBCRepository implements ProductRepository {
 
     @Override
     public void addProduct(ProductCreateCommand productCreateCommand) {
-        String sql = "INSERT INTO product (name, price, imageUrl) VALUES (?, ?, ?)";
-        jdbcTemplate.update(
-                sql,
-                productCreateCommand.name(),
-                productCreateCommand.price(),
-                productCreateCommand.imageUrl()
+        simpleJdbcInsert.execute(
+                Map.of(
+                "name", productCreateCommand.name(),
+                "price", productCreateCommand.price(),
+                "imageUrl", productCreateCommand.imageUrl()
+                )
         );
     }
 
