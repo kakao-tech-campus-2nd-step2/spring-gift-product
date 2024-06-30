@@ -1,5 +1,6 @@
 package gift.controller;
 
+import gift.model.ProductDAO;
 import gift.repository.ProductRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,7 +36,9 @@ public class AdminController {
 
     @GetMapping("/{id}")
     public String getAdminAddPage(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("product", repository.findById(id));
+        ProductDAO product = repository.findById(id);
+        if (product == null) return "error";
+        model.addAttribute("product", product);
         return "adminProductDetail";
     }
 }
