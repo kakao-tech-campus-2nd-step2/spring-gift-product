@@ -12,6 +12,9 @@ public class ProductDTO {
         this.imageUrl = imageUrl;
     }
 
+    public ProductDTO() {
+    }
+
     public String getName() {
         return name;
     }
@@ -39,9 +42,9 @@ public class ProductDTO {
     @Override
     public String toString() {
         return "ProductForm{" +
-            "name='" + name + '\'' +
-            ", price=" + price +
-            ", imageUrl='" + imageUrl + '\'' +
-            '}';
+                "name='" + name + '\'' +
+                ", price=" + price +
+                ", imageUrl='" + imageUrl + '\'' +
+                '}';
     }
 }
