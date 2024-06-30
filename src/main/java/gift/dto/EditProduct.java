@@ -1,26 +1,26 @@
 package gift.dto;
 
-//import com.sun.istack.NotNull;
-
 public class EditProduct {
 
 
 
     public static class Request{
-        //@NotNull
+
+        private  long id;
         private String name;
-        //@NotNull
+
         private int price;
-        //@NotNull
+
         private String imageUrl;
 
-        public Request( String name, int price,String imageUrl) {
-
+        public Request( long id , String name, int price,String imageUrl) {
+            this.id = id;
             this.name=name;
             this.price=price;
             this.imageUrl=imageUrl;
         }
 
+        public long getId() {return id;}
         public String getName() {
             return name;
         }
