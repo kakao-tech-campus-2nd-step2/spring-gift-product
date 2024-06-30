@@ -4,7 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import gift.model.ProductDAO;
 import gift.model.ProductDTO;
+
 import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -44,7 +46,7 @@ public class ProductRepositoryIntegrationTest {
         ProductDAO savedProduct = productRepository.save(product);
 
         ProductDTO editProductForm = new ProductDTO("def", product.getPrice(),
-            product.getImageUrl());
+                product.getImageUrl());
 
         ProductDAO editProduct = productRepository.edit(savedProduct.getId(), editProductForm);
         ProductDAO findProduct = productRepository.findById(savedProduct.getId());

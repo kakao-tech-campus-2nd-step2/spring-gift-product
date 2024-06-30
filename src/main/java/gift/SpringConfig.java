@@ -20,7 +20,6 @@ public class SpringConfig {
 
     private final DataSource dataSource;
 
-    @Autowired
     public SpringConfig(DataSource dataSource) {
         this.dataSource = dataSource;
     }
