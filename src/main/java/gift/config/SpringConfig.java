@@ -1,4 +1,4 @@
-package gift;
+package gift.config;
 
 import gift.controller.AdminController;
 import gift.repository.JdbcProductRepository;
@@ -8,7 +8,6 @@ import jakarta.annotation.PostConstruct;
 
 import javax.sql.DataSource;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -31,14 +30,7 @@ public class SpringConfig {
 
     @Bean
     public ProductRepository productRepository() {
-//        return new MemoryProductRepository();
-        return new JdbcProductRepository(dataSource);
-    }
-
-    @PostConstruct
-    private void initializeDB() {
-        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-        populator.addScript(new ClassPathResource("sql/ddl.sql"));
-        DatabasePopulatorUtils.execute(populator, dataSource);
+        return new MemoryProductRepository();
+//        return new JdbcProductRepository(dataSource);
     }
 }
