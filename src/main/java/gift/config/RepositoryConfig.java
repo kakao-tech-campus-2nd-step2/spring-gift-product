@@ -12,7 +12,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 public class RepositoryConfig {
 
     @Bean
-    public ProductRepository products(JdbcTemplate jdbcTemplate) {
+    public ProductRepository productRepository(JdbcTemplate jdbcTemplate) {
         return new JDBCTemplateProductDao(jdbcTemplate);
     }
 }
