@@ -17,10 +17,19 @@ public class JdbcProductRepository {
 
     public JdbcProductRepository(DataSource dataSource) {
         this.template = new JdbcTemplate(dataSource);
+        createTable();
+    }
+
+    private void createTable() {
+        template.update("create table if not exists product("
+            + "id long primary key auto_increment, "
+            + "name varchar(255), "
+            + "price int,"
+            + "imageUrl varchar(255))");
     }
 
     public Product insertProduct(Product product) {
-        String sql = "insert into product (id, name, price, imageUrl) values (?,?,?,?)";
+        String sql = "insert into product (name, price, imageUrl) values (?,?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         template.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql,new String[]{"id"});
@@ -41,7 +50,7 @@ public class JdbcProductRepository {
 
     public Product getProduct(Long id) {
         String sql = "select * from product where id = ?";
-        return template.queryForObject(sql,new BeanPropertyRowMapper<Product>(Product.class),id);
+        return template.queryForObject(sql,productRowMapper(),id);
     }
 
     public List<Product> findAllProducts() {
