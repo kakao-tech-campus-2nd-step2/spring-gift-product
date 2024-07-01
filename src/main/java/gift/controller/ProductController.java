@@ -1,5 +1,7 @@
-package gift;
+package gift.controller;
 
+import gift.model.Product;
+import gift.repository.ProductRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
