@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Product {
 
-    private Long id;
+    private final Long id;
     private String name;
     private Integer price;
     private String imageUrl;
@@ -16,37 +16,24 @@ public class Product {
         this.imageUrl = imageUrl;
     }
 
-    public Long id() {
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String name() {
+    public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer price() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
-        this.price = price;
-    }
 
-    public String imageUrl() {
+    public String getImageUrl() {
         return imageUrl;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
 
     @Override
     public String toString() {

@@ -10,7 +10,7 @@ public record ProductResponseDto(
 ) {
 
     public static ProductResponseDto from(Product product) {
-        return new ProductResponseDto(product.id(), product.name(), product.price(),
-            product.imageUrl());
+        return new ProductResponseDto(product.getId(), product.getName(), product.getPrice(),
+            product.getImageUrl());
     }
 }

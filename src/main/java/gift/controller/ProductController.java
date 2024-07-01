@@ -79,20 +79,20 @@ public class ProductController {
 
     private Product applyUpdate(Product originalProduct,
         ProductUpdateRequestDto productUpdateRequest) {
-        String name = originalProduct.name();
+        String name = originalProduct.getName();
         if (productUpdateRequest.name() != null) {
             name = productUpdateRequest.name();
         }
 
-        Integer price = originalProduct.price();
+        Integer price = originalProduct.getPrice();
         if (productUpdateRequest.price() != null) {
             price = productUpdateRequest.price();
         }
 
-        String imageUrl = originalProduct.imageUrl();
+        String imageUrl = originalProduct.getImageUrl();
         if (productUpdateRequest.imageUrl() != null) {
             imageUrl = productUpdateRequest.imageUrl();
         }
-        return new Product(originalProduct.id(), name, price, imageUrl);
+        return new Product(originalProduct.getId(), name, price, imageUrl);
     }
 }

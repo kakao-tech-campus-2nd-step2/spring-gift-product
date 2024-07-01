@@ -45,14 +45,14 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     @Override
     public void save(Product product) {
-        if (exists(product.id())) {
+        if (exists(product.getId())) {
             String sql = "UPDATE `products` SET `name` = ?, `price` = ?, `image_url` = ? WHERE `id` = ?";
-            jdbcTemplate.update(sql, product.name(), product.price(), product.imageUrl(),
-                product.id());
+            jdbcTemplate.update(sql, product.getName(), product.getPrice(), product.getImageUrl(),
+                product.getId());
             return;
         }
         String sql = "INSERT INTO `products` (`name`, `price`, `image_url`) VALUES (?, ?, ?)";
-        jdbcTemplate.update(sql, product.name(), product.price(), product.imageUrl());
+        jdbcTemplate.update(sql, product.getName(), product.getPrice(), product.getImageUrl());
     }
 
     @Override
