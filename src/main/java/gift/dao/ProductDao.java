@@ -2,9 +2,11 @@ package gift.dao;
 
 import gift.domain.Product;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,15 +22,21 @@ public class ProductDao implements ProductRepository {
     @Override
     public Product save(Product product) {
         String sql = "INSERT INTO product (name, price, image_url) VALUES(?, ?, ?)";
-        jdbcTemplate.update(sql, product.getName(), product.getPrice(), product.getImageUrl());
-        return product;
+        GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(connection -> {
+            PreparedStatement statement = connection.prepareStatement(sql, new String[]{"id"});
+            statement.setString(1, product.getName());
+            statement.setInt(2, product.getPrice());
+            statement.setString(3, product.getImageUrl());
+            return statement;
+        }, keyHolder);
+        return findById((Long) keyHolder.getKey()).get();
     }
 
     @Override
     public Optional<Product> findById(Long id) {
         String sql = "SELECT * FROM product WHERE id = ?";
-        return Optional.ofNullable(
-                jdbcTemplate.queryForObject(
+        return jdbcTemplate.query(
                         sql,
                         (rs, rowNum) -> new Product(
                                 rs.getLong("id"),
@@ -38,7 +46,8 @@ public class ProductDao implements ProductRepository {
                         ),
                         id
                 )
-        );
+                .stream()
+                .findFirst();
     }
 
     @Override
