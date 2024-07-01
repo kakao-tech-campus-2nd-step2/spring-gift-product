@@ -11,23 +11,17 @@ import java.util.List;
 public class ProductRepository {
 
     private final JdbcTemplate jdbcTemplate;
+    private final RowMapper<Product> productRowMapper;
 
     public ProductRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+        productRowMapper = (rs, rowNum) ->
+            new Product(rs.getLong("id"),
+                    rs.getString("name"),
+                    rs.getLong("price"),
+                    rs.getString("image_url"));
+
     }
-
-    private final RowMapper<Product> productRowMapper = (rs, rowNum) ->
-        new Product(rs.getLong("id"), rs.getString("name"), rs.getLong("price"), rs.getString("image_url"));
-
-    public void createTable() {
-        jdbcTemplate.execute("CREATE TABLE IF NOT EXISTS products (" +
-            "id BIGINT AUTO_INCREMENT PRIMARY KEY, " +
-            "name VARCHAR(255), " +
-            "price BIGINT, " +
-            "image_url VARCHAR(500)" +
-            ")");
-    }
-
     public List<Product> findAll() {
         return jdbcTemplate.query("SELECT * FROM products", productRowMapper);
     }
@@ -38,12 +32,12 @@ public class ProductRepository {
 
     public void save(Product product) {
         jdbcTemplate.update("INSERT INTO products (name, price, image_url) VALUES (?, ?, ?)",
-            product.name(), product.price(), product.imageUrl());
+            product.getName(), product.getPrice(), product.getImageUrl());
     }
 
     public void update(Long id, Product product) {
         jdbcTemplate.update("UPDATE products SET name = ?, price = ?, image_url = ? WHERE id = ?",
-            product.name(), product.price(), product.imageUrl(), id);
+            product.getName(), product.getPrice(), product.getImageUrl(), id);
     }
     public void deleteById(Long id) {
         jdbcTemplate.update("DELETE FROM products WHERE id = ?", id);
