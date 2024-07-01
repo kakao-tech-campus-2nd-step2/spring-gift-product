@@ -35,33 +35,36 @@ public class AdminController {
                 .orElseThrow(() -> ProductNotFoundException.of(id));
 
         model.addAttribute("product", product);
+
         return "admin/edit";
     }
 
     @PostMapping("/products")
-    public String productSave(@RequestBody ProductRequest newProduct){
+    public String productSave(@RequestBody ProductRequest newProduct) {
         productRepository.save(newProduct.toModel());
 
         return "admin/list";
     }
 
     @PatchMapping("/products/{id}")
-    public String productModify(@PathVariable("id") Long id, @RequestBody ProductRequest modifyProduct){
-
+    public String productModify(@PathVariable("id") Long id,
+                                @RequestBody ProductRequest modifyProduct) {
         Product findedProduct = productRepository.find(id)
                 .orElseThrow(() -> ProductNotFoundException.of(id));
 
         productRepository.save(modifyProduct.toModel(id));
+
         return "admin/list";
     }
 
     @DeleteMapping("/products/{id}")
-    public String productDelete(@PathVariable("id") Long id){
+    public String productDelete(@PathVariable("id") Long id) {
         Product findedProduct = productRepository.find(id)
                 .orElseThrow(() -> ProductNotFoundException.of(id));
 
         findedProduct.delete();
         productRepository.save(findedProduct);
+
         return "admin/list";
     }
 

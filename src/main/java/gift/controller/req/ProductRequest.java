@@ -7,7 +7,6 @@ public record ProductRequest(
         Integer price,
         String imgUrl
 ) {
-
     public Product toModel() {
         return new Product(null, name(), price(), imgUrl());
     }

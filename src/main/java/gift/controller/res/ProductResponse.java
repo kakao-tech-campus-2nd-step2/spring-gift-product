@@ -8,7 +8,6 @@ public record ProductResponse(
         Integer price,
         String imgUrl
 ) {
-
     public static ProductResponse fromModel(final Product product) {
         return new ProductResponse(product.getId(), product.getName(), product.getPrice(), product.getImgUrl());
     }
