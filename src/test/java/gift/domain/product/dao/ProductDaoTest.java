@@ -36,32 +36,28 @@ class ProductDaoTest {
     }
 
     /**
-     * 리스트 인덱스 번호 때문에 개별 실행해야 함.
+     * 편의 상 데이터 2개에 대해서만 검증
      */
     @Test
     @DisplayName("DB 전체 상품 조회")
     void findAll() {
         // given
-        Product product1 = new Product(null, "탕종 블루베리 베이글", 3500, "https://image.istarbucks.co.kr/upload/store/skuimg/2023/09/[9300000004823]_20230911131337469.jpg");
-        Product product2 = new Product(null, "오트 콜드 브루", 5800, "https://image.istarbucks.co.kr/upload/store/skuimg/2021/04/[9200000003285]_20210416154437069.jpg");
-        productDao.insert(product1);
-        productDao.insert(product2);
 
         // when
         List<Product> productList = productDao.findAll();
 
         // then
         assertAll(
-            () -> assertThat(productList.get(3)).isNotNull(),
-            () -> assertThat(productList.get(3).getId()).isNotNull(),
-            () -> assertThat(productList.get(3).getName()).isEqualTo(product1.getName()),
-            () -> assertThat(productList.get(3).getPrice()).isEqualTo(product1.getPrice()),
-            () -> assertThat(productList.get(3).getImageUrl()).isEqualTo(product1.getImageUrl()),
-            () -> assertThat(productList.get(4)).isNotNull(),
-            () -> assertThat(productList.get(4).getId()).isNotNull(),
-            () -> assertThat(productList.get(4).getName()).isEqualTo(product2.getName()),
-            () -> assertThat(productList.get(4).getPrice()).isEqualTo(product2.getPrice()),
-            () -> assertThat(productList.get(4).getImageUrl()).isEqualTo(product2.getImageUrl())
+            () -> assertThat(productList.get(0)).isNotNull(),
+            () -> assertThat(productList.get(0).getId()).isNotNull(),
+            () -> assertThat(productList.get(0).getName()).isEqualTo("아이스 카페 아메리카노 T"),
+            () -> assertThat(productList.get(0).getPrice()).isEqualTo(4500),
+            () -> assertThat(productList.get(0).getImageUrl()).isEqualTo("https://image.istarbucks.co.kr/upload/store/skuimg/2021/04/[110563]_20210426095937947.jpg"),
+            () -> assertThat(productList.get(1)).isNotNull(),
+            () -> assertThat(productList.get(1).getId()).isNotNull(),
+            () -> assertThat(productList.get(1).getName()).isEqualTo("아이스 카페 라떼 T"),
+            () -> assertThat(productList.get(1).getPrice()).isEqualTo(5000),
+            () -> assertThat(productList.get(1).getImageUrl()).isEqualTo("https://image.istarbucks.co.kr/upload/store/skuimg/2021/04/[110569]_20210415143036138.jpg")
         );
     }
 
