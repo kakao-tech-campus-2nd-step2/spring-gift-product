@@ -37,7 +37,7 @@ public class ProductController {
         return "editProduct";
     }
     @GetMapping
-    public String getproductList(Model model) {
+    public String getProductList(Model model) {
         model.addAttribute("products", productDao.selectAllProducts());
         return "productManage";
     }
@@ -57,8 +57,8 @@ public class ProductController {
         if (product.amount() >= amount) {
             productDao.purchaseProduct(id, amount);
             return ResponseEntity.ok("Purchase successful");
-        } else {
-            return ResponseEntity.badRequest().body("Not enough stock");
         }
+        return ResponseEntity.badRequest().body("Not enough stock");
     }
+
 }

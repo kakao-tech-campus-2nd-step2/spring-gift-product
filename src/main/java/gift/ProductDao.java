@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class ProductDao {
@@ -69,5 +70,10 @@ public class ProductDao {
                 ),
                 id
         );
+    }
+    public boolean checkProduct(long id) {
+        var sql = "select count(*) from products where id = ?";
+        int count = jdbcTemplate.queryForObject(sql, Integer.class, id);
+        return count > 0;
     }
 }
