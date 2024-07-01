@@ -1,6 +1,7 @@
 package gift.domain.product.dao;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import gift.domain.product.entity.Product;
 import java.util.List;
@@ -25,11 +26,13 @@ class ProductDaoTest {
         Product savedProduct = productDao.insert(product);
 
         // then
-        assertThat(savedProduct).isNotNull();
-        assertThat(savedProduct.getId()).isNotNull();
-        assertThat(savedProduct.getName()).isEqualTo(product.getName());
-        assertThat(savedProduct.getPrice()).isEqualTo(product.getPrice());
-        assertThat(savedProduct.getImageUrl()).isEqualTo(product.getImageUrl());
+        assertAll(
+            () -> assertThat(savedProduct).isNotNull(),
+            () -> assertThat(savedProduct.getId()).isNotNull(),
+            () -> assertThat(savedProduct.getName()).isEqualTo(product.getName()),
+            () -> assertThat(savedProduct.getPrice()).isEqualTo(product.getPrice()),
+            () -> assertThat(savedProduct.getImageUrl()).isEqualTo(product.getImageUrl())
+        );
     }
 
     /**
@@ -48,16 +51,18 @@ class ProductDaoTest {
         List<Product> productList = productDao.findAll();
 
         // then
-        assertThat(productList.get(3)).isNotNull();
-        assertThat(productList.get(3).getId()).isNotNull();
-        assertThat(productList.get(3).getName()).isEqualTo(product1.getName());
-        assertThat(productList.get(3).getPrice()).isEqualTo(product1.getPrice());
-        assertThat(productList.get(3).getImageUrl()).isEqualTo(product1.getImageUrl());
-        assertThat(productList.get(4)).isNotNull();
-        assertThat(productList.get(4).getId()).isNotNull();
-        assertThat(productList.get(4).getName()).isEqualTo(product2.getName());
-        assertThat(productList.get(4).getPrice()).isEqualTo(product2.getPrice());
-        assertThat(productList.get(4).getImageUrl()).isEqualTo(product2.getImageUrl());
+        assertAll(
+            () -> assertThat(productList.get(3)).isNotNull(),
+            () -> assertThat(productList.get(3).getId()).isNotNull(),
+            () -> assertThat(productList.get(3).getName()).isEqualTo(product1.getName()),
+            () -> assertThat(productList.get(3).getPrice()).isEqualTo(product1.getPrice()),
+            () -> assertThat(productList.get(3).getImageUrl()).isEqualTo(product1.getImageUrl()),
+            () -> assertThat(productList.get(4)).isNotNull(),
+            () -> assertThat(productList.get(4).getId()).isNotNull(),
+            () -> assertThat(productList.get(4).getName()).isEqualTo(product2.getName()),
+            () -> assertThat(productList.get(4).getPrice()).isEqualTo(product2.getPrice()),
+            () -> assertThat(productList.get(4).getImageUrl()).isEqualTo(product2.getImageUrl())
+        );
     }
 
     @Test
@@ -71,13 +76,14 @@ class ProductDaoTest {
         Product foundProduct = productDao.findById(savedProduct.getId()).get();
 
         // then
-        assertThat(foundProduct).isNotNull();
-        assertThat(foundProduct.getId()).isNotNull();
-        assertThat(foundProduct.getName()).isEqualTo(product.getName());
-        assertThat(foundProduct.getPrice()).isEqualTo(product.getPrice());
-        assertThat(foundProduct.getImageUrl()).isEqualTo(product.getImageUrl());
+        assertAll(
+            () -> assertThat(foundProduct).isNotNull(),
+            () -> assertThat(foundProduct.getId()).isNotNull(),
+            () -> assertThat(foundProduct.getName()).isEqualTo(product.getName()),
+            () -> assertThat(foundProduct.getPrice()).isEqualTo(product.getPrice()),
+            () -> assertThat(foundProduct.getImageUrl()).isEqualTo(product.getImageUrl())
+        );
     }
-
 
     @Test
     @DisplayName("DB 상품 수정")
@@ -91,11 +97,13 @@ class ProductDaoTest {
         Product updatedProduct = productDao.update(product2).get();
 
         // then
-        assertThat(updatedProduct).isNotNull();
-        assertThat(updatedProduct.getId()).isEqualTo(savedProduct.getId());
-        assertThat(updatedProduct.getName()).isEqualTo(product2.getName());
-        assertThat(updatedProduct.getPrice()).isEqualTo(product2.getPrice());
-        assertThat(updatedProduct.getImageUrl()).isEqualTo(product2.getImageUrl());
+        assertAll(
+            () -> assertThat(updatedProduct).isNotNull(),
+            () -> assertThat(updatedProduct.getId()).isEqualTo(savedProduct.getId()),
+            () -> assertThat(updatedProduct.getName()).isEqualTo(product2.getName()),
+            () -> assertThat(updatedProduct.getPrice()).isEqualTo(product2.getPrice()),
+            () -> assertThat(updatedProduct.getImageUrl()).isEqualTo(product2.getImageUrl())
+        );
     }
 
     @Test
@@ -106,13 +114,9 @@ class ProductDaoTest {
         Product savedProduct = productDao.insert(product1);
 
         // when
-        Product deletedProduct = productDao.update(savedProduct).get();
+        productDao.delete(savedProduct.getId());
 
         // then
-        assertThat(savedProduct).isNotNull();
-        assertThat(savedProduct.getId()).isEqualTo(product1.getId());
-        assertThat(savedProduct.getName()).isEqualTo(product1.getName());
-        assertThat(savedProduct.getPrice()).isEqualTo(product1.getPrice());
-        assertThat(savedProduct.getImageUrl()).isEqualTo(product1.getImageUrl());
+        assertThat(productDao.findById(savedProduct.getId())).isEmpty();
     }
 }
