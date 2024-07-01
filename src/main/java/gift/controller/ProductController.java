@@ -1,8 +1,8 @@
 package gift.controller;
 
 import gift.common.exception.ProductNotFoundException;
-import gift.controller.req.ProductRequest;
-import gift.controller.res.ProductResponse;
+import gift.controller.dto.request.ProductRequest;
+import gift.controller.dto.response.ProductResponse;
 import gift.model.Product;
 import gift.model.repository.ProductRepository;
 import java.util.List;

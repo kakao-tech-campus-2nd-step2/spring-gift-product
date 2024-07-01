@@ -1,7 +1,7 @@
 package gift.controller;
 
 import gift.common.exception.ProductNotFoundException;
-import gift.controller.req.ProductRequest;
+import gift.controller.dto.request.ProductRequest;
 import gift.model.Product;
 import gift.model.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;

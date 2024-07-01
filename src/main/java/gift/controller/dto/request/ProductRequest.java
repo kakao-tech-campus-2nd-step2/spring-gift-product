@@ -1,4 +1,4 @@
-package gift.controller.req;
+package gift.controller.dto.request;
 
 import gift.model.Product;
 
