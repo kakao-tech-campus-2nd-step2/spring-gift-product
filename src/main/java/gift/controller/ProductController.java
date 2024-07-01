@@ -31,7 +31,7 @@ public class ProductController {
 
         List<Product> productsList = productDao.getAllProducts();
         if(productsList.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
         List<ProductResponseDto> dtoList = productsList.stream()
             .map(ProductResponseDto::new)
@@ -44,7 +44,7 @@ public class ProductController {
 
         Product product = productDao.getProductById(id);
         if (product == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
         ProductResponseDto productResponseDto = new ProductResponseDto(product);
         return new ResponseEntity<>(productResponseDto, HttpStatus.OK);
