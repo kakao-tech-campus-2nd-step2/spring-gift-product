@@ -1,7 +1,6 @@
 package gift.service;
 
 
-import gift.exception.DataNotFoundException;
 import gift.model.Gift;
 import gift.model.GiftDao;
 import org.springframework.stereotype.Service;

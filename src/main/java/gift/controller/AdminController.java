@@ -2,7 +2,6 @@ package gift.controller;
 
 
 import gift.model.Gift;
-import gift.model.GiftDao;
 import gift.service.GiftService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,7 +25,7 @@ public class AdminController {
     @GetMapping("/admin")
     public String adminHome(Model model){
         Collection<Gift> giftlist = giftService.getAllGifts();
-        model.addAttribute("giftlist",giftlist);
+        model.addAttribute("giftlist", giftlist);
         return "admin";
     }
 
@@ -45,7 +44,7 @@ public class AdminController {
     @GetMapping("/admin/gift/detail/{id}")
     public String detail(Model model,@PathVariable("id") Long id){
         Gift gift = giftService.getGift(id);
-        model.addAttribute("gift",gift);
+        model.addAttribute("gift", gift);
         return "gift_detail";
     }
 
@@ -53,14 +52,14 @@ public class AdminController {
     @GetMapping("/admin/gift/modify/{id}")
     public String giftModify(Model model,@PathVariable("id") Long id){
         Gift gift = giftService.getGift(id);
-        model.addAttribute("gift",gift);
+        model.addAttribute("gift", gift);
         return "modify_form";
 
     }
     @PutMapping("/admin/gift/modify/{id}")
     public String giftModify(@PathVariable("id") Long id,
                              @ModelAttribute Gift gift){
-        giftService.updateGift(gift,id);
+        giftService.updateGift(gift, id);
         return "redirect:/admin";
 
     }

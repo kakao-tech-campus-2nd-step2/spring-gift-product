@@ -1,13 +1,11 @@
 package gift.model;
-
-import gift.exception.DataNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Repository
 public class GiftDao {
@@ -33,7 +31,7 @@ public class GiftDao {
                             rs.getString("imageUrl")
                     ), id);
         } catch (EmptyResultDataAccessException ex) {
-            throw new DataNotFoundException();
+            throw new NoSuchElementException();
         }
     }
 
@@ -57,7 +55,7 @@ public class GiftDao {
             String sql = "UPDATE gift SET name = ?, price = ?, imageUrl = ? WHERE id = ?";
             jdbcTemplate.update(sql, gift.getName(), gift.getPrice(), gift.getImageUrl(), id);
         } catch (EmptyResultDataAccessException ex) {
-            throw new DataNotFoundException();
+            throw new NoSuchElementException();
         }
     }
 
@@ -66,7 +64,7 @@ public class GiftDao {
             String sql = "DELETE FROM gift WHERE id = ?";
             jdbcTemplate.update(sql, id);
         } catch (EmptyResultDataAccessException ex) {
-            throw new DataNotFoundException();
+            throw new NoSuchElementException();
         }
     }
 }
