@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public class GiftService {
 
-    private GiftDao giftDao;
+    private final GiftDao giftDao;
 
     public GiftService(GiftDao giftDao) {
         this.giftDao = giftDao;
