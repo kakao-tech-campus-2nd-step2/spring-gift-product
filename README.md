@@ -1,6 +1,8 @@
 # spring-gift-product
 
+
 # 구현할 기능 목록 정리
+
 
 ## GET
 ### 1. 전체 상품 조회
@@ -14,6 +16,7 @@
 
 ## Delete
 ### 5. 상품 삭제
+
 
 ------------------------
 
@@ -57,3 +60,4 @@
 
 ### 스키마 스크립트는 schema.sql, 데이터 스크립트는 data.sql
 ### 스키마 및 데이터 스크립트의 위치는 각각 spring.sql.init.schema-locations 및 spring.sql.init.data-locations를 사용하여 사용자 지정할 수 있다.
+

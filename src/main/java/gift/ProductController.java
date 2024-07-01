@@ -1,60 +1,56 @@
 package gift;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+
+import org.springframework.web.bind.annotation.*;
 
 
-@Controller
+import java.util.List;
+
+@RestController
 @RequestMapping("/api/products")
 public class ProductController {
-    private final ProductRepository productRepository;
+    private final ProductService productService;
 
-    @Autowired
-    public ProductController(ProductRepository productRepository) {
-        this.productRepository = productRepository;
+    public ProductController(ProductService productService) {
+        this.productService = productService;
     }
 
     @GetMapping
-    public String getAllProducts(Model model) {
-        model.addAttribute("products", productRepository.findAll());
-        return "index";
+    public List<Product> getAllProducts() {
+        return productService.getAllProducts();
     }
 
-    @GetMapping("/add")
-    public String addProductForm(Model model) {
-        model.addAttribute("product", new Product());
-        return "addProduct";
+    @GetMapping("/{id}")
+    public Product getProductById(@PathVariable Long id) {
+        return productService.getProductById(id);
     }
 
-    @PostMapping("/add")
-    public String addProduct(@ModelAttribute Product product) {
-        productRepository.save(product);
-        return "redirect:/api/products";
+    @PostMapping
+    public Object addProduct(@RequestBody Product product) {
+        String result = productService.addProduct(product);
+        if (result != null) {
+            return result; // 오류 메시지 반환
+        }
+        return product; // 성공 시 추가된 Product 반환
     }
 
-    @GetMapping("/edit/{id}")
-    public String editProductForm(@PathVariable Long id, Model model) {
-        Product product = productRepository.findById(id);
-        model.addAttribute("product", product);
-        return "editProduct";
-    }
 
-    @PostMapping("/edit/{id}")
-    public String updateProduct(@PathVariable Long id, @ModelAttribute Product product) {
-        productRepository.update(id, product);
-        return "redirect:/api/products";
-    }
 
-    @GetMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public String deleteProduct(@PathVariable Long id) {
-        productRepository.deleteById(id);
-        return "redirect:/api/products";
+        return productService.deleteProduct(id); // 성공 시 null 반환, 오류 시 오류 메시지 반환
     }
 
+    @PutMapping("/{id}")
+    public Object modifyProduct(@PathVariable Long id, @RequestBody Product product) {
+        Product modifiedProduct = productService.modifyProduct(id, product);
+        if (modifiedProduct.getId() != id) {
+            return "id 변경 불가능";
+        }
+        if (modifiedProduct == null) {
+            return "Product not found"; // 오류 메시지 반환
+        }
+        return modifiedProduct; // 성공 시 수정된 Product 반환
+    }
 }
+
