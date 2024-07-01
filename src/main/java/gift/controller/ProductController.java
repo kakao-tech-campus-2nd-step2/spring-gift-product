@@ -6,6 +6,7 @@ import gift.controller.dto.ProductUpdateRequestDto;
 import gift.domain.Product;
 import gift.repository.ProductRepository;
 import java.util.List;
+import java.util.NoSuchElementException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,7 +36,7 @@ public class ProductController {
     @GetMapping("/{id}")
     public ProductResponseDto getProduct(@PathVariable Long id) {
         Product product = productRepository.findById(id)
-            .orElseThrow(() -> new NoSuchElementException(id));
+            .orElseThrow(() -> new NoSuchElementException("Product not found. productId: " + id));
         return ProductResponseDto.from(product);
     }
 
@@ -54,7 +55,7 @@ public class ProductController {
         @RequestBody ProductUpdateRequestDto productUpdateRequest
     ) {
         Product originalProduct = productRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Product not found"));
+            .orElseThrow(() -> new NoSuchElementException("Product not found. productId: " + id));
 
         Product updatedProduct = applyUpdate(originalProduct, productUpdateRequest);
         productRepository.save(updatedProduct);
