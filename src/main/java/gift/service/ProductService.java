@@ -16,6 +16,8 @@ import java.util.List;
 public class ProductService {
     private final ProductRepository productRepository;
 
+    private final String NOT_FOUND_PRODUCT_MESSAGE = "ID가 %d 인 상품이 존재하지 않습니다.";
+
     @Autowired
     public ProductService(ProductRepository productRepository){
         this.productRepository = productRepository;
@@ -23,14 +25,13 @@ public class ProductService {
 
     @Transactional
     public ProductResponseDto save(ProductRequestDto productDto){
-        Long id = productRepository.save(productDto.toEntity());
+        Long id = productRepository.save(Product.dtoToEntity(productDto));
         return new ProductResponseDto(id,productDto.getName(),productDto.getPrice(),productDto.getImageUrl());
     }
 
     @Transactional(readOnly = true)
     public ProductResponseDto findById(Long id){
-         Product product = productRepository.findById(id)
-                .orElseThrow(()-> new ProductNotFoundException("ID가 " + id + "인 상품이 존재하지 않습니다."));
+         Product product = findProductByIdOrThrow(id);
          return ProductResponseDto.from(product);
     }
 
@@ -44,19 +45,21 @@ public class ProductService {
 
     @Transactional
     public Long deleteById(Long id){
-        productRepository.findById(id)
-                .orElseThrow(()-> new ProductNotFoundException("ID가 " + id + "인 상품이 존재하지 않습니다."));
+        findProductByIdOrThrow(id);
         return productRepository.delete(id);
     }
 
     @Transactional
     public ProductResponseDto updateById(Long id, ProductRequestDto productDto){
-        Product product = productRepository.findById(id)
-                .orElseThrow(()-> new ProductNotFoundException("ID가 " + id + "인 상품이 존재하지 않습니다."));
-
-        Product editProduct = productRepository.update(id, productDto.toEntity());
+        findProductByIdOrThrow(id);
+        Product editProduct = productRepository.update(id, Product.dtoToEntity(productDto));
         ProductResponseDto productResponseDto = ProductResponseDto.from(editProduct);
         productResponseDto.setId(id);
         return productResponseDto;
+    }
+
+    private Product findProductByIdOrThrow(Long id) {
+        return productRepository.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException(NOT_FOUND_PRODUCT_MESSAGE.formatted(id)));
     }
 }
