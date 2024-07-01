@@ -19,14 +19,14 @@ public class ProductViewController
 
     @GetMapping("")
     public String getAllProducts(Model model) {
-        List<Product> products = productController.getAllProducts();
+        List<Product> products = productController.getAllProducts().getBody();
         model.addAttribute("products", products);
         return "products";
     }
 
     @GetMapping("/{id}")
     public String findById(@PathVariable Long id, Model model) {
-        Product product = productController.findById(id);
+        Product product = productController.findById(id).getBody();
         model.addAttribute("product", product);
         return "product_detail"; // 적절한 Thymeleaf 템플릿이 있는지 확인
     }
@@ -45,7 +45,7 @@ public class ProductViewController
 
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
-        Product product = productController.findById(id);
+        Product product = productController.findById(id).getBody();
         model.addAttribute("product", product);
         return "add_product";
     }
