@@ -13,7 +13,6 @@ import java.util.List;
 
 
 @Service
-@Transactional(readOnly = true)
 public class ProductService {
     private final ProductRepository productRepository;
 
@@ -28,13 +27,14 @@ public class ProductService {
         return new ProductResponseDto(id,productDto.getName(),productDto.getPrice(),productDto.getImageUrl());
     }
 
-
+    @Transactional(readOnly = true)
     public ProductResponseDto findById(Long id){
          Product product = productRepository.findById(id)
                 .orElseThrow(()-> new ProductNotFoundException("ID가 " + id + "인 상품이 존재하지 않습니다."));
          return ProductResponseDto.from(product);
     }
 
+    @Transactional(readOnly = true)
     public List<ProductResponseDto> findAll(){
         return productRepository.findAll()
                 .stream()
