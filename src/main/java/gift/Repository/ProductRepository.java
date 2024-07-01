@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class ProductRepository {
 
-    private static final String TABLE_NAME = "product";
+    private static final String TABLE_NAME = "products";
     private static final String FIELD_ID = "id";
     private static final String FIELD_NAME = "name";
     private static final String FIELD_PRICE = "price";
@@ -36,7 +36,8 @@ public class ProductRepository {
     @PostConstruct
     public void init() {
         simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
-            .withTableName(TABLE_NAME);
+            .withTableName(TABLE_NAME)
+            .usingGeneratedKeyColumns(FIELD_ID);
     }
 
     public List<Product> findProductsAll() {
@@ -52,13 +53,12 @@ public class ProductRepository {
 
     public Product saveProduct(Product product) {
         Map<String, Object> params = new HashMap<>();
-        params.put(FIELD_ID, product.id());
         params.put(FIELD_NAME, product.name());
         params.put(FIELD_PRICE, product.price());
         params.put(FIELD_IMAGE_URL, product.imageUrl());
 
-        simpleJdbcInsert.execute(params);
-        return product;
+        Number newId = simpleJdbcInsert.executeAndReturnKey(params);
+        return new Product(newId.longValue(), product.name(), product.price(), product.imageUrl());
     }
 
     public void deleteProduct(long id) {

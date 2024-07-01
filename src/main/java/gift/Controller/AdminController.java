@@ -30,17 +30,12 @@ public class AdminController {
 
     @GetMapping("/add")
     public String showAddProductForm(Model model) {
-        model.addAttribute("product", new Product(0, "", 0, ""));
+        model.addAttribute("product", new Product(null, "", 0, ""));
         return "add_product_form";
     }
 
     @PostMapping("/add")
     public String addProduct(@ModelAttribute Product product, Model model) {
-        if (isProductIdExists(product.id())) {
-            model.addAttribute("error", "존재하는 ID 입니다.");
-            model.addAttribute("product", product);
-            return "add_product_form";
-        }
         productRepository.saveProduct(product);
         return "redirect:/admin/products";
     }
@@ -55,12 +50,6 @@ public class AdminController {
     @PutMapping("/edit/{id}")
     public String editProduct(@PathVariable("id") long id, @ModelAttribute Product updatedProduct,
         Model model) {
-        if (id != updatedProduct.id()
-            && isProductIdExists(updatedProduct.id())) {
-            model.addAttribute("error", "존재하는 ID 입니다.");
-            model.addAttribute("product", productRepository.findProductsById(id));
-            return "edit_product_form";
-        }
         productRepository.updateProduct(updatedProduct, id);
         return "redirect:/admin/products";
     }

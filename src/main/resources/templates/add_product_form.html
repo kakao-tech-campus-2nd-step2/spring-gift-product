@@ -10,10 +10,7 @@
   <div th:if="${error}">
     <p th:text="${error}" style="color:red;"></p>
   </div>
-  <div>
-    <label for="id">ID:</label>
-    <input type="text" id="id" th:field="*{id}"/>
-  </div>
+
   <div>
     <label for="name">상품 이름:</label>
     <input type="text" id="name" th:field="*{name}"/>
@@ -27,7 +24,7 @@
     <input type="text" id="imageUrl" th:field="*{imageUrl}"/>
   </div>
   <div>
-    <button type="submit">Submit</button>
+    <button type="저장">Submit</button>
   </div>
 </form>
 </body>
