@@ -20,16 +20,20 @@ public class ProductServiceImpl implements ProductService{
     public List<ProductDTO> readAll() {
         var products = jdbcProductRepository.findAllProducts();
         List<ProductDTO> productDTOList = new ArrayList<>();
-        for(var product : products) {
+
+        for(var product : products) { //DTO로 전환
             productDTOList.add(new ProductDTO(product));
         }
+
         return productDTOList;
     }
 
+    //새로운 상품 추가
     @Override
     public void create(ProductDTO prod) {
         jdbcProductRepository.insertProduct(new Product(null,prod.getName(),prod.getPrice(),prod.getImageUrl()));
     }
+
 
     @Override
     public void updateName(long id, String name) {
