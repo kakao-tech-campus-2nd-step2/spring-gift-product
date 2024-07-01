@@ -4,6 +4,7 @@ package gift.service;
 import gift.domain.Product;
 import gift.repository.ProductH2Repository;
 import gift.repository.ProductMemoryRepository;
+import java.util.List;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -24,13 +25,13 @@ public class ProductService {
         return productH2Repository.findById(id).orElse(null);
     }
 
-    public Iterable<Product> getAllProducts() {
+    public List<Product> getAllProducts() {
         return productH2Repository.findAll();
     }
 
     public Product createProduct(Product product) {
-        Product product1 = productH2Repository.save(product);
-        return product1;
+        Product savedproduct = productH2Repository.save(product);
+        return savedproduct;
     }
 
     public void updateProduct(Long id, Product updatedProduct) {
