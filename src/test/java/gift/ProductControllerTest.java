@@ -21,7 +21,7 @@ class ProductControllerTest {
     private ObjectMapper objectMapper;
     @Test
     void setProduct() throws Exception {
-        Product product = new Product(1L, "Product1", 100, "http://image.url");
+        Product product = new Product(1L, "Product1", 100, "http://image.url",100);
 
         mockMvc.perform(post("/api/products")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -35,8 +35,8 @@ class ProductControllerTest {
 
     @Test
     void updateProduct() throws Exception {
-        Product product = new Product(1L, "Product1", 100, "http://image.url");
-        Product updateProduct = new Product(1L, "UpdateProduct", 150, "http://image.url");
+        Product product = new Product(1L, "Product1", 100, "http://image.url",100);
+        Product updateProduct = new Product(1L, "UpdateProduct", 150, "http://image.url",200);
 
         mockMvc.perform(post("/api/products")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -55,7 +55,7 @@ class ProductControllerTest {
 
     @Test
     void getProduct() throws Exception {
-        Product product = new Product(1L, "Product1", 100, "http://image.url");
+        Product product = new Product(1L, "Product1", 100, "http://image.url",100);
 
         mockMvc.perform(post("/api/products")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -72,8 +72,8 @@ class ProductControllerTest {
 
     @Test
     void getAllProducts() throws Exception {
-        Product product1 = new Product(1L, "Product1", 100, "http://image1.url");
-        Product product2 = new Product(2L, "Product2", 200, "http://image2.url");
+        Product product1 = new Product(1L, "Product1", 100, "http://image1.url",100);
+        Product product2 = new Product(2L, "Product2", 200, "http://image2.url",200);
 
         mockMvc.perform(post("/api/products")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -92,7 +92,7 @@ class ProductControllerTest {
 
     @Test
     void deleteProduct() throws Exception {
-        Product product = new Product(1L, "Product1", 100, "http://image.url");
+        Product product = new Product(1L, "Product1", 100, "http://image.url",100);
 
         mockMvc.perform(post("/api/products")
                         .contentType(MediaType.APPLICATION_JSON)
