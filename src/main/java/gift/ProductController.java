@@ -1,5 +1,6 @@
 package gift;
 
+
 import org.springframework.web.bind.annotation.*;
 
 
@@ -52,3 +53,4 @@ public class ProductController {
         return modifiedProduct; // 성공 시 수정된 Product 반환
     }
 }
+
