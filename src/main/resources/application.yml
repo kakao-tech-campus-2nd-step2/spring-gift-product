@@ -7,7 +7,7 @@ spring:
     h2 :
       console:
         enabled : true
+  sql:
+    init:
+      mode: always
 
-sql:
-  init:
-    mode: always
