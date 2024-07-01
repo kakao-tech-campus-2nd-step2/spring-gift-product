@@ -3,16 +3,13 @@ package com.kakaotech2.j20.DTO;
 import com.kakaotech2.j20.Product;
 
 public class ProductDTO {
-    //DTO는 생성 후 변화하지 않으므로 final 지정
 
     private  Long id;
-
     private  String name;
-
     private  Integer price;
-
     private  String imageUrl;
 
+    //타임리프 사용을 위한 기본 생성자
     public ProductDTO() {}
 
     public ProductDTO(Long id, String name, Integer price, String imageUrl) {
@@ -30,9 +27,7 @@ public class ProductDTO {
         this.imageUrl = product.getImageUrl();
     }
 
-    //디버깅을 위한 toString 추가
-
-
+    //디버깅 필요 시 체크용 toString
     @Override
     public String toString() {
         return "ProductDTO{" +
