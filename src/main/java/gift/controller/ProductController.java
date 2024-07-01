@@ -30,9 +30,9 @@ public class ProductController {
 
     @GetMapping()
     public ResponseEntity<List<ProductResponse>> productList() {
-        List<Product> foundProduct = productRepository.findAll();
+        List<Product> foundProducts = productRepository.findAll();
 
-        List<ProductResponse> responses = foundProduct.stream()
+        List<ProductResponse> responses = foundProducts.stream()
                 .map(ProductResponse::fromModel)
                 .toList();
 
@@ -62,7 +62,7 @@ public class ProductController {
     @PutMapping("/{id}")
     public ResponseEntity<String> productModify(@PathVariable("id") Long id,
                                                 @RequestBody ProductRequest modifyProduct) {
-        Product findedProduct = productRepository.find(id)
+        Product foundProduct = productRepository.find(id)
                 .orElseThrow(() -> ProductNotFoundException.of(id));
 
         productRepository.save(modifyProduct.toModel(id));
@@ -73,11 +73,11 @@ public class ProductController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> productDelete(@PathVariable("id") Long id) {
-        Product findedProduct = productRepository.find(id)
+        Product foundProduct = productRepository.find(id)
                 .orElseThrow(() -> ProductNotFoundException.of(id));
 
-        findedProduct.delete();
-        productRepository.save(findedProduct);
+        foundProduct.delete();
+        productRepository.save(foundProduct);
 
         return ResponseEntity.ok()
                 .body("Product deleted");
