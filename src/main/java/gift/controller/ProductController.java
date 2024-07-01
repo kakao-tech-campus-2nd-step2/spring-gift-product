@@ -26,15 +26,18 @@ public class ProductController {
     @Autowired
     public ProductController(ProductRepository productRepository) {
         this.productRepository = productRepository;
-
     }
 
-    @GetMapping("")
+    @GetMapping()
     public ResponseEntity<List<ProductResponse>> productList() {
         List<Product> foundProduct = productRepository.findAll();
 
+        List<ProductResponse> responses = foundProduct.stream()
+                .map(ProductResponse::fromModel)
+                .toList();
+
         return ResponseEntity.ok()
-                .body(foundProduct.stream().map(ProductResponse::fromModel).toList());
+                .body(responses);
     }
 
     @GetMapping("/{id}")
@@ -42,11 +45,13 @@ public class ProductController {
         Product foundProduct = productRepository.find(id)
                 .orElseThrow(() -> ProductNotFoundException.of(id));
 
+        ProductResponse response = ProductResponse.fromModel(foundProduct);
+
         return ResponseEntity.ok()
-                .body(ProductResponse.fromModel(foundProduct));
+                .body(response);
     }
 
-    @PostMapping("")
+    @PostMapping()
     public ResponseEntity<String> productSave(@RequestBody ProductRequest newProduct) {
         productRepository.save(newProduct.toModel());
 
