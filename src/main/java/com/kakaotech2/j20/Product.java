@@ -2,11 +2,10 @@ package com.kakaotech2.j20;
 
 public class Product {
 
+    //null을 위해 wrapper class 사용
     private Long id;
     private String name;
-
     private Integer price;
-
     private String imageUrl;
 
     public Product(Long id, String name, Integer price, String imageUrl) {
@@ -15,6 +14,8 @@ public class Product {
         this.price = price;
         this.imageUrl = imageUrl;
     }
+
+    //setter - 타임리프 사용을 위해 필요
     public void setId(Long id) {
         this.id=id;
     }
@@ -31,6 +32,7 @@ public class Product {
         this.imageUrl = imageUrl;
     }
 
+    //getter
     public Long getId() {
         return id;
     }
