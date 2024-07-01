@@ -47,7 +47,7 @@
     <div class="form-container">
         <div class="gift-name" th:text="${gift.name}"></div>
         <h5 class="form-header">상품 수정</h5>
-        <form th:action="@{|/admin/modify/${gift.id}|}" method="post">
+        <form th:action="@{|/admin/gift/modify/${gift.id}|}" method="post">
             <input type="hidden" name="_method" value="put">
             <div class="form-group">
                 <label for="name" class="form-label">상품명</label>

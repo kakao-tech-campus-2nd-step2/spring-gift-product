@@ -30,19 +30,19 @@ public class AdminController {
         return "admin";
     }
 
-    @GetMapping("/admin/create")
+    @GetMapping("/admin/gift/create")
     public String giftCreate(){
         return "create_form";
     }
 
-    @PostMapping("/admin/create")
+    @PostMapping("/admin/gift/create")
     public String giftCreate(@ModelAttribute Gift gift) {
         giftService.addGift(gift);
         return "redirect:/admin";
     }
 
 
-    @GetMapping("/admin/detail/{id}")
+    @GetMapping("/admin/gift/detail/{id}")
     public String detail(Model model,@PathVariable("id") Long id){
         Gift gift = giftService.getGift(id);
         model.addAttribute("gift",gift);
@@ -50,21 +50,21 @@ public class AdminController {
     }
 
 
-    @GetMapping("/admin/modify/{id}")
+    @GetMapping("/admin/gift/modify/{id}")
     public String giftModify(Model model,@PathVariable("id") Long id){
         Gift gift = giftService.getGift(id);
         model.addAttribute("gift",gift);
         return "modify_form";
 
     }
-    @PutMapping("/admin/modify/{id}")
+    @PutMapping("/admin/gift/modify/{id}")
     public String giftModify(@PathVariable("id") Long id,
                              @ModelAttribute Gift gift){
         giftService.updateGift(gift,id);
         return "redirect:/admin";
 
     }
-    @DeleteMapping("/admin/delete/{id}")
+    @DeleteMapping("/admin/gift/delete/{id}")
     public String giftDelete(@PathVariable("id") Long id){
         giftService.deleteGift(id);
         return "redirect:/admin";

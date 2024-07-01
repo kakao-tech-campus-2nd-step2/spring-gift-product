@@ -19,13 +19,13 @@
         <tbody>
         <tr th:each="gift : ${giftlist}">
             <td th:text="${gift.id}"></td>
-            <td><a th:href="@{|/admin/detail/${gift.id}|}" th:text="${gift.name}"></a></td>
+            <td><a th:href="@{|/admin/gift/detail/${gift.id}|}" th:text="${gift.name}"></a></td>
             <td th:text="${gift.price}"></td>
             <td th:text="${gift.imageUrl}"></td>
         </tr>
         </tbody>
     </table>
-    <a th:href="@{/admin/create}" class="btn btn-primary">상품 등록</a>
+    <a th:href="@{/admin/gift/create}" class="btn btn-primary">상품 등록</a>
 </div>
 </body>
 </html>
