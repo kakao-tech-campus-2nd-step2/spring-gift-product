@@ -1,12 +1,15 @@
 package com.kakaotech2.j20.service;
 
 import com.kakaotech2.j20.DTO.ProductDTO;
-import com.kakaotech2.j20.Product;
 import java.util.List;
-import org.springframework.stereotype.Service;
-
 
 public interface ProductService {
+
+    /*
+    상품 수정 시 만약 문제가 생기면 어떤 값에 의해서 생기는 지 파악의 어려움을 막기 위해
+    update를 각 항목마다 분리
+     */
+
     //상품 리스트 전체 조회
     List<ProductDTO> readAll();
     //새 상품 생성
