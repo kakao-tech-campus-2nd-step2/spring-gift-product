@@ -1,10 +1,14 @@
-package gift;
+package gift.model;
 
 public class Product {
+
     private Long id;
     private String name;
     private long price;
     private String imageUrl;
+
+    public Product() {
+    }
 
     public Product(Long id, String name, long price, String imageUrl) {
         this.id = id;
@@ -44,5 +48,4 @@ public class Product {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
-
 }

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Add or Edit Product</title>
+  <title>Add New Product</title>
 </head>
 <body>
-<h1>Enter Product Information</h1>
+<h1>Add New Product</h1>
 <form th:action="@{/admin/product/add}" method="post" th:object="${product}">
   <div>
     <label for="id">ID:</label>
