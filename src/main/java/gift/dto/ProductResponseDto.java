@@ -19,9 +19,6 @@ public class ProductResponseDto {
         return new ProductResponseDto(product.getId(), product.getName(), product.getPrice(), product.getImageUrl());
     }
 
-    public Product toEntity() {
-        return new Product(this.name,this.price,this.imageUrl);
-    }
     public Long getId() {
         return id;
     }

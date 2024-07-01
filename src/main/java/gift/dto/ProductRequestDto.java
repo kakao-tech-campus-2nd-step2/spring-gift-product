@@ -7,10 +7,6 @@ public class ProductRequestDto {
     private int price;
     private String imageUrl;
 
-    public Product toEntity() {
-        return new Product(this.name,this.price,this.imageUrl);
-    }
-
     public String getName() {
         return name;
     }

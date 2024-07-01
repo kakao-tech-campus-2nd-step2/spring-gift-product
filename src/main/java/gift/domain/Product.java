@@ -1,5 +1,6 @@
 package gift.domain;
 
+import gift.dto.ProductRequestDto;
 import gift.dto.ProductResponseDto;
 
 public class Product {
@@ -19,6 +20,10 @@ public class Product {
         this.name = name;
         this.price = price;
         this.imageUrl = imageUrl;
+    }
+
+    public static Product dtoToEntity(ProductRequestDto productRequestDto) {
+        return new Product(productRequestDto.getName(), productRequestDto.getPrice(), productRequestDto.getImageUrl());
     }
 
     public Long getId() {
