@@ -46,15 +46,15 @@ public class ProductController {
     }
 
     // 등록된 상품을 수정하는 기능
-    @PostMapping("/edit/{id}")
+    @PutMapping("/edit/{id}")
     public String editProduct(@PathVariable("id") Long id, @ModelAttribute Product product) {
         product.setId(id);
         productService.updateProduct(id, product);
         return "redirect:/products";
     }
 
-    // 등록된 상품을 삭제하는 기
-    @GetMapping("/delete/{id}")
+    // 등록된 상품을 삭제하는 기능
+    @DeleteMapping ("/delete/{id}")
     public String deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
         return "redirect:/products";
