@@ -15,12 +15,4 @@ public class RepositoryConfig {
     public ProductRepository products(JdbcTemplate jdbcTemplate) {
         return new JDBCTemplateProductDao(jdbcTemplate);
     }
-//    @Bean
-//    public ProductRepository products() {
-//        return new JDBCProductDao();
-//    }
-//    @Bean
-//    public ProductRepository products() {
-//        return new MapProductDao();
-//    }
 }
