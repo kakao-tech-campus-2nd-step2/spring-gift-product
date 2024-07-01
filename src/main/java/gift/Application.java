@@ -1,5 +1,6 @@
 package gift;
 
+import gift.utility.DataBaseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -14,29 +15,13 @@ public class Application implements CommandLineRunner {
     }
 
     @Autowired
-    private JdbcTemplate jdbcTemplate;
+    private DataBaseUtil dataBaseUtil;
 
     @Override
     public void run(String... strings) throws Exception{
-        dropProductTable();
-        createProductTable();
+        dataBaseUtil.dropProductTable();
+        dataBaseUtil.createProductTable();
     }
 
 
-    private void dropProductTable(){
-        var sql="DROP TABLE products IF EXISTS";
-        jdbcTemplate.execute(sql);
-    }
-
-    private void createProductTable(){
-        var sql= """
-            create table products(
-                id bigint,
-                name varchar(255),
-                price int,
-                image_url varchar(255)
-            )
-            """;
-        jdbcTemplate.execute(sql);
-    }
 }
