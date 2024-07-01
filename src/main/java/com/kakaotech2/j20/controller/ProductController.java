@@ -26,23 +26,34 @@ public class ProductController {
         this.pm = pm;
     }
 
+    /**
+     * 상품 전체 목록 반환
+     * @return 상품 DTO
+     */
     @GetMapping("/api/products")
     public List<ProductDTO> getList(){
         List<ProductDTO> dto = pm.readAll();
         return dto;
     }
 
-
+    /**
+     * 새로운 상품 생성
+     * @param dto id가 존재하는 상태로 입력되더라도 무시됨.
+     */
     @PostMapping("/api/products")
     public void add(ProductDTO dto){
         pm.create(dto);
     }
 
+    /**
+     * 기존 상품 수정
+     * @param id 수정하고자 하는 상품의 id
+     * @param dto 수정하고자 하는 값 이외 null로 지정
+     */
     @PutMapping("/api/products")
     public void update(@RequestParam("id") Long id, @RequestBody ProductDTO dto){
-        if (dto.getId()==null){
-            //TODO : http 메소드로 반환
-            throw new IllegalArgumentException("id is null");
+        if(id==null){
+            throw new IllegalArgumentException("id를 입력해주세요");
         }
         changeCheckAndUpdate(id, dto);
     }
@@ -51,7 +62,6 @@ public class ProductController {
     public void delete(@RequestParam("id") Long id){
         pm.delete(id);
     }
-
 
     private void changeCheckAndUpdate(Long id, ProductDTO dto) {
         if (dto.getName()!=null){
