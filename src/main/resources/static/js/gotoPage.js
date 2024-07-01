@@ -1,7 +1,16 @@
+const homeAdminUrl = "http://localhost:8080/api/products/admin";
+
+
 function gotoHome() {
-      window.location.href="http://localhost:8080/api/products/admin";
-  }
+    window.location.href = `${homeAdminUrl}`;
+}
 
 function gotoAdd() {
-      window.location.href="http://localhost:8080/api/products/admin/add";
-  }
+    window.location.href = `${homeAdminUrl}/add`;
+}
+
+const homeButton = document.querySelector("#homeButton");
+homeButton.addEventListener("click", gotoHome);
+
+const addButton = document.querySelector("#addButton");
+addButton.addEventListener("click", gotoAdd);

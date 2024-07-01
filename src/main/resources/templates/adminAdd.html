@@ -4,7 +4,9 @@
     <title>Add Product</title>
 </head>
 <body>
+
 <h1>Add Product</h1>
+
 <form id="productForm">
     <div>
         <label for="name">Name:</label>
@@ -22,10 +24,37 @@
         <button type="button" onclick="submitForm()">Add Product</button>
     </div>
 </form>
+
 <div>
     <button type="button" onclick="gotoHome()">home</button>
 </div>
-<script th:src="@{/js/adminAddPage.js}"></script>
+
+<script>
+    const adminHomeUrl = "http://localhost:8080/api/products"
+
+    function submitForm() {
+        const form = document.getElementById('productForm');
+        const formData = {
+            name: form.name.value,
+            price: form.price.value,
+            imageUrl: form.imageUrl.value
+        };
+
+        fetch(adminHomeUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+
+        form.name.value = "";
+        form.price.value = "";
+        form.imageUrl.value = "";
+
+        alert("Successfully added");
+    }
+</script>
 <script th:src="@{/js/gotoPage.js}"></script>
 </body>
 </html>
