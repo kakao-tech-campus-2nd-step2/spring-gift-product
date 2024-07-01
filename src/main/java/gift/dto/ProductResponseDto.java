@@ -15,6 +15,10 @@ public class ProductResponseDto {
         this.imageUrl = imageUrl;
     }
 
+    public static ProductResponseDto from(final Product product){
+        return new ProductResponseDto(product.getId(), product.getName(), product.getPrice(), product.getImageUrl());
+    }
+
     public Product toEntity() {
         return new Product(this.name,this.price,this.imageUrl);
     }

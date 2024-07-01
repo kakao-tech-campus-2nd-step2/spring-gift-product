@@ -30,11 +30,11 @@ public class ProductRestController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getProduct(@PathVariable Long id){
-        try{
+    public ResponseEntity<?> getProduct(@PathVariable Long id) {
+        try {
             ProductResponseDto product = productService.findById(id);
             return ResponseEntity.status(HttpStatus.OK).body(product);
-        } catch (ProductNotFoundException e){
+        } catch (ProductNotFoundException e) {
             ErrorResponse errorResponse = new ErrorResponse(e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
         }
@@ -47,23 +47,23 @@ public class ProductRestController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
-        try{
+        try {
             productService.deleteById(id);
             HashMap<String, Long> response = new HashMap<>();
             response.put("id", id);
             return ResponseEntity.status(HttpStatus.OK).body(response);
-        } catch (ProductNotFoundException e){
+        } catch (ProductNotFoundException e) {
             ErrorResponse errorResponse = new ErrorResponse(e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateProduct(@PathVariable Long id, @RequestBody ProductRequestDto request){
-        try{
-            ProductResponseDto updatedProduct = productService.updateById(id,request);
+    public ResponseEntity<?> updateProduct(@PathVariable Long id, @RequestBody ProductRequestDto request) {
+        try {
+            ProductResponseDto updatedProduct = productService.updateById(id, request);
             return ResponseEntity.status(HttpStatus.OK).body(updatedProduct);
-        } catch (ProductNotFoundException e){
+        } catch (ProductNotFoundException e) {
             ErrorResponse errorResponse = new ErrorResponse(e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
         }

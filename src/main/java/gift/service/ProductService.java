@@ -30,15 +30,15 @@ public class ProductService {
 
 
     public ProductResponseDto findById(Long id){
-        return productRepository.findById(id)
-                .orElseThrow(()-> new ProductNotFoundException("ID가 " + id + "인 상품이 존재하지 않습니다."))
-                .toDto();
+         Product product = productRepository.findById(id)
+                .orElseThrow(()-> new ProductNotFoundException("ID가 " + id + "인 상품이 존재하지 않습니다."));
+         return ProductResponseDto.from(product);
     }
 
     public List<ProductResponseDto> findAll(){
         return productRepository.findAll()
                 .stream()
-                .map(Product::toDto)
+                .map(ProductResponseDto::from)
                 .toList();
     }
 
@@ -53,7 +53,9 @@ public class ProductService {
     public ProductResponseDto updateById(Long id, ProductRequestDto productDto){
         Product product = productRepository.findById(id)
                 .orElseThrow(()-> new ProductNotFoundException("ID가 " + id + "인 상품이 존재하지 않습니다."));
-        ProductResponseDto productResponseDto = productRepository.update(id, productDto.toEntity()).toDto();
+
+        Product editProduct = productRepository.update(id, productDto.toEntity());
+        ProductResponseDto productResponseDto = ProductResponseDto.from(editProduct);
         productResponseDto.setId(id);
         return productResponseDto;
     }

@@ -21,10 +21,6 @@ public class Product {
         this.imageUrl = imageUrl;
     }
 
-    public ProductResponseDto toDto(){
-        return new ProductResponseDto(this.id, this.name, this.price, this.imageUrl);
-    }
-
     public Long getId() {
         return id;
     }
