@@ -1,6 +1,7 @@
 package gift.config;
 
 import gift.controller.AdminController;
+import gift.repository.JdbcProductRepository;
 import gift.repository.MemoryProductRepository;
 import gift.repository.ProductRepository;
 import org.springframework.context.annotation.Bean;
@@ -24,7 +25,7 @@ public class SpringConfig {
 
     @Bean
     public ProductRepository productRepository() {
-        return new MemoryProductRepository();
-//        return new JdbcProductRepository(dataSource);
+//        return new MemoryProductRepository();
+        return new JdbcProductRepository(dataSource);
     }
 }
