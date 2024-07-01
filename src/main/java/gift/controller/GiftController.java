@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("/api/products")
+@RequestMapping("/api/gifts")
 public class GiftController {
     private GiftDao giftDao;
 
