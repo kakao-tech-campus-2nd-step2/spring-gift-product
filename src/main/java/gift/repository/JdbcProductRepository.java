@@ -33,8 +33,7 @@ public class JdbcProductRepository implements ProductRepository {
 
         Number key = jdbcInsert.executeAndReturnKey(new MapSqlParameterSource(parameters));
 
-        ProductDAO product = ProductUtility.productDTOToDAO(new ProductDAO(), productDTO);
-        product.setId((Long) key);
+        ProductDAO product = ProductUtility.productDTOToDAO(new ProductDAO((Long) key), productDTO);
 
         return product;
     }
@@ -48,14 +47,14 @@ public class JdbcProductRepository implements ProductRepository {
     @Override
     public ProductDAO edit(Long id, ProductDTO productDTO) {
         jdbcTemplate.update("update product set name = ?, price = ?, imageUrl = ? where id = ?",
-                productDTO.getName(), productDTO.getPrice(), productDTO.getImageUrl(), id);
+            productDTO.getName(), productDTO.getPrice(), productDTO.getImageUrl(), id);
         return findById(id);
     }
 
     @Override
     public ProductDAO findById(Long id) {
         List<ProductDAO> result = jdbcTemplate.query("select * from product where id = ?",
-                productRowMapper(), id);
+            productRowMapper(), id);
         return result.stream().findFirst().orElse(null);
     }
 

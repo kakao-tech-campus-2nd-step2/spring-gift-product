@@ -10,6 +10,10 @@ public class ProductDAO {
     public ProductDAO() {
     }
 
+    public ProductDAO(Long id) {
+        this.id = id;
+    }
+
     public ProductDAO(String name, int price, String imageUrl) {
         this.name = name;
         this.price = price;

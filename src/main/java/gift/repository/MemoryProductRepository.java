@@ -16,8 +16,7 @@ public class MemoryProductRepository implements ProductRepository {
 
     @Override
     public ProductDAO save(ProductDTO productDTO) {
-        ProductDAO product = ProductUtility.productDTOToDAO(new ProductDAO(), productDTO);
-        product.setId(++id);
+        ProductDAO product = ProductUtility.productDTOToDAO(new ProductDAO(++id), productDTO);
 
         db.put(product.getId(), product);
         return product;
