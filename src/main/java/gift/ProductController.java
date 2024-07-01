@@ -18,13 +18,12 @@ public class ProductController {
         this.productDao = productDao;
     }
     @PostMapping
-    public ResponseEntity<String> setProduct(@RequestBody Product product) {
-        try {
+    public String addNewProduct(@RequestBody Product product) {
+        if (productDao.checkProduct(product.id())) {
             productDao.insertProduct(product);
-            return ResponseEntity.ok("Add successful");
-        } catch (DataIntegrityViolationException ex) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Already exists id");
+            return "Add successful";
         }
+        return "Already exists id";
     }
     @PutMapping("/{id}")
     public String updateProduct(@RequestBody Product product) {
