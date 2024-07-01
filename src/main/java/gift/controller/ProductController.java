@@ -2,6 +2,7 @@ package gift.controller;
 
 import gift.model.Product;
 import gift.service.ProductService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +31,7 @@ public class ProductController {
 
   @PostMapping
   public ResponseEntity<Product> createProduct(@RequestBody Product product) {
-    return ResponseEntity.status(201).body(productService.save(product));
+    return ResponseEntity.status(HttpStatus.CREATED).body(productService.save(product));
   }
 
   @PutMapping("/{id}")
