@@ -18,12 +18,12 @@ public class ProductController {
         this.productDao = productDao;
     }
     @PostMapping
-    public String addNewProduct(@RequestBody Product product) {
-        if (productDao.checkProduct(product.id())) {
+    public ResponseEntity<String> addNewProduct(@RequestBody Product product) {
+        if (!productDao.checkProduct(product.id())) {
             productDao.insertProduct(product);
-            return "Add successful";
+            return ResponseEntity.ok("Add successful");
         }
-        return "Already exists id";
+        return ResponseEntity.status(HttpStatus.CONFLICT).body("Already exists id");
     }
     @PutMapping("/{id}")
     public String updateProduct(@RequestBody Product product) {

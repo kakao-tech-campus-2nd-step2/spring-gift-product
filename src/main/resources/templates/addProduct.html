@@ -44,7 +44,7 @@
                 },
                 body: JSON.stringify(product)
             })
-            .then(response => response.text())
+            .then(response => response.text()) // 응답을 텍스트로 변환
             .then(data => {
                 if (data === "Add successful") {
                     alert('Product Added!');
@@ -55,8 +55,10 @@
                     throw new Error('Unexpected response from the server');
                 }
             })
-            .catch(error => console.error('Error adding product:', error));
+            .catch(error => {
+                alert(`Error adding product: ${error.message}`);
         });
+    });
     </script>
 </body>
 </html>
