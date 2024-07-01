@@ -30,10 +30,12 @@ public class ProductController {
     public Product postProduct(@RequestBody Product product) {
         return productService.createProduct(product);
     }
+
     @PutMapping("/{id}")
     public Product putProduct(@PathVariable Long id, @RequestBody Product product) {
         return productService.updateProduct(id, product);
     }
+
     @DeleteMapping("/{id}")
     public Long deleteProduct(@PathVariable Long id) {
         return productService.deleteProduct(id);

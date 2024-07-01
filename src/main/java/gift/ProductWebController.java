@@ -37,6 +37,7 @@ public class ProductWebController {
         productService.createProduct(product);
         return "redirect:/products";
     }
+
     @PostMapping("/products/delete")
     public String deleteProduct(@RequestParam List<Long> productIds) {
         for (Long id : productIds) {
@@ -44,12 +45,14 @@ public class ProductWebController {
         }
         return "redirect:/products";
     }
+
     @GetMapping("/products/edit/{id}")
     public String getEditForm(@PathVariable Long id, Model model) {
         Product product = productService.getProductById(id);
         model.addAttribute("product", product);
         return "productEdit";
     }
+
     @PostMapping("/products/edit/{id}")
     public String editProduct(@RequestParam Long id, @RequestParam String name, @RequestParam int price, @RequestParam String imageUrl) {
         Product product = new Product();

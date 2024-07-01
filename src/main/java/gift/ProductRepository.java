@@ -28,6 +28,7 @@ public class ProductRepository {
         products.put(id, product);
         return products.get(id);
     }
+
     public Long deleteProduct(Long id) {
         products.remove(id);
         return id;
