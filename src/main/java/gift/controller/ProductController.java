@@ -1,5 +1,7 @@
-package gift;
+package gift.controller;
 
+import gift.DTO.Product;
+import gift.repository.ProductRepository;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.http.HttpStatus;
