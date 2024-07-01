@@ -1,14 +1,21 @@
 package gift;
 
-import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
 
 @Controller
 @RequestMapping("/api/products")
 public class ProductController {
     private final ProductRepository productRepository;
 
+    @Autowired
     public ProductController(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
@@ -16,38 +23,38 @@ public class ProductController {
     @GetMapping
     public String getAllProducts(Model model) {
         model.addAttribute("products", productRepository.findAll());
-        return "index";//index.html로 매핑(메인 화면)
+        return "index";
     }
 
     @GetMapping("/add")
     public String addProductForm(Model model) {
         model.addAttribute("product", new Product());
-        return "addProduct";//addProduct.html로 매핑(상품 추가 화면)
+        return "addProduct";
     }
 
     @PostMapping("/add")
     public String addProduct(@ModelAttribute Product product) {
         productRepository.save(product);
-        return "redirect:/api/products";//상품 추가 끝나면 메인페이지로~
+        return "redirect:/api/products";
     }
 
     @GetMapping("/edit/{id}")
     public String editProductForm(@PathVariable Long id, Model model) {
         Product product = productRepository.findById(id);
         model.addAttribute("product", product);
-        return "editProduct";//editProduct.html로 매핑(상품 수정 화면)
+        return "editProduct";
     }
 
     @PostMapping("/edit/{id}")
     public String updateProduct(@PathVariable Long id, @ModelAttribute Product product) {
         productRepository.update(id, product);
-        return "redirect:/api/products";//상품 수정 끝나면 메인페이지로~
+        return "redirect:/api/products";
     }
 
     @GetMapping("/delete/{id}")
     public String deleteProduct(@PathVariable Long id) {
         productRepository.deleteById(id);
-        return "redirect:/api/products";//상품 삭제 끝나면 메인페이지로~
+        return "redirect:/api/products";
     }
 
 }

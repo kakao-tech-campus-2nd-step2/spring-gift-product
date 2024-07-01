@@ -7,10 +7,7 @@
 <body>
 <div class="container">
   <h1>Manage Products</h1>
-
-<!--  상품 추가 버튼 -->
   <a class="btn btn-primary" th:href="@{/api/products/add}">Add New Product</a>
-
   <table class="table table-striped">
     <thead>
     <tr>
@@ -20,7 +17,6 @@
       <th>Actions</th>
     </tr>
     </thead>
-
     <tbody>
     <tr th:each="product : ${products}">
       <td th:text="${product.name}">Product Name</td>
@@ -32,7 +28,6 @@
       </td>
     </tr>
     </tbody>
-
   </table>
 </div>
 </body>

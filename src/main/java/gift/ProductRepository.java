@@ -4,8 +4,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
-
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +12,6 @@ public class ProductRepository {
     private final JdbcTemplate jdbcTemplate;
     private final SimpleJdbcInsert jdbcInsert;
 
-    //JdbcTemplate, SimpleJdbcInsert 초기화
     public ProductRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
         this.jdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
@@ -22,16 +19,14 @@ public class ProductRepository {
                 .usingGeneratedKeyColumns("id");
     }
 
-    // ResultSet의 데이터를 Product 객체로 매핑
-    private final RowMapper<Product> productRowMapper = (rs, rowNum) -> {
+    private final RowMapper<Product> productRowMapper = (Resultset, rowNum) -> {
         Product product = new Product();
-        product.setId(rs.getLong("id"));
-        product.setName(rs.getString("name"));
-        product.setPrice(rs.getInt("price"));
-        product.setImageUrl(rs.getString("imageUrl"));
+        product.setId(Resultset.getLong("id"));
+        product.setName(Resultset.getString("name"));
+        product.setPrice(Resultset.getInt("price"));
+        product.setImageUrl(Resultset.getString("imageUrl"));
         return product;
     };
-
 
     public List<Product> findAll() {
         return jdbcTemplate.query("SELECT * FROM products", productRowMapper);
@@ -42,10 +37,11 @@ public class ProductRepository {
     }
 
     public void save(Product product) {
-        Map<String, Object> parameters = new HashMap<>();
-        parameters.put("name", product.getName());
-        parameters.put("price", product.getPrice());
-        parameters.put("imageUrl", product.getImageUrl());
+        Map<String, Object> parameters = Map.of(
+                "name", product.getName(),
+                "price", product.getPrice(),
+                "imageUrl", product.getImageUrl()
+        );
         Number newId = jdbcInsert.executeAndReturnKey(parameters);
         product.setId(newId.longValue());
     }
@@ -59,5 +55,4 @@ public class ProductRepository {
     public void deleteById(Long id) {
         jdbcTemplate.update("DELETE FROM products WHERE id = ?", id);
     }
-
 }
