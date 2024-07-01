@@ -1,6 +1,6 @@
 package gift.model;
 
-import gift.controller.DTO.ProductResponseDto;
+import gift.controller.dto.ProductResponseDto;
 
 public class Product{
     private Long id;

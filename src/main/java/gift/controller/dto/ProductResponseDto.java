@@ -1,4 +1,4 @@
-package gift.controller.DTO;
+package gift.controller.dto;
 
 public class ProductResponseDto {
     private Long id;
@@ -7,6 +7,7 @@ public class ProductResponseDto {
     private String imageUrl;
 
     public ProductResponseDto(){}
+
     public ProductResponseDto(Long id, String name, int price, String imageUrl) {
         this.imageUrl = imageUrl;
         this.price = price;

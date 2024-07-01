@@ -14,7 +14,7 @@ public class Application implements CommandLineRunner {
     }
 
     @Autowired
-    JdbcTemplate jdbcTemplate;
+    private JdbcTemplate jdbcTemplate;
 
     @Override
     public void run(String... strings) throws Exception{

@@ -1,7 +1,7 @@
 package gift.controller;
 
-import gift.controller.DTO.ProductRequestDto;
-import gift.controller.DTO.ProductResponseDto;
+import gift.controller.dto.ProductRequestDto;
+import gift.controller.dto.ProductResponseDto;
 import gift.model.ProductDao;
 import gift.model.Product;
 import java.util.List;
