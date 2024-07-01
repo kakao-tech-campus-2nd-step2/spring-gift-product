@@ -25,8 +25,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ProductController {
 
     private final ProductDao productDao;
-    private final Map<Long, Product> productRepository = new ConcurrentHashMap<>();
-    private final AtomicLong key = new AtomicLong(1);
 
     public ProductController(ProductDao productDao) {
         this.productDao = productDao;
@@ -84,8 +82,11 @@ public class ProductController {
 
         Optional<Product> updatedProduct = productDao.update(product);
 
-        return updatedProduct.map(value -> "redirect:/products/" + value.getId()).orElse("error");
+        if (updatedProduct.isEmpty()) {
+            return "error";
+        }
 
+        return "redirect:/products/" + updatedProduct.get().getId();
     }
 
     @DeleteMapping("/{productId}")
