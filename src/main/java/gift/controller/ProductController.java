@@ -59,15 +59,13 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> productModify(@PathVariable("id") Long id,
+    @ResponseStatus(HttpStatus.OK)
+    public void productModify(@PathVariable("id") Long id,
                                                 @RequestBody ProductRequest modifyProduct) {
         Product foundProduct = productRepository.find(id)
                 .orElseThrow(() -> ProductNotFoundException.of(id));
 
         productRepository.save(modifyProduct.toModel(id));
-
-        return ResponseEntity.ok()
-                .body("Product modified");
     }
 
     @DeleteMapping("/{id}")
