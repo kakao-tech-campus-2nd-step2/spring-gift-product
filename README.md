@@ -1,5 +1,4 @@
 # spring-gift-product
-# spring-gift-product
 
 ## 요구 사항
 ### 기능 요구 사항
