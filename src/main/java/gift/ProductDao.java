@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 import java.util.List;
 
-
 @Repository
 public class ProductDao {
 
@@ -24,7 +23,7 @@ public class ProductDao {
         jdbcTemplate.update(sql, product.getId(), product.getName(), product.getPrice(), product.getImageUrl());
     }
 
-    public Product select(Long id) {
+    public Product find(Long id) {
         String sql = "SELECT id, name, price, imageUrl from products WHERE id = ?";
         try {
             return jdbcTemplate.queryForObject(sql, productRowMapper(), id);
@@ -33,7 +32,7 @@ public class ProductDao {
         }
     }
 
-    public List<Product> selectAll() {
+    public List<Product> findAll() {
         String sql = "SELECT id, name, price, imageUrl from products";
         List<Product> products = jdbcTemplate.query(sql, productRowMapper());
         return products;
@@ -56,11 +55,12 @@ public class ProductDao {
 
     private RowMapper<Product> productRowMapper() {
         return (rs, rowNum) -> {
-            Product product = new Product();
-            product.setId(rs.getLong("id"));
-            product.setName(rs.getString("name"));
-            product.setPrice(rs.getInt("price"));
-            product.setImageUrl(rs.getString("imageUrl"));
+            Product product = new Product(
+                    rs.getLong("id"),
+                    rs.getString("name"),
+                    rs.getInt("price"),
+                    rs.getString("imageUrl")
+            );
             return product;
         };
     }

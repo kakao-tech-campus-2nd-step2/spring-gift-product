@@ -15,7 +15,7 @@ public class ProductService {
     }
 
     public Product makeProduct(ProductRequestDto requestDto) {
-        Product getProduct = productDao.select(requestDto.getId());
+        Product getProduct = productDao.find(requestDto.getId());
 
         if (getProduct == null) {
             Product product = new Product(
@@ -31,15 +31,15 @@ public class ProductService {
     }
 
     public List<Product> getAllProducts() {
-        return productDao.selectAll();
+        return productDao.findAll();
     }
 
     public Product getProduct(Long id) {
-        return productDao.select(id);
+        return productDao.find(id);
     }
 
     public Product putProduct(ProductRequestDto requestDto) {
-        Product getProduct = productDao.select(requestDto.getId());
+        Product getProduct = productDao.find(requestDto.getId());
 
         if (getProduct != null) {
             Product updateProduct = new Product(
@@ -55,7 +55,7 @@ public class ProductService {
     }
 
     public Product deleteProduct(Long id) {
-        Product product = productDao.select(id);
+        Product product = productDao.find(id);
         if (product != null) {
             productDao.delete(id);
             return product;

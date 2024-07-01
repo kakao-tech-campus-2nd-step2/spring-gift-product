@@ -2,6 +2,11 @@ package gift;
 
 public class Product {
 
+    private Long id;
+    private String name;
+    private int price;
+    private String imageUrl;
+
     public Product() {}
     public Product(Long id, String name, int price, String imageUrl) {
         this.id = id;
@@ -9,10 +14,6 @@ public class Product {
         this.price = price;
         this.imageUrl = imageUrl;
     }
-    private Long id;
-    private String name;
-    private int price;
-    private String imageUrl;
 
     public Long getId() {
         return id;
@@ -28,21 +29,5 @@ public class Product {
 
     public String getImageUrl() {
         return imageUrl;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
     }
 }

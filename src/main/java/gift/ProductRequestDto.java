@@ -2,6 +2,11 @@ package gift;
 
 public class ProductRequestDto {
 
+    private Long id;
+    private String name;
+    private int price;
+    private String imageUrl;
+
     public ProductRequestDto() {}
     public ProductRequestDto(Long id, String name, int price, String imageUrl) {
         this.id = id;
@@ -9,10 +14,6 @@ public class ProductRequestDto {
         this.price = price;
         this.imageUrl = imageUrl;
     }
-    private Long id;
-    private String name;
-    private int price;
-    private String imageUrl;
 
     public Long getId() {
         return id;

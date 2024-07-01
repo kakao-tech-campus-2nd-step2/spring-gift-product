@@ -36,10 +36,10 @@ public class ProductController {
     public ResponseEntity<Product> getProduct(@PathVariable("id") Long id) {
         Product product = productService.getProduct(id);
 
-        if (product != null) {
-            return new ResponseEntity<>(product, HttpStatus.OK);
+        if (product == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
     @PutMapping("/products")
@@ -52,7 +52,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/products/{id}")
-    public ResponseEntity deleteProduct(@PathVariable("id") Long id) {
+    public ResponseEntity deleteProduct(@PathVariable Long id) {
         Product product = productService.deleteProduct(id);
         if (product == null) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
