@@ -2,18 +2,18 @@ package gift.controller;
 
 import gift.domain.Product;
 
-public class ProductDto {
+public class ProductRequest {
     private String name;
     private long price;
     private String imageUrl;
 
-    public ProductDto(String name, long price, String imageUrl) {
+    public ProductRequest(String name, long price, String imageUrl) {
         this.name = name;
         this.price = price;
         this.imageUrl = imageUrl;
     }
 
-    public ProductDto() {
+    public ProductRequest() {
     }
 
     public String getName(){
@@ -35,7 +35,7 @@ public class ProductDto {
         this.imageUrl = imageUrl;
     }
 
-    public static ProductDto entityToDto(Product product){
-        return new ProductDto(product.getName(), product.getPrice(), product.getImageUrl());
+    public static ProductRequest entityToRequest(Product product){
+        return new ProductRequest(product.getName(), product.getPrice(), product.getImageUrl());
     }
 }

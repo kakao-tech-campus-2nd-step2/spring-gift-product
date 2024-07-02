@@ -1,7 +1,7 @@
 package gift.controller;
 
 import gift.controller.ProductController;
-import gift.controller.ProductDto;
+import gift.controller.ProductRequest;
 import gift.domain.Product;
 import gift.service.ProductService;
 import org.junit.jupiter.api.BeforeEach;
@@ -75,16 +75,16 @@ public class ProductControllerTest {
 
     @Test
     void addProduct() throws Exception {
-        ProductDto productDto = new ProductDto("New Product", 100L, "new-product-url");
+        ProductRequest productRequest = new ProductRequest("New Product", 100L, "new-product-url");
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/products")
-                        .param("name", productDto.getName())
-                        .param("price", String.valueOf(productDto.getPrice()))
-                        .param("imageUrl", productDto.getImageUrl()))
+                        .param("name", productRequest.getName())
+                        .param("price", String.valueOf(productRequest.getPrice()))
+                        .param("imageUrl", productRequest.getImageUrl()))
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
                 .andExpect(MockMvcResultMatchers.view().name("redirect:/api/products"));
 
-        verify(productService, times(1)).register(any(ProductDto.class));
+        verify(productService, times(1)).register(any(ProductRequest.class));
     }
 
     @Test
@@ -104,16 +104,16 @@ public class ProductControllerTest {
     @Test
     void updateProduct() throws Exception {
         Long productId = 1L;
-        ProductDto updatedProductDto = new ProductDto("Updated Product", 300L, "updated-url");
+        ProductRequest updatedProductRequest = new ProductRequest("Updated Product", 300L, "updated-url");
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/products/edit/{id}", productId)
-                        .param("name", updatedProductDto.getName())
-                        .param("price", String.valueOf(updatedProductDto.getPrice()))
-                        .param("imageUrl", updatedProductDto.getImageUrl()))
+                        .param("name", updatedProductRequest.getName())
+                        .param("price", String.valueOf(updatedProductRequest.getPrice()))
+                        .param("imageUrl", updatedProductRequest.getImageUrl()))
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
                 .andExpect(MockMvcResultMatchers.view().name("redirect:/api/products"));
 
-        verify(productService, times(1)).update(eq(productId), any(ProductDto.class));
+        verify(productService, times(1)).update(eq(productId), any(ProductRequest.class));
     }
 
     @Test

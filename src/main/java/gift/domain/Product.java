@@ -1,7 +1,7 @@
 package gift.domain;
 
 
-import gift.controller.ProductDto;
+import gift.controller.ProductRequest;
 
 public class Product {
     private long id;
@@ -50,7 +50,7 @@ public class Product {
         this.imageUrl = imageUrl;
     }
 
-    public static Product dtoToEntity(ProductDto productDto){
-        return new Product(productDto.getName(), productDto.getPrice(), productDto.getImageUrl());
+    public static Product RequestToEntity(ProductRequest productRequest){
+        return new Product(productRequest.getName(), productRequest.getPrice(), productRequest.getImageUrl());
     }
 }

@@ -1,6 +1,6 @@
 package gift.service;
 
-import gift.controller.ProductDto;
+import gift.controller.ProductRequest;
 import gift.domain.Product;
 import gift.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
-@Transactional
+@Transactional()
 public class ProductService {
     private final ProductRepository productRepository;
 
@@ -24,13 +24,13 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public Product register(ProductDto productDto){
-        validateDuplicateProduct(productDto);
-        Product product = Product.dtoToEntity(productDto);
+    public Product register(ProductRequest productRequest){
+        validateDuplicateProduct(productRequest);
+        Product product = Product.RequestToEntity(productRequest);
         return productRepository.save(product);
     }
-    private void validateDuplicateProduct(ProductDto productDto){
-        productRepository.findByName(productDto.getName())
+    private void validateDuplicateProduct(ProductRequest productRequest){
+        productRepository.findByName(productRequest.getName())
                 .ifPresent(p -> {
                     throw new IllegalStateException("이미 존재하는 상품입니다.");
                 });
@@ -44,8 +44,8 @@ public class ProductService {
         return productRepository.findById(productId);
     }
 
-    public Product update(Long productId, ProductDto productDto){
-        Optional<Product> product = productRepository.updateById(productId, productDto);
+    public Product update(Long productId, ProductRequest productRequest){
+        Optional<Product> product = productRepository.updateById(productId, productRequest);
         if (product.isPresent()){
             return product.get();
         };

@@ -1,12 +1,17 @@
 package gift.repository;
 
-import gift.controller.ProductDto;
+import gift.controller.ProductRequest;
 import gift.domain.Product;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -86,20 +91,20 @@ public class ProductMemoryRepositoryTest {
         Product product = new Product("Initial Product", 100, "initial-url");
         Product savedProduct = repository.save(product);
         Long productId = savedProduct.getId();
-        ProductDto updatedProductDto = new ProductDto("Updated Product", 200, "updated-url");
+        ProductRequest updatedProductRequest = new ProductRequest("Updated Product", 200, "updated-url");
 
-        Optional<Product> updatedProductOptional = repository.updateById(productId, updatedProductDto);
+        Optional<Product> updatedProductOptional = repository.updateById(productId, updatedProductRequest);
 
         assertTrue(updatedProductOptional.isPresent());
         Product updatedProduct = updatedProductOptional.get();
-        assertEquals(updatedProductDto.getName(), updatedProduct.getName());
-        assertEquals(updatedProductDto.getPrice(), updatedProduct.getPrice());
-        assertEquals(updatedProductDto.getImageUrl(), updatedProduct.getImageUrl());
+        assertEquals(updatedProductRequest.getName(), updatedProduct.getName());
+        assertEquals(updatedProductRequest.getPrice(), updatedProduct.getPrice());
+        assertEquals(updatedProductRequest.getImageUrl(), updatedProduct.getImageUrl());
     }
 
     @Test
     void updateById_id없을때() {
-        Optional<Product> updatedProductOptional = repository.updateById(999L, new ProductDto("Updated Product", 200, "updated-url"));
+        Optional<Product> updatedProductOptional = repository.updateById(999L, new ProductRequest("Updated Product", 200, "updated-url"));
 
         assertFalse(updatedProductOptional.isPresent());
     }
@@ -123,4 +128,29 @@ public class ProductMemoryRepositoryTest {
 
         assertFalse(deletedProductOptional.isPresent());
     }
+
+    //동시성 테스트
+    @Test
+    public void testConcurrentProductCreation() throws InterruptedException {
+        int numberOfThreads = 100;
+        ExecutorService executorService = Executors.newFixedThreadPool(numberOfThreads);
+        Set<Long> productIds = ConcurrentHashMap.newKeySet();
+        CountDownLatch latch = new CountDownLatch(numberOfThreads);
+
+        for (int i = 0; i < numberOfThreads; i++) {
+            executorService.submit(() -> {
+                Product product = new Product("Product", 100, "http://example.com/image.png");
+                repository.save(product);
+                productIds.add(product.getId());
+                latch.countDown();
+            });
+        }
+
+        latch.await();
+        executorService.shutdown();
+
+        // Check if there are any duplicate IDs
+        assertEquals(numberOfThreads, productIds.size(), "Duplicates found! Number of unique IDs: " + productIds.size());
+    }
+
 }

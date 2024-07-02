@@ -1,10 +1,11 @@
 package gift.repository;
 
-import gift.controller.ProductDto;
+import gift.controller.ProductRequest;
 import gift.domain.Product;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
@@ -21,8 +22,10 @@ public class ProductDBRepository implements ProductRepository {
 
     @Override
     public Product save(Product product) {
+        GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
         String sql = "INSERT INTO product(name, price, imageUrl) VALUES (?, ?, ?)";
-        jdbcTemplate.update(sql, product.getName(), product.getPrice(), product.getImageUrl());
+        jdbcTemplate.update(sql, product.getName(), product.getPrice(), product.getImageUrl(), keyHolder);
+        product.setId(keyHolder.getKey().longValue());
         return product;
     }
 
@@ -46,11 +49,11 @@ public class ProductDBRepository implements ProductRepository {
     }
 
     @Override
-    public Optional<Product> updateById(Long id, ProductDto productDto){
+    public Optional<Product> updateById(Long id, ProductRequest productRequest){
         String sql  = "UPDATE product " +
                 "SET name = ?,price=?,imageUrl=? " +
                 "WHERE id = ?";
-        jdbcTemplate.update(sql,productDto.getName(), productDto.getPrice(), productDto.getImageUrl(), id);
+        jdbcTemplate.update(sql,productRequest.getName(), productRequest.getPrice(), productRequest.getImageUrl(), id);
         return findById(id);
     }
 

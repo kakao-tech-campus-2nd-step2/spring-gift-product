@@ -1,6 +1,6 @@
 package gift.repository;
 
-import gift.controller.ProductDto;
+import gift.controller.ProductRequest;
 import gift.domain.Product;
 import gift.repository.ProductDBRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -110,18 +110,18 @@ public class ProductDBRepositoryTest {
 
     @Test
     void updateById_id있을때() {
-        ProductDto updatedProductDto = new ProductDto("Updated Product", 200, "updated-url");
+        ProductRequest updatedProductRequest = new ProductRequest("Updated Product", 200, "updated-url");
 
         when(jdbcTemplate.update(anyString(), any(), any(), any(), any()))
                 .thenReturn(1);
 
-        Optional<Product> updatedProductOptional = repository.updateById(1L, updatedProductDto);
+        Optional<Product> updatedProductOptional = repository.updateById(1L, updatedProductRequest);
 
         assertTrue(updatedProductOptional.isPresent());
         Product updatedProduct = updatedProductOptional.get();
-        assertEquals(updatedProductDto.getName(), updatedProduct.getName());
-        assertEquals(updatedProductDto.getPrice(), updatedProduct.getPrice());
-        assertEquals(updatedProductDto.getImageUrl(), updatedProduct.getImageUrl());
+        assertEquals(updatedProductRequest.getName(), updatedProduct.getName());
+        assertEquals(updatedProductRequest.getPrice(), updatedProduct.getPrice());
+        assertEquals(updatedProductRequest.getImageUrl(), updatedProduct.getImageUrl());
     }
 
     @Test
@@ -129,7 +129,7 @@ public class ProductDBRepositoryTest {
         when(jdbcTemplate.update(anyString(), any(), any(), any(), any()))
                 .thenReturn(0);
 
-        Optional<Product> updatedProductOptional = repository.updateById(999L, new ProductDto("Updated Product", 200, "updated-url"));
+        Optional<Product> updatedProductOptional = repository.updateById(999L, new ProductRequest("Updated Product", 200, "updated-url"));
 
         assertFalse(updatedProductOptional.isPresent());
     }

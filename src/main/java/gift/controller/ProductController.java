@@ -35,13 +35,13 @@ public class ProductController {
 
     @GetMapping("/api/products/new")
     public String newProductForm(Model model){
-        model.addAttribute("product", new ProductDto());
+        model.addAttribute("product", new ProductRequest());
         return "product-add-form";
     }
 
     @PostMapping("/api/products")
-    public String addProduct(@ModelAttribute ProductDto productDto) {
-        productService.register(productDto);
+    public String addProduct(@ModelAttribute ProductRequest productRequest) {
+        productService.register(productRequest);
         return "redirect:/api/products";
     }
 
@@ -55,8 +55,8 @@ public class ProductController {
         return "redirect:/api/products";
     }
     @PostMapping("/api/products/edit/{id}")
-    public String updateProduct(@PathVariable Long id, @ModelAttribute ProductDto productDto) {
-        productService.update(id, productDto);
+    public String updateProduct(@PathVariable Long id, @ModelAttribute ProductRequest productRequest) {
+        productService.update(id, productRequest);
         return "redirect:/api/products";
     }
 
@@ -66,8 +66,4 @@ public class ProductController {
         return "redirect:/api/products";
 
     }
-
-
-
-
 }

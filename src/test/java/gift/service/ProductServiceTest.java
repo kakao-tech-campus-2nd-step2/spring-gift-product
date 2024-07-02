@@ -1,6 +1,6 @@
 package gift.service;
 
-import gift.controller.ProductDto;
+import gift.controller.ProductRequest;
 import gift.domain.Product;
 import gift.repository.ProductRepository;
 import gift.service.ProductService;
@@ -34,15 +34,15 @@ public class ProductServiceTest {
 
     @Test
     void register() {
-        ProductDto productDto = new ProductDto("New Product", 100L, "new-product-url");
-        Product product = new Product(1L, productDto.getName(), productDto.getPrice(), productDto.getImageUrl());
+        ProductRequest productRequest = new ProductRequest("New Product", 100L, "new-product-url");
+        Product product = new Product(1L, productRequest.getName(), productRequest.getPrice(), productRequest.getImageUrl());
 
-        when(productRepository.findByName(productDto.getName()))
+        when(productRepository.findByName(productRequest.getName()))
                 .thenReturn(Optional.empty());
         when(productRepository.save(any(Product.class)))
                 .thenReturn(product);
 
-        Product registeredProduct = productService.register(productDto);
+        Product registeredProduct = productService.register(productRequest);
 
         assertNotNull(registeredProduct);
         assertEquals(product.getName(), registeredProduct.getName());
@@ -52,14 +52,14 @@ public class ProductServiceTest {
 
     @Test
     void register_중복() {
-        ProductDto productDto = new ProductDto("Duplicate Product", 200L, "duplicate-product-url");
-        Product existingProduct = new Product(1L, productDto.getName(), productDto.getPrice(), productDto.getImageUrl());
+        ProductRequest productRequest = new ProductRequest("Duplicate Product", 200L, "duplicate-product-url");
+        Product existingProduct = new Product(1L, productRequest.getName(), productRequest.getPrice(), productRequest.getImageUrl());
 
-        when(productRepository.findByName(productDto.getName()))
+        when(productRepository.findByName(productRequest.getName()))
                 .thenReturn(Optional.of(existingProduct));
 
         IllegalStateException exception = assertThrows(IllegalStateException.class,
-                () -> productService.register(productDto));
+                () -> productService.register(productRequest));
 
         assertEquals("이미 존재하는 상품입니다.", exception.getMessage());
     }
@@ -105,13 +105,13 @@ public class ProductServiceTest {
     @Test
     void update_id존재() {
         Long productId = 1L;
-        ProductDto updatedProductDto = new ProductDto("Updated Product", 300L, "updated-product-url");
-        Product updatedProduct = new Product(productId, updatedProductDto.getName(), updatedProductDto.getPrice(), updatedProductDto.getImageUrl());
+        ProductRequest updatedProductRequest = new ProductRequest("Updated Product", 300L, "updated-product-url");
+        Product updatedProduct = new Product(productId, updatedProductRequest.getName(), updatedProductRequest.getPrice(), updatedProductRequest.getImageUrl());
 
-        when(productRepository.updateById(productId, updatedProductDto))
+        when(productRepository.updateById(productId, updatedProductRequest))
                 .thenReturn(Optional.of(updatedProduct));
 
-        Product result = productService.update(productId, updatedProductDto);
+        Product result = productService.update(productId, updatedProductRequest);
 
         assertNotNull(result);
         assertEquals(updatedProduct.getName(), result.getName());
@@ -122,13 +122,13 @@ public class ProductServiceTest {
     @Test
     void update_id존재x() {
         Long productId = 999L;
-        ProductDto updatedProductDto = new ProductDto("Updated Product", 300L, "updated-product-url");
+        ProductRequest updatedProductRequest = new ProductRequest("Updated Product", 300L, "updated-product-url");
 
-        when(productRepository.updateById(productId, updatedProductDto))
+        when(productRepository.updateById(productId, updatedProductRequest))
                 .thenReturn(Optional.empty());
 
         NoSuchElementException exception = assertThrows(NoSuchElementException.class,
-                () -> productService.update(productId, updatedProductDto));
+                () -> productService.update(productId, updatedProductRequest));
 
         assertEquals("존재하지 않는 상품입니다.", exception.getMessage());
     }
