@@ -1,7 +1,6 @@
 package gift.controller;
 
 import gift.ProductService;
-import gift.domain.product.Product;
 import gift.dto.ProductRequestDto;
 import gift.dto.ProductResponseDto;
 import org.springframework.stereotype.Controller;
@@ -18,23 +17,47 @@ public class WebController {
         this.productService = productService;
     }
 
-    @GetMapping("/lists")
-    public String itemList(Model model){
+    @GetMapping("/")
+    public String itemList(Model model) {
         List<ProductResponseDto> products = productService.findAll();
-        model.addAttribute("products",products);
+        model.addAttribute("products", products);
         return "items";
     }
 
-    @GetMapping("/add")
-    public String add(){
+    @PostMapping("products/add")
+    public String add(@ModelAttribute ProductRequestDto requestDto) {
+        productService.addProduct(requestDto);
+        return "redirect:/";
+    }
+
+    @GetMapping("products/add")
+    public String add() {
         return "addForm";
     }
 
-    @GetMapping("/edit/{id}")
-    public String editProduct(
-            @PathVariable("id") Long id, Model model){
+    @GetMapping("products/edit/{id}")
+    public String getEditForm(
+            @PathVariable("id") Long id, Model model) {
+        System.out.println(id);
         ProductResponseDto product = productService.findProduct(id);
-        model.addAttribute("product",product);
+        model.addAttribute("product", product);
+        model.addAttribute("id", id);
         return "editForm";
+    }
+
+    @PutMapping("products/edit/{id}")
+    public String editProduct(
+            @PathVariable("id") Long id,
+            @ModelAttribute ProductRequestDto product) {
+        productService.editProduct(id, product);
+        return "redirect:/";
+    }
+
+    @DeleteMapping("products/delete/{id}")
+    public String deleteProduct(
+            @PathVariable("id") Long id
+    ) {
+        productService.deleteProduct(id);
+        return "redirect:/";
     }
 }

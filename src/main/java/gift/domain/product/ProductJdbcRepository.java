@@ -26,7 +26,7 @@ public class ProductJdbcRepository implements ProductRepository {
     public ArrayList<Product> findAll() {
         String sql = "SELECT * FROM product";
         return (ArrayList<Product>) jdbcTemplate.query(sql, (rs, rowNum) -> {
-            long id = rs.getLong("id");
+            Long id = rs.getLong("id");
             String name = rs.getString("name");
             int price = rs.getInt("price");
             String imgUrl = rs.getString("img_url");
@@ -42,7 +42,7 @@ public class ProductJdbcRepository implements ProductRepository {
             int price = rs.getInt("price");
             String imgUrl = rs.getString("img_url");
             return new Product(id, name, price, imgUrl);
-        });
+        }, id);
     }
 
     @Override
@@ -53,8 +53,11 @@ public class ProductJdbcRepository implements ProductRepository {
 
     @Override
     public int update(Long id, ProductRequestDto requestDto) {
-        String sql = "UPDATE product set name = ?, price = ?, image_url = ? where id = ?";
-        return jdbcTemplate.update(sql, requestDto.getName(), requestDto.getPrice(),
-                requestDto.getImgUrl(), id);
+        String sql = "UPDATE product set name = ?, price = ?, img_url = ? where id = ?";
+        return jdbcTemplate.update(sql,
+                requestDto.getName(),
+                requestDto.getPrice(),
+                requestDto.getImgUrl(),
+                id);
     }
 }

@@ -18,10 +18,6 @@ public class ProductController {
         this.productService = productService;
     }
 
-    /**
-     * 상품 등록 API
-     * @param requestDto 이름과 가격 이미지 URL
-     */
     @PostMapping("")
     public void save(@RequestBody ProductRequestDto requestDto){
         productService.addProduct(requestDto);
