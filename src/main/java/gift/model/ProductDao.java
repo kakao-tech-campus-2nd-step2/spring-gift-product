@@ -1,48 +1,77 @@
 package gift.model;
 
-import java.util.ArrayList;
+
+import gift.enums.Query;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.springframework.stereotype.Component;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.stereotype.Repository;
 
-@Component
+@Repository
 public class ProductDao {
 
-    private static final Map<Long, Product> store = new HashMap<>();
-    private static long sequence = 0L;
+    private final JdbcTemplate jdbcTemplate;
+    private final SimpleJdbcInsert jdbcInsert;
 
-    public Product save(ProductRequest productRequest) {
-        Product product = productRequest.toEntity(++sequence);
-        store.put(sequence, product);
-        return product;
+    public ProductDao(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+        this.jdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
+            .withTableName("product")
+            .usingGeneratedKeyColumns("id");
     }
 
+    public Product save(ProductRequest productRequest) {
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("name", productRequest.name());
+        parameters.put("price", productRequest.price());
+        parameters.put("imageUrl", productRequest.imageUrl());
+
+        Number key = jdbcInsert.executeAndReturnKey(parameters);
+        long id = key.longValue();
+
+        Product product = findById(id);
+
+
     public Product findById(Long id) {
-        if (!store.containsKey(id)) {
-            throw new IllegalArgumentException("존재하지 않는 상품입니다.");
-        }
-        return store.get(id);
+        var sql = Query.FIND_BY_ID.getQuery();
+        return jdbcTemplate.queryForObject(
+            sql,
+            (resultSet, rowNum) -> new Product(
+                resultSet.getLong("id"),
+                resultSet.getString("name"),
+                resultSet.getInt("price"),
+                resultSet.getString("imageUrl")
+            ),
+            id
+        );
     }
 
     public List<Product> findAll() {
-        return new ArrayList<>(store.values());
+        var sql = Query.FIND_ALL.getQuery();
+        return jdbcTemplate.query(
+            sql,
+            (resultSet, rowNum) -> new Product(
+                resultSet.getLong("id"),
+                resultSet.getString("name"),
+                resultSet.getInt("price"),
+                resultSet.getString("imageUrl")
+            )
+        );
     }
 
     public Product update(Long id, ProductRequest productRequest) {
-        if (!store.containsKey(id)) {
-            throw new IllegalArgumentException("존재하지 않는 상품입니다.");
-        }
-        Product product = store.get(id);
-        product.updateProduct(productRequest);
+        var sql = Query.UPDATE.getQuery();
+        jdbcTemplate.update(sql, productRequest.name(), productRequest.price(), productRequest.imageUrl(), id);
+
+        Product product = findById(id);
 
         return product;
     }
 
     public void delete(Long id) {
-        if (!store.containsKey(id)) {
-            throw new IllegalArgumentException("존재하지 않는 상품입니다.");
-        }
-        store.remove(id);
+        var sql = Query.DELETE.getQuery();
+        jdbcTemplate.update(sql, id);
     }
 }
