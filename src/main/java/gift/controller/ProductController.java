@@ -2,11 +2,15 @@ package gift.controller;
 
 import gift.model.Product;
 import gift.service.ProductService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/products")
@@ -35,33 +39,76 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
-        productService.createProduct(product);
-        return ResponseEntity.ok(product);
+    public ResponseEntity<Map<String, Object>> createProduct(@RequestBody Product product) {
+        boolean success = productService.createProduct(product);
+        Map<String, Object> response = new HashMap<>();
+        if (success) {
+            response.put("message", "Product created successfully.");
+            response.put("product", product);
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        } else {
+            response.put("message", "Failed to create product.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product product) {
-        productService.updateProduct(id, product);
-        return ResponseEntity.ok(product);
+    public ResponseEntity<Map<String, Object>> updateProduct(@PathVariable Long id, @RequestBody Product product) {
+        boolean success = productService.updateProduct(id, product);
+        Map<String, Object> response = new HashMap<>();
+        if (success) {
+            Product updatedProduct = productService.getProductById(id);
+            response.put("message", "Product updated successfully.");
+            response.put("product", updatedProduct);
+            return ResponseEntity.ok(response);
+        } else {
+            response.put("message", "Failed to update product.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Product> patchProduct(@PathVariable Long id, @RequestBody Map<String, Object> updates) {
-        productService.patchProduct(id, updates);
-        Product updatedProduct = productService.getProductById(id);
-        return ResponseEntity.ok(updatedProduct);
+    public ResponseEntity<Map<String, Object>> patchProduct(@PathVariable Long id, @RequestBody Map<String, Object> updates) {
+        boolean success = productService.patchProduct(id, updates);
+        Map<String, Object> response = new HashMap<>();
+        if (success) {
+            Product updatedProduct = productService.getProductById(id);
+            response.put("message", "Product patched successfully.");
+            response.put("product", updatedProduct);
+            return ResponseEntity.ok(response);
+        } else {
+            response.put("message", "Failed to patch product.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
     }
 
     @PatchMapping
-    public ResponseEntity<List<Product>> patchProducts(@RequestBody List<Map<String, Object>> updatesList) {
-        List<Product> updatedProducts = productService.patchProducts(updatesList);
-        return ResponseEntity.ok(updatedProducts);
+    public ResponseEntity<Map<String, Object>> patchProducts(@RequestBody List<Map<String, Object>> updatesList) {
+        List<Product> updatedProducts = productService.patchProducts(updatesList).stream()
+            .filter(Objects::nonNull)
+            .collect(Collectors.toList());
+
+        Map<String, Object> response = new HashMap<>();
+        if (updatedProducts.isEmpty()) {
+            response.put("message", "Failed to patch products.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+
+        response.put("message", "Products patched successfully.");
+        response.put("products", updatedProducts);
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
-        productService.deleteProduct(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<Map<String, Object>> deleteProduct(@PathVariable Long id) {
+        boolean success = productService.deleteProduct(id);
+        Map<String, Object> response = new HashMap<>();
+        if (success) {
+            response.put("message", "Product deleted successfully.");
+            return ResponseEntity.noContent().build();
+        } else {
+            response.put("message", "Failed to delete product.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
     }
 }

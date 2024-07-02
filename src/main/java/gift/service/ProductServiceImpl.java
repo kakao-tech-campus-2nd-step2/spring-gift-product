@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -28,39 +28,42 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void createProduct(Product product) {
-        productRepository.save(product);
+    public boolean createProduct(Product product) {
+        return productRepository.save(product);
     }
 
     @Override
-    public void updateProduct(Long id, Product product) {
+    public boolean updateProduct(Long id, Product product) {
         Product existingProduct = productRepository.findById(id);
         if (existingProduct != null) {
             existingProduct.setName(product.getName());
             existingProduct.setPrice(product.getPrice());
             existingProduct.setImageUrl(product.getImageUrl());
-            productRepository.update(existingProduct);
+            return productRepository.update(existingProduct);
         }
+        return false;
     }
 
     @Override
-    public void patchProduct(Long id, Map<String, Object> updates) {
+    public boolean patchProduct(Long id, Map<String, Object> updates) {
         Product existingProduct = productRepository.findById(id);
         if (existingProduct != null) {
             applyUpdates(existingProduct, updates);
-            productRepository.update(existingProduct);
+            return productRepository.update(existingProduct);
         }
+        return false;
     }
 
     @Override
     public List<Product> patchProducts(List<Map<String, Object>> updatesList) {
-        return updatesList.stream()
-            .map(updates -> {
-                Long id = ((Number) updates.get("id")).longValue();
-                patchProduct(id, updates);
-                return productRepository.findById(id);
-            })
-            .collect(Collectors.toList());
+        List<Product> updatedProducts = new ArrayList<>();
+        for (Map<String, Object> updates : updatesList) {
+            Long id = ((Number) updates.get("id")).longValue();
+            if (patchProduct(id, updates)) {
+                updatedProducts.add(productRepository.findById(id));
+            }
+        }
+        return updatedProducts;
     }
 
     private void applyUpdates(Product product, Map<String, Object> updates) {
@@ -88,8 +91,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void deleteProduct(Long id) {
-        productRepository.delete(id);
+    public boolean deleteProduct(Long id) {
+        return productRepository.delete(id);
     }
 
     public List<Product> getProducts(int page, int size) {

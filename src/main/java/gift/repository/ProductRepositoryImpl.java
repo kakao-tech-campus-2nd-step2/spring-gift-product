@@ -49,10 +49,10 @@ public class ProductRepositoryImpl implements ProductRepository {
 
 
     @Override
-    public void save(Product product) {
+    public boolean save(Product product) {
         var sql = "INSERT INTO product (name, price, imageUrl) VALUES (?, ?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        jdbcTemplate.update(connection -> {
+        int result = jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, product.getName());
             ps.setInt(2, product.getPrice());
@@ -60,19 +60,24 @@ public class ProductRepositoryImpl implements ProductRepository {
             return ps;
         }, keyHolder);
 
-        product.setId(Objects.requireNonNull(keyHolder.getKey()).longValue());
+        if (result > 0) {
+            product.setId(Objects.requireNonNull(keyHolder.getKey()).longValue());
+        }
+        return result > 0;
     }
 
     @Override
-    public void update(Product product) {
+    public boolean update(Product product) {
         var sql = "UPDATE product SET name = ?, price = ?, imageUrl = ? WHERE id = ?";
-        jdbcTemplate.update(sql, product.getName(), product.getPrice(), product.getImageUrl(), product.getId());
+        int result = jdbcTemplate.update(sql, product.getName(), product.getPrice(), product.getImageUrl(), product.getId());
+        return result > 0;
     }
 
     @Override
-    public void delete(Long id) {
+    public boolean delete(Long id) {
         var sql = "DELETE FROM product WHERE id = ?";
-        jdbcTemplate.update(sql, id);
+        int result = jdbcTemplate.update(sql, id);
+        return result > 0;
     }
 
     @Override
