@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -21,16 +23,21 @@ class ProductControllerTest {
     private ObjectMapper objectMapper;
     @Test
     void setProduct() throws Exception {
-        Product product = new Product(1L, "Product1", 100, "http://image.url",100);
+        // Given
+        Product product = new Product(1L, "Product1", 100, "http://image.url", 100);
 
-        mockMvc.perform(post("/api/products")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(product)))
-                .andExpect(status().isOk())
+        // When
+        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.post("/api/products")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(product)));
+
+        // Then
+        resultActions.andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(product.id()))
                 .andExpect(jsonPath("$.name").value(product.name()))
                 .andExpect(jsonPath("$.price").value(product.price()))
-                .andExpect(jsonPath("$.imageUrl").value(product.imageUrl()));
+                .andExpect(jsonPath("$.imageUrl").value(product.imageUrl()))
+                .andExpect(jsonPath("$.amount").value(product.amount()));
     }
 
     @Test
@@ -50,7 +57,8 @@ class ProductControllerTest {
                 .andExpect(jsonPath("$.id").value(updateProduct.id()))
                 .andExpect(jsonPath("$.name").value(updateProduct.name()))
                 .andExpect(jsonPath("$.price").value(updateProduct.price()))
-                .andExpect(jsonPath("$.imageUrl").value(updateProduct.imageUrl()));
+                .andExpect(jsonPath("$.imageUrl").value(updateProduct.imageUrl()))
+                .andExpect(jsonPath("$.amount").value(product.amount()));
     }
 
     @Test
@@ -67,7 +75,8 @@ class ProductControllerTest {
                 .andExpect(jsonPath("$.id").value(1L))
                 .andExpect(jsonPath("$.name").value("Product1"))
                 .andExpect(jsonPath("$.price").value(100))
-                .andExpect(jsonPath("$.imageUrl").value("http://image.url"));
+                .andExpect(jsonPath("$.imageUrl").value("http://image.url"))
+                .andExpect(jsonPath("$.amount").value(product.amount()));
     }
 
     @Test

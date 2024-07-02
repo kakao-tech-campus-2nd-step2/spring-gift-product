@@ -59,5 +59,4 @@ public class ProductController {
         }
         return ResponseEntity.badRequest().body("Not enough stock");
     }
-
 }
