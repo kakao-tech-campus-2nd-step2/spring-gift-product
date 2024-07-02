@@ -22,14 +22,15 @@ step-3의 구현 사항
    1. Database를 사용하기 위해 메모리에 데이터를 저장하는 h2 Database를 사용
    2. 기존의 HashMap은 제거하고, ProductDAO(Data Access Object)를 만들어 사용
    3. ProductDAO에는 기존의 HashMap에서 지원하는 추가, 삭제, 수정, 조회 기능을 구현해야 함
-      0. 데이터베이스 생성 : sql구문 및 jdbcTemplate의 execute메소드 를 통해 생성
-      1. 추가 기능 : 파라미터로 Product를 받으며, sql구문 및 jdbcTemplate의 update 메소드를 통해 추가
-      2. 삭제 기능 : 파라미터로 Long id를 받으며, sql구문 및 jdbcTemplate의 update 메소드를 통해 삭제
-      2. 수정 기능 : 파라미터로 Long id 및 Product를 받으며, sql구문 및 jdbcTemplate의 update 메소드를 통해 수정
-      3. 조회 기능 : 전체 데이터를 조회할 경우 query를 통해 받으며, 파라미터로 Long id를 입력받아 queryForObject를 이용하여 받음
+      a. 데이터베이스 생성 : sql구문 및 jdbcTemplate의 execute메소드 를 통해 생성
+      b. 추가 기능 : 파라미터로 Product를 받으며, sql구문 및 jdbcTemplate의 update 메소드를 통해 추가
+      c. 삭제 기능 : 파라미터로 Long id를 받으며, sql구문 및 jdbcTemplate의 update 메소드를 통해 삭제
+      d. 수정 기능 : 파라미터로 Long id 및 Product를 받으며, sql구문 및 jdbcTemplate의 update 메소드를 통해 수정
+      e. 조회 기능 : 전체 데이터를 조회할 경우 query를 통해 받으며, 파라미터로 Long id를 입력받아 queryForObject를 이용하여 받음
    4. 기타 기능
-      1. url, user, password를 빠르게 입력하기 위하여 getConnection() 구현
-      2. application.properties에서 url을 "jdbc:h2:mem:test"으로 지정
+      a. url, user, password를 빠르게 입력하기 위하여 getConnection() 구현
+      b. application.properties에서 url을 "jdbc:h2:mem:test"으로 지정
 2. step-2에서 미흡한 사항 보완
    1. ProductController에서 추가, 삭제, 수정 기능에서 성공 여부 판별을 위해 if문 사용 : Database 사용 시 다시 조회해서 확인해야하는 불편함 있음
       => try-catch로 변경하고 에러 발생 시 실패, 에러가 발생하지 않을 경우 성공
+     
