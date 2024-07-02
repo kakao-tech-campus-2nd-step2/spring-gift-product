@@ -1,24 +1,19 @@
 package gift;
 
 import gift.domain.product.Product;
-import gift.domain.product.ProductInMemoryRepository;
-import gift.domain.product.ProductJdbcRepository;
 import gift.domain.product.ProductRepository;
 import gift.dto.ProductRequestDto;
 import gift.dto.ProductResponseDto;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class ProductService {
-    private final ProductJdbcRepository repository;
+    private final ProductRepository repository;
 
-    @Autowired
-    public ProductService(ProductJdbcRepository repository) {
-        this.repository = repository;
+    public ProductService(ProductRepository productRepository) {
+        this.repository = productRepository;
     }
 
     public void addProduct(ProductRequestDto requestDto){
@@ -27,7 +22,10 @@ public class ProductService {
     }
 
     public List<ProductResponseDto> findAll(){
-        return repository.findAll().stream().map(ProductResponseDto::new).toList();
+        return repository.findAll()
+                .stream()
+                .map(ProductResponseDto::new)
+                .toList();
     }
 
     public ProductResponseDto findProduct(Long id){
@@ -44,6 +42,5 @@ public class ProductService {
 
     public void deleteProduct(Long id){
         repository.deleteById(id);
-        //TODO 예외처리
     }
 }

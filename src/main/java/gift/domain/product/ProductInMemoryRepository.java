@@ -1,21 +1,19 @@
 package gift.domain.product;
 
+import gift.dto.ProductRequestDto;
+import org.springframework.stereotype.Repository;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+@Repository
 public class ProductInMemoryRepository implements ProductRepository {
     private final Map<Long,Product> storage = new HashMap<>();
 
     private static long sequence = 0L;
 
-    public static final ProductInMemoryRepository instance = new ProductInMemoryRepository();
-
-    public static ProductInMemoryRepository getInstance() {
-        return instance;
-    }
-
-    private ProductInMemoryRepository(){}
+    public ProductInMemoryRepository(){}
 
     @Override
     public void save(Product product){
@@ -36,5 +34,10 @@ public class ProductInMemoryRepository implements ProductRepository {
     @Override
     public void deleteById(Long id){
         storage.remove(id);
+    }
+
+    @Override
+    public int update(Long id, ProductRequestDto dto) {
+        return 0;
     }
 }

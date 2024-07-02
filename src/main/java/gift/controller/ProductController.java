@@ -22,7 +22,7 @@ public class ProductController {
      * 상품 등록 API
      * @param requestDto 이름과 가격 이미지 URL
      */
-    @PostMapping("/add")
+    @PostMapping("")
     public void save(@RequestBody ProductRequestDto requestDto){
         productService.addProduct(requestDto);
     }
@@ -37,14 +37,14 @@ public class ProductController {
         return productService.findProduct(id);
     }
 
-    @PutMapping("/edit/{id}")
+    @PutMapping("/{id}")
     public ProductResponseDto editProduct(
             @PathVariable("id") Long id,
             @RequestBody ProductRequestDto request){
         return productService.editProduct(id,request);
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("")
     public HttpStatus deleteProduct(@RequestParam("id") Long id){
         productService.deleteProduct(id);
         return HttpStatus.NO_CONTENT;

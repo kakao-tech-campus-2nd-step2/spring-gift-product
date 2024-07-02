@@ -1,18 +1,17 @@
 package gift.domain.product;
 
 import gift.dto.ProductRequestDto;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 
 @Repository
-public class ProductJdbcRepository implements ProductRepository{
-    private JdbcTemplate jdbcTemplate;
+@Primary
+public class ProductJdbcRepository implements ProductRepository {
+    private final JdbcTemplate jdbcTemplate;
 
-
-    @Autowired
     public ProductJdbcRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
@@ -20,7 +19,7 @@ public class ProductJdbcRepository implements ProductRepository{
     @Override
     public void save(Product product) {
         String sql = "INSERT INTO product(name, price, img_url) VALUES(?, ?, ?)";
-        jdbcTemplate.update(sql, product.getName(), product.getPrice(),product.getImgUrl());
+        jdbcTemplate.update(sql, product.getName(), product.getPrice(), product.getImgUrl());
     }
 
     @Override
@@ -38,7 +37,7 @@ public class ProductJdbcRepository implements ProductRepository{
     @Override
     public Product findById(Long id) {
         String sql = "SELECT * FROM product where id = ?";
-        return jdbcTemplate.queryForObject(sql,(rs, rowNum) -> {
+        return jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {
             String name = rs.getString("name");
             int price = rs.getInt("price");
             String imgUrl = rs.getString("img_url");
@@ -49,13 +48,13 @@ public class ProductJdbcRepository implements ProductRepository{
     @Override
     public void deleteById(Long id) {
         String sql = "DELETE FROM product where id = ?";
-        jdbcTemplate.update(sql,id);
+        jdbcTemplate.update(sql, id);
     }
 
-    public int update(Long id, ProductRequestDto requestDto){
+    @Override
+    public int update(Long id, ProductRequestDto requestDto) {
         String sql = "UPDATE product set name = ?, price = ?, image_url = ? where id = ?";
         return jdbcTemplate.update(sql, requestDto.getName(), requestDto.getPrice(),
                 requestDto.getImgUrl(), id);
-
     }
 }
