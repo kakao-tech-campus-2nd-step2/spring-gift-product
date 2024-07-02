@@ -85,8 +85,67 @@
         "imageUrl": "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg"
     }
     ```
+### 5. 기존 상품 일부 수정
 
-### 5. 상품 삭제
+#### 단일 상품 수정
+
+- **URL**: `/api/products/{id}`
+- **Method**: `PATCH`
+- **요청 본문**:
+    ```json
+    {
+        "name": "따뜻한 카페 라떼 T",
+        "price": 5500
+    }
+    ```
+- **응답 예시**:
+    ```json
+    {
+        "id": 8146027,
+        "name": "따뜻한 카페 라떼 T",
+        "price": 5500,
+        "imageUrl": "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg"
+    }
+    ```
+
+#### 여러 개의 상품 수정
+
+- **URL**: `/api/products`
+- **Method**: `PATCH`
+- **요청 본문**:
+    ```json
+    [
+        {
+            "id": 8146027,
+            "name": "따뜻한 카페 라떼 T",
+            "price": 5500
+        },
+        {
+            "id": 8146028,
+            "price": 6000,
+            "imageUrl": "https://example.com/newimage.jpg"
+        }
+    ]
+    ```
+- **응답 예시**:
+    ```json
+    [
+        {
+            "id": 8146027,
+            "name": "따뜻한 카페 라떼 T",
+            "price": 5500,
+            "imageUrl": "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg"
+        },
+        {
+            "id": 8146028,
+            "name": "아이스 카페 아메리카노 T",
+            "price": 6000,
+            "imageUrl": "https://example.com/newimage.jpg"
+        }
+    ]
+    ```
+
+### 6. 상품 삭제
 
 - **URL**: `/api/products/{id}`
 - **Method**: `DELETE`
