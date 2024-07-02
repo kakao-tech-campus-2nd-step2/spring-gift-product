@@ -5,12 +5,11 @@
     <title>상품 수정 화면</title>
 </head>
 <body>
-<form method="post" th:object="${product}" th:action="@{'/api/products/edit/' + ${product.id}}">
+<form method="post" th:object="${product}" th:action="@{'/products/edit/' + ${id}}">
     <input type="hidden" name="_method" value="put">
-
     <div>
         <label for="id">상품 ID</label>
-        <input type="text" id="id" name="id" class="form-control" value="1" th:value="${product.id}"
+        <input type="text" id="id" name="id" class="form-control" value="1" th:value="${id}"
                readonly>
     </div>
     <div>
