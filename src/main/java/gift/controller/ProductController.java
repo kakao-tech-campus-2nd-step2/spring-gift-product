@@ -1,11 +1,9 @@
 package gift.controller;
 
-import gift.database.ProductDatabase;
+import gift.repository.ProductRepository;
 import gift.model.Product;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,21 +19,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/products")
 public class ProductController {
 
-    private final ProductDatabase productDatabase;
+    private final ProductRepository productRepository;
 
-    public ProductController(ProductDatabase productDatabase) {
-        this.productDatabase = productDatabase;
+    public ProductController(ProductRepository productRepository) {
+        this.productRepository = productRepository;
     }
 
 
     @GetMapping
     public ResponseEntity<List<Product>> getAllProducts() {
-        return ResponseEntity.ok(productDatabase.findAll());
+        return ResponseEntity.ok(productRepository.findAll());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable("id") Long id) {
-        Optional<Product> productOpt = productDatabase.findById(id);
+        Optional<Product> productOpt = productRepository.findById(id);
         if (productOpt.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
@@ -44,7 +42,7 @@ public class ProductController {
 
     @GetMapping("/nameSearch")
     public ResponseEntity<Product> getProductByName(@RequestParam("name") String name) {
-        Optional<Product> productOpt = productDatabase.findByName(name);
+        Optional<Product> productOpt = productRepository.findByName(name);
         if (productOpt.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
@@ -53,14 +51,14 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<Void> addProduct(@RequestBody Product product) {
-        productDatabase.save(product);
+        productRepository.save(product);
         // 상태코드 201은 POST 나 PUT 으로 새로운 데이터를 서버에 생성하는 작업이 성공했을 때 반환한다고 함
         return ResponseEntity.status(201).build();
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> updateProduct(@PathVariable("id") Long id, @RequestBody Product product) {
-        Optional<Product> oldProductOpt = productDatabase.findById(id);
+        Optional<Product> oldProductOpt = productRepository.findById(id);
         if (oldProductOpt.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
@@ -68,17 +66,17 @@ public class ProductController {
         oldProduct.setName(product.getName());
         oldProduct.setPrice(product.getPrice());
         oldProduct.setImageUrl(product.getImageUrl());
-        productDatabase.save(oldProduct);
+        productRepository.save(oldProduct);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable("id") Long id) {
-        Optional<Product> productOpt = productDatabase.findById(id);
+        Optional<Product> productOpt = productRepository.findById(id);
         if (productOpt.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        productDatabase.deleteById(id);
+        productRepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 

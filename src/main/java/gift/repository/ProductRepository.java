@@ -1,24 +1,20 @@
-package gift.database;
+package gift.repository;
 
 import gift.model.Product;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.stream.Collectors;
 import javax.sql.DataSource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ProductDatabase {
+public class ProductRepository {
 
     private final JdbcTemplate jdbcTemplate;
     private final SimpleJdbcInsert simpleJdbcInsert;
@@ -30,18 +26,12 @@ public class ProductDatabase {
         rs.getString("image_url")
     );
 
-    public ProductDatabase(DataSource dataSource) {
+    public ProductRepository(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
         this.simpleJdbcInsert = new SimpleJdbcInsert(dataSource)
             .withTableName("product")
             .usingGeneratedKeyColumns("id");
     }
-    // 지인이 동시성 문제를 해결하기 위해 ConcurrentHashMap 이라는 것을 사용해보자고 해서...
-    // 좀 더 알아봐야겠다!
-    private final Map<Long, Product> products = new ConcurrentHashMap<>();
-
-    // 자동으로 제품 ID를 등록하기 위해
-    private final AtomicLong idGenerator = new AtomicLong(0);
 
     public void save(Product product){
         if (product.getId() == null) {
