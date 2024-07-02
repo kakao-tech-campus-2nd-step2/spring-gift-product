@@ -1,50 +1,52 @@
 package gift.service;
 
+import gift.Product;
+import gift.dao.ProductDao;
 import gift.model.ProductModel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 @Service
 public class ProductService {
+    private final ProductDao productDao;
 
-    private final Map<Long, ProductModel> products = new HashMap<>(); // 상품 데이터를 저장하는 자료구조
-    private long currentId = 0; // 추가될 id를 유지하기 위한 변수
-
-    // 현재 저장된 모든 상품들을 반환
-    public Collection<ProductModel> getAllProducts() {
-        return products.values();
+    @Autowired
+    public ProductService(ProductDao productDao) {
+        this.productDao = productDao;
     }
 
-    // 주어진 id에 해당하는 상품 객체를 반환
-    public ProductModel getProductById(long id) {
-        return products.get(id);
-    }
-
-    // 상품 추가
-    public ProductModel addProduct(ProductModel product) {
-        product.id = ++currentId;
-        products.put(product.id, product);
+    public Product save(ProductModel productModel) {
+        Product product = new Product(
+                productModel.getName(),
+                productModel.getPrice(),
+                productModel.getImgUrl()
+        );
+        productDao.save(product);
         return product;
     }
 
-    // 상품 업데이트
-    public ProductModel updateProduct(long id, ProductModel updatedProduct) {
-        ProductModel product = products.get(id);
-        if (product != null) {
-            product.category = updatedProduct.category; // 카테고리 업데이트
-            product.name = updatedProduct.name; // 이름 업데이트
-            product.price = updatedProduct.price; // 가격 업데이트
-            products.put(id, product);
-            return product;
-        }
-        return null;
+    public List<Product> findAll() {
+        return productDao.findAll();
     }
 
-    // 상품 삭제
-    public boolean deleteProduct(long id) {
-        return products.remove(id) != null;
+    public Product findById(Long id) {
+        return productDao.findById(id);
+    }
+
+    public Product update(Long id, ProductModel productModel) {
+        Product product = new Product(
+                id,
+                productModel.getName(),
+                productModel.getPrice(),
+                productModel.getImgUrl()
+        );
+        productDao.update(product);
+        return product;
+    }
+
+    public void deleteById(Long id) {
+        productDao.deleteById(id);
     }
 }

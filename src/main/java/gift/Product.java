@@ -1,27 +1,43 @@
 package gift;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+// 관리할 객체 만들기
+@Entity
 public class Product {
-
-    private Long id;
-    private String category;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     private String name;
-    private Long price;
+    private int price;
+    private String imgUrl;
 
-    // Getters and setters
+    public Product(Long o, String name, int price, String imgUrl) {}
+
+    // id 포함하지 않고 필드 초기화
+    public Product(String name, int price, String imgUrl) {
+        this.name = name;
+        this.price = price;
+        this.imgUrl = imgUrl;
+    }
+
+    // id 포함해서 필드 초기화
+    public Product(long id, String name, int price, String imgUrl) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.imgUrl = imgUrl;
+    }
+
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
     }
 
     public String getName() {
@@ -32,11 +48,29 @@ public class Product {
         this.name = name;
     }
 
-    public Long getPrice() {
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(Long price) {
+    public void setPrice(int price) {
         this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", imgUrl='" + imgUrl + '\'' +
+                '}';
     }
 }

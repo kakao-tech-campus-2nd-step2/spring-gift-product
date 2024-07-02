@@ -1,6 +1,6 @@
-CREATE TABLE product (
-                          id BIGINT PRIMARY KEY,
-                          category VARCHAR(255),
-                          name VARCHAR(255) NOT NULL,
-                          price BIGINT NOT NULL
+CREATE TABLE products (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      name VARCHAR(255) NOT NULL,
+      price INT NOT NULL,
+      imgUrl VARCHAR(255) NOT NULL
 );

@@ -1,2 +1,3 @@
-INSERT INTO product (id, category, name, price) VALUES
-    (12314, 'clothes', 'adidas', '45000');
+INSERT INTO products (id, name, price, imgUrl) VALUES
+('123', 'adidas', 28500,),
+('456', 'nike', 71200,);

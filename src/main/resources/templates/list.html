@@ -5,7 +5,7 @@
             <th>ID</th>
             <th>Name</th>
             <th>Price</th>
-            <th>Category</th>
+            <th>imgUrl</th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -14,7 +14,7 @@
             <td th:text="${product.id}">1</td>
             <td th:text="${product.name}">Product Name</td>
             <td th:text="${product.price}">100</td>
-            <td th:text="${product.category}">Uncategorized</td>
+            <td th:text="${product.imgUrl}">Uncategorized</td>
             <td>
                 <a th:href="@{/products/{id}(id=${product.id})}">View</a>
                 <a th:href="@{/products/edit/{id}(id=${product.id})}">Edit</a>

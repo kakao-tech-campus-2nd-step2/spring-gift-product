@@ -1,18 +1,18 @@
 package gift.controller;
 
+import gift.Product;
 import gift.model.ProductModel;
 import gift.service.ProductService;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import java.util.Collection;
 
-@RestController // 해당 클래스가 RESTful 웹 서비스의 컨트롤러임을 나타냄
-@RequestMapping("/api/products") // 이 클래스의 모든 HTTP 요청은 ("/api/products")로 매핑됨
+import java.util.List;
+
+@Controller
+@RequestMapping("/products")
 public class ProductController {
-
     private final ProductService productService;
 
     @Autowired
@@ -20,45 +20,48 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping
-    // 모든 상품을 조회하여 'ResponseEntity'에 담아 반환
-    public ResponseEntity<Collection<ProductModel>> 모든상품조회() {
-        return ResponseEntity.ok(productService.getAllProducts());
+    @GetMapping("/list")
+    public String listProducts(Model model) {
+        List<Product> products = productService.findAll();
+        model.addAttribute("products", products);
+        return "list"; // list.html을 렌더링
     }
 
-    @GetMapping("/{productId}")
-    // 주어진 id에 해당하는 상품을 조회하여 'ResponseEntity'에 담아 반환
-    public ResponseEntity<ProductModel> 상품조회(@PathVariable("productId") long id) {
-        ProductModel product = productService.getProductById(id);
-        return product != null ? ResponseEntity.ok(product) : ResponseEntity.notFound().build();
+    @GetMapping("/view/{id}")
+    public String viewProduct(@PathVariable Long id, Model model) {
+        Product product = productService.findById(id);
+        model.addAttribute("product", product);
+        return "view"; // view.html을 렌더링
     }
 
-    @PostMapping
-    // 전달된 JSON 형식의 상품 정보를 받아서 서비스를 통해 상품을 추가
-    public ResponseEntity<ProductModel> 상품추가(@RequestBody ProductModel product) {
-        ProductModel addedProduct = productService.addProduct(product);
-        return ResponseEntity.status(HttpStatus.CREATED).body(addedProduct);
+    @GetMapping("/add")
+    public String showAddProductForm(Model model) {
+        model.addAttribute("productModel", new ProductModel());
+        return "add"; // add.html을 렌더링
     }
 
-    @PutMapping("/{productId}")
-    public ResponseEntity<ProductModel> 상품수정(@PathVariable("productId") long id, @RequestBody ProductModel updatedProduct) {
-        ProductModel existingProduct = productService.getProductById(id);
-        if (existingProduct != null) {
-            // 업데이트할 내용을 설정
-            existingProduct.setCategory(updatedProduct.getCategory());
-            existingProduct.setName(updatedProduct.getName());
-            existingProduct.setPrice(updatedProduct.getPrice());
-
-            ProductModel updated = productService.updateProduct(id, existingProduct);
-            return ResponseEntity.ok(updated);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    @PostMapping("/add")
+    public String addProduct(@ModelAttribute("productModel") ProductModel productModel) {
+        productService.save(productModel);
+        return "redirect:/products/list";
     }
 
-    @DeleteMapping("/{productId}")
-    public ResponseEntity<Void> 상품삭제(@PathVariable("productId") long id) {
-        boolean deleted = productService.deleteProduct(id);
-        return deleted ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
+    @GetMapping("/edit/{id}")
+    public String showEditProductForm(@PathVariable Long id, Model model) {
+        Product product = productService.findById(id);
+        model.addAttribute("productModel", new ProductModel(product.getId(), product.getName(), product.getPrice(), product.getImgUrl()));
+        return "edit";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String editProduct(@PathVariable Long id, @ModelAttribute("productModel") ProductModel productModel) {
+        productService.update(id, productModel);
+        return "redirect:/products/list";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteProduct(@PathVariable Long id) {
+        productService.deleteById(id);
+        return "redirect:/products/list";
     }
 }
