@@ -1,5 +1,6 @@
 package gift.model;
 
+
 import gift.enums.Query;
 import java.util.HashMap;
 import java.util.List;
@@ -31,8 +32,7 @@ public class ProductDao {
         long id = key.longValue();
 
         Product product = findById(id);
-        return product;
-    }
+
 
     public Product findById(Long id) {
         var sql = Query.FIND_BY_ID.getQuery();
@@ -66,6 +66,7 @@ public class ProductDao {
         jdbcTemplate.update(sql, productRequest.name(), productRequest.price(), productRequest.imageUrl(), id);
 
         Product product = findById(id);
+
         return product;
     }
 

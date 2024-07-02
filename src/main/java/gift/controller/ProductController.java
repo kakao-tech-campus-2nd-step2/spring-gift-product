@@ -1,8 +1,10 @@
 package gift.controller;
 
 import gift.model.Product;
+
 import gift.model.ProductDao;
 import gift.model.ProductRequest;
+
 import gift.model.ProductResponse;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,8 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ProductController {
 
+
     private ProductDao productDao;
-    @Autowired
+
     ProductController(ProductDao productDao) {
         this.productDao = productDao;
     }
