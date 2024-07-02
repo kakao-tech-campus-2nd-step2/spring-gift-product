@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/products")
@@ -84,19 +82,23 @@ public class ProductController {
 
     @PatchMapping
     public ResponseEntity<Map<String, Object>> patchProducts(@RequestBody List<Map<String, Object>> updatesList) {
-        List<Product> updatedProducts = productService.patchProducts(updatesList).stream()
-            .filter(Objects::nonNull)
-            .collect(Collectors.toList());
-
+        List<Product> updatedProducts = productService.patchProducts(updatesList);
         Map<String, Object> response = new HashMap<>();
-        if (updatedProducts.isEmpty()) {
-            response.put("message", "Failed to patch products.");
+        int originalCount = updatesList.size();
+        int updateCount = updatedProducts.size();
+
+        response.put("updatedProducts", updatedProducts);
+
+        if (updateCount == originalCount) {
+            response.put("message", "All products patched successfully.");
+            return ResponseEntity.ok(response);
+        } else if (updateCount > 0) {
+            response.put("message", "Some products patched successfully.");
+            return ResponseEntity.status(HttpStatus.PARTIAL_CONTENT).body(response);
+        } else {
+            response.put("message", "No products patched.");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
-
-        response.put("message", "Products patched successfully.");
-        response.put("products", updatedProducts);
-        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
