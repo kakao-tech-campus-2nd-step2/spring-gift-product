@@ -4,9 +4,9 @@ import java.util.Objects;
 
 public class Product {
     private Long id;
-    private final String name;
-    private final int price;
-    private final String imageUrl;
+    private String name;
+    private int price;
+    private String imageUrl;
 
     public Product() {
         this.id = null;
@@ -31,7 +31,6 @@ public class Product {
         this.imageUrl = Objects.requireNonNull(imageUrl, "imageUrl must not be null");
     }
 
-    // getter and setter
     public Long getId() {
         return id;
     }
@@ -39,6 +38,7 @@ public class Product {
     public void setId(Long id) {
         this.id = id;
     }
+
 
     public String getName() {
         return name;
@@ -50,5 +50,18 @@ public class Product {
 
     public String getImageUrl() {
         return imageUrl;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 }
