@@ -1,6 +1,5 @@
 package gift.global.exception;
 
-import gift.global.response.ErrorCode;
 import org.springframework.http.HttpStatus;
 
 /**

@@ -1,7 +1,6 @@
 package gift.global.handler;
 
 import gift.global.exception.BusinessException;
-import gift.global.response.ErrorCode;
 import gift.global.response.ErrorResponseDto;
 import gift.global.response.ResponseMaker;
 import org.springframework.http.HttpStatus;

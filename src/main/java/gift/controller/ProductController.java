@@ -1,7 +1,6 @@
 package gift.controller;
 
 import gift.global.response.ResponseMaker;
-import gift.global.response.ResultCode;
 import gift.global.response.ResultResponseDto;
 import gift.global.response.SimpleResultResponseDto;
 import gift.service.ProductService;

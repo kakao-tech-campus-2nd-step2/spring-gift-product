@@ -2,7 +2,6 @@ package gift.global.validation;
 
 import gift.dto.ProductDTO;
 import gift.global.exception.BusinessException;
-import gift.global.response.ErrorCode;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
