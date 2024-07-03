@@ -8,15 +8,16 @@ import org.springframework.ui.Model;
 @Controller
 public class AdminController {
     final String adminpath = "/admin/products";
-    final ProductDAO productDAO;
 
-    public AdminController(ProductDAO productDAO) {
-        this.productDAO = productDAO;
+    private final ProductService productService;
+
+    public AdminController(ProductService productService) {
+        this.productService = productService;
     }
 
     @GetMapping(adminpath)
     public String getProduct(Model model) {
-        model.addAttribute("products", productDAO.selectAll());
+        model.addAttribute("products", productService.getAllProducts());
         return "admin";
     }
 
@@ -27,26 +28,26 @@ public class AdminController {
 
     @PostMapping(adminpath + "/add")
     public String addProduct(@ModelAttribute("product") Product product) {
-        productDAO.insert(product);
+        productService.addProduct(product);
         return "redirect:" + adminpath;
     }
 
     @GetMapping(adminpath + "/del/{id}")
     public String delProduct(@PathVariable int id) {
-        productDAO.delete(id);
+        productService.deleteProduct(id);
         return "redirect:" + adminpath;
     }
 
     @RequestMapping(adminpath + "/edit/{id}")
     public String editProduct(@PathVariable int id, Model model) {
-        model.addAttribute("product", productDAO.select(id));
+        model.addAttribute("product", productService.getProductById(id));
         return "edit";
 
     }
 
     @PostMapping(adminpath + "/edit/{id}")
     public String updateProduct(@PathVariable int id, @ModelAttribute("product") Product product) {
-        productDAO.update(id, product);
+        productService.updateProduct(id, product);
         return "redirect:" + adminpath;
     }
 }

@@ -1,6 +1,5 @@
 package gift;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -8,31 +7,27 @@ import java.util.List;
 
 @RestController
 public class ProductController {
-
     final String apipath = "/api/products";
 
-    @Autowired
-    private final ProductDAO productDAO;
+    private final ProductService productService;
 
-    public ProductController(ProductDAO productDAO) {
-        this.productDAO = productDAO;
-        productDAO.create();
-        productDAO.insert(new Product(1, "test", 1, "test"));
+    public ProductController(ProductService productService) {
+        this.productService = productService;
     }
 
     @GetMapping(apipath)
     public List<Product> getAllProducts() {
-        return productDAO.selectAll();
+        return productService.getAllProducts();
     }
 
     @GetMapping(apipath + "/{id}")
     public Product getProduct(@PathVariable long id) {
-        return productDAO.select(id);
+        return productService.getProductById(id);
     }
 
     @PostMapping(apipath)
     public HttpStatus addProduct(@RequestBody Product product) {
-        productDAO.insert(product);
+        productService.addProduct(product);
         return HttpStatus.CREATED;
 
     }
@@ -40,7 +35,7 @@ public class ProductController {
     @DeleteMapping(apipath + "/{id}")
     public HttpStatus removeProduct(@PathVariable long id) {
         try {
-            productDAO.delete(id);
+            productService.deleteProduct(id);
             return HttpStatus.NO_CONTENT;
         }
         catch (Exception e) {
@@ -50,7 +45,7 @@ public class ProductController {
 
     @PutMapping(apipath + "/{id}")
     public HttpStatus updateProduct(@PathVariable long id, @RequestBody Product product) {
-        productDAO.update(id, product);
+        productService.updateProduct(id, product);
         return HttpStatus.OK;
     }
 }
