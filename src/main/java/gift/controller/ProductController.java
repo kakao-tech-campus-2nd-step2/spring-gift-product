@@ -2,7 +2,6 @@ package gift.controller;
 
 import gift.domain.Product;
 import gift.repository.ProductRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -39,25 +38,23 @@ public class ProductController {
         return "redirect:/api/products";
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Product> getProduct(@PathVariable(value = "id") Long id) {
-        Product product = products.get(id);
-        if (product == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(product);
+    @GetMapping("/edit/{id}")
+    public String editProductForm(@PathVariable Long id, Model model) {
+        Product product = productRepository.findById(id);
+        model.addAttribute("product", product);
+        return "productForm";
     }
 
-    @PostMapping("/edit/{id}")
+    @PutMapping("/{id}")
     public String updateProduct(@PathVariable Long id, @ModelAttribute Product updatedProduct) {
         updatedProduct.setId(id);
-        productRepository.update(updatedProduct);
+        productRepository.save(updatedProduct);
         return "redirect:/api/products";
     }
 
-    @PostMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public String deleteProduct(@PathVariable Long id) {
-        productRepository.delete(id);
+        productRepository.deleteById(id);
         return "redirect:/api/products";
     }
 }

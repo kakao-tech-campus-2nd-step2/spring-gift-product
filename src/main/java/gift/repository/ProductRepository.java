@@ -40,4 +40,6 @@ public class ProductRepository {
         jdbcTemplate.update(sql, id);
     }
 
+    public void deleteById(Long id) {
+    }
 }
