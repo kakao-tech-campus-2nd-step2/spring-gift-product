@@ -50,7 +50,7 @@ public class ProductRepository {
         jdbcTemplate.update(connection -> {
             PreparedStatement preparedStatement = connection.prepareStatement(sql, new String[]{"id"});
             preparedStatement.setString(1, productRequest.name());
-            preparedStatement.setDouble(2, productRequest.price());
+            preparedStatement.setLong(2, productRequest.price());
             preparedStatement.setString(3, productRequest.imageUrl());
             return preparedStatement;
         }, keyHolder);

@@ -14,11 +14,11 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public List<Product> readProduct() {
+    public List<Product> readProductAll() {
         return productRepository.findAll();
     }
 
-    public Product readProduct(Long id) {
+    public Product readProductById(Long id) {
         return productRepository.findById(id);
     }
 
