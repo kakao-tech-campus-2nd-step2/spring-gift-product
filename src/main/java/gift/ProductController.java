@@ -12,8 +12,8 @@ public class ProductController {
     final String apipath = "/api/products";
 
     @Autowired
-    //Product 클래스를 저장하는 해시맵
     private final ProductDAO productDAO;
+
     public ProductController(ProductDAO productDAO) {
         this.productDAO = productDAO;
         productDAO.create();
@@ -32,7 +32,6 @@ public class ProductController {
 
     @PostMapping(apipath)
     public HttpStatus addProduct(@RequestBody Product product) {
-        //json 입력을 받아 product 객체 만들고 해시맵에 저장
         productDAO.insert(product);
         return HttpStatus.CREATED;
 
@@ -40,7 +39,6 @@ public class ProductController {
 
     @DeleteMapping(apipath + "/{id}")
     public HttpStatus removeProduct(@PathVariable long id) {
-        // 입력된 id에 해당하는 해시맵 내 객체 삭제
         try {
             productDAO.delete(id);
             return HttpStatus.NO_CONTENT;
@@ -52,7 +50,6 @@ public class ProductController {
 
     @PutMapping(apipath + "/{id}")
     public HttpStatus updateProduct(@PathVariable long id, @RequestBody Product product) {
-        // 입력된 id에 해당하는 해시맵 내 객체 수정
         productDAO.update(id, product);
         return HttpStatus.OK;
     }

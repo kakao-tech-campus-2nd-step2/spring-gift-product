@@ -24,11 +24,13 @@ public class AdminController {
     public String addProduct() {
         return "add";
     }
+
     @PostMapping(adminpath + "/add")
     public String addProduct(@ModelAttribute("product") Product product) {
         productDAO.insert(product);
         return "redirect:" + adminpath;
     }
+
     @GetMapping(adminpath + "/del/{id}")
     public String delProduct(@PathVariable int id) {
         productDAO.delete(id);
@@ -41,6 +43,7 @@ public class AdminController {
         return "edit";
 
     }
+
     @PostMapping(adminpath + "/edit/{id}")
     public String updateProduct(@PathVariable int id, @ModelAttribute("product") Product product) {
         productDAO.update(id, product);
