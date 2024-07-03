@@ -17,9 +17,7 @@ public class AdminPageController {
 
     @GetMapping("/products")
     public String products(Model model) {
-        System.out.println(productService.readProduct());
-
-        model.addAttribute("products", productService.readProduct());
+        model.addAttribute("products", productService.readProductAll());
         return "products";
     }
 }

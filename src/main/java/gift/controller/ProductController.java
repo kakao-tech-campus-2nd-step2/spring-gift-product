@@ -26,12 +26,12 @@ public class ProductController {
 
     @GetMapping()
     public List<Product> readProducts() {
-        return productService.readProduct();
+        return productService.readProductAll();
     }
 
     @GetMapping("/{id}")
-    public Product readProduct(@PathVariable("id") Long id) {
-        return productService.readProduct(id);
+    public Product readProduct(@PathVariable Long id) {
+        return productService.readProductById(id);
     }
 
     @PostMapping()
@@ -41,12 +41,12 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public Product updateProduct(@PathVariable("id") Long id, @RequestBody ProductRequest productRequest) {
+    public Product updateProduct(@PathVariable Long id, @RequestBody ProductRequest productRequest) {
         return productService.updateProduct(id, productRequest);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
         return ResponseEntity.noContent().build();
     }
