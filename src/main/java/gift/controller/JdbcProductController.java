@@ -22,7 +22,7 @@ public class JdbcProductController {
     }
     //insert
     @PostMapping("/product/jdbc")
-    public String createProduct(@ModelAttribute CreateProduct.Request request) {
+    public String createProduct(@RequestBody CreateProduct.Request request) {
         productDao.insertProduct(request);
         return "product 가 생성되었습니다.";
     }
@@ -34,7 +34,7 @@ public class JdbcProductController {
 
     //update
     @PutMapping("/product/jdbc/{id}")
-    public void updateProduct(@PathVariable("id") long id, @ModelAttribute EditProduct.Request request) { productDao.updateProduct(id,request); }
+    public void updateProduct(@PathVariable("id") long id, @RequestBody EditProduct.Request request) { productDao.updateProduct(id,request); }
 
 
     //delete

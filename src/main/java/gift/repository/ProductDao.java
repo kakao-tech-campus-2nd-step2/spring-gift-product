@@ -29,7 +29,6 @@ public class ProductDao {
     public void insertProduct(CreateProduct.Request request) {
         var sql = "insert into product (id, name, price, url) values (?, ?, ?, ?)";
         jdbcTemplate.update(sql,request.getId(),request.getName(), request.getPrice(), request.getImageUrl());
-
     }
 
     public ProductDTO selectProduct(long id) {
