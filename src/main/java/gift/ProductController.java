@@ -1,9 +1,11 @@
 package gift;
 
-import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URISyntaxException;
 import java.util.List;
+import java.net.URI;
 
 @RestController
 public class ProductController {
@@ -21,31 +23,31 @@ public class ProductController {
     }
 
     @GetMapping(apipath + "/{id}")
-    public Product getProduct(@PathVariable long id) {
-        return productService.getProductById(id);
+    public ResponseEntity<Product> getProduct(@PathVariable long id) {
+        return ResponseEntity.ok(productService.getProductById(id));
     }
 
     @PostMapping(apipath)
-    public HttpStatus addProduct(@RequestBody Product product) {
+    public ResponseEntity<URI> addProduct(@RequestBody Product product) throws URISyntaxException {
         productService.addProduct(product);
-        return HttpStatus.CREATED;
-
+        URI uri = new URI(apipath + "/" + product.id());
+        return ResponseEntity.created(uri).build();
     }
 
     @DeleteMapping(apipath + "/{id}")
-    public HttpStatus removeProduct(@PathVariable long id) {
+    public ResponseEntity<?> removeProduct(@PathVariable long id) {
         try {
             productService.deleteProduct(id);
-            return HttpStatus.NO_CONTENT;
+            return ResponseEntity.noContent().build();
         }
         catch (Exception e) {
-            return HttpStatus.NOT_FOUND;
+            return ResponseEntity.notFound().build();
         }
     }
 
     @PutMapping(apipath + "/{id}")
-    public HttpStatus updateProduct(@PathVariable long id, @RequestBody Product product) {
+    public ResponseEntity<Product> updateProduct(@PathVariable long id, @RequestBody Product product) {
         productService.updateProduct(id, product);
-        return HttpStatus.OK;
+        return ResponseEntity.ok(product);
     }
 }
