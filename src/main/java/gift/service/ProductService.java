@@ -32,8 +32,6 @@ public class ProductService {
     public void createProduct(ProductDTO productDTO) {
         System.out.println("여기까지 올 수 있나?");
 
-        validator.validateProduct(productDTO);
-
         String sql = "INSERT INTO product (name, price, image_url) VALUES (?, ?, ?)";
 
         int rowNum = jdbcTemplate.update(sql, productDTO.getName(), productDTO.getPrice(),
@@ -65,8 +63,6 @@ public class ProductService {
      * @param productDTO
      */
     public void updateProduct(Long id, ProductDTO productDTO) {
-        validator.validateProduct(productDTO);
-
         String sql = "UPDATE product SET name = ?, price = ?, image_url = ? WHERE id = ?";
 
         int rowNum = jdbcTemplate.update(sql, productDTO.getName(), productDTO.getPrice(),

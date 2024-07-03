@@ -68,7 +68,7 @@ public class ProductController {
      */
     @PutMapping("/{id}")
     public ResponseEntity<SimpleResultResponseDto> updateProduct(@PathVariable("id") Long id,
-        @RequestBody ProductDTO productDTO) {
+        @Valid @RequestBody ProductDTO productDTO) {
         productService.updateProduct(id, productDTO);
         return ResponseMaker.createSimpleResponse(HttpStatus.OK, "상품을 수정했습니다.");
     }
