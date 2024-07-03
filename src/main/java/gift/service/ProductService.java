@@ -7,6 +7,7 @@ import gift.model.Product;
 import gift.global.validation.validator;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,7 @@ public class ProductService {
      *
      * @param productDTO
      */
-    public void postProduct(ProductDTO productDTO) {
+    public void createProduct(ProductDTO productDTO) {
         System.out.println("여기까지 올 수 있나?");
 
         validator.validateProduct(productDTO);
@@ -39,7 +40,7 @@ public class ProductService {
             productDTO.getImageUrl());
 
         if (rowNum == 0) {
-            throw new BusinessException(ErrorCode.CREATE_PRODUCT_FAILED);
+            throw new BusinessException(HttpStatus.BAD_REQUEST, "상품 추가에 실패했습니다.");
         }
     }
 
@@ -54,9 +55,6 @@ public class ProductService {
         List<Product> products = jdbcTemplate.query(sql,
             BeanPropertyRowMapper.newInstance(Product.class));
 
-        if (products == null) {
-            throw new BusinessException(ErrorCode.GET_ALL_PRODUCTS_FAILED);
-        }
         return products;
     }
 
@@ -74,7 +72,7 @@ public class ProductService {
         int rowNum = jdbcTemplate.update(sql, productDTO.getName(), productDTO.getPrice(),
             productDTO.getImageUrl(), id);
         if (rowNum == 0) {
-            throw new BusinessException(ErrorCode.UPDATE_PRODUCT_FAILED);
+            throw new BusinessException(HttpStatus.NOT_FOUND, "상품 수정에 실패했습니다.");
         }
     }
 
@@ -88,7 +86,7 @@ public class ProductService {
         String sql = "DELETE FROM product WHERE id = ?";
         int rowNum = jdbcTemplate.update(sql, id);
         if (rowNum == 0) {
-            throw new BusinessException(ErrorCode.DELETE_PRODUCT_FAILED);
+            throw new BusinessException(HttpStatus.NOT_FOUND, "상품 삭제에 실패했습니다.");
         }
     }
 
@@ -106,7 +104,7 @@ public class ProductService {
         }
         // 모두 삭제가 이루어지지 않은 경우
         if (rowNum != productIds.size()) {
-            throw new BusinessException(ErrorCode.DELETE_PRODUCTS_FAILED);
+            throw new BusinessException(HttpStatus.NOT_FOUND, "선택된 상품들 삭제에 실패했습니다.");
         }
     }
 }
