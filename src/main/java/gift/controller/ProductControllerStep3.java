@@ -1,6 +1,5 @@
 package gift.controller;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +19,7 @@ public class ProductControllerStep3 {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    @GetMapping("yeti/products")
+    @GetMapping("v3/products")
     public String getAllProducts(Model model) {
         String sql = "select id, name, price, imageurl from products";
         List<Product> products = jdbcTemplate.query(
@@ -37,35 +36,27 @@ public class ProductControllerStep3 {
         return "index";
     }
 
-    @PostMapping("yeti/products")
-    public String addProduct(@ModelAttribute ProductDTO productDTO) {
+    @PostMapping("v3/products")
+    public String addProduct(@RequestBody ProductDTO productDTO) {
         String sql = "INSERT INTO products(id, name, price, imageurl) VALUES (?,?,?,?)";
         jdbcTemplate.update(sql, productDTO.id(), productDTO.name(), productDTO.price(), productDTO.imageUrl());
 
-        return "redirect:/yeti/products";
+        return "redirect:/v3/products";
     }
 
-    @PostMapping("/yeti/products/{id}")
-    public ResponseEntity<ProductDTO> modifyProduct(@PathVariable Long id, @RequestBody ProductDTO productDTO) {
-        if (!id.equals(productDTO.id())) {
-            String deleteSql = "DELETE FROM products WHERE id = ?";
-            jdbcTemplate.update(deleteSql, id);
+    @PostMapping("/v3/products/{id}")
+    public String modifyProduct(@PathVariable Long id, @RequestBody ProductDTO productDTO) {
+        String updateSql = "UPDATE products SET name = ?, price = ?, imageurl = ? WHERE id = ?";
+        jdbcTemplate.update(updateSql, productDTO.name(), productDTO.price(), productDTO.imageUrl(), id);
 
-            String insertSql = "INSERT INTO products (id, name, price, imageurl) VALUES (?, ?, ?, ?)";
-            jdbcTemplate.update(insertSql, productDTO.id(), productDTO.name(), productDTO.price(), productDTO.imageUrl());
-        }
-
-        String updateSql = "UPDATE products SET id = ?, name = ?, price = ?, imageurl = ? WHERE id = ?";
-        jdbcTemplate.update(updateSql, productDTO.id(), productDTO.name(), productDTO.price(), productDTO.imageUrl(), id);
-
-        return ResponseEntity.ok(productDTO);
+        return "redirect:/v3/products";
     }
 
-    @DeleteMapping("yeti/products/{id}")
+    @DeleteMapping("v3/products/{id}")
     public String DeleteProduct(@PathVariable("id") Long id) {
         String sql = "DELETE FROM products WHERE id = ?";
         jdbcTemplate.update(sql, id);
 
-        return "redirect:/yeti/products";
+        return "redirect:/v3/products";
     }
 }
