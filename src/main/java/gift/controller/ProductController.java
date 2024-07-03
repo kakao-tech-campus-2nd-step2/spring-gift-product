@@ -1,21 +1,16 @@
-package gift.Controller;
+package gift.controller;
 
-import gift.Global.Response.ErrorCode;
-import gift.Global.Response.ErrorResponseDto;
-import gift.Global.Response.ResponseMaker;
-import gift.Global.Response.ResultCode;
-import gift.Global.Response.ResultResponseDto;
-import gift.Global.Response.SimpleResultResponseDto;
-import gift.Service.ProductService;
-import gift.DTO.ProductDTO;
-import gift.Model.Product;
+import gift.global.response.ResponseMaker;
+import gift.global.response.ResultCode;
+import gift.global.response.ResultResponseDto;
+import gift.global.response.SimpleResultResponseDto;
+import gift.service.ProductService;
+import gift.dto.ProductDTO;
+import gift.model.Product;
 import jakarta.validation.Valid;
 import java.util.List;
-import java.util.Map;
-import javax.swing.text.StyledEditorKit.BoldAction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -24,7 +19,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -45,7 +39,7 @@ public class ProductController {
      * @return 결과 메시지
      */
     @PostMapping
-    public ResponseEntity<SimpleResultResponseDto> postProduct(@Valid @ModelAttribute ProductDTO productDTO) {
+        public ResponseEntity<SimpleResultResponseDto> postProduct(@Valid @ModelAttribute ProductDTO productDTO) {
         productService.postProduct(productDTO);
         return ResponseMaker.createSimpleResponse(ResultCode.CREATE_PRODUCT_SUCCESS);
     }

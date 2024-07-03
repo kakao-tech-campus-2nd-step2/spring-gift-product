@@ -1,4 +1,4 @@
-package gift.Global.Response;
+package gift.global.response;
 
 import org.springframework.http.ResponseEntity;
 

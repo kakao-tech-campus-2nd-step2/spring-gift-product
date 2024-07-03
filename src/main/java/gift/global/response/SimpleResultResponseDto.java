@@ -1,4 +1,4 @@
-package gift.Global.Response;
+package gift.global.response;
 
 /**
  * 사용자 정의 상태 코드와 메시지 전달 (데이터 X)

@@ -1,4 +1,4 @@
-package gift.Global.Response;
+package gift.global.response;
 
 public enum ErrorCode {
 

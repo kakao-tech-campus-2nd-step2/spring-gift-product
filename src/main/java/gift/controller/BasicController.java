@@ -1,9 +1,8 @@
-package gift.Controller;
+package gift.controller;
 
-import gift.Service.ProductService;
-import gift.Model.Product;
+import gift.service.ProductService;
+import gift.model.Product;
 import java.util.List;
-import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

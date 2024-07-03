@@ -1,15 +1,15 @@
-package gift.Global.Validation;
+package gift.global.validation;
 
-import gift.DTO.ProductDTO;
-import gift.Global.Exception.BusinessException;
-import gift.Global.Response.ErrorCode;
+import gift.dto.ProductDTO;
+import gift.global.exception.BusinessException;
+import gift.global.response.ErrorCode;
 import org.springframework.stereotype.Component;
 
 /**
  * 유효성 검증 클래스
  */
 @Component
-public class Validation {
+public class validator {
 
     public void validateProduct(ProductDTO productDTO) {
         if (productDTO.getName() == ""

@@ -1,9 +1,9 @@
-package gift.Global.Handler;
+package gift.global.handler;
 
-import gift.Global.Exception.BusinessException;
-import gift.Global.Response.ErrorCode;
-import gift.Global.Response.ErrorResponseDto;
-import gift.Global.Response.ResponseMaker;
+import gift.global.exception.BusinessException;
+import gift.global.response.ErrorCode;
+import gift.global.response.ErrorResponseDto;
+import gift.global.response.ResponseMaker;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;

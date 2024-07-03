@@ -1,6 +1,6 @@
-package gift.Global.Exception;
+package gift.global.exception;
 
-import gift.Global.Response.ErrorCode;
+import gift.global.response.ErrorCode;
 
 /**
  * RuntimeException 을 상속받는 커스텀 에러

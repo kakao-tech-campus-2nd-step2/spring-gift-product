@@ -1,10 +1,10 @@
-package gift.Service;
+package gift.service;
 
-import gift.DTO.ProductDTO;
-import gift.Global.Exception.BusinessException;
-import gift.Global.Response.ErrorCode;
-import gift.Model.Product;
-import gift.Global.Validation.Validation;
+import gift.dto.ProductDTO;
+import gift.global.exception.BusinessException;
+import gift.global.response.ErrorCode;
+import gift.model.Product;
+import gift.global.validation.validator;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -15,12 +15,12 @@ import org.springframework.stereotype.Service;
 public class ProductService {
 
     private final JdbcTemplate jdbcTemplate; // h2 DB 사용한 메모리 저장 방식
-    private final Validation validation; // 유효성 검증
+    private final validator validator; // 유효성 검증
 
     @Autowired
-    public ProductService(JdbcTemplate jdbcTemplate, Validation validation) {
+    public ProductService(JdbcTemplate jdbcTemplate, validator validator) {
         this.jdbcTemplate = jdbcTemplate;
-        this.validation = validation;
+        this.validator = validator;
     }
 
     /**
@@ -31,7 +31,7 @@ public class ProductService {
     public void postProduct(ProductDTO productDTO) {
         System.out.println("여기까지 올 수 있나?");
 
-        validation.validateProduct(productDTO);
+        validator.validateProduct(productDTO);
 
         String sql = "INSERT INTO product (name, price, image_url) VALUES (?, ?, ?)";
 
@@ -67,7 +67,7 @@ public class ProductService {
      * @param productDTO
      */
     public void updateProduct(Long id, ProductDTO productDTO) {
-        validation.validateProduct(productDTO);
+        validator.validateProduct(productDTO);
 
         String sql = "UPDATE product SET name = ?, price = ?, image_url = ? WHERE id = ?";
 

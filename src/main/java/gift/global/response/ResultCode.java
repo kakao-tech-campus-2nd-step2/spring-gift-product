@@ -1,6 +1,4 @@
-package gift.Global.Response;
-
-import javax.xml.transform.Result;
+package gift.global.response;
 
 /**
  * 수행 성공 시 반환하는 응답 객체에 사용되는 응답 코드
