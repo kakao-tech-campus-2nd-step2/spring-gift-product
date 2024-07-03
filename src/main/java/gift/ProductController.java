@@ -8,6 +8,9 @@ import java.util.List;
 
 @RestController
 public class ProductController {
+
+    final String apipath = "/api/products";
+
     @Autowired
     //Product 클래스를 저장하는 해시맵
     private final ProductDAO productDAO;
@@ -17,17 +20,17 @@ public class ProductController {
         productDAO.insert(new Product(1, "test", 1, "test"));
     }
 
-    @GetMapping("api/products")
+    @GetMapping(apipath)
     public List<Product> getAllProducts() {
         return productDAO.selectAll();
     }
 
-    @GetMapping("/api/products/{id}")
+    @GetMapping(apipath + "/{id}")
     public Product getProduct(@PathVariable long id) {
         return productDAO.select(id);
     }
 
-    @PostMapping("/api/products")
+    @PostMapping(apipath)
     public HttpStatus addProduct(@RequestBody Product product) {
         //json 입력을 받아 product 객체 만들고 해시맵에 저장
         productDAO.insert(product);
@@ -35,7 +38,7 @@ public class ProductController {
 
     }
 
-    @DeleteMapping("/api/products/{id}")
+    @DeleteMapping(apipath + "/{id}")
     public HttpStatus removeProduct(@PathVariable long id) {
         // 입력된 id에 해당하는 해시맵 내 객체 삭제
         try {
@@ -47,7 +50,7 @@ public class ProductController {
         }
     }
 
-    @PutMapping("/api/products/{id}")
+    @PutMapping(apipath + "/{id}")
     public HttpStatus updateProduct(@PathVariable long id, @RequestBody Product product) {
         // 입력된 id에 해당하는 해시맵 내 객체 수정
         productDAO.update(id, product);
