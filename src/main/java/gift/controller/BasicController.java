@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping(value = "/api")
+@RequestMapping( "/api")
 public class BasicController {
 
     private final ProductService productService;
@@ -21,7 +21,7 @@ public class BasicController {
     }
 
     /**
-     * 홈 화면으로 이동, 상품 목록 넘겨줌
+     * 홈 화면 렌더링 (thymeleaf)
      *
      * @param model
      * @return 홈 화면 html 명
