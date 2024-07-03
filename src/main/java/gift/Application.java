@@ -8,11 +8,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class Application {
 
-    @Autowired
-    private ProductDao productDao;
+   // @Autowired
+   // private ProductDao productDao;
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
-        productDao.createProductTable();
+
 
 
     }

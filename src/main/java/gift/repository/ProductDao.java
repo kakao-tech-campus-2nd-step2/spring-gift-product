@@ -1,5 +1,7 @@
 package gift.repository;
 
+import gift.dto.CreateProduct;
+import gift.dto.EditProduct;
 import gift.dto.ProductDTO;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -24,9 +26,10 @@ public class ProductDao {
         jdbcTemplate.execute(sql);
     }
 
-    public void insertProduct(ProductDTO productDTO) {
-        var sql = "insert i nto product (id, name, price, url) values (?, ?, ?, ?)";
-        jdbcTemplate.update(sql,productDTO.getId(), productDTO.getName(),productDTO.getPrice(),productDTO.getUrl());
+    public void insertProduct(CreateProduct.Request request) {
+        var sql = "insert into product (id, name, price, url) values (?, ?, ?, ?)";
+        jdbcTemplate.update(sql,request.getId(),request.getName(), request.getPrice(), request.getImageUrl());
+
     }
 
     public ProductDTO selectProduct(long id) {
@@ -34,11 +37,22 @@ public class ProductDao {
         return jdbcTemplate.queryForObject(
                 sql,
                 (resultSet, rowNum) -> new ProductDTO(
+                        id,
                         resultSet.getString("name"),
                         resultSet.getInt("price"),
                         resultSet.getString("url")
                 ),
                 id
         );
+    }
+
+    public void updateProduct(long id, EditProduct.Request request){
+        var sql = "update product set name= ?, price = ?, url = ? where id=?";
+        jdbcTemplate.update(sql,request.getName(),request.getPrice(),request.getImageUrl(),id);
+    }
+
+    public void deleteProduct(long id){
+        var sql = "delete from product where id=?";
+        jdbcTemplate.update(sql,id);
     }
 }
