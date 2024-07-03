@@ -16,10 +16,10 @@ public class ProductDAO {
     public void create() {
         var sql = """
             create table product (
-                id bigint,
-                name varchar(255),
-                price bigint,
-                imageURL varchar(255),
+                id bigint not null,
+                name varchar(255) not null,
+                price bigint not null,
+                imageURL varchar(255) not null,
                 primary key (id)
                 )
             """;
