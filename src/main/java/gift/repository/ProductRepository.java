@@ -35,11 +35,8 @@ public class ProductRepository {
         jdbcTemplate.update(sql, product.getName(), product.getPrice(), product.getImageUrl(), product.getId());
     }
 
-    public void delete(Long id) {
+    public void deleteById(Long id) {
         String sql = "DELETE FROM kakaoProduct WHERE id = ?";
         jdbcTemplate.update(sql, id);
-    }
-
-    public void deleteById(Long id) {
     }
 }
