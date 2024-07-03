@@ -1,29 +1,35 @@
 package gift.domain;
 
+import java.util.Objects;
+
 public class Product {
     private Long id;
-    private String name;
-    private int price;
-    private String imageUrl;
+    private final String name;
+    private final int price;
+    private final String imageUrl;
 
     public Product() {
+        this.id = null;
+        this.name = null;
+        this.price = 0;
+        this.imageUrl = null;
     }
 
     // constructor (use id)
     public Product(Long id, String name, int price, String imageUrl) {
-        this.id = id;
-        this.name = name;
+        this.id = Objects.requireNonNull(id, "id must not be null");
+        this.name = Objects.requireNonNull(name, "name must not be null");
         this.price = price;
-        this.imageUrl = imageUrl;
+        this.imageUrl = Objects.requireNonNull(imageUrl, "imageUrl must not be null");
     }
 
     // constructor (don't use id)
     public Product(String name, int price, String imageUrl) {
-        this.name = name;
+        this.id = null;
+        this.name = Objects.requireNonNull(name, "name must not be null");
         this.price = price;
-        this.imageUrl = imageUrl;
+        this.imageUrl = Objects.requireNonNull(imageUrl, "imageUrl must not be null");
     }
-
 
     // getter and setter
     public Long getId() {
@@ -38,24 +44,11 @@ public class Product {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public int getPrice() {
         return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
     }
 
     public String getImageUrl() {
         return imageUrl;
     }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
 }
