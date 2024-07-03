@@ -15,9 +15,11 @@ public class ProductController {
     // GET : 한 개의 상품 조회
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProduct(@PathVariable(value = "id") Long id) {
-        return products.containsKey(id)
-                ? ResponseEntity.ok(products.get(id))
-                : ResponseEntity.notFound().build();
+        Product product = products.get(id);
+        if (product == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(product);
     }
 
     // GET : 전체 상품 조회
