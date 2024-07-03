@@ -29,7 +29,7 @@ document.querySelectorAll('.delete-btn').forEach(button => {
 
 // Function to delete a product
 function deleteProduct(id) {
-    fetch(`/yeti/products/${id}`, {
+    fetch(`/v3/products/${id}`, {
         method: 'DELETE'
     })
     .then(response => {
@@ -43,6 +43,34 @@ function deleteProduct(id) {
     });
 }
 
+// Handle form submission for add
+document.getElementById('addProductForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // 기본 폼 제출 동작을 막음
+
+    const form = event.target;
+    const data = {
+        id: form.id.value,
+        name: form.name.value,
+        price: form.price.value,
+        imageUrl: form.imageUrl.value
+    };
+
+    fetch(`/v3/products`, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+
+    .then(result => {
+        // 모달 닫기
+        $('#addProduct').modal('hide');
+        window.location.href = "/v3/products";
+    });
+
+});
+
 // Variable to store the original ID for editing
 var originalId;
 
@@ -55,7 +83,6 @@ document.querySelectorAll('.edit-btn').forEach(button => {
         const imageUrl = this.dataset.imageurl;
 
         const form = document.getElementById('editProductForm');
-        form.id.value = originalId;
         form.name.value = name;
         form.price.value = price;
         form.imageUrl.value = imageUrl;
@@ -68,13 +95,12 @@ document.getElementById('editProductForm').addEventListener('submit', function(e
 
     const form = event.target;
     const data = {
-        id: form.id.value,
         name: form.name.value,
         price: form.price.value,
         imageUrl: form.imageUrl.value
     };
 
-    fetch(`/yeti/products/${originalId}`, {
+    fetch(`/v3/products/${originalId}`, {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -82,20 +108,9 @@ document.getElementById('editProductForm').addEventListener('submit', function(e
         }
     })
 
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-
     .then(result => {
         // 모달 닫기
         $('#editProduct').modal('hide');
-        window.location.href = "/yeti/products";
-    })
-
-    .catch(error => {
-        console.error('Error:', error);
+        window.location.href = "/v3/products";
     });
 });
