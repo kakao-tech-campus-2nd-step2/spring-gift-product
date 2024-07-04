@@ -12,12 +12,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
 class ProductControllerTest {
@@ -88,6 +88,53 @@ class ProductControllerTest {
         assertNotNull(response.getBody());
         assertEquals("Product updated successfully.", response.getBody().get("message"));
         assertEquals(updatedProduct, response.getBody().get("product"));
+    }
+
+    @Test
+    @DisplayName("기존 상품을 부분 수정")
+    void testPatchProduct() {
+        Product updatedProduct = new Product(1L, "UpdatedProduct1", 150, "http://example.com/updated_image1");
+        when(productService.patchProduct(anyLong(), any(Map.class))).thenReturn(true);
+        when(productService.getProductById(anyLong())).thenReturn(updatedProduct);
+
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("name", "UpdatedProduct1");
+        updates.put("price", 150);
+
+        ResponseEntity<Map<String, Object>> response = productController.patchProduct(1L, updates);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals("Product patched successfully.", response.getBody().get("message"));
+        assertEquals(updatedProduct, response.getBody().get("product"));
+    }
+
+    @Test
+    @DisplayName("여러 기존 상품을 부분 수정")
+    void testPatchProducts() {
+        Product product1 = new Product(1L, "UpdatedProduct1", 150, "http://example.com/updated_image1");
+        Product product2 = new Product(2L, "UpdatedProduct2", 250, "http://example.com/updated_image2");
+        when(productService.patchProducts(anyList())).thenReturn(Arrays.asList(product1, product2));
+
+        Map<String, Object> updates1 = new HashMap<>();
+        updates1.put("id", 1L);
+        updates1.put("name", "UpdatedProduct1");
+        updates1.put("price", 150);
+
+        Map<String, Object> updates2 = new HashMap<>();
+        updates2.put("id", 2L);
+        updates2.put("name", "UpdatedProduct2");
+        updates2.put("price", 250);
+
+        List<Map<String, Object>> updatesList = Arrays.asList(updates1, updates2);
+
+        ResponseEntity<Map<String, Object>> response = productController.patchProducts(updatesList);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals("All products patched successfully.", response.getBody().get("message"));
+        List<Product> updatedProducts = (List<Product>) response.getBody().get("updatedProducts");
+        assertEquals(2, updatedProducts.size());
+        assertEquals(product1, updatedProducts.get(0));
+        assertEquals(product2, updatedProducts.get(1));
     }
 
     @Test

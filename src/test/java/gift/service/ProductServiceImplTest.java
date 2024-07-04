@@ -9,7 +9,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -77,6 +79,57 @@ class ProductServiceImplTest {
 
         assertTrue(success);
         verify(productRepository, times(1)).update(existingProduct);
+    }
+
+    @Test
+    @DisplayName("기존 상품을 부분 수정")
+    void testPatchProduct() {
+        Product existingProduct = new Product(1L, "Product1", 100, "http://example.com/image1");
+        when(productRepository.findById(anyLong())).thenReturn(existingProduct);
+        when(productRepository.update(any(Product.class))).thenReturn(true);
+
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("name", "UpdatedProduct1");
+        updates.put("price", 150);
+
+        boolean success = productService.patchProduct(1L, updates);
+
+        assertTrue(success);
+        assertEquals("UpdatedProduct1", existingProduct.getName());
+        assertEquals(150, existingProduct.getPrice());
+        verify(productRepository, times(1)).update(existingProduct);
+    }
+
+    @Test
+    @DisplayName("여러 기존 상품을 부분 수정")
+    void testPatchProducts() {
+        Product product1 = new Product(1L, "Product1", 100, "http://example.com/image1");
+        Product product2 = new Product(2L, "Product2", 200, "http://example.com/image2");
+        when(productRepository.findById(1L)).thenReturn(product1);
+        when(productRepository.findById(2L)).thenReturn(product2);
+        when(productRepository.update(any(Product.class))).thenReturn(true);
+
+        Map<String, Object> updates1 = new HashMap<>();
+        updates1.put("id", 1L);
+        updates1.put("name", "UpdatedProduct1");
+        updates1.put("price", 150);
+
+        Map<String, Object> updates2 = new HashMap<>();
+        updates2.put("id", 2L);
+        updates2.put("name", "UpdatedProduct2");
+        updates2.put("price", 250);
+
+        List<Map<String, Object>> updatesList = Arrays.asList(updates1, updates2);
+
+        List<Product> updatedProducts = productService.patchProducts(updatesList);
+
+        assertEquals(2, updatedProducts.size());
+        assertEquals("UpdatedProduct1", product1.getName());
+        assertEquals(150, product1.getPrice());
+        assertEquals("UpdatedProduct2", product2.getName());
+        assertEquals(250, product2.getPrice());
+        verify(productRepository, times(1)).update(product1);
+        verify(productRepository, times(1)).update(product2);
     }
 
     @Test
