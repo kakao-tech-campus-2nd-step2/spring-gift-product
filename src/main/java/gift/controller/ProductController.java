@@ -11,6 +11,8 @@ import java.util.*;
 @Controller
 @RequestMapping("/api/products")
 public class ProductController {
+
+    private static final String REDIRECT_URL = "redirect:/api/products";
     private final ProductService productService;
 
     public ProductController(ProductService productService) {
@@ -29,7 +31,7 @@ public class ProductController {
     public String addProduct(@ModelAttribute Product product) {
         productService.addProduct(product);
 
-        return "redirect:/api/products";  // 새로운 상품 추가 후 상품 조회 화면으로 리다이렉트
+        return REDIRECT_URL;  // 새로운 상품 추가 후 상품 조회 화면으로 리다이렉트
     }
 
     @GetMapping("/new")
@@ -43,7 +45,7 @@ public class ProductController {
         Product product = productService.getProductById(id);
 
         if(product == null) {
-            return "redirect:/api/products";
+            return REDIRECT_URL;
         }
 
         model.addAttribute("product", product);
@@ -56,7 +58,7 @@ public class ProductController {
         // 상품 정보 수정
         productService.updateProduct(id, product);
 
-        return "redirect:/api/products";
+        return REDIRECT_URL;
     }
 
     @GetMapping("/{id}")
@@ -64,7 +66,7 @@ public class ProductController {
         // 요청받은 id를 가진 상품을 삭제
         productService.deleteProduct(id);
 
-        return "redirect:/api/products";
+        return REDIRECT_URL;
     }
 
 }
