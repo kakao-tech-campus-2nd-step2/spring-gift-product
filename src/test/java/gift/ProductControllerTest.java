@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@Transactional
 public class ProductControllerTest {
 
     @Autowired
@@ -72,7 +74,7 @@ public class ProductControllerTest {
 
         Product existingProduct = productService.getAllProducts().get(0);
 
-        mockMvc.perform(post("/api/products/" + existingProduct.getId())
+        mockMvc.perform(put("/api/products/" + existingProduct.getId())
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .param("name", "아이스 카페 아메리카노 T Updated")
                         .param("price", "3000")
@@ -93,7 +95,7 @@ public class ProductControllerTest {
         Product existingProduct = productService.getAllProducts().get(0);
         String productName = existingProduct.getName();
 
-        mockMvc.perform(get("/api/products/" + existingProduct.getId())
+        mockMvc.perform(delete("/api/products/" + existingProduct.getId())
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/api/products"));
