@@ -1,3 +1,5 @@
+수정된 반환 값을 반영한 README 파일을 아래와 같이 수정하겠습니다.
+
 # spring-gift-product
 
 이 프로젝트는 선물 상품을 관리하기 위한 간단한 REST API입니다. 상품을 생성(Create), 조회(Read), 수정(Update), 삭제(Delete)할 수 있습니다. API는 HTTP 요청에 JSON 형식의 데이터로 응답합니다.
@@ -18,27 +20,39 @@
 - **Method**: `GET`
 - **응답 예시**:
     ```json
-    [
-        {
-            "id": 8146027,
-            "name": "아이스 카페 아메리카노 T",
-            "price": 4500,
-            "imageUrl": "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg"
-        }
-    ]
+    {
+        "message": "All products retrieved successfully.",
+        "products": [
+            {
+                "id": 8146027,
+                "name": "아이스 카페 아메리카노 T",
+                "price": 4500,
+                "imageUrl": "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg"
+            }
+        ]
+    }
     ```
 
 ### 2. 단일 상품 조회
 
 - **URL**: `/api/products/{id}`
 - **Method**: `GET`
-- **응답 예시**:
+- **응답 예시 (성공 시)**:
     ```json
     {
-        "id": 8146027,
-        "name": "아이스 카페 아메리카노 T",
-        "price": 4500,
-        "imageUrl": "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg"
+        "message": "Product retrieved successfully.",
+        "product": {
+            "id": 8146027,
+            "name": "아이스 카페 아메리카노 T",
+            "price": 4500,
+            "imageUrl": "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg"
+        }
+    }
+    ```
+- **응답 예시 (실패 시)**:
+    ```json
+    {
+        "message": "Product not found with id: 999"
     }
     ```
 
@@ -57,10 +71,13 @@
 - **응답 예시**:
     ```json
     {
-        "id": 8146027,
-        "name": "아이스 카페 아메리카노 T",
-        "price": 4500,
-        "imageUrl": "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg"
+        "message": "Product created successfully.",
+        "product": {
+            "id": 8146027,
+            "name": "아이스 카페 아메리카노 T",
+            "price": 4500,
+            "imageUrl": "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg"
+        }
     }
     ```
 
@@ -79,12 +96,16 @@
 - **응답 예시**:
     ```json
     {
-        "id": 8146027,
-        "name": "아이스 카페 아메리카노 T",
-        "price": 5000,
-        "imageUrl": "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg"
+        "message": "Product updated successfully.",
+        "product": {
+            "id": 8146027,
+            "name": "아이스 카페 아메리카노 T",
+            "price": 5000,
+            "imageUrl": "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg"
+        }
     }
     ```
+
 ### 5. 기존 상품 일부 수정
 
 #### 단일 상품 수정
@@ -101,10 +122,13 @@
 - **응답 예시**:
     ```json
     {
-        "id": 8146027,
-        "name": "따뜻한 카페 라떼 T",
-        "price": 5500,
-        "imageUrl": "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg"
+        "message": "Product patched successfully.",
+        "product": {
+            "id": 8146027,
+            "name": "따뜻한 카페 라떼 T",
+            "price": 5500,
+            "imageUrl": "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg"
+        }
     }
     ```
 
@@ -129,20 +153,23 @@
     ```
 - **응답 예시**:
     ```json
-    [
-        {
-            "id": 8146027,
-            "name": "따뜻한 카페 라떼 T",
-            "price": 5500,
-            "imageUrl": "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg"
-        },
-        {
-            "id": 8146028,
-            "name": "아이스 카페 아메리카노 T",
-            "price": 6000,
-            "imageUrl": "https://example.com/newimage.jpg"
-        }
-    ]
+    {
+        "message": "All products patched successfully.",
+        "updatedProducts": [
+            {
+                "id": 8146027,
+                "name": "따뜻한 카페 라떼 T",
+                "price": 5500,
+                "imageUrl": "https://st.kakaocdn.net/product/gift/product/20231010111814_9a667f9eccc943648797925498bdd8a3.jpg"
+            },
+            {
+                "id": 8146028,
+                "name": "아이스 카페 아메리카노 T",
+                "price": 6000,
+                "imageUrl": "https://example.com/newimage.jpg"
+            }
+        ]
+    }
     ```
 
 ### 6. 상품 삭제
@@ -190,8 +217,8 @@ spring.datasource.url=jdbc:h2:mem:step3
 spring.datasource.username=sa
 spring.sql.init.mode=always
 spring.sql.init.schema-locations=classpath:schema.sql
-spring.sql.init.data-locations=classpath:data.sql
 ```
+
 ### schema.sql 파일
 
 src/main/resources/schema.sql 파일에 데이터베이스 테이블을 생성하는 SQL 스크립트를 추가합니다.
@@ -205,11 +232,4 @@ CREATE TABLE IF NOT EXISTS product (
 );
 ```
 
-### data.sql 파일
-
-src/main/resources/data.sql 파일에 초기 데이터를 삽입하는 SQL 스크립트를 추가합니다.
-
-```
-INSERT INTO product (name, price, imageUrl) VALUES ('Product1', 100, 'http://example.com/product1.jpg');
-INSERT INTO product (name, price, imageUrl) VALUES ('Product2', 200, 'http://example.com/product2.jpg');
-```
+이 수정된 README 파일은 모든 엔드포인트의 응답 형식을 새로운 반환 값 구조에 맞게 업데이트합니다.
