@@ -1,5 +1,3 @@
-수정된 반환 값을 반영한 README 파일을 아래와 같이 수정하겠습니다.
-
 # spring-gift-product
 
 이 프로젝트는 선물 상품을 관리하기 위한 간단한 REST API입니다. 상품을 생성(Create), 조회(Read), 수정(Update), 삭제(Delete)할 수 있습니다. API는 HTTP 요청에 JSON 형식의 데이터로 응답합니다.
