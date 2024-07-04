@@ -22,18 +22,26 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Product>> getAllProducts() {
+    public ResponseEntity<Map<String, Object>> getAllProducts() {
         List<Product> products = productService.getAllProducts();
-        return ResponseEntity.ok(products);
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "All products retrieved successfully.");
+        response.put("products", products);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable Long id) {
-        Product product = productService.getProductById(id);
-        if (product != null) {
-            return ResponseEntity.ok(product);
+    public ResponseEntity<Map<String, Object>> getProductById(@PathVariable Long id) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            Product product = productService.getProductById(id);
+            response.put("message", "Product retrieved successfully.");
+            response.put("product", product);
+            return ResponseEntity.ok(response);
+        } catch (ProductNotFoundException ex) {
+            response.put("message", ex.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
-        return ResponseEntity.notFound().build();
     }
 
     @PostMapping
@@ -113,10 +121,9 @@ public class ProductController {
     }
 
     @ExceptionHandler(ProductNotFoundException.class)
-    public ResponseEntity<Map<String, String>> handleProductNotFoundException(ProductNotFoundException ex) {
-        Map<String, String> response = new HashMap<>();
+    public ResponseEntity<Map<String, Object>> handleProductNotFoundException(ProductNotFoundException ex) {
+        Map<String, Object> response = new HashMap<>();
         response.put("message", ex.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
-
 }
