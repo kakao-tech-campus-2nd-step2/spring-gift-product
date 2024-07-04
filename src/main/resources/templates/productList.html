@@ -30,7 +30,10 @@
             <td>
                 <div class="action-cell">
                     <a th:href="@{/api/products/{id}/edit(id=${product.id})}" class="action-link">✏️</a>
-                    <a th:href="@{/api/products/{id}(id=${product.id})}" class="action-link">❌</a>
+                    <form th:action="@{/api/products/{id}(id=${product.id})}" method="post" style="display:inline;" class="action-link">
+                        <input type="hidden" name="_method" value="delete" />
+                        <button type="submit" class="delete-btn">❌</button>
+                    </form>
                 </div>
             </td>
         </tr>

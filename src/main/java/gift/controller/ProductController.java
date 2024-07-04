@@ -61,7 +61,7 @@ public class ProductController {
         return REDIRECT_URL;
     }
 
-    @GetMapping("/{id}")
+    @DeleteMapping("/{id}")
     public String deleteProduct(@PathVariable("id") Long id) {
         // 요청받은 id를 가진 상품을 삭제
         productService.deleteProduct(id);
