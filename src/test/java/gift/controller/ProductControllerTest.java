@@ -1,6 +1,7 @@
 package gift.controller;
 
 import gift.model.Product;
+import gift.exception.ProductNotFoundException;
 import gift.service.ProductService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -40,11 +41,12 @@ class ProductControllerTest {
         Product product2 = new Product(2L, "Product2", 200, "http://example.com/image2");
         when(productService.getAllProducts()).thenReturn(Arrays.asList(product1, product2));
 
-        ResponseEntity<List<Product>> response = productController.getAllProducts();
-        List<Product> products = response.getBody();
+        ResponseEntity<Map<String, Object>> response = productController.getAllProducts();
+        Map<String, Object> responseBody = response.getBody();
 
-        assertNotNull(products);
-        assertEquals(2, products.size());
+        assertNotNull(responseBody);
+        assertEquals(2, ((List<Product>) responseBody.get("products")).size());
+        assertEquals("All products retrieved successfully.", responseBody.get("message"));
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
@@ -54,13 +56,26 @@ class ProductControllerTest {
         Product product = new Product(1L, "Product1", 100, "http://example.com/image1");
         when(productService.getProductById(anyLong())).thenReturn(product);
 
-        ResponseEntity<Product> response = productController.getProductById(1L);
+        ResponseEntity<Map<String, Object>> response = productController.getProductById(1L);
+        Map<String, Object> responseBody = response.getBody();
+
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertNotNull(response.getBody());
-        assertEquals(1L, response.getBody().getId());
-        assertEquals("Product1", response.getBody().getName());
-        assertEquals(100, response.getBody().getPrice());
-        assertEquals("http://example.com/image1", response.getBody().getImageUrl());
+        assertNotNull(responseBody);
+        assertEquals("Product retrieved successfully.", responseBody.get("message"));
+        assertEquals(product, responseBody.get("product"));
+    }
+
+    @Test
+    @DisplayName("ID로 특정 제품 조회 - 존재하지 않는 경우")
+    void testGetProductById_NotFound() {
+        when(productService.getProductById(anyLong())).thenThrow(new ProductNotFoundException("Product not found with id: 999"));
+
+        ResponseEntity<Map<String, Object>> response = productController.getProductById(999L);
+        Map<String, Object> responseBody = response.getBody();
+
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertNotNull(responseBody);
+        assertEquals("Product not found with id: 999", responseBody.get("message"));
     }
 
     @Test
