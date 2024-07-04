@@ -54,7 +54,7 @@ public class ProductController {
     }
 
     @PostMapping("/{id}")
-    public String EditProduct(@PathVariable("id") Long id, @ModelAttribute Product product) {
+    public String editProduct(@PathVariable("id") Long id, @ModelAttribute Product product) {
         // 상품 정보 수정
         productService.updateProduct(id, product);
 
