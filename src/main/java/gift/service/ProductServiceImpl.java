@@ -1,5 +1,6 @@
 package gift.service;
 
+import gift.exception.ProductNotFoundException;
 import gift.model.Product;
 import gift.repository.ProductRepository;
 import org.springframework.stereotype.Service;
@@ -24,8 +25,13 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product getProductById(Long id) {
-        return productRepository.findById(id);
+        Product product = productRepository.findById(id);
+        if (product == null) {
+            throw new ProductNotFoundException("Product not found with id: " + id);
+        }
+        return product;
     }
+
 
     @Override
     public boolean createProduct(Product product) {

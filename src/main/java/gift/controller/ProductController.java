@@ -1,5 +1,6 @@
 package gift.controller;
 
+import gift.exception.ProductNotFoundException;
 import gift.model.Product;
 import gift.service.ProductService;
 import org.springframework.http.HttpStatus;
@@ -110,4 +111,12 @@ public class ProductController {
         response.put("message", "Failed to delete product.");
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
+
+    @ExceptionHandler(ProductNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleProductNotFoundException(ProductNotFoundException ex) {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
 }
