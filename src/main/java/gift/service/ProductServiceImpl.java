@@ -75,20 +75,21 @@ public class ProductServiceImpl implements ProductService {
     }
 
     private void updateProductField(Product product, String key, Object value) {
-        switch (key) {
-            case "name":
-                product.setName((String) value);
-                break;
-            case "price":
-                product.setPrice((Integer) value);
-                break;
-            case "imageUrl":
-                product.setImageUrl((String) value);
-                break;
-            default:
-                throw new IllegalArgumentException("Invalid field: " + key);
+        if ("name".equals(key)) {
+            product.setName((String) value);
+            return;
         }
+        if ("price".equals(key)) {
+            product.setPrice((Integer) value);
+            return;
+        }
+        if ("imageUrl".equals(key)) {
+            product.setImageUrl((String) value);
+            return;
+        }
+        throw new IllegalArgumentException("Invalid field: " + key);
     }
+
 
     @Override
     public boolean deleteProduct(Long id) {

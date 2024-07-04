@@ -31,9 +31,8 @@ public class ProductController {
         Product product = productService.getProductById(id);
         if (product != null) {
             return ResponseEntity.ok(product);
-        } else {
-            return ResponseEntity.notFound().build();
         }
+        return ResponseEntity.notFound().build();
     }
 
     @PostMapping
@@ -44,10 +43,9 @@ public class ProductController {
             response.put("message", "Product created successfully.");
             response.put("product", product);
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
-        } else {
-            response.put("message", "Failed to create product.");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
+        response.put("message", "Failed to create product.");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
 
     @PutMapping("/{id}")
@@ -59,10 +57,9 @@ public class ProductController {
             response.put("message", "Product updated successfully.");
             response.put("product", updatedProduct);
             return ResponseEntity.ok(response);
-        } else {
-            response.put("message", "Failed to update product.");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
+        response.put("message", "Failed to update product.");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
 
     @PatchMapping("/{id}")
@@ -74,10 +71,9 @@ public class ProductController {
             response.put("message", "Product patched successfully.");
             response.put("product", updatedProduct);
             return ResponseEntity.ok(response);
-        } else {
-            response.put("message", "Failed to patch product.");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
+        response.put("message", "Failed to patch product.");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
 
     @PatchMapping
@@ -92,13 +88,15 @@ public class ProductController {
         if (updateCount == originalCount) {
             response.put("message", "All products patched successfully.");
             return ResponseEntity.ok(response);
-        } else if (updateCount > 0) {
+        }
+
+        if (updateCount > 0) {
             response.put("message", "Some products patched successfully.");
             return ResponseEntity.status(HttpStatus.PARTIAL_CONTENT).body(response);
-        } else {
-            response.put("message", "No products patched.");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
+
+        response.put("message", "No products patched.");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
 
     @DeleteMapping("/{id}")
@@ -108,9 +106,8 @@ public class ProductController {
         if (success) {
             response.put("message", "Product deleted successfully.");
             return ResponseEntity.noContent().build();
-        } else {
-            response.put("message", "Failed to delete product.");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
+        response.put("message", "Failed to delete product.");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
 }
