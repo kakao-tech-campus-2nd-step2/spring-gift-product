@@ -1,6 +1,7 @@
 package gift.service;
 
 import gift.model.Product;
+import gift.exception.ProductNotFoundException;
 import gift.repository.ProductRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -54,6 +55,17 @@ class ProductServiceImplTest {
         assertEquals("Product1", foundProduct.getName());
         assertEquals(100, foundProduct.getPrice());
         assertEquals("http://example.com/image1", foundProduct.getImageUrl());
+    }
+
+    @Test
+    @DisplayName("ID로 특정 제품 조회 - 존재하지 않는 경우")
+    void testGetProductById_NotFound() {
+        when(productRepository.findById(999L)).thenReturn(null);
+
+        ProductNotFoundException exception = assertThrows(ProductNotFoundException.class,
+            () -> productService.getProductById(999L));
+
+        assertEquals("Product not found with id: 999", exception.getMessage());
     }
 
     @Test
