@@ -1,9 +1,7 @@
 package gift.web.controller.view;
 
-import gift.domain.Product;
 import gift.service.ProductService;
 import gift.web.dto.form.CreateProductFormDto;
-import gift.web.dto.form.UpdateProductFormDto;
 import gift.web.dto.response.ReadAllProductsResponse;
 import gift.web.dto.response.ReadProductResponse;
 import java.util.List;
@@ -14,7 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/view")
+@RequestMapping("/view/products")
 public class ProductViewController {
 
     private final ProductService productService;
@@ -23,7 +21,7 @@ public class ProductViewController {
         this.productService = productService;
     }
 
-    @GetMapping("/admin")
+    @GetMapping()
     public String readAdminPage(Model model) {
         ReadAllProductsResponse allProductsResponse = productService.readAllProducts();
         List<ReadProductResponse> products = allProductsResponse.getProducts();
@@ -31,17 +29,16 @@ public class ProductViewController {
         return "admin";
     }
 
-    @GetMapping("/product/add")
+    @GetMapping("/add")
     public String addForm(Model model) {
         model.addAttribute("product", new CreateProductFormDto());
         return "form/add-product-form";
     }
 
-    @GetMapping("/product/{id}/edit")
+    @GetMapping("/{id}")
     public String editForm(@PathVariable Long id, Model model) {
-        Product product = productService.searchProduct(id);
-        UpdateProductFormDto updateProductFormDto = UpdateProductFormDto.fromEntity(product);
-        model.addAttribute("product", updateProductFormDto);
+        ReadProductResponse product = productService.searchProduct(id);
+        model.addAttribute("product", product);
         return "form/edit-product-form";
     }
 }
